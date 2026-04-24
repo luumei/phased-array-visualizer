@@ -2,6 +2,8 @@
 
 Interactive 3D visualization tool for understanding phased antenna arrays and beamforming.
 
+Online tool: https://phased-array-simulator.com
+
 ---
 
 ## Overview
@@ -20,11 +22,11 @@ https://luumei.github.io/phased-array-visualizer
 
 ## Features
 
-* Interactive 3D radiation pattern visualization
-* Beam steering (theta and phi)
-* Adjustable array size and element spacing (λ-based)
-* Detailed and simplified calculation modes
-* Clear representation of phase steering effects
+* Interactive 3D radiation pattern visualization  
+* Beam steering (theta and phi)  
+* Adjustable array size and element spacing (λ-based)  
+* Detailed and simplified calculation modes  
+* Clear representation of phase steering effects  
 
 ---
 
@@ -36,11 +38,11 @@ Adjust array parameters and steering direction to observe how the radiation patt
 
 ## Concepts
 
-* Phased arrays
-* Beamforming
-* Radiation patterns
-* Element spacing (λ/2, center-to-center)
-* Phase steering
+* Phased arrays  
+* Beamforming  
+* Radiation patterns  
+* Element spacing (λ/2, center-to-center)  
+* Phase steering  
 
 ---
 
@@ -50,11 +52,10 @@ https://github.com/luumei/phased-array-visualizer
 
 ---
 
-## Author
+## About
 
-Lukas Meienberger
-Lumeitech
-https://www.lumeitech.com
+Personal project focused on intuitive visualization of phased arrays.  
+https://phased-array-simulator.com
 
 ---
 
