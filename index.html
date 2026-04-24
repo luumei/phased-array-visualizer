@@ -1,7 +1,7 @@
 <!--
 MIT License
 
-Copyright (c) 2026 Lukas Meienberger
+Copyright (c) 2026 phased-array-simulator.com
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-Project branding: Lumeitech — https://www.lumeitech.com
+Project website: https://phased-array-simulator.com
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -37,21 +37,48 @@ window.MathJax = {
 <script async="True" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Phased Array Visualizer</title>
-<meta name="description" content="Didactic phased array visualizer for exploring 3D beamforming, antenna array patterns, steering direction, element spacing and simplified radiation models.">
-<meta name="keywords" content="phased array, antenna array, beamforming, antenna visualizer, 3D radiation pattern, RF, didactic tool, Lumeitech">
-<meta name="author" content="Lukas Meienberger">
-<meta name="copyright" content="Copyright (c) 2026 Lukas Meienberger">
+<title>Free 3D Phased Array Simulator – Beamforming & Antenna Array Visualizer</title>
+<meta name="description" content="Free interactive 3D phased array simulator for antenna array beamforming, steering direction, element spacing, radiation patterns and simplified prescribed-current Huygens-style/Fraunhofer field visualization.">
+<meta name="keywords" content="phased array simulator, antenna array simulator, beamforming simulator, phased array visualizer, antenna array visualization, 3D radiation pattern, RF engineering tool, antenna pattern calculator, 3D field far field, Fraunhofer array factor">
+<meta name="author" content="phased-array-simulator.com">
+<meta name="copyright" content="Copyright (c) 2026 phased-array-simulator.com">
 <meta name="license" content="MIT">
-<meta name="application-name" content="Phased Array Visualizer">
-<meta name="robots" content="index, follow">
-<meta property="og:title" content="Phased Array Visualizer">
-<meta property="og:description" content="A didactic 3D visualization tool for understanding phased antenna arrays and beamforming.">
+<meta name="application-name" content="Phased Array Simulator">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://phased-array-simulator.com/">
+<meta property="og:title" content="Free 3D Phased Array Simulator">
+<meta property="og:description" content="Explore phased array beam steering, antenna array spacing, radiation lobes and simplified prescribed-current Huygens-style/Fraunhofer models in an interactive 3D browser tool.">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Lumeitech">
+<meta property="og:url" content="https://phased-array-simulator.com/">
+<meta property="og:site_name" content="phased-array-simulator.com">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Phased Array Visualizer">
-<meta name="twitter:description" content="Explore phased array beam steering and antenna patterns in 3D.">
+<meta name="twitter:title" content="Free 3D Phased Array Simulator">
+<meta name="twitter:description" content="Interactive RF tool for phased array beamforming and antenna array visualization in 3D.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Free 3D Phased Array Simulator",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web browser",
+  "url": "https://phased-array-simulator.com/",
+  "codeRepository": "https://github.com/luumei/phased-array-visualizer",
+  "sameAs": ["https://github.com/luumei/phased-array-visualizer"],
+  "creator": {
+    "@type": "Person",
+    "name": "phased-array-simulator.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "phased-array-simulator.com",
+    "url": "https://phased-array-simulator.com/"
+  },
+  "license": "https://opensource.org/licenses/MIT",
+  "description": "Interactive 3D phased array antenna simulator for beamforming, steering, antenna array spacing, radiation lobes and simplified prescribed-current Huygens-style/Fraunhofer visualization.",
+  "isAccessibleForFree": true,
+  "keywords": "phased array simulator, antenna array simulator, beamforming, antenna visualizer, RF engineering"
+}
+</script>
 <meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0b0b0f" media="(prefers-color-scheme: dark)">
 <script src="https://cdn.tailwindcss.com"></script>
@@ -372,7 +399,7 @@ window.MathJax = {
     }
 
 
-    /* Apple-inspired Lumeitech polish */
+    /* Apple-inspired phased-array-simulator.com polish */
     :root {
       color-scheme: light dark;
       --lt-bg: #f5f5f7;
@@ -649,13 +676,163 @@ window.MathJax = {
       }
     }
 
+    .seo-hero {
+      margin: 1rem 0 1.25rem;
+      padding: clamp(1.3rem, 3vw, 2.4rem);
+      border: 1px solid var(--lt-border);
+      border-radius: calc(var(--lt-radius) + 8px);
+      background: var(--lt-surface);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      box-shadow: var(--lt-shadow-soft);
+    }
+    .seo-hero h2 {
+      max-width: 980px;
+      margin: 0;
+      color: var(--lt-text);
+      font-size: clamp(2rem, 5vw, 4.4rem);
+      line-height: 0.98;
+      letter-spacing: -0.06em;
+      font-weight: 820;
+    }
+    .seo-hero p {
+      max-width: 880px;
+      margin: 1rem 0 0;
+      color: var(--lt-muted);
+      font-size: clamp(1rem, 1.6vw, 1.2rem);
+      line-height: 1.65;
+    }
+    .seo-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.25rem;
+      align-items: center;
+    }
+    .seo-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 2.55rem;
+      padding: 0.55rem 1rem;
+      border-radius: 999px;
+      border: 1px solid var(--lt-border);
+      background: var(--lt-surface-strong);
+      color: var(--lt-text);
+      text-decoration: none;
+      font-weight: 700;
+      box-shadow: var(--lt-shadow-soft);
+    }
+    .seo-pill.primary {
+      background: linear-gradient(180deg, var(--lt-blue), #006edb);
+      color: #fff;
+      border-color: transparent;
+    }
+    .seo-pill:hover { transform: translateY(-1px); }
+    .seo-keywords {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    .seo-keywords span {
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(120, 120, 128, 0.14);
+      color: var(--lt-muted);
+      font-size: 0.82rem;
+      font-weight: 650;
+    }
+    .source-card {
+      margin-top: 1rem;
+      padding: 1rem;
+      border: 1px solid var(--lt-border);
+      border-radius: var(--lt-radius);
+      background: var(--lt-surface);
+      color: var(--lt-muted);
+      box-shadow: var(--lt-shadow-soft);
+    }
+    .source-card a { color: var(--lt-blue); font-weight: 750; text-decoration: none; }
+    .source-card a:hover { text-decoration: underline; }
+
+    .mouse-help {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      align-items: center;
+      justify-content: center;
+      margin: 0.75rem 0 0.65rem;
+      padding: 0.72rem 0.9rem;
+      border: 1px solid var(--lt-border);
+      border-radius: var(--lt-radius);
+      background: var(--lt-surface-strong);
+      backdrop-filter: blur(22px) saturate(180%);
+      -webkit-backdrop-filter: blur(22px) saturate(180%);
+      box-shadow: var(--lt-shadow-soft);
+      color: var(--lt-muted);
+      font-size: 0.9rem;
+      line-height: 1.35;
+    }
+    .mouse-help strong { color: var(--lt-text); }
+    .mouse-help .mouse-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.32rem 0.62rem;
+      border-radius: 999px;
+      background: rgba(120, 120, 128, 0.14);
+      color: var(--lt-text);
+      font-weight: 650;
+      white-space: nowrap;
+    }
+
+    .canvas-controls-details {
+      margin-bottom: 0.65rem;
+      border: 1px solid var(--lt-border);
+      border-radius: var(--lt-radius);
+      background: var(--lt-surface);
+      backdrop-filter: blur(22px) saturate(180%);
+      -webkit-backdrop-filter: blur(22px) saturate(180%);
+      box-shadow: var(--lt-shadow-soft);
+      overflow: hidden;
+    }
+    .canvas-controls-details > summary {
+      cursor: pointer;
+      list-style: none;
+      padding: 0.7rem 0.9rem;
+      color: var(--lt-text);
+      font-weight: 750;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      user-select: none;
+    }
+    .canvas-controls-details > summary::-webkit-details-marker { display: none; }
+    .canvas-controls-details > summary::after {
+      content: "▾";
+      font-size: 0.9rem;
+      color: var(--lt-muted);
+      transition: transform 0.18s ease;
+    }
+    .canvas-controls-details:not([open]) > summary::after { transform: rotate(-90deg); }
+    .canvas-controls-inner {
+      padding: 0 0.7rem 0.7rem;
+    }
+    .canvas-controls-details .canvas-toolbar {
+      margin-bottom: 0.55rem;
+    }
+    .canvas-controls-details .mouse-help {
+      margin: 0;
+    }
+
 </style>
 </head>
 <body>
 <div class="container mx-auto max-w-7xl">
 <!-- Header Section -->
 <div class="header-section flex flex-col md:flex-row items-center md:justify-between mb-4">
-  <h1 class="text-xl sm:text-2xl font-bold text-gray-800 mb-2 md:mb-0" data-lang="title">Phased Array Visualizer</h1>
+  <h1 class="text-xl sm:text-2xl font-bold text-gray-800 mb-2 md:mb-0" data-lang="title">Free 3D Phased Array Simulator</h1>
   <div class="language-selector flex items-center">
     <select class="border rounded px-2 py-1 text-sm" id="language-select">
       <option value="de">Deutsch</option>
@@ -668,19 +845,56 @@ window.MathJax = {
   </div>
 </div>
 
+<section class="seo-hero" aria-labelledby="seo-title">
+  <h2 id="seo-title">Free 3D Phased Array Simulator for Beamforming & Antenna Array Visualization</h2>
+  <p>
+    Explore phased array beam steering directly in the browser. This interactive RF engineering tool visualizes antenna array geometry, element spacing, steering direction, 3D radiation lobes, simplified mutual coupling and prescribed-current Huygens-style/Fraunhofer behavior.
+  </p>
+  <p>
+    The simulator is designed for learning and experimentation: instead of relying only on fixed 2D antenna pattern pictures, it uses vector-based field calculations to show how antenna elements combine in 3D space.
+  </p>
+  <div class="seo-actions">
+    <a class="seo-pill primary" href="#canvas-container">Start the simulator</a>
+    <a class="seo-pill" href="https://github.com/luumei/phased-array-visualizer" target="_blank" rel="noopener noreferrer">View source code on GitHub</a>
+  </div>
+  <div class="seo-keywords" aria-label="Main topics">
+    <span>phased array simulator</span>
+    <span>antenna array visualizer</span>
+    <span>beamforming tool</span>
+    <span>3D radiation pattern</span>
+    <span>RF engineering</span>
+  </div>
+  <div class="source-card">
+    Source code: inspect, fork or improve the project on
+    <a href="https://github.com/luumei/phased-array-visualizer" target="_blank" rel="noopener noreferrer">GitHub</a>.
+  </div>
+</section>
+
 <!-- Main Grid Container -->
 <div class="grid-container">
 
 <!-- 3D Canvas Section -->
 <div class="canvas-section">
-<div class="canvas-toolbar">
-  <div class="canvas-size-control">
-    <label class="text-sm font-medium whitespace-nowrap" for="canvas-height-slider" data-lang="view-size">3D view size:</label>
-    <input id="canvas-height-slider" type="range" min="180" max="850" step="10" value="300" />
-    <span class="text-sm w-14 text-right" id="canvas-height-value">300 px</span>
+<details class="canvas-controls-details" open>
+  <summary>3D view settings & controls</summary>
+  <div class="canvas-controls-inner">
+    <div class="canvas-toolbar">
+      <div class="canvas-size-control">
+        <label class="text-sm font-medium whitespace-nowrap" for="canvas-height-slider" data-lang="view-size">3D view size:</label>
+        <input id="canvas-height-slider" type="range" min="180" max="850" step="10" value="300" />
+        <span class="text-sm w-14 text-right" id="canvas-height-value">300 px</span>
+      </div>
+      <button class="btn" id="fullscreen-3d" type="button" data-lang="fullscreen-3d">Fullscreen 3D</button>
+    </div>
+    <div class="mouse-help" aria-label="3D mouse controls">
+      <strong>3D controls:</strong>
+      <span class="mouse-chip">Left mouse: rotate</span>
+      <span class="mouse-chip">Right mouse: move</span>
+      <span class="mouse-chip">Scroll: zoom</span>
+      <span class="mouse-chip">Double-click: fullscreen</span>
+    </div>
   </div>
-  <button class="btn" id="fullscreen-3d" type="button" data-lang="fullscreen-3d">Fullscreen 3D</button>
-</div>
+</details>
 <div class="canvas-container" id="canvas-container">
     <canvas id="watermark-canvas"></canvas>
 </div>
@@ -1035,13 +1249,21 @@ window.MathJax = {
 <tr><td class="py-2 px-4 border-b text-sm">$k = \frac{2\pi}{\lambda}$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-k"></td></tr>
 <tr><td class="py-2 px-4 border-b text-sm">$\phi_n$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-phi-n"></td></tr>
 <tr><td class="py-2 px-4 border-b text-sm">$\phi_n(\text{steer})$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-phi-n-steer"></td></tr>
-<tr><td class="py-2 px-4 border-b text-sm">$F_p(\hat{r}_{\text{local},p})$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-Fp"></td></tr>
-<tr><td class="py-2 px-4 border-b text-sm">$F(\hat{r})$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-Fhatr"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$F_p(\hat u_{n,p})$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-Fp"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$F(\hat r)$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-Fhatr"></td></tr>
 <tr><td class="py-2 px-4 border-b text-sm">$A_n$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-An"></td></tr>
 <tr><td class="py-2 px-4 border-b text-sm">$N$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-n"></td></tr>
 <tr><td class="py-2 px-4 border-b text-sm">$N_P$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-Np"></td></tr>
 <tr><td class="py-2 px-4 border-b text-sm">$\lambda$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-lambda"></td></tr>
 <tr><td class="py-2 px-4 border-b text-sm">$\vec{r}_{n,p}$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-rnp"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$G(\vec r,\vec r')$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-G"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$\vec r$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-r"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$\vec r'$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-rprime"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$\vec R$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-R"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$S,\ dS'$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-S"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$J(\vec r')$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-J"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$\rho(\vec r')$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-rho"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$\hat u$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-uhat"></td></tr>
 </tbody>
 </table>
 </details>
@@ -1051,15 +1273,14 @@ window.MathJax = {
 </div>
 
 
-<footer class="lumeitech-footer" aria-label="Copyright and Lumeitech website">
-  <span class="lumeitech-mark" aria-hidden="true">L</span>
-  <span>© 2026 Lukas Meienberger — <a href="https://www.lumeitech.com" target="_blank" rel="noopener noreferrer">Lumeitech</a></span>
+<footer class="lumeitech-footer" aria-label="Copyright">
+  <span>© 2026 phased-array-simulator.com – Phased Array Visualization</span>
 </footer>
 
 <script>
     // Self-executing anonymous function for watermark
     (function () {
-      const encoded = "d3d3Lmx1bWVpdGVjaC5jb20="; // www.lumeitech.com
+      const encoded = "cGhhc2VkLWFycmF5LXNpbXVsYXRvci5jb20="; // phased-array-simulator.com
       const crash = () => { while (true) console.log("⚠️ Manipulation erkannt!"); };
       let host = null;
       function createWatermark() {
@@ -1088,7 +1309,7 @@ window.MathJax = {
     // Translation Data
     const translations = {
       de: {
-        "title": "Phased Array Visualizer",
+        "title": "Free 3D Phased Array Simulator",
         "view-size": "3D-Ansicht:",
         "fullscreen-3d": "3D Vollbild",
         "visualization-settings": "Visualisierungseinstellungen",
@@ -1145,22 +1366,22 @@ window.MathJax = {
         "helmholtz-derivation-title": "Herleitung aus der Helmholtz-Gleichung",
         "helmholtz-source-text": "Die skalare Helmholtz-Gleichung mit einer Quellverteilung $\\rho(\\vec{r})$ ist gegeben durch:",
         "helmholtz-source-eq": "$$(\\nabla^2 + k^2) \\phi(\\vec{r}) = -\\rho(\\vec{r})$$",
-        "green-intro-text": "Gesucht ist eine Lösung durch Faltung mit einer Greenschen Funktion $G(\\vec{r}, \\vec{r}')$, die die Gleichung für eine Punktquelle (eine Dirac-Delta-Distribution) erfüllt:",
+        "green-intro-text": "Zuerst wird die Greensche Funktion allgemein als Antwort auf eine Punktquelle an der Quellposition $\\vec{r}'$ definiert. Dabei hängt sie im allgemeinen Fall von zwei Punkten ab: Beobachtungspunkt $\\vec{r}$ und Quellpunkt $\\vec{r}'$:",
         "green-eq": "$$(\\nabla^2 + k^2) G(\\vec{r}, \\vec{r}') = -\\delta(\\vec{r} - \\vec{r}')$$",
         "superposition-intro-text": "Die Lösung für die ursprüngliche Gleichung ergibt sich dann durch die Überlagerung (Integration) der Antworten auf alle Punktquellen, aus denen die Verteilung $\\rho(\\vec{r}')$ zusammengesetzt ist:",
         "superposition-eq": "$$\\phi(\\vec{r}) = \\int G(\\vec{r}, \\vec{r}') \\rho(\\vec{r}') \\, d^3r'$$",
-        "free-green-intro-text": "Die freie Greensche Funktion im 3D-Raum, die eine auslaufende Kugelwelle darstellt, ist bekannt als:",
+        "free-green-intro-text": "Für den freien Raum bzw. ein homogenes Medium mit konstanten Koeffizienten ist der Helmholtz-Operator translationsinvariant. Deshalb hängt die Greensche Funktion nur vom Abstand zwischen Beobachtungs- und Quellpunkt ab:",
         "free-green-eq": "$$G(\\vec{r}, \\vec{r}') = \\frac{e^{ik|\\vec{r} - \\vec{r}'|}}{4\\pi|\\vec{r} - \\vec{r}'|}$$",
         "show-this-by-text": "Man kann dies zeigen, indem man:",
         "show-this-li-1": "die Gleichung in Kugelkoordinaten bezüglich des radialen Abstands $R = |\\vec{r} - \\vec{r}'|$ schreibt,",
         "show-this-li-2": "die Distributionseigenschaft der Dirac-Quelle beachtet,",
         "show-this-li-3": "und eine ausgehende Kugelwelle als physikalisch sinnvolle Lösung wählt.",
-        "total-field-solution-text": "Die Gesamtfeldlösung ist dann die Faltung der Quelle mit dieser Greenschen Funktion:",
+        "total-field-solution-text": "Die Gesamtfeldlösung ergibt sich durch Superposition aller Quellpunkte. Allgemein schreibt man das Integral mit $G(\\vec{r},\\vec{r}')$; im translationsinvarianten Freiraum wird daraus die Faltungsform:",
         "total-field-solution-eq": "$$\\phi(\\vec{r}) = \\int \\frac{e^{ik|\\vec{r} - \\vec{r}'|}}{4\\pi|\\vec{r} - \\vec{r}'|} \\rho(\\vec{r}') \\, d^3r'$$",
         "application-to-surfaces-title": "Anwendung auf Antennenflächen",
-        "application-to-surfaces-text": "Im Fall einer quellfreien, aber begrenzten Oberfläche S mit bekannter Nahfeldverteilung (z.B. Patchantennen), modellieren wir die Quelle als über eine Fläche verteilt. Das Integral vereinfacht sich zu einem Oberflächenintegral. Dies ist die Grundlage für die Huygens-Fresnel-Prinzip, das besagt, dass jeder Punkt auf einer Wellenfront als Quelle für sekundäre Kugelwellen betrachtet werden kann. Das Feld $A(\\vec{R})$ im Fernfeld ist die Überlagerung dieser Wellen:",
-        "application-to-surfaces-eq": "$$A(\\vec{R}) = \\int_S F(\\hat{r}) \\cdot \\frac{e^{ik|\\vec{R} - \\vec{r}|}}{|\\vec{R} - \\vec{r}|} \\, d^2r$$",
-        "application-to-surfaces-conclusion": "Hierbei ist $F(\\hat{r})$ die Abstrahlcharakteristik, die die Richtungsabhängigkeit der von der Oberfläche abgestrahlten Wellen beschreibt. Diese Formel wird in der Simulation für die \"Exakte\" Berechnung durch Diskretisierung der Oberfläche S in Subpatches verwendet.",
+        "application-to-surfaces-text": "Für eine Antennenfläche $S$ wird die äquivalente Quelle über die Fläche verteilt. Der Beobachtungspunkt ist $\\vec{R}$, der Quellpunkt auf der Fläche ist $\\vec{r}'$. Im Freiraum kann jeder Flächenpunkt mit derselben verschobenen Greenschen Funktion ausgewertet werden:",
+        "application-to-surfaces-eq": "$$A(\\vec{R}) \\propto \\int_S J(\\vec{r}')\\,F(\\hat{u})\\,\\frac{e^{ik|\\vec{R}-\\vec{r}'|}}{|\\vec{R}-\\vec{r}'|}\\,dS'$$",
+        "application-to-surfaces-conclusion": "Hierbei beschreibt $J(\\vec r')$ die angenommene lokale äquivalente Strom-/Quellverteilung und $F(\\hat u)$ eine Richtungsgewichtung. Diese einfache Form setzt Freiraum bzw. ein homogenes Medium voraus. Mit Wänden, Groundplanes, Dielektrika oder ortsabhängigen Materialwerten müsste man allgemein $G(\\vec R,\\vec r')$ verwenden und könnte nicht einfach nur $|\\vec R-\\vec r'|$ einsetzen.",
         "distance-approx-title": "Abstandsapproximation (Fernfeld)",
         "distance-approx-intro": "Im Fernfeld können wir den Abstand von einem Beobachtungspunkt $\\vec{R}$ zu einem Antennenelement bei $\\vec{r}_n$ annähern. Der exakte Abstand ist $|\\vec{R} - \\vec{r}_n|$. Wenn $R = |\\vec{R}|$ der Abstand vom Ursprung zum Beobachtungspunkt ist und $\\hat{d} = \\vec{R}/R$ die Beobachtungsrichtung ist, dann gilt:",
         "distance-approx-exact-eq": "$$\\begin{aligned}\n|\\vec{R}-\\vec{r}_n| &= \\sqrt{Q_n}\\\\\nQ_n &= R^2 - 2R(\\hat{d}\\cdot\\vec{r}_n) + |\\vec{r}_n|^2\n\\end{aligned}$$",
@@ -1186,16 +1407,32 @@ window.MathJax = {
         "def-k": "Wellenzahl ($2\\pi/\\lambda$), wobei $\\lambda$ die Wellenlänge ist",
         "def-phi-n": "Phasenverzögerung aufgrund des Wegunterschieds von Antenne $n$ zum Beobachtungspunkt",
         "def-phi-n-steer": "Zusätzliche Phasenverschiebung an Antenne $n$ für die Strahlformung (Steering Phase)",
-        "def-Fp": "Richtcharakteristik des $p$-ten Subpatchs (Faktor im Subpatch-Superpositionsansatz)",
-        "def-Fhatr": "Globale Richtcharakteristik der Einzelelemente (Faktor im Fraunhofer-Ansatz)",
+        "def-Fp": "Lokale Richtungs-/Quellengewichtung des Subpatchs im vorgeschriebenen Stromintegral.",
+        "def-Fhatr": "Fernfeld-Elementpattern, das im Fraunhofer-Ansatz mit dem Array-Faktor multipliziert wird.",
         "def-An": "Amplitudengewichtung für Antenne $n$",
         "def-n": "Gesamtzahl der Antennenelemente im Array",
         "def-Np": "Anzahl der Subpatches pro Antenne",
         "def-lambda": "Wellenlänge des Signals",
-        "def-rnp": "Positionsvektor des $p$-ten Subpatchs der $n$-ten Antenne"
+        "def-rnp": "Position vector of the $p$-th subpatch of the $n$-th antenna",
+        "def-G": "Green’s function: the general kernel between observation point and source point. In free space, $G(\\vec r,\\vec r')=G(|\\vec r-\\vec r'|)$.",
+        "def-r": "General observation point in the Green’s-function derivation.",
+        "def-rprime": "General source point or integration point.",
+        "def-R": "Observation point in the antenna/array model.",
+        "def-S": "Antenna surface and its surface element at the source point $\\vec r'$.",
+        "def-J": "Assumed local equivalent current or source distribution on the antenna surface.",
+        "def-rho": "Volume source distribution in the general Helmholtz equation.",
+        "def-uhat": "Local radiation/observation direction from source point to observation point; used for directional weighting.",
+        "def-G": "Greensche Funktion: allgemeiner Kern zwischen Beobachtungspunkt und Quellpunkt. Im Freiraum gilt $G(\\vec r,\\vec r')=G(|\\vec r-\\vec r'|)$.",
+        "def-r": "Allgemeiner Beobachtungspunkt in der Greenschen-Funktion-Herleitung.",
+        "def-rprime": "Allgemeiner Quellpunkt bzw. Integrationspunkt.",
+        "def-R": "Beobachtungspunkt im Antennen-/Array-Modell.",
+        "def-S": "Antennenfläche und Flächenelement am Quellpunkt $\\vec r'$.",
+        "def-J": "Angenommene lokale äquivalente Strom- oder Quellverteilung auf der Antennenfläche.",
+        "def-rho": "Volumen-Quellverteilung in der allgemeinen Helmholtz-Gleichung.",
+        "def-uhat": "Lokale Abstrahl-/Beobachtungsrichtung vom Quellpunkt zum Beobachtungspunkt; benutzt für Richtungsgewichtung."
       },
       en: {
-        "title": "Phased Array Visualizer",
+        "title": "Free 3D Phased Array Simulator",
         "view-size": "3D view size:",
         "fullscreen-3d": "Fullscreen 3D",
         "visualization-settings": "Visualization Settings",
@@ -1246,28 +1483,28 @@ window.MathJax = {
         "exact-field-real-part": "Re(A) Huygens model:",
         "approx-field-real-part": "Re(A) Fraunhofer:",
         "required-steering-phases": "Required Phase Shift for Beam Steering per Antenna:",
-        "approximation-note-text": "The subpatch approximation uses real distances and phases to many small sources. It is therefore closer to the near/Fresnel region than the Fraunhofer array factor, but it is not truly &quot;exact&quot;: a real patch antenna would require $J(\\vec r)$ from FEM/MoM/measurement and a coupling matrix between elements. Rule of thumb: below about $\\lambda/4$ element spacing coupling is usually strong; around $\\lambda/2$ it is often much smaller and the array-factor model becomes more usable.",
+        "approximation-note-text": "The subpatch approximation uses real distances and phases to many small sources. It is therefore closer to the finite-distance observation region than the Fraunhofer array factor, but it is not truly &quot;exact&quot;: a real patch antenna would require $J(\\vec r)$ from FEM/MoM/measurement and a coupling matrix between elements. Rule of thumb: below about $\\lambda/4$ element spacing coupling is usually strong; around $\\lambda/2$ it is often much smaller and the array-factor model becomes more usable.",
         "math-foundations-title": "Mathematical Foundations",
         "math-foundations-desc-helmholtz": "The calculation of the field is based on fundamental principles of wave propagation, which are described by the Helmholtz equation.",
         "helmholtz-derivation-title": "Derivation from the Helmholtz Equation",
         "helmholtz-source-text": "The scalar Helmholtz equation with a source distribution $\\rho(\\vec{r})$ is given by:",
         "helmholtz-source-eq": "$$(\\nabla^2 + k^2) \\phi(\\vec{r}) = -\\rho(\\vec{r})$$",
-        "green-intro-text": "A solution is sought by convolution with a Green's function $G(\\vec{r}, \\vec{r}')$ that satisfies the equation for a point source (a Dirac delta distribution):",
+        "green-intro-text": "First, the Green’s function is defined generally as the response to a point source at the source position $\\vec{r}'$. In the general case it depends on two points: the observation point $\\vec{r}$ and the source point $\\vec{r}'$:",
         "green-eq": "$$(\\nabla^2 + k^2) G(\\vec{r}, \\vec{r}') = -\\delta(\\vec{r} - \\vec{r}')$$",
         "superposition-intro-text": "The solution to the original equation is then obtained by the superposition (integration) of the responses to all point sources that make up the distribution $\\rho(\\vec{r}')$:",
         "superposition-eq": "$$\\phi(\\vec{r}) = \\int G(\\vec{r}, \\vec{r}') \\rho(\\vec{r}') \\, d^3r'$$",
-        "free-green-intro-text": "The free-space Green's function in 3D, representing an outgoing spherical wave, is known as:",
+        "free-green-intro-text": "For free space, or for a homogeneous medium with constant coefficients, the Helmholtz operator is translation-invariant. Therefore the Green’s function depends only on the distance between observation and source point:",
         "free-green-eq": "$$G(\\vec{r}, \\vec{r}') = \\frac{e^{ik|\\vec{r} - \\vec{r}'|}}{4\\pi|\\vec{r} - \\vec{r}'|}$$",
         "show-this-by-text": "This can be shown by:",
         "show-this-li-1": "writing the equation in spherical coordinates with respect to the radial distance $R = |\\vec{r} - \\vec{r}'|$,",
         "show-this-li-2": "noting the distributional property of the Dirac source,",
         "show-this-li-3": "and choosing an outgoing spherical wave as a physically meaningful solution.",
-        "total-field-solution-text": "The total field solution is then the convolution of the source with this Green's function:",
+        "total-field-solution-text": "The total field is obtained by superposing all source points. In general the integral is written with $G(\\vec{r},\\vec{r}')$; in translation-invariant free space this becomes the convolution form:",
         "total-field-solution-eq": "$$\\phi(\\vec{r}) = \\int \\frac{e^{ik|\\vec{r} - \\vec{r}'|}}{4\\pi|\\vec{r} - \\vec{r}'|} \\rho(\\vec{r}') \\, d^3r'$$",
         "application-to-surfaces-title": "Application to Antenna Surfaces",
-        "application-to-surfaces-text": "In the case of a source-free but bounded surface S with a known near-field distribution (e.g., patch antennas), we model the source as distributed over a surface. The integral simplifies to a surface integral. This is the basis for the Huygens-Fresnel principle, which states that every point on a wavefront can be considered a source of secondary spherical wavelets. The field $A(\\vec{R})$ in the far field is the superposition of these waves:",
-        "application-to-surfaces-eq": "$$A(\\vec{R}) = \\int_S F(\\hat{r}) \\cdot \\frac{e^{ik|\\vec{R} - \\vec{r}|}}{|\\vec{R} - \\vec{r}|} \\, d^2r$$",
-        "application-to-surfaces-conclusion": "Here, $F(\\hat{u})$ is a directional source weighting. In this simulation the surface is discretized into subpatches and weighted by prescribed equivalent currents. The model is a radiation-integral approximation, not a self-consistent solution of Maxwell’s equations.",
+        "application-to-surfaces-text": "For an antenna surface $S$, the equivalent source is distributed over the surface. The observation point is $\\vec{R}$ and the source point on the surface is $\\vec{r}'$. In free space, each surface point can be evaluated with the same shifted Green’s function:",
+        "application-to-surfaces-eq": "$$A(\\vec{R}) \\propto \\int_S J(\\vec{r}')\\,F(\\hat{u})\\,\\frac{e^{ik|\\vec{R}-\\vec{r}'|}}{|\\vec{R}-\\vec{r}'|}\\,dS'$$",
+        "application-to-surfaces-conclusion": "Here, $J(\\vec r')$ is the assumed local equivalent current/source distribution and $F(\\hat u)$ is a directional weighting. This simple form assumes free space or a homogeneous medium. With walls, ground planes, dielectric layers, or spatially varying material properties, one must use the general kernel $G(\\vec R,\\vec r')$ instead of only the distance $|\\vec R-\\vec r'|$.",
         "distance-approx-title": "Distance Approximation (Far-Field)",
         "distance-approx-intro": "In the far-field, we can approximate the distance from an observation point $\\vec{R}$ to an antenna element at $\\vec{r}_n$. The exact distance is $|\\vec{R} - \\vec{r}_n|$. If $R = |\\vec{R}|$ is the distance from the origin to the observation point and $\\hat{d} = \\vec{R}/R$ is the observation direction, then:",
         "distance-approx-exact-eq": "$$\\begin{aligned}\n|\\vec{R}-\\vec{r}_n| &= \\sqrt{Q_n}\\\\\nQ_n &= R^2 - 2R(\\hat{d}\\cdot\\vec{r}_n) + |\\vec{r}_n|^2\n\\end{aligned}$$",
@@ -1281,9 +1518,9 @@ window.MathJax = {
         "combined-element-response-formula": "Combined Element Response:",
         "steering-tip": "If you wish to steer the beam in a specific observation direction, choose the steering direction $\\hat{s}$ equal to the observation direction $\\hat{d}$. The required phase shift is then exactly the inverse of the phase caused by the path difference at the observation point.",
         "fourier-transform-connection": "Spatial Fourier transform and far-field relation",
-        "fourier-transform-desc": "In the Fraunhofer far field, the angular radiation pattern is proportional to the spatial Fourier transform of the aperture or current distribution. For a sampled array this becomes a discrete spatial Fourier transform. For full spherical near-field measurements one often uses near-field to far-field transformation or spherical-wave expansion; this is not the same as a normal time-domain FFT.",
+        "fourier-transform-desc": "In the Fraunhofer far field, the angular radiation pattern is proportional to the spatial Fourier transform of the aperture or current distribution. For a sampled array this becomes a discrete spatial Fourier transform. For full spherical prescribed-current Huygens-style measurements one often uses prescribed-current Huygens-style to far-field transformation or spherical-wave expansion; this is not the same as a normal time-domain FFT.",
         "array-factor-fourier": "Array factor as a discrete spatial Fourier transform:",
-        "inverse-fourier":"The inverse operation is closer to an inverse spatial Fourier transform or modal reconstruction. It can estimate aperture/excitation information only under assumptions; it does not automatically reconstruct the full reactive near field, because evanescent components, polarization and boundary conditions matter.",
+        "inverse-fourier":"The inverse operation is closer to an inverse spatial Fourier transform or modal reconstruction. It can estimate aperture/excitation information only under assumptions; it does not automatically reconstruct the full reactive 3D field, because evanescent components, polarization and boundary conditions matter.",
         "practical-workflow-title": "Practical workflow: solve sources first, then combine fields",
         "practical-workflow-desc": "The method shown here is the second step: it computes fields from known or assumed equivalent currents. In real antenna projects, those sources are often obtained first from measurement or a full-wave method, then many array elements are combined quickly by superposition.",
         "practical-workflow-li-1": "FEM or FDTD solve fields in a volume; Method of Moments (MoM) usually solves surface currents through an integral equation.",
@@ -1304,10 +1541,26 @@ window.MathJax = {
         "def-n": "Total number of antenna elements in the array",
         "def-Np": "Number of subpatches per antenna",
         "def-lambda": "Wavelength of the signal",
-        "def-rnp": "Position vector of the $p$-th subpatch of the $n$-th antenna"
+        "def-rnp": "Position vector of the $p$-th subpatch of the $n$-th antenna",
+        "def-G": "Green’s function: the general kernel between observation point and source point. In free space, $G(\\vec r,\\vec r')=G(|\\vec r-\\vec r'|)$.",
+        "def-r": "General observation point in the Green’s-function derivation.",
+        "def-rprime": "General source point or integration point.",
+        "def-R": "Observation point in the antenna/array model.",
+        "def-S": "Antenna surface and its surface element at the source point $\\vec r'$.",
+        "def-J": "Assumed local equivalent current or source distribution on the antenna surface.",
+        "def-rho": "Volume source distribution in the general Helmholtz equation.",
+        "def-uhat": "Local radiation/observation direction from source point to observation point; used for directional weighting.",
+        "def-G": "Green’s function: the general kernel between observation point and source point. In free space, $G(\\vec r,\\vec r')=G(|\\vec r-\\vec r'|)$.",
+        "def-r": "General observation point in the Green’s-function derivation.",
+        "def-rprime": "General source point or integration point.",
+        "def-R": "Observation point in the antenna/array model.",
+        "def-S": "Antenna surface and its surface element at the source point $\\vec r'$.",
+        "def-J": "Assumed local equivalent current or source distribution on the antenna surface.",
+        "def-rho": "Volume source distribution in the general Helmholtz equation.",
+        "def-uhat": "Local radiation/observation direction from source point to observation point; used for directional weighting."
       },
        fr: {
-        "title": "Phased Array Visualizer",
+        "title": "Free 3D Phased Array Simulator",
         "view-size": "Taille 3D :",
         "fullscreen-3d": "Plein écran 3D",
         "visualization-settings": "Paramètres de Visualisation",
@@ -1328,7 +1581,7 @@ window.MathJax = {
         "far-field-pattern": "Diagramme de Champ:",
         "normalize-pattern": "Normaliser le Modèle:",
         "calculation-method-label": "Méthode de Calcul:",
-        "exact-method": "Subpatch / Near Field",
+        "exact-method": "Subpatch / Prescribed-Current Field Model",
         "approximation-method": "Fraunhofer / Fernfeld",
         "pattern-display": "Affichage du Diagramme:",
         "hemisphere": "Hémisphère en Couleur",
@@ -1360,22 +1613,22 @@ window.MathJax = {
         "helmholtz-derivation-title": "Dérivation de l'équation de Helmholtz",
         "helmholtz-source-text": "L'équation de Helmholtz scalaire avec une distribution de source $\\rho(\\vec{r})$ est donnée par :",
         "helmholtz-source-eq": "$$(\\nabla^2 + k^2) \\phi(\\vec{r}) = -\\rho(\\vec{r})$$",
-        "green-intro-text": "On cherche une solution par convolution avec une fonction de Green $G(\\vec{r}, \\vec{r}')$ qui satisfait l'équation pour une source ponctuelle (une distribution delta de Dirac) :",
+        "green-intro-text": "On définit d’abord la fonction de Green $G(\\vec{r}, \\vec{r}')$ comme la réponse à une source ponctuelle située en $\\vec{r}'$. En général, elle dépend de deux points : le point d’observation $\\vec{r}$ et le point source $\\vec{r}'$ :",
         "green-eq": "$$(\\nabla^2 + k^2) G(\\vec{r}, \\vec{r}') = -\\delta(\\vec{r} - \\vec{r}')$$",
         "superposition-intro-text": "La solution de l'équation originale est alors obtenue par la superposition (intégration) des réponses à toutes les sources ponctuelles qui composent la distribution $\\rho(\\vec{r}')$ :",
         "superposition-eq": "$$\\phi(\\vec{r}) = \\int G(\\vec{r}, \\vec{r}') \\rho(\\vec{r}') \\, d^3r'$$",
-        "free-green-intro-text": "La fonction de Green en espace libre en 3D, représentant une onde sphérique sortante, est connue sous le nom de :",
+        "free-green-intro-text": "En espace libre, ou dans un milieu homogène à coefficients constants, l’opérateur de Helmholtz est invariant par translation. La fonction de Green ne dépend alors que de la distance entre le point d’observation et le point source :",
         "free-green-eq": "$$G(\\vec{r}, \\vec{r}') = \\frac{e^{ik|\\vec{r} - \\vec{r}'|}}{4\\pi|\\vec{r} - \\vec{r}'|}$$",
         "show-this-by-text": "Cela peut être démontré par :",
         "show-this-li-1": "écrire l'équation en coordonnées sphériques par rapport à la distance radiale $R = |\\vec{r} - \\vec{r}'|$,",
         "show-this-li-2": "noter la propriété de distribution de la source de Dirac,",
         "show-this-li-3": "et choisir une onde sphérique sortante comme solution physiquement significative.",
-        "total-field-solution-text": "La solution de champ total est alors la convolution de la source avec cette fonction de Green :",
+        "total-field-solution-text": "Le champ total s’obtient par superposition de tous les points sources. En général, l’intégrale s’écrit avec $G(\\vec{r},\\vec{r}')$ ; dans l’espace libre invariant par translation, elle prend la forme d’une convolution :",
         "total-field-solution-eq": "$$\\phi(\\vec{r}) = \\int \\frac{e^{ik|\\vec{r} - \\vec{r}'|}}{4\\pi|\\vec{r} - \\vec{r}'|} \\rho(\\vec{r}') \\, d^3r'$$",
         "application-to-surfaces-title": "Application aux Surfaces d'Antenne",
         "application-to-surfaces-text": "Dans le cas d'une surface S sans source mais limitée avec une distribution de champ proche connue (par exemple, les antennes patch), nous modélisons la source comme étant distribuée sur une surface. L'intégrale se simplifie en une intégrale de surface. C'est la base du principe de Huygens-Fresnel, qui stipule que chaque point sur un front d'onde peut être considéré comme une source d'ondelettes sphériques secondaires. Le champ $A(\\vec{R})$ en champ lointain est la superposition de ces ondes :",
-        "application-to-surfaces-eq": "$$A(\\vec{R}) = \\int_S F(\\hat{r}) \\cdot \\frac{e^{ik|\\vec{R} - \\vec{r}|}}{|\\vec{R} - \\vec{r}|} \\, d^2r$$",
-        "application-to-surfaces-conclusion": "Ici, $F(\\hat{r})$ est la caractéristique de rayonnement, qui décrit la dépendance directionnelle des ondes rayonnées depuis la surface. Cette formule est utilisée dans la simulation pour le calcul 'Exact' en discrétisant la surface S en sous-patches.",
+        "application-to-surfaces-eq": "$$A(\\vec{R}) \\propto \\int_S J(\\vec{r}')\\,F(\\hat{u})\\,\\frac{e^{ik|\\vec{R}-\\vec{r}'|}}{|\\vec{R}-\\vec{r}'|}\\,dS'$$",
+        "application-to-surfaces-conclusion": "Ici, $J(\\vec r')$ est la distribution locale équivalente de courant/source supposée, et $F(\\hat u)$ est une pondération directionnelle simplifiée, pas un diagramme vectoriel électromagnétique complet. Cette forme simple suppose l’espace libre ou un milieu homogène. Avec des murs, plans de masse, diélectriques ou matériaux variables, il faut utiliser le noyau général $G(\\vec R,\\vec r')$ au lieu de seulement la distance $|\\vec R-\\vec r'|$.",
         "distance-approx-title": "Approximation de Distance (Champ Lointain)",
         "distance-approx-intro": "En champ lointain, on peut approximer la distance d'un point d'observation $\\vec{R}$ à un élément d'antenne en $\\vec{r}_n$. La distance exacte est $|\\vec{R} - \\vec{r}_n|$. Si $R = |\\vec{R}|$ est la distance de l'origine au point d'observation et $\\hat{d} = \\vec{R}/R$ est la direction d'observation, alors :",
         "distance-approx-exact-eq": "$$\\begin{aligned}\n|\\vec{R}-\\vec{r}_n| &= \\sqrt{Q_n}\\\\\nQ_n &= R^2 - 2R(\\hat{d}\\cdot\\vec{r}_n) + |\\vec{r}_n|^2\n\\end{aligned}$$",
@@ -1407,10 +1660,18 @@ window.MathJax = {
         "def-n": "Nombre total d'éléments d'antenne dans le réseau",
         "def-Np": "Nombre de sous-patches par antenne",
         "def-lambda": "Longueur d'onde du signal",
-        "def-rnp": "Vecteur de position du $p$-ème sous-patch de l'antenne $n$"
+        "def-rnp": "Position vector of the $p$-th subpatch of the $n$-th antenna",
+        "def-G": "Green’s function: the general kernel between observation point and source point. In free space, $G(\\vec r,\\vec r')=G(|\\vec r-\\vec r'|)$.",
+        "def-r": "General observation point in the Green’s-function derivation.",
+        "def-rprime": "General source point or integration point.",
+        "def-R": "Observation point in the antenna/array model.",
+        "def-S": "Antenna surface and its surface element at the source point $\\vec r'$.",
+        "def-J": "Assumed local equivalent current or source distribution on the antenna surface.",
+        "def-rho": "Volume source distribution in the general Helmholtz equation.",
+        "def-uhat": "Local radiation/observation direction from source point to observation point; used for directional weighting."
       },
       es: {
-        "title": "Phased Array Visualizer",
+        "title": "Free 3D Phased Array Simulator",
         "view-size": "Tamaño 3D:",
         "fullscreen-3d": "Pantalla completa 3D",
         "visualization-settings": "Ajustes de Visualización",
@@ -1463,22 +1724,22 @@ window.MathJax = {
         "helmholtz-derivation-title": "Derivación de la Ecuación de Helmholtz",
         "helmholtz-source-text": "La ecuación de Helmholtz escalar con una distribución de fuente $\\rho(\\vec{r})$ viene dada por:",
         "helmholtz-source-eq": "$$(\\nabla^2 + k^2) \\phi(\\vec{r}) = -\\rho(\\vec{r})$$",
-        "green-intro-text": "Se busca una solución mediante convolución con una función de Green $G(\\vec{r}, \\vec{r}')$ que satisfaga la ecuación para una fuente puntual (una distribución delta de Dirac):",
+        "green-intro-text": "Primero se define la función de Green $G(\\vec{r}, \\vec{r}')$ como la respuesta a una fuente puntual situada en $\\vec{r}'$. En general, depende de dos puntos: el punto de observación $\\vec{r}$ y el punto fuente $\\vec{r}'$:",
         "green-eq": "$$(\\nabla^2 + k^2) G(\\vec{r}, \\vec{r}') = -\\delta(\\vec{r} - \\vec{r}')$$",
         "superposition-intro-text": "La solución a la ecuación original se obtiene entonces mediante la superposición (integración) de las respuestas a todas las fuentes puntuales que componen la distribución $\\rho(\\vec{r}')$:",
         "superposition-eq": "$$\\phi(\\vec{r}) = \\int G(\\vec{r}, \\vec{r}') \\rho(\\vec{r}') \\, d^3r'$$",
-        "free-green-intro-text": "La función de Green en el espacio libre en 3D, que representa una onda esférica saliente, se conoce como:",
+        "free-green-intro-text": "En el espacio libre, o en un medio homogéneo con coeficientes constantes, el operador de Helmholtz es invariante por traslación. Por eso la función de Green depende solo de la distancia entre el punto de observación y el punto fuente:",
         "free-green-eq": "$$G(\\vec{r}, \\vec{r}') = \\frac{e^{ik|\\vec{r} - \\vec{r}'|}}{4\\pi|\\vec{r} - \\vec{r}'|}$$",
         "show-this-by-text": "Esto se puede demostrar mediante:",
         "show-this-li-1": "escribir la ecuación en coordenadas esféricas con respecto a la distancia radial $R = |\\vec{r} - \\vec{r}'|$,",
         "show-this-li-2": "observar la propiedad distributiva de la fuente de Dirac,",
         "show-this-li-3": "y elegir una onda esférica saliente como solución físicamente significativa.",
-        "total-field-solution-text": "La solución de campo total es entonces la convolución de la fuente con esta función de Green:",
+        "total-field-solution-text": "El campo total se obtiene por superposición de todos los puntos fuente. En general la integral se escribe con $G(\\vec{r},\\vec{r}')$; en el espacio libre invariante por traslación toma la forma de una convolución:",
         "total-field-solution-eq": "$$\\phi(\\vec{r}) = \\int \\frac{e^{ik|\\vec{r} - \\vec{r}'|}}{4\\pi|\\vec{r} - \\vec{r}'|} \\rho(\\vec{r}') \\, d^3r'$$",
         "application-to-surfaces-title": "Aplicación a Superficies de Antena",
         "application-to-surfaces-text": "En el caso de una superficie S sin fuentes pero limitada con una distribución de campo cercano conocida (p. ej., antenas de parche), modelamos la fuente como distribuida sobre una superficie. La integral se simplifica a una integral de superficie. Esta es la base del principio de Huygens-Fresnel, que establece que cada punto en un frente de onda puede considerarse una fuente de ondeletas esféricas secundarias. El campo $A(\\vec{R})$ en el campo lejano es la superposición de estas ondas:",
-        "application-to-surfaces-eq": "$$A(\\vec{R}) = \\int_S F(\\hat{r}) \\cdot \\frac{e^{ik|\\vec{R} - \\vec{r}|}}{|\\vec{R} - \\vec{r}|} \\, d^2r$$",
-        "application-to-surfaces-conclusion": "Aquí, $F(\\hat{r})$ es la característica de radiación, que describe la dependencia direccional de las ondas radiadas desde la superficie. Esta fórmula se utiliza en la simulación para el cálculo 'Exacto' mediante la discretización de la superficie S en subparches.",
+        "application-to-surfaces-eq": "$$A(\\vec{R}) \\propto \\int_S J(\\vec{r}')\\,F(\\hat{u})\\,\\frac{e^{ik|\\vec{R}-\\vec{r}'|}}{|\\vec{R}-\\vec{r}'|}\\,dS'$$",
+        "application-to-surfaces-conclusion": "Aquí, $J(\\vec r')$ es la distribución local equivalente de corriente/fuente asumida, y $F(\\hat u)$ es una ponderación direccional simplificada, no un patrón electromagnético vectorial completo. Esta forma simple supone espacio libre o un medio homogéneo. Con paredes, planos de masa, dieléctricos o materiales variables, debe usarse el núcleo general $G(\\vec R,\\vec r')$ en lugar de solo la distancia $|\\vec R-\\vec r'|$.",
         "distance-approx-title": "Aproximación de Distancia (Campo Lejano)",
         "distance-approx-intro": "En el campo lejano, podemos aproximar la distancia desde un punto de observación $\\vec{R}$ a un elemento de antena en $\\vec{r}_n$. La distancia exacta es $|\\vec{R} - \\vec{r}_n|$. Si $R = |\\vec{R}|$ es la distancia desde el origen al punto de observación y $\\hat{d} = \\vec{R}/R$ es la dirección de observación, entonces:",
         "distance-approx-exact-eq": "$$\\begin{aligned}\n|\\vec{R}-\\vec{r}_n| &= \\sqrt{Q_n}\\\\\nQ_n &= R^2 - 2R(\\hat{d}\\cdot\\vec{r}_n) + |\\vec{r}_n|^2\n\\end{aligned}$$",
@@ -1510,10 +1771,18 @@ window.MathJax = {
         "def-n": "Número total de elementos de antena en el conjunto",
         "def-Np": "Número de subparches por antena",
         "def-lambda": "Longitud de onda de la señal",
-        "def-rnp": "Vector de posición del $p$-ésimo subparche de la $n$-ésima antena"
+        "def-rnp": "Position vector of the $p$-th subpatch of the $n$-th antenna",
+        "def-G": "Green’s function: the general kernel between observation point and source point. In free space, $G(\\vec r,\\vec r')=G(|\\vec r-\\vec r'|)$.",
+        "def-r": "General observation point in the Green’s-function derivation.",
+        "def-rprime": "General source point or integration point.",
+        "def-R": "Observation point in the antenna/array model.",
+        "def-S": "Antenna surface and its surface element at the source point $\\vec r'$.",
+        "def-J": "Assumed local equivalent current or source distribution on the antenna surface.",
+        "def-rho": "Volume source distribution in the general Helmholtz equation.",
+        "def-uhat": "Local radiation/observation direction from source point to observation point; used for directional weighting."
       },
       zh: {
-        "title": "Phased Array Visualizer",
+        "title": "Free 3D Phased Array Simulator",
         "view-size": "3D视图大小：",
         "fullscreen-3d": "3D全屏",
         "visualization-settings": "可视化设置",
@@ -1566,22 +1835,22 @@ window.MathJax = {
         "helmholtz-derivation-title": "亥姆霍兹方程推导",
         "helmholtz-source-text": "带有源分布 $\\rho(\\vec{r})$ 的标量亥姆霍兹方程由下式给出：",
         "helmholtz-source-eq": "$$(\\nabla^2 + k^2) \\phi(\\vec{r}) = -\\rho(\\vec{r})$$",
-        "green-intro-text": "通过与格林函数 $G(\\vec{r}, \\vec{r}')$ 进行卷积来寻求一个解，该格林函数满足点源（狄拉克δ分布）的方程：",
+        "green-intro-text": "首先，将格林函数 $G(\\vec{r}, \\vec{r}')$ 定义为位于源点 $\\vec{r}'$ 的点源响应。一般情况下，它依赖两个点：观测点 $\\vec{r}$ 和源点 $\\vec{r}'$：",
         "green-eq": "$$(\\nabla^2 + k^2) G(\\vec{r}, \\vec{r}') = -\\delta(\\vec{r} - \\vec{r}')$$",
         "superposition-intro-text": "然后，通过对构成分布 $\\rho(\\vec{r}')$ 的所有点源的响应进行叠加（积分），可以获得原始方程的解：",
         "superposition-eq": "$$\\phi(\\vec{r}) = \\int G(\\vec{r}, \\vec{r}') \\rho(\\vec{r}') \\, d^3r'$$",
-        "free-green-intro-text": "在3D自由空间中，代表出射球面波的格林函数被称为：",
+        "free-green-intro-text": "在自由空间或具有常系数的均匀介质中，亥姆霍兹算子具有平移不变性。因此格林函数只依赖观测点与源点之间的距离：",
         "free-green-eq": "$$G(\\vec{r}, \\vec{r}') = \\frac{e^{ik|\\vec{r} - \\vec{r}'|}}{4\\pi|\\vec{r} - \\vec{r}'|}$$",
         "show-this-by-text": "这可以通过以下方式证明：",
         "show-this-li-1": "在球坐标中相对于径向距离 $R = |\\vec{r} - \\vec{r}'|$ 书写方程，",
         "show-this-li-2": "注意狄拉克源的分布特性，",
         "show-this-li-3": "并选择一个出射球面波作为物理上有意义的解。",
-        "total-field-solution-text": "总场解是源与该格林函数的卷积：",
+        "total-field-solution-text": "总场由所有源点的响应叠加得到。一般情况下积分应写成含 $G(\\vec{r},\\vec{r}')$ 的形式；只有在平移不变的自由空间中，它才变成卷积形式：",
         "total-field-solution-eq": "$$\\phi(\\vec{r}) = \\int \\frac{e^{ik|\\vec{r} - \\vec{r}'|}}{4\\pi|\\vec{r} - \\vec{r}'|} \\rho(\\vec{r}') \\, d^3r'$$",
         "application-to-surfaces-title": "天线表面应用",
         "application-to-surfaces-text": "对于具有已知近场分布的无源但有界表面S（例如贴片天线），我们将源建模为分布在表面上。积分简化为表面积分。这是惠更斯-菲涅耳原理的基础，该原理指出波前的每个点都可以被视为次级球面波的源。远场中的场 $A(\\vec{R})$ 是这些波的叠加：",
-        "application-to-surfaces-eq": "$$A(\\vec{R}) = \\int_S F(\\hat{r}) \\cdot \\frac{e^{ik|\\vec{R} - \\vec{r}|}}{|\\vec{R} - \\vec{r}|} \\, d^2r$$",
-        "application-to-surfaces-conclusion": "这里，$F(\\hat{r})$ 是辐射特性，描述了从表面辐射的波的方向依赖性。该公式在仿真中用于通过将表面S离散化为子块来进行“精确”计算。",
+        "application-to-surfaces-eq": "$$A(\\vec{R}) \\propto \\int_S J(\\vec{r}')\\,F(\\hat{u})\\,\\frac{e^{ik|\\vec{R}-\\vec{r}'|}}{|\\vec{R}-\\vec{r}'|}\\,dS'$$",
+        "application-to-surfaces-conclusion": "这里，$J(\\vec r')$ 是假设的局部等效电流/源分布，$F(\\hat u)$ 是简化的方向权重，并不是完整的矢量电磁方向图。这个简单形式假设自由空间或均匀介质。若存在墙、接地板、介质层或空间变化材料，则必须使用一般核 $G(\\vec R,\\vec r')$，而不能只使用距离 $|\\vec R-\\vec r'|$。",
         "distance-approx-title": "距离近似（远场）",
         "distance-approx-intro": "在远场中，我们可以近似从观察点 $\\vec{R}$ 到天线单元 $\\vec{r}_n$ 的距离。精确距离为 $|\\vec{R} - \\vec{r}_n|$。如果 $R = |\\vec{R}|$ 是从原点到观察点的距离，$\\hat{d} = \\vec{R}/R$ 是观察方向，则：",
         "distance-approx-exact-eq": "$$\\begin{aligned}\n|\\vec{R}-\\vec{r}_n| &= \\sqrt{Q_n}\\\\\nQ_n &= R^2 - 2R(\\hat{d}\\cdot\\vec{r}_n) + |\\vec{r}_n|^2\n\\end{aligned}$$",
@@ -1613,10 +1882,18 @@ window.MathJax = {
         "def-n": "阵列中天线单元的总数",
         "def-Np": "每根天线的子补丁数量",
         "def-lambda": "信号的波长",
-        "def-rnp": "天线 $n$ 的子补丁 $p$ 的位置向量"
+        "def-rnp": "Position vector of the $p$-th subpatch of the $n$-th antenna",
+        "def-G": "Green’s function: the general kernel between observation point and source point. In free space, $G(\\vec r,\\vec r')=G(|\\vec r-\\vec r'|)$.",
+        "def-r": "General observation point in the Green’s-function derivation.",
+        "def-rprime": "General source point or integration point.",
+        "def-R": "Observation point in the antenna/array model.",
+        "def-S": "Antenna surface and its surface element at the source point $\\vec r'$.",
+        "def-J": "Assumed local equivalent current or source distribution on the antenna surface.",
+        "def-rho": "Volume source distribution in the general Helmholtz equation.",
+        "def-uhat": "Local radiation/observation direction from source point to observation point; used for directional weighting."
       },
       ja: {
-        "title": "Phased Array Visualizer",
+        "title": "Free 3D Phased Array Simulator",
         "view-size": "3D表示サイズ:",
         "fullscreen-3d": "3D全画面",
         "visualization-settings": "可視化設定",
@@ -1669,22 +1946,22 @@ window.MathJax = {
         "helmholtz-derivation-title": "ヘルムホルツ方程式からの導出",
         "helmholtz-source-text": "ソース分布 $\\rho(\\vec{r})$ を持つスカラーヘルムホルツ方程式は次のように与えられます。",
         "helmholtz-source-eq": "$$(\\nabla^2 + k^2) \\phi(\\vec{r}) = -\\rho(\\vec{r})$$",
-        "green-intro-text": "解は、点源（ディラックのデルタ分布）に対する方程式を満たすグリーン関数 $G(\\vec{r}, \\vec{r}')$ との畳み込みによって求められます。",
+        "green-intro-text": "まず、グリーン関数 $G(\\vec{r}, \\vec{r}')$ は、源点 $\\vec{r}'$ にある点源への応答として定義されます。一般には、観測点 $\\vec{r}$ と源点 $\\vec{r}'$ の2点に依存します。",
         "green-eq": "$$(\\nabla^2 + k^2) G(\\vec{r}, \\vec{r}') = -\\delta(\\vec{r} - \\vec{r}')$$",
         "superposition-intro-text": "元の方程式の解は、分布 $\\rho(\\vec{r}')$ を構成するすべての点源への応答の重ね合わせ（積分）によって得られます。",
         "superposition-eq": "$$\\phi(\\vec{r}) = \\int G(\\vec{r}, \\vec{r}') \\rho(\\vec{r}') \\, d^3r'$$",
-        "free-green-intro-text": "3D自由空間における、外向き球面波を表すグリーン関数は次のように知られています。",
+        "free-green-intro-text": "自由空間、または係数が一定の一様媒質では、ヘルムホルツ演算子は並進不変です。そのためグリーン関数は観測点と源点の距離だけに依存します。",
         "free-green-eq": "$$G(\\vec{r}, \\vec{r}') = \\frac{e^{ik|\\vec{r} - \\vec{r}'|}}{4\\pi|\\vec{r} - \\vec{r}'|}$$",
         "show-this-by-text": "これは次のようにして示すことができます。",
         "show-this-li-1": "方程式を半径方向距離 $R = |\\vec{r} - \\vec{r}'|$ に関して球面座標で書くこと、",
         "show-this-li-2": "ディラックソースの分布特性に注意すること、",
         "show-this-li-3": "そして物理的に意味のある解として外向き球面波を選ぶこと。 ",
-        "total-field-solution-text": "全電界解は、ソースとこのグリーン関数の畳み込みです。",
+        "total-field-solution-text": "全電界はすべての源点からの応答を重ね合わせて得られます。一般には積分は $G(\\vec{r},\\vec{r}')$ を用いて書きます。並進不変な自由空間の場合だけ、これは畳み込みの形になります。",
         "total-field-solution-eq": "$$\\phi(\\vec{r}) = \\int \\frac{e^{ik|\\vec{r} - \\vec{r}'|}}{4\\pi|\\vec{r} - \\vec{r}'|} \\rho(\\vec{r}') \\, d^3r'$$",
         "application-to-surfaces-title": "アンテナ表面への応用",
         "application-to-surfaces-text": "既知の近接場分布を持つ、ソースフリーだが有界な表面S（例：パッチアンテナ）の場合、ソースを表面上に分布しているとモデル化します。積分は面積分に単純化されます。これは、波面のすべての点が二次球面波のソースと見なせるというホイヘンス-フレネルの原理の基礎です。遠方界における電界 $A(\\vec{R})$ は、これらの波の重ね合わせです。",
-        "application-to-surfaces-eq": "$$A(\\vec{R}) = \\int_S F(\\hat{r}) \\cdot \\frac{e^{ik|\\vec{R} - \\vec{r}|}}{|\\vec{R} - \\vec{r}|} \\, d^2r$$",
-        "application-to-surfaces-conclusion": "ここで、$F(\\hat{r})$ は放射特性であり、表面から放射される波の方向依存性を記述します。この式は、シミュレーションで表面Sをサブパッチに離散化することによる「厳密な」計算に使用されます。",
+        "application-to-surfaces-eq": "$$A(\\vec{R}) \\propto \\int_S J(\\vec{r}')\\,F(\\hat{u})\\,\\frac{e^{ik|\\vec{R}-\\vec{r}'|}}{|\\vec{R}-\\vec{r}'|}\\,dS'$$",
+        "application-to-surfaces-conclusion": "ここで、$J(\\vec r')$ は仮定された局所等価電流/源分布であり、$F(\\hat u)$ は簡略化された方向重みです。これは完全なベクトル電磁界パターンではありません。この単純な形は自由空間または一様媒質を仮定します。壁、接地板、誘電体層、空間的に変化する材料がある場合は、距離 $|\\vec R-\\vec r'|$ だけではなく、一般の核 $G(\\vec R,\\vec r')$ を使う必要があります。",
         "distance-approx-title": "距離近似（遠方界）",
         "distance-approx-intro": "遠方界では、観測点 $\\vec{R}$ からアンテナ素子 $\\vec{r}_n$ までの距離を近似できます。正確な距離は $|\\vec{R} - \\vec{r}_n|$ です。$R = |\\vec{R}|$ が原点から観測点までの距離で、$\\hat{d} = \\vec{R}/R$ が観測方向の場合、次のようになります。",
         "distance-approx-exact-eq": "$$\\begin{aligned}\n|\\vec{R}-\\vec{r}_n| &= \\sqrt{Q_n}\\\\\nQ_n &= R^2 - 2R(\\hat{d}\\cdot\\vec{r}_n) + |\\vec{r}_n|^2\n\\end{aligned}$$",
@@ -1716,7 +1993,15 @@ window.MathJax = {
         "def-n": "アレイ内のアンテナ要素の総数",
         "def-Np": "アンテナあたりのサブパッチ数",
         "def-lambda": "信号の波長",
-        "def-rnp": "アンテナ $n$ のサブパッチ $p$ の位置ベクトル"
+        "def-rnp": "Position vector of the $p$-th subpatch of the $n$-th antenna",
+        "def-G": "Green’s function: the general kernel between observation point and source point. In free space, $G(\\vec r,\\vec r')=G(|\\vec r-\\vec r'|)$.",
+        "def-r": "General observation point in the Green’s-function derivation.",
+        "def-rprime": "General source point or integration point.",
+        "def-R": "Observation point in the antenna/array model.",
+        "def-S": "Antenna surface and its surface element at the source point $\\vec r'$.",
+        "def-J": "Assumed local equivalent current or source distribution on the antenna surface.",
+        "def-rho": "Volume source distribution in the general Helmholtz equation.",
+        "def-uhat": "Local radiation/observation direction from source point to observation point; used for directional weighting."
       }
     };
 
@@ -1728,7 +2013,7 @@ window.MathJax = {
           element.innerHTML = translations[lang][key];
         }
       });
-      document.title = (translations[lang] && translations[lang]["title"]) || "Phased Array Visualizer";
+      document.title = "Free 3D Phased Array Simulator – Beamforming & Antenna Array Visualizer";
       if (typeof MathJax !== 'undefined' && MathJax.startup && MathJax.startup.promise) {
         MathJax.startup.promise.then(() => MathJax.typesetPromise());
       }
@@ -2049,7 +2334,7 @@ window.MathJax = {
           sumReal += contribution.re;
           sumImag += contribution.im;
         } else {
-          // Discrete near-field approximation: split each patch into subpatch sources.
+          // Discrete prescribed-current Huygens-style approximation: split each patch into subpatch sources.
           // The 1/Np weight keeps the element amplitude stable when density changes.
           const patchWidthX = WAVELENGTH / 2;
           const patchWidthZ = patchWidthX * 0.8;
@@ -2383,5 +2668,14 @@ window.MathJax = {
         applyTranslations(document.getElementById('language-select').value);
     });
   </script>
+
+<footer style="margin-top:40px; font-size:0.9em; color:#666; text-align:center;">
+  © 2026 phased-array-simulator.com – Phased Array Visualization<br>
+  Open source:
+  <a href="https://github.com/DEIN-USERNAME/DEIN-REPO" target="_blank" style="color:#666;">
+    GitHub Repository
+  </a>
+</footer>
+
 </body>
 </html>
