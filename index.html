@@ -1,0 +1,2387 @@
+<!--
+MIT License
+
+Copyright (c) 2026 Lukas Meienberger
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+Project branding: Lumeitech — https://www.lumeitech.com
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']]
+  }
+};
+</script>
+<script async="True" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Phased Array Visualizer</title>
+<meta name="description" content="Didactic phased array visualizer for exploring 3D beamforming, antenna array patterns, steering direction, element spacing and simplified radiation models.">
+<meta name="keywords" content="phased array, antenna array, beamforming, antenna visualizer, 3D radiation pattern, RF, didactic tool, Lumeitech">
+<meta name="author" content="Lukas Meienberger">
+<meta name="copyright" content="Copyright (c) 2026 Lukas Meienberger">
+<meta name="license" content="MIT">
+<meta name="application-name" content="Phased Array Visualizer">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Phased Array Visualizer">
+<meta property="og:description" content="A didactic 3D visualization tool for understanding phased antenna arrays and beamforming.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Lumeitech">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Phased Array Visualizer">
+<meta name="twitter:description" content="Explore phased array beam steering and antenna patterns in 3D.">
+<meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b0b0f" media="(prefers-color-scheme: dark)">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+<style>
+    /* Grundlegende Stildefinitionen */
+    html, body {
+      height: 100%;
+      margin: 0;
+      overflow-x: hidden;
+      background-color: #f0f9ff;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    .container {
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: 1rem 0.75rem 2rem;
+      box-sizing: border-box;
+    }
+    .canvas-section {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: #f0f9ff;
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+    }
+    .canvas-container {
+      position: relative;
+      width: 100%;
+      height: var(--canvas-height, clamp(160px, 24vh, 300px));
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.14);
+    }
+
+    .canvas-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      background: rgba(255,255,255,0.88);
+      border-radius: 0.75rem;
+      padding: 0.55rem 0.75rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .canvas-size-control {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      min-width: min(100%, 360px);
+      flex: 1;
+    }
+    .canvas-size-control input { flex: 1; }
+    .canvas-container:fullscreen {
+      width: 100vw;
+      height: 100vh;
+      border-radius: 0;
+    }
+    .explanations .bg-gray-100 {
+      max-width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .explanations .font-mono { max-width: 100%; }
+    mjx-container[jax="CHTML"][display="true"] {
+      overflow-x: auto;
+      overflow-y: hidden;
+      max-width: 100%;
+      padding-bottom: 0.15rem;
+    }
+    #watermark-canvas {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        pointer-events: none;
+        z-index: 100;
+    }
+    .controls {
+      background-color: rgba(255, 255, 255, 0.95);
+      border-radius: 8px;
+      padding: 1rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      align-items: start;
+    }
+    .controls > .flex.justify-between,
+    .controls > #approximation-note {
+      grid-column: 1 / -1;
+    }
+    .controls > .flex.flex-wrap.-mx-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      grid-column: 1 / -1;
+      margin-left: 0;
+      margin-right: 0;
+    }
+    .controls > .flex.flex-wrap.-mx-2 > div { padding-left: 0; padding-right: 0; margin-bottom: 0; }
+    .controls .mt-4 { margin-top: 0; }
+    .controls .slider-container { margin-bottom: 0.65rem; }
+    .controls #subpatch-density-slider { align-self: end; }
+    .controls-and-info.controls-panel-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(320px, 1fr);
+      gap: 1rem;
+      align-items: start;
+    }
+    .controls-and-info > .mt-4 { margin-top: 0; }
+    .slider-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .slider-container label {
+      width: 140px;
+      font-weight: 500;
+      white-space: nowrap;
+      font-size: 0.875rem;
+      margin-right: 0.5rem;
+      flex-shrink: 0;
+    }
+    .slider-container input[type="range"] {
+      flex-grow: 1;
+    }
+    .slider-value {
+      width: 45px;
+      text-align: right;
+      margin-left: 0.5rem;
+      font-size: 0.875rem;
+    }
+    /* Custom Slider Styles */
+    input[type=range] {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 100%;
+        background: transparent;
+        cursor: pointer;
+    }
+    input[type=range]::-webkit-slider-runnable-track {
+        height: 4px;
+        background: #d1d5db; /* gray-300 */
+        border-radius: 4px;
+    }
+    input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        margin-top: -6px; /* Center thumb on track */
+        background-color: #3b82f6; /* blue-500 */
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+    }
+    input[type=range]::-moz-range-track {
+        height: 4px;
+        background: #d1d5db;
+        border-radius: 4px;
+    }
+    input[type=range]::-moz-range-thumb {
+        background-color: #3b82f6;
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        border: none;
+    }
+    .antenna-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+      gap: 8px;
+    }
+    .array-config-section {
+      grid-column: 1 / -1;
+      width: 100%;
+      min-width: 0;
+    }
+    .array-config-controls {
+      align-items: end;
+    }
+    .array-config-section .antenna-grid {
+      width: 100%;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      align-items: start;
+    }
+    .array-config-section .checkbox-wrapper {
+      min-width: 0;
+      padding: 0.35rem 0.45rem;
+      border-radius: 0.375rem;
+      background: rgba(248, 250, 252, 0.75);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+    }
+    .array-config-section .checkbox-wrapper label {
+      overflow-wrap: anywhere;
+      line-height: 1.2;
+    }
+    @media (min-width: 1280px) {
+      .array-config-section .antenna-grid {
+        grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
+      }
+    }
+    @media (max-width: 640px) {
+      .array-config-section .antenna-grid {
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      }
+    }
+    .checkbox-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 3px;
+      font-size: 0.875rem;
+    }
+    .checkbox-wrapper input {
+      margin-right: 6px;
+    }
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 45px;
+      height: 22px;
+    }
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 22px;
+    }
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 14px;
+      width: 14px;
+      left: 3px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    input:checked + .toggle-slider {
+      background-color: #3b82f6;
+    }
+    input:checked + .toggle-slider:before {
+      transform: translateX(23px);
+    }
+    .btn {
+      background-color: #3b82f6;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background-color 0.2s;
+      font-size: 0.875rem;
+    }
+    .btn:hover {
+      background-color: #2563eb;
+    }
+    ul.list-disc li {
+        display: list-item;
+        font-size: 0.875rem;
+    }
+    .text-sm {
+        font-size: 0.875rem;
+    }
+
+    /* Layout: 3D stays visible at top, controls/formulas scroll below */
+    .grid-container {
+      display: flex !important;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .canvas-section, .controls-and-info, .explanations {
+      width: 100%;
+      order: initial;
+    }
+    .controls {
+      max-height: none;
+      overflow: visible;
+    }
+    .controls-panel-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(320px, 1fr);
+      gap: 1rem;
+      align-items: start;
+    }
+    .physics-note {
+      border-left: 4px solid #f59e0b;
+      background: #fffbeb;
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+    }
+    @media (max-width: 900px) {
+      .controls-and-info.controls-panel-grid,
+      .controls-panel-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .canvas-container { height: min(var(--canvas-height, 26vh), 60vh); min-height: 180px; }
+      .canvas-toolbar { align-items: stretch; }
+      .canvas-size-control { min-width: 100%; }
+      .slider-container { align-items: flex-start; }
+      .slider-container label { width: 110px; }
+    }
+
+
+    /* Apple-inspired Lumeitech polish */
+    :root {
+      color-scheme: light dark;
+      --lt-bg: #f5f5f7;
+      --lt-surface: rgba(255, 255, 255, 0.72);
+      --lt-surface-strong: rgba(255, 255, 255, 0.88);
+      --lt-text: #1d1d1f;
+      --lt-muted: #6e6e73;
+      --lt-border: rgba(0, 0, 0, 0.08);
+      --lt-shadow: 0 18px 50px rgba(0, 0, 0, 0.10);
+      --lt-shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.08);
+      --lt-blue: #0071e3;
+      --lt-blue-hover: #0077ed;
+      --lt-radius: 22px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 15% 0%, rgba(0, 113, 227, 0.13), transparent 30%),
+        radial-gradient(circle at 85% 10%, rgba(175, 82, 222, 0.12), transparent 28%),
+        linear-gradient(180deg, #fbfbfd 0%, var(--lt-bg) 50%, #ffffff 100%) !important;
+      color: var(--lt-text);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    .container {
+      padding-bottom: 4.5rem !important;
+    }
+
+    .header-section {
+      position: relative;
+      padding: 1rem 1.1rem;
+      border: 1px solid var(--lt-border);
+      border-radius: calc(var(--lt-radius) + 4px);
+      background: var(--lt-surface);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      box-shadow: var(--lt-shadow-soft);
+    }
+
+    .header-section h1 {
+      letter-spacing: -0.035em;
+      color: var(--lt-text) !important;
+      font-weight: 750 !important;
+    }
+
+    .language-selector select,
+    select,
+    input[type="range"] {
+      accent-color: var(--lt-blue);
+    }
+
+    select {
+      border: 1px solid var(--lt-border) !important;
+      border-radius: 999px !important;
+      background: var(--lt-surface-strong) !important;
+      color: var(--lt-text) !important;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.35);
+      outline: none;
+    }
+
+    .canvas-section {
+      background: transparent !important;
+    }
+
+    .canvas-toolbar,
+    .controls,
+    #observation-info,
+    .explanations > div,
+    .physics-note,
+    .array-config-section .checkbox-wrapper,
+    .taper-note,
+    #approximation-note {
+      border: 1px solid var(--lt-border) !important;
+      background: var(--lt-surface) !important;
+      backdrop-filter: blur(22px) saturate(180%);
+      -webkit-backdrop-filter: blur(22px) saturate(180%);
+      box-shadow: var(--lt-shadow-soft) !important;
+    }
+
+    .canvas-toolbar,
+    .controls,
+    .explanations > div,
+    #observation-info {
+      border-radius: var(--lt-radius) !important;
+    }
+
+    .canvas-container {
+      border-radius: calc(var(--lt-radius) + 6px) !important;
+      border: 1px solid rgba(255,255,255,0.55);
+      box-shadow: var(--lt-shadow) !important;
+      background: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.45));
+    }
+
+    .explanations h2,
+    .controls h2,
+    .explanations h3,
+    .controls h3 {
+      color: var(--lt-text) !important;
+      letter-spacing: -0.02em;
+    }
+
+    .text-sm,
+    .explanations p,
+    .explanations li,
+    .slider-container label,
+    .checkbox-wrapper,
+    .taper-note,
+    #approximation-note {
+      color: var(--lt-muted) !important;
+    }
+
+    .bg-gray-100,
+    .math-box {
+      background: rgba(142, 142, 147, 0.10) !important;
+      border: 1px solid var(--lt-border);
+      border-radius: 16px !important;
+    }
+
+    .bg-blue-50,
+    .bg-yellow-50,
+    .bg-slate-50,
+    .bg-white {
+      background: var(--lt-surface) !important;
+    }
+
+    .btn,
+    button.btn {
+      border-radius: 999px !important;
+      border: 0 !important;
+      background: linear-gradient(180deg, var(--lt-blue), #006edb) !important;
+      color: white !important;
+      box-shadow: 0 10px 22px rgba(0, 113, 227, 0.28), inset 0 1px 0 rgba(255,255,255,0.28) !important;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+
+    .btn:hover,
+    button.btn:hover {
+      background: linear-gradient(180deg, var(--lt-blue-hover), var(--lt-blue)) !important;
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px rgba(0, 113, 227, 0.32), inset 0 1px 0 rgba(255,255,255,0.32) !important;
+    }
+
+    input[type=range]::-webkit-slider-runnable-track {
+      height: 5px !important;
+      background: rgba(120, 120, 128, 0.22) !important;
+      border-radius: 999px !important;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+      background: #ffffff !important;
+      border: 1px solid rgba(0,0,0,0.08);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+      height: 18px !important;
+      width: 18px !important;
+      margin-top: -6.5px !important;
+    }
+
+    input[type=range]::-moz-range-track {
+      height: 5px !important;
+      background: rgba(120, 120, 128, 0.22) !important;
+      border-radius: 999px !important;
+    }
+
+    input[type=range]::-moz-range-thumb {
+      background: #ffffff !important;
+      border: 1px solid rgba(0,0,0,0.08) !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+      height: 18px !important;
+      width: 18px !important;
+    }
+
+    .toggle-slider {
+      background: rgba(120, 120, 128, 0.32) !important;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.12);
+    }
+
+    input:checked + .toggle-slider {
+      background: var(--lt-blue) !important;
+    }
+
+    .toggle-slider:before {
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    }
+
+    .lumeitech-footer {
+      position: fixed;
+      left: 50%;
+      bottom: 14px;
+      transform: translateX(-50%);
+      z-index: 2147483000;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.48rem 0.85rem;
+      border-radius: 999px;
+      border: 1px solid var(--lt-border);
+      background: var(--lt-surface-strong);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      box-shadow: var(--lt-shadow-soft);
+      color: var(--lt-muted);
+      font-size: 12px;
+      line-height: 1;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .lumeitech-footer a {
+      color: var(--lt-blue);
+      text-decoration: none;
+      font-weight: 650;
+    }
+
+    .lumeitech-footer a:hover {
+      text-decoration: underline;
+    }
+
+    .lumeitech-mark {
+      width: 18px;
+      height: 18px;
+      border-radius: 6px;
+      display: inline-grid;
+      place-items: center;
+      background: linear-gradient(135deg, #0071e3, #af52de);
+      color: #fff;
+      font-weight: 800;
+      font-size: 11px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.32);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --lt-bg: #0b0b0f;
+        --lt-surface: rgba(28, 28, 30, 0.68);
+        --lt-surface-strong: rgba(36, 36, 38, 0.86);
+        --lt-text: #f5f5f7;
+        --lt-muted: #a1a1a6;
+        --lt-border: rgba(255, 255, 255, 0.12);
+        --lt-shadow: 0 20px 60px rgba(0, 0, 0, 0.42);
+        --lt-shadow-soft: 0 10px 28px rgba(0, 0, 0, 0.32);
+        --lt-blue: #0a84ff;
+        --lt-blue-hover: #2997ff;
+      }
+
+      body {
+        background:
+          radial-gradient(circle at 15% 0%, rgba(10, 132, 255, 0.20), transparent 32%),
+          radial-gradient(circle at 85% 8%, rgba(191, 90, 242, 0.18), transparent 30%),
+          linear-gradient(180deg, #050507 0%, var(--lt-bg) 58%, #111114 100%) !important;
+      }
+
+      .canvas-container {
+        border-color: rgba(255,255,255,0.10);
+        background: linear-gradient(180deg, rgba(44,44,46,0.7), rgba(28,28,30,0.45));
+      }
+
+      input[type=range]::-webkit-slider-thumb,
+      input[type=range]::-moz-range-thumb {
+        background: #f5f5f7 !important;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .lumeitech-footer {
+        bottom: 10px;
+        max-width: calc(100vw - 24px);
+        font-size: 11px;
+        padding: 0.44rem 0.65rem;
+      }
+    }
+
+</style>
+</head>
+<body>
+<div class="container mx-auto max-w-7xl">
+<!-- Header Section -->
+<div class="header-section flex flex-col md:flex-row items-center md:justify-between mb-4">
+  <h1 class="text-xl sm:text-2xl font-bold text-gray-800 mb-2 md:mb-0" data-lang="title">Phased Array Visualizer</h1>
+  <div class="language-selector flex items-center">
+    <select class="border rounded px-2 py-1 text-sm" id="language-select">
+      <option value="de">Deutsch</option>
+      <option value="en" selected>English</option>
+      <option value="fr">Français</option>
+      <option value="es">Español</option>
+      <option value="zh">中文</option>
+      <option value="ja">日本語</option>
+    </select>
+  </div>
+</div>
+
+<!-- Main Grid Container -->
+<div class="grid-container">
+
+<!-- 3D Canvas Section -->
+<div class="canvas-section">
+<div class="canvas-toolbar">
+  <div class="canvas-size-control">
+    <label class="text-sm font-medium whitespace-nowrap" for="canvas-height-slider" data-lang="view-size">3D view size:</label>
+    <input id="canvas-height-slider" type="range" min="180" max="850" step="10" value="300" />
+    <span class="text-sm w-14 text-right" id="canvas-height-value">300 px</span>
+  </div>
+  <button class="btn" id="fullscreen-3d" type="button" data-lang="fullscreen-3d">Fullscreen 3D</button>
+</div>
+<div class="canvas-container" id="canvas-container">
+    <canvas id="watermark-canvas"></canvas>
+</div>
+</div>
+
+<!-- Controls and Info Section -->
+<div class="controls-and-info controls-panel-grid">
+<div class="controls mb-6">
+<div class="flex justify-between items-center mb-4">
+<h2 class="text-lg sm:text-xl font-semibold" data-lang="visualization-settings">Visualisierungseinstellungen</h2>
+</div>
+<div class="flex items-center mb-2 w-full">
+  <span class="mr-2 text-sm font-medium" data-lang="antenna-type">Antennentyp:</span>
+  <select class="border rounded px-2 py-1 text-sm pattern-type-selector flex-grow" id="pattern-type">
+    <option data-lang="isotropic" value="isotropic">Isotrop</option>
+    <option data-lang="patch" value="patch" selected>Patch (Direktional)</option>
+  </select>
+</div>
+<div class="flex items-center mb-4 w-full">
+    <span class="mr-2 text-sm" data-lang="pattern-display">Musterdarstellung:</span>
+    <select class="border rounded px-2 py-1 flex-grow" id="pattern-display">
+        <!-- Default: lobe/3D magnitude shape, easier for non-specialists to understand. -->
+        <option data-lang="hemisphere" value="hemisphere">Farbkodierte Hemisphäre</option>
+        <option data-lang="3d-shape" value="3d" selected>Keulenform (3D-Magnitude)</option>
+    </select>
+</div>
+
+<div class="flex flex-wrap -mx-2">
+<div class="w-full px-2 mb-4">
+<h3 class="font-medium mb-2" data-lang="steering-direction">Steuerungsrichtung (Beam Steering)</h3>
+<div class="slider-container">
+<label data-lang="azimuth" for="steering-azimuth">Azimut (φ):</label>
+<input class="w-full" id="steering-azimuth" max="360" min="0" type="range" value="10"/>
+<span class="slider-value" id="steering-azimuth-value">10°</span>
+</div>
+<div class="slider-container">
+<label data-lang="elevation" for="steering-elevation">Elevation (θ):</label>
+<input class="w-full" id="steering-elevation" max="90" min="0" type="range" value="75"/>
+<span class="slider-value" id="steering-elevation-value">75°</span>
+</div>
+<div class="flex items-center mt-2">
+    <span class="mr-2 text-sm" data-lang="show-steering-point">Steuerungspunkt anzeigen:</span>
+    <label class="toggle-switch">
+        <input id="show-steering-point-toggle" type="checkbox" checked/>
+        <span class="toggle-slider"></span>
+    </label>
+</div>
+</div>
+<div class="w-full px-2 mb-4">
+<h3 class="font-medium mb-2" data-lang="observation-point">Beobachtungspunkt</h3>
+<div class="slider-container">
+<label data-lang="azimuth" for="observation-azimuth">Azimut (φ):</label>
+<input class="w-full" id="observation-azimuth" max="360" min="0" type="range" value="10"/>
+<span class="slider-value" id="observation-azimuth-value">10°</span>
+</div>
+<div class="slider-container">
+<label data-lang="elevation" for="observation-elevation">Elevation (θ):</label>
+<input class="w-full" id="observation-elevation" max="90" min="0" type="range" value="75"/>
+<span class="slider-value" id="observation-elevation-value">75°</span>
+</div>
+<div class="slider-container">
+<label data-lang="distance" for="observation-distance">Entfernung:</label>
+<input class="w-full" id="observation-distance" max="100" min="1" step="1" type="range" value="20"/>
+<span class="slider-value" id="observation-distance-value">20</span>
+</div>
+<div class="flex items-center mt-2">
+    <span class="mr-2 text-sm" data-lang="sync-observation">Beobachtung = Steuerung:</span>
+    <label class="toggle-switch">
+        <input id="sync-observation-toggle" type="checkbox" checked/>
+        <span class="toggle-slider"></span>
+    </label>
+</div>
+<div class="flex items-center mt-2">
+    <span class="mr-2 text-sm" data-lang="show-observation-point">Beobachtungspunkt anzeigen:</span>
+    <label class="toggle-switch">
+        <input id="show-observation-point-toggle" type="checkbox" checked/>
+        <span class="toggle-slider"></span>
+    </label>
+</div>
+</div>
+</div>
+<div class="array-config-section mt-4">
+<h3 class="font-medium mb-2" data-lang="antenna-array-config">Antenna array configuration (XZ-plane)</h3>
+<div class="array-config-controls grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3 mb-3">
+  <div class="slider-container">
+    <label for="array-x-count">X elements:</label>
+    <input class="w-full" id="array-x-count" max="9" min="3" step="1" type="range" value="5"/>
+    <span class="slider-value" id="array-x-count-value">5</span>
+  </div>
+  <div class="slider-container">
+    <label for="array-z-count">Z elements:</label>
+    <input class="w-full" id="array-z-count" max="9" min="3" step="1" type="range" value="5"/>
+    <span class="slider-value" id="array-z-count-value">5</span>
+  </div>
+  <div class="slider-container">
+    <label for="element-spacing">Spacing:</label>
+    <input class="w-full" id="element-spacing" max="1.00" min="0.25" step="0.05" type="range" value="0.50"/>
+    <span class="slider-value" id="element-spacing-value">0.50λ</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <span class="text-sm font-medium">Taper:</span>
+    <select class="border rounded px-2 py-1 text-sm flex-grow" id="amplitude-taper">
+      <option value="uniform" selected>Uniform</option>
+      <option value="chebyshev">Dolph-Chebyshev</option>
+    </select>
+  </div>
+  <div class="slider-container md:col-span-2" id="chebyshev-sidelobe-slider">
+    <label for="chebyshev-sidelobe">Chebyshev SLL:</label>
+    <input class="w-full" id="chebyshev-sidelobe" max="50" min="15" step="1" type="range" value="25"/>
+    <span class="slider-value" id="chebyshev-sidelobe-value">25 dB</span>
+  </div>
+<div class="taper-note text-xs text-gray-700 mt-2 mb-3 p-2 rounded bg-slate-50 border border-slate-200 md:col-span-2 xl:col-span-4">Chebyshev taper changes amplitudes, not phases. For a 2D array this demo uses separable weights: <span class="font-mono">w(x,z)=w_x(x)·w_z(z)</span>. More elements make the main lobe narrower; tapering mainly controls sidelobes.</div>
+</div>
+<div class="antenna-grid" id="antenna-grid"></div>
+</div>
+<div class="mt-4 flex flex-wrap justify-between items-center">
+<div class="flex items-center mr-4 mb-2">
+<span class="mr-2" data-lang="waves">Wellen:</span>
+<label class="toggle-switch">
+<input checked id="show-waves" type="checkbox"/>
+<span class="toggle-slider"></span>
+</label>
+</div>
+<div class="flex items-center mr-4 mb-2">
+<span class="mr-2" data-lang="vectors">Vektoren:</span>
+<label class="toggle-switch">
+<input checked id="show-vectors" type="checkbox"/>
+<span class="toggle-slider"></span>
+</label>
+</div>
+<div class="flex items-center mr-4 mb-2">
+<span class="mr-2" data-lang="far-field-pattern">Feldmuster:</span>
+<label class="toggle-switch">
+<input checked id="show-pattern" type="checkbox"/>
+<span class="toggle-slider"></span>
+</label>
+</div>
+<div class="flex items-center mr-4 mb-2">
+    <span class="mr-2" data-lang="normalize-pattern">Muster normalisieren:</span>
+    <label class="toggle-switch">
+        <input id="normalize-pattern-toggle" type="checkbox" checked/>
+        <span class="toggle-slider"></span>
+    </label>
+</div>
+<div class="flex items-center mr-4 mb-2">
+    <span class="mr-2" data-lang="mutual-coupling">Mutual coupling:</span>
+    <label class="toggle-switch">
+        <input id="mutual-coupling-toggle" type="checkbox"/>
+        <span class="toggle-slider"></span>
+    </label>
+</div>
+<div class="slider-container w-full md:w-1/2 mt-2" id="coupling-strength-slider">
+    <label data-lang="coupling-strength" for="coupling-strength">Coupling estimate:</label>
+    <input class="w-full" id="coupling-strength" max="-6" min="-30" step="1" type="range" value="-20"/>
+    <span class="slider-value" id="coupling-strength-value">-20 dB</span>
+</div>
+<div class="flex items-center mb-2">
+    <span class="mr-2 text-sm" data-lang="calculation-method-label">Berechnungsmethode:</span>
+    <select class="border rounded px-2 py-1" id="calculation-method">
+        <option value="false" data-lang="exact-method">Prescribed-current Huygens model</option>
+        <option value="true" data-lang="approximation-method">Fraunhofer far field</option>
+    </select>
+</div>
+
+</div>
+<div class="slider-container mt-4" id="subpatch-density-slider">
+    <label data-lang="subpatch-density" for="subpatch-density">Subpatch-Dichte:</label>
+    <input class="w-full" id="subpatch-density" max="10" min="1" step="1" type="range" value="3"/>
+    <span class="slider-value" id="subpatch-density-value">3x3</span>
+</div>
+
+<div id="approximation-note" class="text-sm text-gray-600 mt-2 p-2 bg-yellow-50 rounded">
+    <span data-lang="approximation-note-text"></span>
+</div>
+</div>
+<div class="mt-4">
+<h3 class="font-medium mb-2 text-base" data-lang="observation-info">Beobachtungspunkt-Info:</h3>
+<div class="bg-blue-50 p-3 rounded" id="observation-info">
+<p class="text-sm"><span data-lang="direction">Richtung:</span> <span id="obs-direction">θ=75°, φ=10°</span></p>
+<p class="text-sm"><span data-lang="total-field-magnitude">Betrag des Gesamtfeldes:</span> <span id="array-factor-value">1.0</span></p>
+<p class="text-sm"><span data-lang="exact-field-real-part">Re(A) Huygens model:</span> <span id="exact-field-real-part-value">0.0</span></p>
+<p class="text-sm" id="approx-field-info" style="display: none;"><span data-lang="approx-field-real-part">Re(A) Fraunhofer:</span> <span id="approx-field-real-part-value">0.0</span></p>
+<h4 class="font-medium mt-4 mb-2 text-base" data-lang="required-steering-phases">Erforderliche Phasenverschiebung zur Strahlsteuerung pro Antenne:</h4>
+<ul id="steering-phase-info" class="text-sm pl-5 list-disc">
+</ul>
+</div>
+</div>
+</div>
+
+<!-- Explanations and Formulas Section -->
+<div class="explanations mt-6">
+<div class="bg-white rounded-lg shadow p-4 mb-6">
+<h2 class="text-lg sm:text-xl font-semibold mb-4" data-lang="array-factor"></h2>
+<p class="mb-4 text-sm" data-lang="array-factor-desc">
+          </p>
+<div class="mb-4">
+<h3 class="font-medium mb-2 text-base" data-lang="formula-exact"></h3>
+<div class="bg-gray-100 p-3 rounded mb-2 math-box">
+<p class="font-mono text-sm">
+                $$A(\vec{R}) = \sum_{n=1}^N \frac{e^{ik(\vec{r}_n\cdot\hat{s})}}{N_P} \sum_{p=1}^{N_P} F_p(\hat{r}_{n,p})\,\frac{e^{ik|\vec{R}-\vec{r}_{n,p}|}}{|\vec{R}-\vec{r}_{n,p}|}$$
+              </p>
+</div>
+<h3 class="font-medium mb-2 text-base" data-lang="formula-approx"></h3>
+<div class="bg-gray-100 p-3 rounded math-box">
+<p class="font-mono text-sm">
+                $$A_{\text{Fraunhofer}}(\vec{R}) = \frac{e^{ikR}}{R} F(\hat{r}) \sum_{n=1}^N e^{-ik(\hat{r}\cdot\vec{r}_n)} e^{ik(\vec{r}_n\cdot\hat{s})}$$
+              </p>
+</div>
+</div>
+<div class="mb-4">
+<h3 class="font-medium mb-2 text-base" data-lang="parameters"></h3>
+<ul class="list-disc pl-5 space-y-1">
+<li data-lang="param-r"></li>
+<li data-lang="param-r-local"></li>
+<li data-lang="param-s"></li>
+<li data-lang="param-rn"></li>
+<li data-lang="param-rnp"></li>
+<li data-lang="param-k"></li>
+<li data-lang="param-Fp"></li>
+<li data-lang="param-Fhatr"></li>
+<li data-lang="param-Np"></li>
+<li data-lang="param-w"></li>
+</ul>
+</div>
+<div class="physics-note text-sm" data-lang="subpatch-accuracy-note"></div>
+</div>
+
+<div class="bg-white rounded-lg shadow p-4 mb-6">
+    <h2 class="text-lg sm:text-xl font-semibold mb-4" data-lang="math-foundations-title"></h2>
+    <p class="mb-4 text-sm" data-lang="math-foundations-desc-helmholtz"></p>
+
+    <h3 class="font-medium mb-2 text-base" data-lang="helmholtz-derivation-title"></h3>
+    <p class="mb-2 text-sm" data-lang="helmholtz-source-text"></p>
+    <div class="bg-gray-100 p-3 rounded mb-4 math-box">
+        <p class="font-mono text-sm text-center" data-lang="helmholtz-source-eq"></p>
+    </div>
+
+    <p class="mb-2 text-sm" data-lang="green-intro-text"></p>
+    <div class="bg-gray-100 p-3 rounded mb-4 math-box">
+        <p class="font-mono text-sm text-center" data-lang="green-eq"></p>
+    </div>
+
+    <p class="mb-2 text-sm" data-lang="superposition-intro-text"></p>
+    <div class="bg-gray-100 p-3 rounded mb-4 math-box">
+        <p class="font-mono text-sm text-center" data-lang="superposition-eq"></p>
+    </div>
+
+    <p class="mb-2 text-sm" data-lang="free-green-intro-text"></p>
+    <div class="bg-gray-100 p-3 rounded mb-4 math-box">
+        <p class="font-mono text-sm text-center" data-lang="free-green-eq"></p>
+    </div>
+    
+    <p class="mb-2 text-sm" data-lang="show-this-by-text"></p>
+    <ul class="list-disc pl-5 space-y-1 text-sm mb-4">
+        <li data-lang="show-this-li-1"></li>
+        <li data-lang="show-this-li-2"></li>
+        <li data-lang="show-this-li-3"></li>
+    </ul>
+
+    <p class="mb-2 text-sm" data-lang="total-field-solution-text"></p>
+    <div class="bg-gray-100 p-3 rounded mb-4 math-box">
+        <p class="font-mono text-sm text-center" data-lang="total-field-solution-eq"></p>
+    </div>
+
+    <h3 class="font-medium mb-2 text-base" data-lang="application-to-surfaces-title"></h3>
+    <p class="mb-2 text-sm" data-lang="application-to-surfaces-text"></p>
+    <div class="bg-gray-100 p-3 rounded mb-4 math-box">
+        <p class="font-mono text-sm text-center" data-lang="application-to-surfaces-eq"></p>
+    </div>
+    <p class="text-sm" data-lang="application-to-surfaces-conclusion"></p>
+</div>
+
+<div class="bg-white rounded-lg shadow p-4 mb-6">
+    <h3 class="font-medium mb-2 text-base" data-lang="distance-approx-title"></h3>
+    <p class="mb-2 text-sm" data-lang="distance-approx-intro"></p>
+    <div class="bg-gray-100 p-3 rounded mb-4 math-box">
+        <p class="font-mono text-sm text-center" data-lang="distance-approx-exact-eq"></p>
+    </div>
+    <p class="mb-2 text-sm" data-lang="distance-approx-explanation"></p>
+    <div class="bg-gray-100 p-3 rounded mb-4 math-box">
+        <p class="font-mono text-sm text-center" data-lang="distance-approx-approx-eq"></p>
+    </div>
+</div>
+
+<div class="bg-white rounded-lg shadow p-4 mb-6">
+    <h3 class="font-medium mb-2 text-base" data-lang="phase-delay-title"></h3>
+    <div class="bg-gray-100 p-3 rounded mb-4 math-box">
+        <p class="font-mono text-sm text-center" data-lang="phase-delay-eq"></p>
+    </div>
+</div>
+
+<div class="bg-white rounded-lg shadow p-4 mb-6">
+<h2 class="text-lg sm:text-xl font-semibold mb-4" data-lang="beam-steering-explained"></h2>
+<p class="mb-4 text-sm" data-lang="beam-steering-desc">
+</p>
+<h3 class="font-medium mb-2 text-base" data-lang="steering-phase-formula"></h3>
+<div class="bg-gray-100 p-3 rounded mb-4 math-box">
+<p class="font-mono text-sm">
+                    $$\phi_n(\text{steer}) = k(\vec{r}_n \cdot \hat{s})$$
+                </p>
+</div>
+<h3 class="font-medium mb-2 text-base" data-lang="combined-element-response-formula"></h3>
+<div class="bg-gray-100 p-3 rounded mb-4 math-box">
+<p class="font-mono text-sm">
+                    $$A_n(\hat{d}) = A_n \cdot e^{-i k (\hat{d} \cdot \vec{r}_n) + i k (\vec{r}_n \cdot \hat{s})}$$
+                </p>
+</div>
+<p class="mb-4 text-sm" data-lang="steering-tip">
+</p>
+</div>
+
+<div class="bg-white rounded-lg shadow p-4 mb-6">
+<h2 class="text-lg sm:text-xl font-semibold mb-4" data-lang="fourier-transform-connection"></h2>
+<p class="mb-4 text-sm" data-lang="fourier-transform-desc">
+</p>
+<h3 class="font-medium mb-2 text-base" data-lang="array-factor-fourier"></h3>
+<div class="bg-gray-100 p-3 rounded mb-4 math-box">
+<p class="font-mono text-sm">
+                    $$AF(\hat{d}) = \sum_{n=1}^{N} a_n e^{-i k (\hat{d} \cdot \vec{r}_n)}$$
+                </p>
+</div>
+<p class="mb-4 text-sm" data-lang="inverse-fourier">
+</p>
+</div>
+
+<div class="bg-white rounded-lg shadow p-4 mb-6">
+<h2 class="text-lg sm:text-xl font-semibold mb-4" data-lang="practical-workflow-title"></h2>
+<p class="mb-3 text-sm" data-lang="practical-workflow-desc"></p>
+<ul class="list-disc pl-5 space-y-1 text-sm">
+  <li data-lang="practical-workflow-li-1"></li>
+  <li data-lang="practical-workflow-li-2"></li>
+  <li data-lang="practical-workflow-li-3"></li>
+</ul>
+</div>
+
+<div class="bg-white rounded-lg shadow p-4">
+<h2 class="text-lg sm:text-xl font-semibold mb-4" data-lang="symbol-definitions"></h2>
+<details>
+<summary data-lang="show-symbols"></summary>
+<table class="min-w-full bg-white">
+<thead>
+<tr>
+<th class="py-2 px-4 border-b text-left">Symbol</th>
+<th class="py-2 px-4 border-b text-left">Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr><td class="py-2 px-4 border-b text-sm">$A$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-A"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$\vec{r}_n$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-rn"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$\hat{d}$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-d"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$\hat{s}$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-s"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$k = \frac{2\pi}{\lambda}$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-k"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$\phi_n$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-phi-n"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$\phi_n(\text{steer})$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-phi-n-steer"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$F_p(\hat{r}_{\text{local},p})$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-Fp"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$F(\hat{r})$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-Fhatr"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$A_n$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-An"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$N$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-n"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$N_P$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-Np"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$\lambda$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-lambda"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$\vec{r}_{n,p}$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-rnp"></td></tr>
+</tbody>
+</table>
+</details>
+</div>
+
+</div>
+</div>
+
+
+<footer class="lumeitech-footer" aria-label="Copyright and Lumeitech website">
+  <span class="lumeitech-mark" aria-hidden="true">L</span>
+  <span>© 2026 Lukas Meienberger — <a href="https://www.lumeitech.com" target="_blank" rel="noopener noreferrer">Lumeitech</a></span>
+</footer>
+
+<script>
+    // Self-executing anonymous function for watermark
+    (function () {
+      const encoded = "d3d3Lmx1bWVpdGVjaC5jb20="; // www.lumeitech.com
+      const crash = () => { while (true) console.log("⚠️ Manipulation erkannt!"); };
+      let host = null;
+      function createWatermark() {
+        if (host && document.body.contains(host)) document.body.removeChild(host);
+        host = document.createElement("div");
+        host.style.cssText = "position:fixed;bottom:5px;right:5px;z-index:2147483647;pointer-events:none;";
+        const shadow = host.attachShadow({ mode: "closed" });
+        const canvas = document.createElement("canvas");
+        canvas.width = 180; canvas.height = 30;
+        const ctx = canvas.getContext("2d");
+        ctx.globalAlpha = 0.3; ctx.font = "14px Arial"; ctx.fillStyle = "#999";
+        ctx.fillText(atob(encoded), 5, 20);
+        shadow.appendChild(canvas);
+        document.body.appendChild(host);
+      }
+      function verify() {
+        try {
+          if (!host || !document.body.contains(host) || host.getBoundingClientRect().width === 0) crash();
+        } catch { crash(); }
+      }
+      createWatermark();
+      setInterval(createWatermark, 1000);
+      new MutationObserver(verify).observe(document.body, { childList: true, subtree: true, attributes: true });
+    })();
+
+    // Translation Data
+    const translations = {
+      de: {
+        "title": "Phased Array Visualizer",
+        "view-size": "3D-Ansicht:",
+        "fullscreen-3d": "3D Vollbild",
+        "visualization-settings": "Visualisierungseinstellungen",
+        "antenna-type": "Antennentyp:",
+        "isotropic": "Isotrop",
+        "patch": "Patch (Direktional)",
+        "steering-direction": "Steuerungsrichtung (Beam Steering)",
+        "azimuth": "Azimut (φ):",
+        "elevation": "Elevation (θ):",
+        "observation-point": "Beobachtungspunkt",
+        "distance": "Entfernung:",
+        "sync-observation": "Beobachtung = Steuerung:",
+        "show-observation-point": "Beobachtungspunkt anzeigen:",
+        "show-steering-point": "Steuerungspunkt anzeigen:",
+        "antenna-array-config": "Antennenarray-Konfiguration (XZ-Ebene)",
+        "waves": "Wellen:",
+        "vectors": "Vektoren:",
+        "far-field-pattern": "Feldmuster:",
+        "normalize-pattern": "Muster normalisieren:",
+        "mutual-coupling": "Gegenseitige Kopplung:",
+        "coupling-strength": "Kopplungsschätzung:",
+        "calculation-method-label": "Feldmodell:",
+        "exact-method": "Subpatch / Nahfeld",
+        "approximation-method": "Fraunhofer / Fernfeld",
+        "pattern-display": "Musterdarstellung:",
+        "hemisphere": "Farbkodierte Hemisphäre",
+        "3d-shape": "Keulenform (3D-Magnitude)",
+        "subpatch-density": "Subpatch-Dichte:",
+        "total-field-magnitude": "Betrag des Gesamtfeldes:",
+        "array-factor": "Gesamtfeld (Array-Faktor)",
+        "array-factor-desc": "Das gezeigte Gesamtfeld ist ein skalares Demonstrationsmodell für die Superposition der Antennenelemente. Im Fernfeld entspricht es dem üblichen Elementpattern-mal-Array-Faktor-Ansatz; im Nah-/Übergangsbereich nutzt die Simulation eine diskrete Huygens-/Subpatch-Näherung. Es ist keine vollständige FEM/MoM-Lösung, weil die echte Stromverteilung und Kopplung nur vereinfacht modelliert werden.",
+        "formula-exact": "Diskrete Huygens-/Stromquellen-Näherung (nicht volle FEM-Exaktheit):",
+        "formula-approx": "Fernfeld-Approximation (Fraunhofer / Array-Faktor):",
+        "parameters": "Parameter:",
+        "param-r": "$\\hat{r}$: Beobachtungsrichtung (vom Array-Ursprung)",
+        "param-r-local": "$\\hat{r}_{\\text{local},p}$: Lokale Beobachtungsrichtung (vom Subpatch $p$)",
+        "param-s": "$\\hat{s}$: Steuerungsrichtung",
+        "param-rn": "$\\vec{r}_n$: Position des $n$-ten Antennen-Mittelpunkts",
+        "param-rnp": "$\\vec{r}_{n,p}$: Position des $p$-ten Subpatchs der $n$-ten Antenne",
+        "param-k": "$k$: Wellenzahl ($2\\pi/\\lambda$)",
+        "param-Fp": "$F_p(\\hat{r}_{\\text{local},p})$: Richtcharakteristik des Subpatchs $p$",
+        "param-Fhatr": "$F(\\hat{r})$: Globale Richtcharakteristik der Einzelelemente",
+        "param-Np": "$N_P$: Anzahl der Subpatches pro Antenne",
+        "param-w": "$w_{n,p} \\propto J(\\vec r_{n,p})\\Delta S_p$: Gewicht des Subpatchs durch lokale Stromdichte und Fläche",
+        "subpatch-accuracy-note": "Wichtig: Die Subpatch-Summe ist eine Huygens-/Stromquellen-Näherung. Sie wird genauer, wenn die Subpatches kleiner werden und wenn die lokale Stromverteilung $J(\\vec r)$ bekannt ist. In dieser Demo wird $J$ stark vereinfacht; echte Patch-Ströme, Substrat und Kopplung müssten mit FEM/MoM oder Messdaten bestimmt werden.",
+        "observation-info": "Beobachtungspunkt-Info:",
+        "direction": "Richtung:",
+        "exact-field-real-part": "Re(A) Subpatch:",
+        "approx-field-real-part": "Re(A) Approximiert:",
+        "required-steering-phases": "Erforderliche Phasenverschiebung zur Strahlsteuerung pro Antenne:",
+        "approximation-note-text": "Die Subpatch-Näherung verwendet echte Abstände und Phasen zu vielen kleinen Quellen. Sie ist deshalb näher am Nah-/Fresnelbereich als der Fraunhofer-Array-Faktor, aber nicht wirklich &quot;exakt&quot;: Für eine reale Patch-Antenne bräuchte man $J(\\vec r)$ aus FEM/MoM/Messung und eine Kopplungsmatrix zwischen Elementen. Faustregel: unter etwa $\\lambda/4$ Elementabstand ist Kopplung meist stark; ab etwa $\\lambda/2$ ist sie oft deutlich kleiner und der Array-Faktor brauchbarer.",
+        "math-foundations-title": "Mathematische Grundlagen",
+        "math-foundations-desc-helmholtz": "Die Berechnung des Feldes basiert auf grundlegenden Prinzipien der Wellenausbreitung, die durch die Helmholtz-Gleichung beschrieben werden.",
+        "helmholtz-derivation-title": "Herleitung aus der Helmholtz-Gleichung",
+        "helmholtz-source-text": "Die skalare Helmholtz-Gleichung mit einer Quellverteilung $\\rho(\\vec{r})$ ist gegeben durch:",
+        "helmholtz-source-eq": "$$(\\nabla^2 + k^2) \\phi(\\vec{r}) = -\\rho(\\vec{r})$$",
+        "green-intro-text": "Gesucht ist eine Lösung durch Faltung mit einer Greenschen Funktion $G(\\vec{r}, \\vec{r}')$, die die Gleichung für eine Punktquelle (eine Dirac-Delta-Distribution) erfüllt:",
+        "green-eq": "$$(\\nabla^2 + k^2) G(\\vec{r}, \\vec{r}') = -\\delta(\\vec{r} - \\vec{r}')$$",
+        "superposition-intro-text": "Die Lösung für die ursprüngliche Gleichung ergibt sich dann durch die Überlagerung (Integration) der Antworten auf alle Punktquellen, aus denen die Verteilung $\\rho(\\vec{r}')$ zusammengesetzt ist:",
+        "superposition-eq": "$$\\phi(\\vec{r}) = \\int G(\\vec{r}, \\vec{r}') \\rho(\\vec{r}') \\, d^3r'$$",
+        "free-green-intro-text": "Die freie Greensche Funktion im 3D-Raum, die eine auslaufende Kugelwelle darstellt, ist bekannt als:",
+        "free-green-eq": "$$G(\\vec{r}, \\vec{r}') = \\frac{e^{ik|\\vec{r} - \\vec{r}'|}}{4\\pi|\\vec{r} - \\vec{r}'|}$$",
+        "show-this-by-text": "Man kann dies zeigen, indem man:",
+        "show-this-li-1": "die Gleichung in Kugelkoordinaten bezüglich des radialen Abstands $R = |\\vec{r} - \\vec{r}'|$ schreibt,",
+        "show-this-li-2": "die Distributionseigenschaft der Dirac-Quelle beachtet,",
+        "show-this-li-3": "und eine ausgehende Kugelwelle als physikalisch sinnvolle Lösung wählt.",
+        "total-field-solution-text": "Die Gesamtfeldlösung ist dann die Faltung der Quelle mit dieser Greenschen Funktion:",
+        "total-field-solution-eq": "$$\\phi(\\vec{r}) = \\int \\frac{e^{ik|\\vec{r} - \\vec{r}'|}}{4\\pi|\\vec{r} - \\vec{r}'|} \\rho(\\vec{r}') \\, d^3r'$$",
+        "application-to-surfaces-title": "Anwendung auf Antennenflächen",
+        "application-to-surfaces-text": "Im Fall einer quellfreien, aber begrenzten Oberfläche S mit bekannter Nahfeldverteilung (z.B. Patchantennen), modellieren wir die Quelle als über eine Fläche verteilt. Das Integral vereinfacht sich zu einem Oberflächenintegral. Dies ist die Grundlage für die Huygens-Fresnel-Prinzip, das besagt, dass jeder Punkt auf einer Wellenfront als Quelle für sekundäre Kugelwellen betrachtet werden kann. Das Feld $A(\\vec{R})$ im Fernfeld ist die Überlagerung dieser Wellen:",
+        "application-to-surfaces-eq": "$$A(\\vec{R}) = \\int_S F(\\hat{r}) \\cdot \\frac{e^{ik|\\vec{R} - \\vec{r}|}}{|\\vec{R} - \\vec{r}|} \\, d^2r$$",
+        "application-to-surfaces-conclusion": "Hierbei ist $F(\\hat{r})$ die Abstrahlcharakteristik, die die Richtungsabhängigkeit der von der Oberfläche abgestrahlten Wellen beschreibt. Diese Formel wird in der Simulation für die \"Exakte\" Berechnung durch Diskretisierung der Oberfläche S in Subpatches verwendet.",
+        "distance-approx-title": "Abstandsapproximation (Fernfeld)",
+        "distance-approx-intro": "Im Fernfeld können wir den Abstand von einem Beobachtungspunkt $\\vec{R}$ zu einem Antennenelement bei $\\vec{r}_n$ annähern. Der exakte Abstand ist $|\\vec{R} - \\vec{r}_n|$. Wenn $R = |\\vec{R}|$ der Abstand vom Ursprung zum Beobachtungspunkt ist und $\\hat{d} = \\vec{R}/R$ die Beobachtungsrichtung ist, dann gilt:",
+        "distance-approx-exact-eq": "$$\\begin{aligned}\n|\\vec{R}-\\vec{r}_n| &= \\sqrt{Q_n}\\\\\nQ_n &= R^2 - 2R(\\hat{d}\\cdot\\vec{r}_n) + |\\vec{r}_n|^2\n\\end{aligned}$$",
+        "distance-approx-explanation": "Für große Distanzen $R \\gg |\\vec{r}_n|$ können wir eine Taylor-Entwicklung verwenden und Terme höherer Ordnung vernachlässigen (Fraunhofer-Approximation). Dies führt zur Abstandsapproximation:",
+        "distance-approx-approx-eq": "$$|\\vec{R} - \\vec{r}_n| \\approx R - (\\hat{d} \\cdot \\vec{r}_n)$$",
+        "phase-delay-title": "Phasenverschiebung durch Wegunterschied",
+        "phase-delay-eq": "$$\\Delta l_n = -(\\hat{d} \\cdot \\vec{r}_n) \\quad\\Rightarrow\\quad \\phi_n = -k(\\hat{d} \\cdot \\vec{r}_n) \\text{ mit } k = \\frac{2\\pi}{\\lambda}$$",
+        "beam-steering-explained": "Strahlformung erklärt",
+        "beam-steering-desc": "Strahlformung ermöglicht die elektronische Ausrichtung des Hauptstrahls. Dies geschieht durch gezielte Phasenverschiebungen an jedem Antennenelement. Um den Strahl in eine Richtung $\\hat{s}$ zu lenken, muss die Phasenverschiebung an der Antenne $n$ um $k(\\vec{r}_n \\cdot \\hat{s})$ vorgezogen werden.",
+        "steering-phase-formula": "Lenkphase (Steering Phase):",
+        "combined-element-response-formula": "Kombinierte Elementarantwort:",
+        "steering-tip": "Wenn Sie den Strahl in eine bestimmte Beobachtungsrichtung lenken möchten, wählen Sie die Lenkrichtung $\\hat{s}$ gleich der Beobachtungsrichtung $\\hat{d}$. Die erforderliche Phasenverschiebung ist dann genau die inverse der durch den Wegunterschied am Beobachtungspunkt verursachten Phase.",
+        "fourier-transform-connection": "Sphärische Fernfeldtransformation (Fourier-/Spherical-FFT-Idee)",
+        "fourier-transform-desc": "Im Fraunhofer-Fernfeld ist das Winkelmuster näherungsweise die räumliche Fourier-Transformation der Apertur-/Stromverteilung. Bei einer kugelförmigen Auswertung spricht man genauer von einer sphärischen Fernfeldtransformation bzw. von Kugelflächen-/spherical-harmonics-Darstellungen. Eine einfache inverse FFT rekonstruiert nicht automatisch das komplette Nahfeld, sondern nur unter starken Annahmen die Aperturbelegung.",
+        "array-factor-fourier": "Array-Faktor als räumliche Fourier-Transformation:",
+        "inverse-fourier":"Eine inverse Fourier-/sphärische Transformation kann Apertur- oder Modenkoeffizienten rekonstruieren, aber echte Nahfelder benötigen zusätzlich Amplitude, Phase, Polarisation, Randbedingungen und die evaneszenten Anteile.",
+        "symbol-definitions": "Symbol-Definitionen",
+        "show-symbols": "Klicken Sie hier, um die Symbol-Definitionen anzuzeigen",
+        "def-A": "Das gesamte Feld (Array-Faktor), eine normalisierte Darstellung ohne Absolutamplituden oder physikalische Konstanten.",
+        "def-rn": "Positionsvektor der $n$-ten Antenne",
+        "def-d": "Beobachtungsrichtung (Einheitsvektor)",
+        "def-s": "Lenkrichtung (Steering Direction, Einheitsvektor)",
+        "def-k": "Wellenzahl ($2\\pi/\\lambda$), wobei $\\lambda$ die Wellenlänge ist",
+        "def-phi-n": "Phasenverzögerung aufgrund des Wegunterschieds von Antenne $n$ zum Beobachtungspunkt",
+        "def-phi-n-steer": "Zusätzliche Phasenverschiebung an Antenne $n$ für die Strahlformung (Steering Phase)",
+        "def-Fp": "Richtcharakteristik des $p$-ten Subpatchs (Faktor im Subpatch-Superpositionsansatz)",
+        "def-Fhatr": "Globale Richtcharakteristik der Einzelelemente (Faktor im Fraunhofer-Ansatz)",
+        "def-An": "Amplitudengewichtung für Antenne $n$",
+        "def-n": "Gesamtzahl der Antennenelemente im Array",
+        "def-Np": "Anzahl der Subpatches pro Antenne",
+        "def-lambda": "Wellenlänge des Signals",
+        "def-rnp": "Positionsvektor des $p$-ten Subpatchs der $n$-ten Antenne"
+      },
+      en: {
+        "title": "Phased Array Visualizer",
+        "view-size": "3D view size:",
+        "fullscreen-3d": "Fullscreen 3D",
+        "visualization-settings": "Visualization Settings",
+        "antenna-type": "Antenna Type:",
+        "isotropic": "Isotropic",
+        "patch": "Patch (Directional)",
+        "steering-direction": "Steering Direction (Beam Steering)",
+        "azimuth": "Azimuth (φ):",
+        "elevation": "Elevation (θ):",
+        "observation-point": "Observation Point",
+        "distance": "Distance:",
+        "sync-observation": "Observation = Steering:",
+        "show-observation-point": "Show Observation Point:",
+        "show-steering-point": "Show Steering Point:",
+        "antenna-array-config": "Antenna Array Configuration (XZ-Plane)",
+        "waves": "Waves:",
+        "vectors": "Vectors:",
+        "far-field-pattern": "Field Pattern:",
+        "normalize-pattern": "Normalize Pattern:",
+        "mutual-coupling": "Mutual coupling:",
+        "coupling-strength": "Coupling estimate:",
+        "calculation-method-label": "Field model:",
+        "exact-method": "Prescribed-current Huygens model",
+        "approximation-method": "Fraunhofer far field",
+        "pattern-display": "Pattern Display:",
+        "hemisphere": "Color-Coded Hemisphere",
+        "3d-shape": "Lobe Shape (3D Magnitude)",
+        "subpatch-density": "Subpatch Density:",
+        "total-field-magnitude": "Total Field Magnitude:",
+        "array-factor": "Total Field / Array Response",
+        "array-factor-desc": "The shown field is a scalar demonstration of antenna-element superposition. The subpatch mode evaluates a discretized radiation integral using prescribed equivalent source weights. The Fraunhofer mode uses the far-field array-factor approximation. This is not a full-wave FEM or MoM solver. However, the optional mutual-coupling switch adds a small MoM-inspired matrix model at element level: nearby elements modify the complex excitation currents before the radiation integral is evaluated. The coupling slider is calibrated like a rough nearest-neighbour $S_{21}$ magnitude in dB, not like a measured material parameter. In subpatch mode, each subpatch still receives a prescribed local current shape.",
+        "formula-exact": "Discretized radiation integral with prescribed equivalent currents:",
+        "formula-approx": "Fraunhofer far-field approximation / array factor:",
+        "parameters": "Parameters:",
+        "param-r": "$\\hat{r}$: Observation direction (from array origin)",
+        "param-r-local": "$\\hat{r}_{\\text{local},p}$: Local observation direction (from subpatch $p$)",
+        "param-s": "$\\hat{s}$: Steering direction",
+        "param-rn": "$\\vec{r}_n$: Position of antenna $n$'s center",
+        "param-rnp": "$\\vec{r}_{n,p}$: Position of subpatch $p$ of antenna $n$",
+        "param-k": "$k$: Wave number ($2\\pi/\\lambda$)",
+        "param-Fp": "$F_p(\\hat{u}_{n,p})$: directional weighting of subpatch $p$",
+        "param-Fhatr": "$F(\\hat{r})$: Global directional characteristic of individual elements",
+        "param-Np": "$N_P$: Number of subpatches per antenna",
+        "param-w": "$w_{n,p} \\propto J(\\vec r_{n,p})\\Delta S_p$: subpatch weight from local current density and area",
+        "subpatch-accuracy-note": "Important: the subpatch sum is a Huygens/current-source approximation. It improves when subpatches get smaller and when the local current distribution $J(\\vec r)$ is known. In this demo $J$ is heavily simplified. The optional coupling model modifies each antenna element current, but it is still not a full-wave solution; real patch currents, substrate effects and strong mutual coupling require FEM/MoM/FDTD or measurements.",
+        "observation-info": "Observation Point Info:",
+        "direction": "Direction:",
+        "exact-field-real-part": "Re(A) Huygens model:",
+        "approx-field-real-part": "Re(A) Fraunhofer:",
+        "required-steering-phases": "Required Phase Shift for Beam Steering per Antenna:",
+        "approximation-note-text": "The subpatch approximation uses real distances and phases to many small sources. It is therefore closer to the near/Fresnel region than the Fraunhofer array factor, but it is not truly &quot;exact&quot;: a real patch antenna would require $J(\\vec r)$ from FEM/MoM/measurement and a coupling matrix between elements. Rule of thumb: below about $\\lambda/4$ element spacing coupling is usually strong; around $\\lambda/2$ it is often much smaller and the array-factor model becomes more usable.",
+        "math-foundations-title": "Mathematical Foundations",
+        "math-foundations-desc-helmholtz": "The calculation of the field is based on fundamental principles of wave propagation, which are described by the Helmholtz equation.",
+        "helmholtz-derivation-title": "Derivation from the Helmholtz Equation",
+        "helmholtz-source-text": "The scalar Helmholtz equation with a source distribution $\\rho(\\vec{r})$ is given by:",
+        "helmholtz-source-eq": "$$(\\nabla^2 + k^2) \\phi(\\vec{r}) = -\\rho(\\vec{r})$$",
+        "green-intro-text": "A solution is sought by convolution with a Green's function $G(\\vec{r}, \\vec{r}')$ that satisfies the equation for a point source (a Dirac delta distribution):",
+        "green-eq": "$$(\\nabla^2 + k^2) G(\\vec{r}, \\vec{r}') = -\\delta(\\vec{r} - \\vec{r}')$$",
+        "superposition-intro-text": "The solution to the original equation is then obtained by the superposition (integration) of the responses to all point sources that make up the distribution $\\rho(\\vec{r}')$:",
+        "superposition-eq": "$$\\phi(\\vec{r}) = \\int G(\\vec{r}, \\vec{r}') \\rho(\\vec{r}') \\, d^3r'$$",
+        "free-green-intro-text": "The free-space Green's function in 3D, representing an outgoing spherical wave, is known as:",
+        "free-green-eq": "$$G(\\vec{r}, \\vec{r}') = \\frac{e^{ik|\\vec{r} - \\vec{r}'|}}{4\\pi|\\vec{r} - \\vec{r}'|}$$",
+        "show-this-by-text": "This can be shown by:",
+        "show-this-li-1": "writing the equation in spherical coordinates with respect to the radial distance $R = |\\vec{r} - \\vec{r}'|$,",
+        "show-this-li-2": "noting the distributional property of the Dirac source,",
+        "show-this-li-3": "and choosing an outgoing spherical wave as a physically meaningful solution.",
+        "total-field-solution-text": "The total field solution is then the convolution of the source with this Green's function:",
+        "total-field-solution-eq": "$$\\phi(\\vec{r}) = \\int \\frac{e^{ik|\\vec{r} - \\vec{r}'|}}{4\\pi|\\vec{r} - \\vec{r}'|} \\rho(\\vec{r}') \\, d^3r'$$",
+        "application-to-surfaces-title": "Application to Antenna Surfaces",
+        "application-to-surfaces-text": "In the case of a source-free but bounded surface S with a known near-field distribution (e.g., patch antennas), we model the source as distributed over a surface. The integral simplifies to a surface integral. This is the basis for the Huygens-Fresnel principle, which states that every point on a wavefront can be considered a source of secondary spherical wavelets. The field $A(\\vec{R})$ in the far field is the superposition of these waves:",
+        "application-to-surfaces-eq": "$$A(\\vec{R}) = \\int_S F(\\hat{r}) \\cdot \\frac{e^{ik|\\vec{R} - \\vec{r}|}}{|\\vec{R} - \\vec{r}|} \\, d^2r$$",
+        "application-to-surfaces-conclusion": "Here, $F(\\hat{u})$ is a directional source weighting. In this simulation the surface is discretized into subpatches and weighted by prescribed equivalent currents. The model is a radiation-integral approximation, not a self-consistent solution of Maxwell’s equations.",
+        "distance-approx-title": "Distance Approximation (Far-Field)",
+        "distance-approx-intro": "In the far-field, we can approximate the distance from an observation point $\\vec{R}$ to an antenna element at $\\vec{r}_n$. The exact distance is $|\\vec{R} - \\vec{r}_n|$. If $R = |\\vec{R}|$ is the distance from the origin to the observation point and $\\hat{d} = \\vec{R}/R$ is the observation direction, then:",
+        "distance-approx-exact-eq": "$$\\begin{aligned}\n|\\vec{R}-\\vec{r}_n| &= \\sqrt{Q_n}\\\\\nQ_n &= R^2 - 2R(\\hat{d}\\cdot\\vec{r}_n) + |\\vec{r}_n|^2\n\\end{aligned}$$",
+        "distance-approx-explanation": "For large distances $R \\gg |\\vec{r}_n|$, we can use a Taylor expansion and neglect higher-order terms (Fraunhofer approximation). This leads to the distance approximation:",
+        "distance-approx-approx-eq": "$$|\\vec{R} - \\vec{r}_n| \\approx R - (\\hat{d} \\cdot \\vec{r}_n)$$",
+        "phase-delay-title": "Phase Delay from Path Difference",
+        "phase-delay-eq": "$$\\Delta l_n = -(\\hat{d} \\cdot \\vec{r}_n) \\quad\\Rightarrow\\quad \\phi_n = -k(\\hat{d} \\cdot \\vec{r}_n) \\text{ with } k = \\frac{2\\pi}{\\lambda}$$",
+        "beam-steering-explained": "Beam Steering Explained",
+        "beam-steering-desc": "Beamforming enables electronic steering of the main beam. This is achieved by applying specific phase shifts to each antenna element. To steer the beam in a direction $\\hat{s}$, the phase at antenna $n$ must be advanced by $k(\\vec{r}_n \\cdot \\hat{s})$.",
+        "steering-phase-formula": "Steering Phase:",
+        "combined-element-response-formula": "Combined Element Response:",
+        "steering-tip": "If you wish to steer the beam in a specific observation direction, choose the steering direction $\\hat{s}$ equal to the observation direction $\\hat{d}$. The required phase shift is then exactly the inverse of the phase caused by the path difference at the observation point.",
+        "fourier-transform-connection": "Spatial Fourier transform and far-field relation",
+        "fourier-transform-desc": "In the Fraunhofer far field, the angular radiation pattern is proportional to the spatial Fourier transform of the aperture or current distribution. For a sampled array this becomes a discrete spatial Fourier transform. For full spherical near-field measurements one often uses near-field to far-field transformation or spherical-wave expansion; this is not the same as a normal time-domain FFT.",
+        "array-factor-fourier": "Array factor as a discrete spatial Fourier transform:",
+        "inverse-fourier":"The inverse operation is closer to an inverse spatial Fourier transform or modal reconstruction. It can estimate aperture/excitation information only under assumptions; it does not automatically reconstruct the full reactive near field, because evanescent components, polarization and boundary conditions matter.",
+        "practical-workflow-title": "Practical workflow: solve sources first, then combine fields",
+        "practical-workflow-desc": "The method shown here is the second step: it computes fields from known or assumed equivalent currents. In real antenna projects, those sources are often obtained first from measurement or a full-wave method, then many array elements are combined quickly by superposition.",
+        "practical-workflow-li-1": "FEM or FDTD solve fields in a volume; Method of Moments (MoM) usually solves surface currents through an integral equation.",
+        "practical-workflow-li-2": "Once $J(\\vec r)$ is known, the radiation integral can be evaluated directly without solving MoM again.",
+        "practical-workflow-li-3": "For close arrays, mutual coupling and changed element currents still matter. As a rough rule, $\\lambda/2$ spacing is much safer than $\\lambda/4$ for weak coupling.",
+        "symbol-definitions": "Symbol Definitions",
+        "show-symbols": "Click here to show symbol definitions",
+        "def-A": "Total field (array factor), a normalized representation without absolute amplitudes or physical constants.",
+        "def-rn": "Position vector of the $n$-th antenna",
+        "def-d": "Observation direction (unit vector)",
+        "def-s": "Steering direction (unit vector)",
+        "def-k": "Wave number ($2\\pi/\\lambda$)",
+        "def-phi-n": "Phase delay due to path difference from antenna $n$ to the observation point",
+        "def-phi-n-steer": "Additional phase shift at antenna $n$ for beamforming (Steering Phase)",
+        "def-Fp": "Directional/source weighting of subpatch $p$ in the prescribed-current radiation integral",
+        "def-Fhatr": "Far-field element pattern used in the Fraunhofer approximation",
+        "def-An": "Amplitude weight for antenna $n$",
+        "def-n": "Total number of antenna elements in the array",
+        "def-Np": "Number of subpatches per antenna",
+        "def-lambda": "Wavelength of the signal",
+        "def-rnp": "Position vector of the $p$-th subpatch of the $n$-th antenna"
+      },
+       fr: {
+        "title": "Phased Array Visualizer",
+        "view-size": "Taille 3D :",
+        "fullscreen-3d": "Plein écran 3D",
+        "visualization-settings": "Paramètres de Visualisation",
+        "antenna-type": "Type d'Antenne:",
+        "isotropic": "Isotrope",
+        "patch": "Patch (Directionnelle)",
+        "steering-direction": "Direction de Pointage (Beam Steering)",
+        "azimuth": "Azimut (φ):",
+        "elevation": "Élévation (θ):",
+        "observation-point": "Point d'Observation",
+        "distance": "Distance:",
+        "sync-observation": "Observation = Pointage:",
+        "show-observation-point": "Afficher le point d'observation:",
+        "show-steering-point": "Afficher le point de direction:",
+        "antenna-array-config": "Configuration du Réseau d'Antennes (Plan XZ)",
+        "waves": "Ondes:",
+        "vectors": "Vecteurs:",
+        "far-field-pattern": "Diagramme de Champ:",
+        "normalize-pattern": "Normaliser le Modèle:",
+        "calculation-method-label": "Méthode de Calcul:",
+        "exact-method": "Subpatch / Near Field",
+        "approximation-method": "Fraunhofer / Fernfeld",
+        "pattern-display": "Affichage du Diagramme:",
+        "hemisphere": "Hémisphère en Couleur",
+        "3d-shape": "Lobes 3D (Amplitude)",
+        "subpatch-density": "Densité de Sous-patches:",
+        "total-field-magnitude": "Amplitude du Champ Total:",
+        "array-factor": "Champ Total (Facteur de Réseau)",
+        "array-factor-desc": "Le champ total, souvent appelé facteur de réseau dans sa forme générale, représente le champ électromagnétique combiné en tout point de l'espace dû à tous les éléments d'antenne actifs. Il dépend des positions des antennes, de la direction de pointage et du diagramme de l'élément.",
+        "formula-exact": "Formule Exacte (Superposition de Sous-patches):",
+        "formula-approx": "Formule d'Approximation de Champ (Fraunhofer):",
+        "parameters": "Paramètres:",
+        "param-r": "$\\hat{r}$: Direction d'observation (depuis l'origine du réseau)",
+        "param-r-local": "$\\hat{r}_{\\text{local},p}$: Direction d'observation locale (depuis le sous-patch $p$)",
+        "param-s": "$\\hat{s}$: Direction de pointage",
+        "param-rn": "$\\vec{r}_n$: Position du centre de l'antenne $n$",
+        "param-rnp": "$\\vec{r}_{n,p}$: Position du sous-patch $p$ de l'antenne $n$",
+        "param-k": "$k$: Nombre d'onde ($2\\pi/\\lambda$)",
+        "param-Fp": "$F_p(\\hat{r}_{\\text{local},p})$: Caractéristique directionnelle du sous-patch $p$",
+        "param-Fhatr": "$F(\\hat{r})$: Caractéristique directionnelle globale des éléments individuels",
+        "param-Np": "$N_P$: Nombre de sous-patches par antenne",
+        "observation-info": "Info du Point d'Observation:",
+        "direction": "Direction:",
+        "exact-field-real-part": "Re(A) subpatch:",
+        "approx-field-real-part": "Re(A) Approximatif:",
+        "required-steering-phases": "Déphasage requis pour le pointage du faisceau par antenne :",
+        "approximation-note-text": "Des différences entre les diagrammes Exact et Approximé sont attendues, surtout à des <span id=\"distance-link\" class=\"text-blue-600 underline cursor-pointer\">distances plus courtes</span>, car l'approximation de champ n'est valide que pour de grandes distances par rapport au réseau. La partie réelle du champ approximé n'est affichée que si la méthode de calcul 'Approximation' est sélectionnée.",
+        "math-foundations-title": "Fondements Mathématiques",
+        "math-foundations-desc-helmholtz": "Le calcul du champ est basé sur les principes fondamentaux de la propagation des ondes, décrits par l'équation de Helmholtz.",
+        "helmholtz-derivation-title": "Dérivation de l'équation de Helmholtz",
+        "helmholtz-source-text": "L'équation de Helmholtz scalaire avec une distribution de source $\\rho(\\vec{r})$ est donnée par :",
+        "helmholtz-source-eq": "$$(\\nabla^2 + k^2) \\phi(\\vec{r}) = -\\rho(\\vec{r})$$",
+        "green-intro-text": "On cherche une solution par convolution avec une fonction de Green $G(\\vec{r}, \\vec{r}')$ qui satisfait l'équation pour une source ponctuelle (une distribution delta de Dirac) :",
+        "green-eq": "$$(\\nabla^2 + k^2) G(\\vec{r}, \\vec{r}') = -\\delta(\\vec{r} - \\vec{r}')$$",
+        "superposition-intro-text": "La solution de l'équation originale est alors obtenue par la superposition (intégration) des réponses à toutes les sources ponctuelles qui composent la distribution $\\rho(\\vec{r}')$ :",
+        "superposition-eq": "$$\\phi(\\vec{r}) = \\int G(\\vec{r}, \\vec{r}') \\rho(\\vec{r}') \\, d^3r'$$",
+        "free-green-intro-text": "La fonction de Green en espace libre en 3D, représentant une onde sphérique sortante, est connue sous le nom de :",
+        "free-green-eq": "$$G(\\vec{r}, \\vec{r}') = \\frac{e^{ik|\\vec{r} - \\vec{r}'|}}{4\\pi|\\vec{r} - \\vec{r}'|}$$",
+        "show-this-by-text": "Cela peut être démontré par :",
+        "show-this-li-1": "écrire l'équation en coordonnées sphériques par rapport à la distance radiale $R = |\\vec{r} - \\vec{r}'|$,",
+        "show-this-li-2": "noter la propriété de distribution de la source de Dirac,",
+        "show-this-li-3": "et choisir une onde sphérique sortante comme solution physiquement significative.",
+        "total-field-solution-text": "La solution de champ total est alors la convolution de la source avec cette fonction de Green :",
+        "total-field-solution-eq": "$$\\phi(\\vec{r}) = \\int \\frac{e^{ik|\\vec{r} - \\vec{r}'|}}{4\\pi|\\vec{r} - \\vec{r}'|} \\rho(\\vec{r}') \\, d^3r'$$",
+        "application-to-surfaces-title": "Application aux Surfaces d'Antenne",
+        "application-to-surfaces-text": "Dans le cas d'une surface S sans source mais limitée avec une distribution de champ proche connue (par exemple, les antennes patch), nous modélisons la source comme étant distribuée sur une surface. L'intégrale se simplifie en une intégrale de surface. C'est la base du principe de Huygens-Fresnel, qui stipule que chaque point sur un front d'onde peut être considéré comme une source d'ondelettes sphériques secondaires. Le champ $A(\\vec{R})$ en champ lointain est la superposition de ces ondes :",
+        "application-to-surfaces-eq": "$$A(\\vec{R}) = \\int_S F(\\hat{r}) \\cdot \\frac{e^{ik|\\vec{R} - \\vec{r}|}}{|\\vec{R} - \\vec{r}|} \\, d^2r$$",
+        "application-to-surfaces-conclusion": "Ici, $F(\\hat{r})$ est la caractéristique de rayonnement, qui décrit la dépendance directionnelle des ondes rayonnées depuis la surface. Cette formule est utilisée dans la simulation pour le calcul 'Exact' en discrétisant la surface S en sous-patches.",
+        "distance-approx-title": "Approximation de Distance (Champ Lointain)",
+        "distance-approx-intro": "En champ lointain, on peut approximer la distance d'un point d'observation $\\vec{R}$ à un élément d'antenne en $\\vec{r}_n$. La distance exacte est $|\\vec{R} - \\vec{r}_n|$. Si $R = |\\vec{R}|$ est la distance de l'origine au point d'observation et $\\hat{d} = \\vec{R}/R$ est la direction d'observation, alors :",
+        "distance-approx-exact-eq": "$$\\begin{aligned}\n|\\vec{R}-\\vec{r}_n| &= \\sqrt{Q_n}\\\\\nQ_n &= R^2 - 2R(\\hat{d}\\cdot\\vec{r}_n) + |\\vec{r}_n|^2\n\\end{aligned}$$",
+        "distance-approx-explanation": "Pour de grandes distances $R \\gg |\\vec{r}_n|$, on peut utiliser un développement de Taylor et négliger les termes d'ordre supérieur (approximation de Fraunhofer). Cela conduit à l'approximation de distance :",
+        "distance-approx-approx-eq": "$$|\\vec{R} - \\vec{r}_n| \\approx R - (\\hat{d} \\cdot \\vec{r}_n)$$",
+        "phase-delay-title": "Déphasage dû à la Différence de Chemin",
+        "phase-delay-eq": "$$\\Delta l_n = -(\\hat{d} \\cdot \\vec{r}_n) \\quad\\Rightarrow\\quad \\phi_n = -k(\\hat{d} \\cdot \\vec{r}_n) \\text{ avec } k = \\frac{2\\pi}{\\lambda}$$",
+        "beam-steering-explained": "Explication de la Formation de Faisceau",
+        "beam-steering-desc": "La formation de faisceau permet l'orientation électronique du faisceau principal. Ceci est réalisé en appliquant des déphasages spécifiques à chaque élément d'antenne. Pour orienter le faisceau dans une direction $\\hat{s}$, la phase à l'antenne $n$ doit être avancée de $k(\\vec{r}_n \\cdot \\hat{s})$.",
+        "steering-phase-formula": "Phase de Pointage:",
+        "combined-element-response-formula": "Réponse Combinée de l'Élément:",
+        "steering-tip": "Si vous souhaitez orienter le faisceau dans une direction d'observation spécifique, choisissez la direction de pointage $\\hat{s}$ égale à la direction d'observation $\\hat{d}$. Le déphasage requis est alors exactement l'inverse de la phase causée par la différence de chemin au point d'observation.",
+        "fourier-transform-connection": "Connexion Transformée de Fourier et Champ Proche/Champ Lointain",
+        "fourier-transform-desc": "Le diagramme de champ d'un réseau d'antennes est la Transformée de Fourier de la distribution de courant en champ proche. Cela signifie que chaque direction d'observation en champ lointain correspond à une 'fréquence spatiale' dans l'espace de Fourier.",
+        "array-factor-fourier": "Facteur de Réseau comme Transformée de Fourier:",
+        "inverse-fourier": "En appliquant la Transformée de Fourier inverse, on peut reconstruire la distribution en champ proche (excitations d'antenne) à partir du diagramme de champ.",
+        "symbol-definitions": "Définitions des Symboles",
+        "show-symbols": "Cliquez ici pour afficher les définitions des symboles",
+        "def-A": "Champ total (facteur de réseau), une représentation normalisée sans amplitudes absolues ou constantes physiques.",
+        "def-rn": "Vecteur de position de l'antenne $n$",
+        "def-d": "Direction d'observation (vecteur unitaire)",
+        "def-s": "Direction de pointage (vecteur unitaire)",
+        "def-k": "Nombre d'onde ($2\\pi/\\lambda$)",
+        "def-phi-n": "Délai de phase dû à la différence de chemin de l'antenne $n$ au point d'observation",
+        "def-phi-n-steer": "Déphasage additionnel à l'antenne $n$ pour la formation de faisceau (Phase de Pointage)",
+        "def-Fp": "Caractéristique directionnelle du sous-patch $p$ (facteur dans l'approche de superposition de sous-patches)",
+        "def-Fhatr": "Caractéristique directionnelle globale des éléments individuels (facteur dans l'approche de Fraunhofer)",
+        "def-An": "Poids d'amplitude pour l'antenne $n$",
+        "def-n": "Nombre total d'éléments d'antenne dans le réseau",
+        "def-Np": "Nombre de sous-patches par antenne",
+        "def-lambda": "Longueur d'onde du signal",
+        "def-rnp": "Vecteur de position du $p$-ème sous-patch de l'antenne $n$"
+      },
+      es: {
+        "title": "Phased Array Visualizer",
+        "view-size": "Tamaño 3D:",
+        "fullscreen-3d": "Pantalla completa 3D",
+        "visualization-settings": "Ajustes de Visualización",
+        "antenna-type": "Tipo de Antena:",
+        "isotropic": "Isotrópica",
+        "patch": "Parche (Direccional)",
+        "steering-direction": "Dirección de Orientación (Beam Steering)",
+        "azimuth": "Acimut (φ):",
+        "elevation": "Elevación (θ):",
+        "observation-point": "Punto de Observación",
+        "distance": "Distancia:",
+        "sync-observation": "Observación = Orientación:",
+        "show-observation-point": "Mostrar Punto de Observación:",
+        "show-steering-point": "Mostrar Punto de Orientación:",
+        "antenna-array-config": "Configuración del Conjunto de Antenas (Plano XZ)",
+        "waves": "Ondas:",
+        "vectors": "Vectores:",
+        "far-field-pattern": "Patrón de Campo:",
+        "normalize-pattern": "Normalizar Patrón:",
+        "calculation-method-label": "Método de Cálculo:",
+        "exact-method": "Aprox. subparches",
+        "approximation-method": "Aproximación",
+        "pattern-display": "Visualización del Patrón:",
+        "hemisphere": "Hemisferio Codificado por Color",
+        "3d-shape": "Lóbulos 3D (Magnitud)",
+        "subpatch-density": "Densidad de Subparches:",
+        "total-field-magnitude": "Magnitud del Campo Total:",
+        "array-factor": "Campo Total (Factor de Conjunto)",
+        "array-factor-desc": "El campo total, a menudo denominado factor de conjunto en su forma general, representa el campo electromagnético combinado en cualquier punto del espacio debido a todos los elementos de antena activos. Depende de las posiciones de las antenas, la dirección de orientación y el patrón del elemento.",
+        "formula-exact": "Fórmula Exacta (Superposición de Subparches):",
+        "formula-approx": "Fórmula de Aproximación de Campo (Fraunhofer):",
+        "parameters": "Parámetros:",
+        "param-r": "$\\hat{r}$: Dirección de observación (desde el origen del conjunto)",
+        "param-r-local": "$\\hat{r}_{\\text{local},p}$: Dirección de observación local (desde el subparche $p$)",
+        "param-s": "$\\hat{s}$: Dirección de orientación",
+        "param-rn": "$\\vec{r}_n$: Posición del centro de la antena $n$",
+        "param-rnp": "$\\vec{r}_{n,p}$: Posición del subparche $p$ de la antena $n$",
+        "param-k": "$k$: Número de onda ($2\\pi/\\lambda$)",
+        "param-Fp": "$F_p(\\hat{r}_{\\text{local},p})$: Característica direccional del subparche $p$",
+        "param-Fhatr": "$F(\\hat{r})$: Característica direccional global de los elementos individuales",
+        "param-Np": "$N_P$: Número de subparches por antena",
+        "observation-info": "Información del Punto de Observación:",
+        "direction": "Dirección:",
+        "exact-field-real-part": "Re(A) subparches:",
+        "approx-field-real-part": "Re(A) Aproximado:",
+        "required-steering-phases": "Desplazamiento de fase requerido para la conformación del haz por antena:",
+        "approximation-note-text": "Se esperan diferencias entre los patrones exactos y aproximados, especialmente a <span id=\"distance-link\" class=\"text-blue-600 underline cursor-pointer\">distancias más cortas</span>, ya que la aproximación de campo solo es válida para grandes distancias desde el conjunto. La parte real del campo aproximado solo se muestra cuando se selecciona el método de cálculo 'Aproximación'.",
+        "math-foundations-title": "Fundamentos Matemáticos",
+        "math-foundations-desc-helmholtz": "El cálculo del campo se basa en principios fundamentales de la propagación de ondas, descritos por la ecuación de Helmholtz.",
+        "helmholtz-derivation-title": "Derivación de la Ecuación de Helmholtz",
+        "helmholtz-source-text": "La ecuación de Helmholtz escalar con una distribución de fuente $\\rho(\\vec{r})$ viene dada por:",
+        "helmholtz-source-eq": "$$(\\nabla^2 + k^2) \\phi(\\vec{r}) = -\\rho(\\vec{r})$$",
+        "green-intro-text": "Se busca una solución mediante convolución con una función de Green $G(\\vec{r}, \\vec{r}')$ que satisfaga la ecuación para una fuente puntual (una distribución delta de Dirac):",
+        "green-eq": "$$(\\nabla^2 + k^2) G(\\vec{r}, \\vec{r}') = -\\delta(\\vec{r} - \\vec{r}')$$",
+        "superposition-intro-text": "La solución a la ecuación original se obtiene entonces mediante la superposición (integración) de las respuestas a todas las fuentes puntuales que componen la distribución $\\rho(\\vec{r}')$:",
+        "superposition-eq": "$$\\phi(\\vec{r}) = \\int G(\\vec{r}, \\vec{r}') \\rho(\\vec{r}') \\, d^3r'$$",
+        "free-green-intro-text": "La función de Green en el espacio libre en 3D, que representa una onda esférica saliente, se conoce como:",
+        "free-green-eq": "$$G(\\vec{r}, \\vec{r}') = \\frac{e^{ik|\\vec{r} - \\vec{r}'|}}{4\\pi|\\vec{r} - \\vec{r}'|}$$",
+        "show-this-by-text": "Esto se puede demostrar mediante:",
+        "show-this-li-1": "escribir la ecuación en coordenadas esféricas con respecto a la distancia radial $R = |\\vec{r} - \\vec{r}'|$,",
+        "show-this-li-2": "observar la propiedad distributiva de la fuente de Dirac,",
+        "show-this-li-3": "y elegir una onda esférica saliente como solución físicamente significativa.",
+        "total-field-solution-text": "La solución de campo total es entonces la convolución de la fuente con esta función de Green:",
+        "total-field-solution-eq": "$$\\phi(\\vec{r}) = \\int \\frac{e^{ik|\\vec{r} - \\vec{r}'|}}{4\\pi|\\vec{r} - \\vec{r}'|} \\rho(\\vec{r}') \\, d^3r'$$",
+        "application-to-surfaces-title": "Aplicación a Superficies de Antena",
+        "application-to-surfaces-text": "En el caso de una superficie S sin fuentes pero limitada con una distribución de campo cercano conocida (p. ej., antenas de parche), modelamos la fuente como distribuida sobre una superficie. La integral se simplifica a una integral de superficie. Esta es la base del principio de Huygens-Fresnel, que establece que cada punto en un frente de onda puede considerarse una fuente de ondeletas esféricas secundarias. El campo $A(\\vec{R})$ en el campo lejano es la superposición de estas ondas:",
+        "application-to-surfaces-eq": "$$A(\\vec{R}) = \\int_S F(\\hat{r}) \\cdot \\frac{e^{ik|\\vec{R} - \\vec{r}|}}{|\\vec{R} - \\vec{r}|} \\, d^2r$$",
+        "application-to-surfaces-conclusion": "Aquí, $F(\\hat{r})$ es la característica de radiación, que describe la dependencia direccional de las ondas radiadas desde la superficie. Esta fórmula se utiliza en la simulación para el cálculo 'Exacto' mediante la discretización de la superficie S en subparches.",
+        "distance-approx-title": "Aproximación de Distancia (Campo Lejano)",
+        "distance-approx-intro": "En el campo lejano, podemos aproximar la distancia desde un punto de observación $\\vec{R}$ a un elemento de antena en $\\vec{r}_n$. La distancia exacta es $|\\vec{R} - \\vec{r}_n|$. Si $R = |\\vec{R}|$ es la distancia desde el origen al punto de observación y $\\hat{d} = \\vec{R}/R$ es la dirección de observación, entonces:",
+        "distance-approx-exact-eq": "$$\\begin{aligned}\n|\\vec{R}-\\vec{r}_n| &= \\sqrt{Q_n}\\\\\nQ_n &= R^2 - 2R(\\hat{d}\\cdot\\vec{r}_n) + |\\vec{r}_n|^2\n\\end{aligned}$$",
+        "distance-approx-explanation": "Para grandes distancias $R \\gg |\\vec{r}_n|$, podemos usar una expansión de Taylor y despreciar los términos de orden superior (aproximación de Fraunhofer). Esto conduce a la aproximación de distancia:",
+        "distance-approx-approx-eq": "$$|\\vec{R} - \\vec{r}_n| \\approx R - (\\hat{d} \\cdot \\vec{r}_n)$$",
+        "phase-delay-title": "Desfase por Diferencia de Camino",
+        "phase-delay-eq": "$$\\Delta l_n = -(\\hat{d} \\cdot \\vec{r}_n) \\quad\\Rightarrow\\quad \\phi_n = -k(\\hat{d} \\cdot \\vec{r}_n) \\text{ con } k = \\frac{2\\pi}{\\lambda}$$",
+        "beam-steering-explained": "Conformación de Haz Explicada",
+        "beam-steering-desc": "La conformación de haz permite la orientación electrónica del haz principal. Esto se logra aplicando cambios de fase específicos a cada elemento de antena. Para orientar el haz en una dirección $\\hat{s}$, la fase en la antena $n$ debe adelantarse en $k(\\vec{r}_n \\cdot \\hat{s})$.",
+        "steering-phase-formula": "Fase de Orientación:",
+        "combined-element-response-formula": "Respuesta Combinada del Elemento:",
+        "steering-tip": "Si desea orientar el haz en una dirección de observación específica, elija la dirección de orientación $\\hat{s}$ igual a la dirección de observación $\\hat{d}$. El cambio de fase requerido es entonces exactamente el inverso de la fase causada por la diferencia de trayectoria en el punto de observación.",
+        "fourier-transform-connection": "Conexión de Transformada de Fourier y Campo Cercano/Lejano",
+        "fourier-transform-desc": "El patrón de campo de un conjunto de antenas es la Transformada de Fourier de la distribución de corriente en el campo cercano. Esto significa que cada dirección de observación en el campo lejano corresponde a una 'frecuencia espacial' en el espacio de Fourier.",
+        "array-factor-fourier": "Factor de Conjunto como Transformada de Fourier:",
+        "inverse-fourier": "Aplicando la Transformada Inversa de Fourier, se puede reconstruir la distribución de campo cercano (excitaciones de antena) a partir del patrón de campo.",
+        "symbol-definitions": "Definiciones de Símbolos",
+        "show-symbols": "Haz clic aquí para mostrar las definiciones de los símbolos",
+        "def-A": "Campo total (factor de conjunto), una representación normalizada sin amplitudes absolutas ni constantes físicas.",
+        "def-rn": "Vector de posición de la antena $n$",
+        "def-d": "Dirección de observación (vector unitario)",
+        "def-s": "Dirección de orientación (vector unitario)",
+        "def-k": "Número de onda ($2\\pi/\\lambda$)",
+        "def-phi-n": "Retraso de fase debido a la diferencia de trayectoria desde la antena $n$ hasta el punto de observación",
+        "def-phi-n-steer": "Desplazamiento de fase adicional en la antena $n$ para la conformación del haz (Fase de Orientación)",
+        "def-Fp": "Característica direccional del subparche $p$ (factor en el enfoque de superposición de subparches)",
+        "def-Fhatr": "Característica direccional global de los elementos individuales (factor en el enfoque de Fraunhofer)",
+        "def-An": "Peso de amplitud para la antena $n$",
+        "def-n": "Número total de elementos de antena en el conjunto",
+        "def-Np": "Número de subparches por antena",
+        "def-lambda": "Longitud de onda de la señal",
+        "def-rnp": "Vector de posición del $p$-ésimo subparche de la $n$-ésima antena"
+      },
+      zh: {
+        "title": "Phased Array Visualizer",
+        "view-size": "3D视图大小：",
+        "fullscreen-3d": "3D全屏",
+        "visualization-settings": "可视化设置",
+        "antenna-type": "天线类型：",
+        "isotropic": "全向性",
+        "patch": "贴片（定向）",
+        "steering-direction": "波束指向方向",
+        "azimuth": "方位角 (φ)：",
+        "elevation": "仰角 (θ)：",
+        "observation-point": "观测点",
+        "distance": "距离：",
+        "sync-observation": "观测 = 指向：",
+        "show-observation-point": "显示观测点：",
+        "show-steering-point": "显示转向点：",
+        "antenna-array-config": "天线阵列配置（XZ平面）",
+        "waves": "波：",
+        "vectors": "向量：",
+        "far-field-pattern": "场方向图：",
+        "normalize-pattern": "标准化模式：",
+        "calculation-method-label": "计算方法：",
+        "exact-method": "子贴片近似",
+        "approximation-method": "近似",
+        "pattern-display": "方向图显示：",
+        "hemisphere": "彩色半球",
+        "3d-shape": "3D波瓣形状（幅度）",
+        "subpatch-density": "子补丁密度：",
+        "total-field-magnitude": "总场幅值:",
+        "array-factor": "总场（阵列因子）",
+        "array-factor-desc": "总场，通常以其通用形式称为阵列因子，表示由于所有有源天线元件在空间中任意点产生的组合电磁场。它取决于天线位置、指向方向和元件方向图。",
+        "formula-exact": "精确公式（子补丁叠加）：",
+        "formula-approx": "场近似公式（夫琅禾费）：",
+        "parameters": "参数：",
+        "param-r": "$\\hat{r}$: 观测方向（从阵列原点）",
+        "param-r-local": "$\\hat{r}_{\\text{local},p}$: 局部观测方向（从子补丁 $p$）",
+        "param-s": "$\\hat{s}$: 指向方向",
+        "param-rn": "$\\vec{r}_n$: 天线 $n$ 的中心位置",
+        "param-rnp": "$\\vec{r}_{n,p}$: 天线 $n$ 的子补丁 $p$ 的位置",
+        "param-k": "$k$: 波数 ($2\\pi/\\lambda$)",
+        "param-Fp": "$F_p(\\hat{r}_{\\text{local},p})$: 子补丁 $p$ 的方向特性",
+        "param-Fhatr": "$F(\\hat{r})$: 单个元件的全局方向特性",
+        "param-Np": "$N_P$: 每根天线的子补丁数量",
+        "observation-info": "观测点信息：",
+        "direction": "方向：",
+        "exact-field-real-part": "Re(A) 子贴片:",
+        "approx-field-real-part": "Re(A) 近似值:",
+        "required-steering-phases": "每根天线波束指向所需的相移：",
+        "approximation-note-text": "精确模式和近似模式之间的差异是预期的，尤其是在<span id=\"distance-link\" class=\"text-blue-600 underline cursor-pointer\">较短距离处</span>，因为场近似仅对距离阵列较远的距离有效，精确计算考虑了近场效应。近似场的实部仅在选择“近似”计算方法时显示。",
+        "math-foundations-title": "数学基础",
+        "math-foundations-desc-helmholtz": "场的计算基于亥姆霍兹方程所描述的波传播基本原理。",
+        "helmholtz-derivation-title": "亥姆霍兹方程推导",
+        "helmholtz-source-text": "带有源分布 $\\rho(\\vec{r})$ 的标量亥姆霍兹方程由下式给出：",
+        "helmholtz-source-eq": "$$(\\nabla^2 + k^2) \\phi(\\vec{r}) = -\\rho(\\vec{r})$$",
+        "green-intro-text": "通过与格林函数 $G(\\vec{r}, \\vec{r}')$ 进行卷积来寻求一个解，该格林函数满足点源（狄拉克δ分布）的方程：",
+        "green-eq": "$$(\\nabla^2 + k^2) G(\\vec{r}, \\vec{r}') = -\\delta(\\vec{r} - \\vec{r}')$$",
+        "superposition-intro-text": "然后，通过对构成分布 $\\rho(\\vec{r}')$ 的所有点源的响应进行叠加（积分），可以获得原始方程的解：",
+        "superposition-eq": "$$\\phi(\\vec{r}) = \\int G(\\vec{r}, \\vec{r}') \\rho(\\vec{r}') \\, d^3r'$$",
+        "free-green-intro-text": "在3D自由空间中，代表出射球面波的格林函数被称为：",
+        "free-green-eq": "$$G(\\vec{r}, \\vec{r}') = \\frac{e^{ik|\\vec{r} - \\vec{r}'|}}{4\\pi|\\vec{r} - \\vec{r}'|}$$",
+        "show-this-by-text": "这可以通过以下方式证明：",
+        "show-this-li-1": "在球坐标中相对于径向距离 $R = |\\vec{r} - \\vec{r}'|$ 书写方程，",
+        "show-this-li-2": "注意狄拉克源的分布特性，",
+        "show-this-li-3": "并选择一个出射球面波作为物理上有意义的解。",
+        "total-field-solution-text": "总场解是源与该格林函数的卷积：",
+        "total-field-solution-eq": "$$\\phi(\\vec{r}) = \\int \\frac{e^{ik|\\vec{r} - \\vec{r}'|}}{4\\pi|\\vec{r} - \\vec{r}'|} \\rho(\\vec{r}') \\, d^3r'$$",
+        "application-to-surfaces-title": "天线表面应用",
+        "application-to-surfaces-text": "对于具有已知近场分布的无源但有界表面S（例如贴片天线），我们将源建模为分布在表面上。积分简化为表面积分。这是惠更斯-菲涅耳原理的基础，该原理指出波前的每个点都可以被视为次级球面波的源。远场中的场 $A(\\vec{R})$ 是这些波的叠加：",
+        "application-to-surfaces-eq": "$$A(\\vec{R}) = \\int_S F(\\hat{r}) \\cdot \\frac{e^{ik|\\vec{R} - \\vec{r}|}}{|\\vec{R} - \\vec{r}|} \\, d^2r$$",
+        "application-to-surfaces-conclusion": "这里，$F(\\hat{r})$ 是辐射特性，描述了从表面辐射的波的方向依赖性。该公式在仿真中用于通过将表面S离散化为子块来进行“精确”计算。",
+        "distance-approx-title": "距离近似（远场）",
+        "distance-approx-intro": "在远场中，我们可以近似从观察点 $\\vec{R}$ 到天线单元 $\\vec{r}_n$ 的距离。精确距离为 $|\\vec{R} - \\vec{r}_n|$。如果 $R = |\\vec{R}|$ 是从原点到观察点的距离，$\\hat{d} = \\vec{R}/R$ 是观察方向，则：",
+        "distance-approx-exact-eq": "$$\\begin{aligned}\n|\\vec{R}-\\vec{r}_n| &= \\sqrt{Q_n}\\\\\nQ_n &= R^2 - 2R(\\hat{d}\\cdot\\vec{r}_n) + |\\vec{r}_n|^2\n\\end{aligned}$$",
+        "distance-approx-explanation": "对于远距离 $R \\gg |\\vec{r}_n|$，我们可以使用泰勒展开并忽略高阶项（夫琅禾费近似）。这导致了距离近似：",
+        "distance-approx-approx-eq": "$$|\\vec{R} - \\vec{r}_n| \\approx R - (\\hat{d} \\cdot \\vec{r}_n)$$",
+        "phase-delay-title": "路径差异引起的相位延迟",
+        "phase-delay-eq": "$$\\Delta l_n = -(\\hat{d} \\cdot \\vec{r}_n) \\quad\\Rightarrow\\quad \\phi_n = -k(\\hat{d} \\cdot \\vec{r}_n) \\text{ with } k = \\frac{2\\pi}{\\lambda}$$",
+        "beam-steering-explained": "波束指向解释",
+        "beam-steering-desc": "波束成形实现了主波束的电子转向。这是通过对每个天线单元施加特定的相移来实现的。为了将波束指向方向 $\\hat{s}$，天线 $n$ 处的相位必须提前 $k(\\vec{r}_n \\cdot \\hat{s})$。",
+        "steering-phase-formula": "指向相位：",
+        "combined-element-response-formula": "组合元素响应：",
+        "steering-tip": "如果您希望将波束指向特定的观测方向，请选择指向方向 $\\hat{s}$ 等于观测方向 $\\hat{d}$。所需的相移恰好是观测点处路径差异引起的相位的反向。",
+        "fourier-transform-connection": "傅里叶变换与近场/远场",
+        "fourier-transform-desc": "天线阵列的场模式是近场电流分布的傅里叶变换。这意味着远场中的每个观测方向都对应于傅里叶空间中的“空间频率”。",
+        "array-factor-fourier": "作为傅里叶变换的阵列因子：",
+        "inverse-fourier": "通过应用傅里叶逆变换，可以从场模式重建近场分布（天线激励）。",
+        "symbol-definitions": "符号定义",
+        "show-symbols": "点击此处显示符号定义",
+        "def-A": "总场（阵列因子），一种归一化表示，不考虑绝对振幅或$\\epsilon$或$\\mu$等物理常数。",
+        "def-rn": "天线 $n$ 的位置向量",
+        "def-d": "观测方向（单位向量）",
+        "def-s": "指向方向（单位向量）",
+        "def-k": "波数 ($2\\pi/\\lambda$)",
+        "def-phi-n": "从天线 $n$ 到观测点的路径差异引起的相位延迟",
+        "def-phi-n-steer": "天线 $n$ 用于波束成形的额外相移（指向相位）",
+        "def-Fp": "子补丁 $p$ 的方向特性（子补丁叠加方法中的因子）",
+        "def-Fhatr": "单个元件的全局方向特性（夫琅禾费方法中的因子）",
+        "def-An": "天线 $n$ 的幅度权重",
+        "def-n": "阵列中天线单元的总数",
+        "def-Np": "每根天线的子补丁数量",
+        "def-lambda": "信号的波长",
+        "def-rnp": "天线 $n$ 的子补丁 $p$ 的位置向量"
+      },
+      ja: {
+        "title": "Phased Array Visualizer",
+        "view-size": "3D表示サイズ:",
+        "fullscreen-3d": "3D全画面",
+        "visualization-settings": "可視化設定",
+        "antenna-type": "アンテナタイプ:",
+        "isotropic": "等方性",
+        "patch": "パッチ（指向性）",
+        "steering-direction": "ビームステアリング方向",
+        "azimuth": "方位角 (φ):",
+        "elevation": "仰角 (θ):",
+        "observation-point": "観測点",
+        "distance": "距離:",
+        "sync-observation": "観測 = ステアリング:",
+        "show-observation-point": "観測点を表示:",
+        "show-steering-point": "ステアリングポイントを表示:",
+        "antenna-array-config": "アンテナアレイ構成 (XZ平面)",
+        "waves": "波:",
+        "vectors": "ベクトル:",
+        "far-field-pattern": "電界パターン:",
+        "normalize-pattern": "パターンを正規化:",
+        "calculation-method-label": "計算方法:",
+        "exact-method": "サブパッチ近似",
+        "approximation-method": "近似",
+        "pattern-display": "パターン表示:",
+        "hemisphere": "色分けされた半球",
+        "3d-shape": "3Dローブ形状（振幅）",
+        "subpatch-density": "サブパッチ密度:",
+        "total-field-magnitude": "全界磁の大きさ:",
+        "array-factor": "全界磁（アレイファクター）",
+        "array-factor-desc": "全界磁は、一般的にはアレイファクターと呼ばれ、すべてのアクティブなアンテナ要素によって空間の任意の点に生成される結合された電磁界を表します。これは、アンテナの位置、ステアリング方向、および要素パターンに依存します。",
+        "formula-exact": "厳密な式 (サブパッチ重ね合わせ):",
+        "formula-approx": "電界近似式 (フラウンホーファー):",
+        "parameters": "パラメータ:",
+        "param-r": "$\\hat{r}$: 観測方向 (アレイ原点から)",
+        "param-r-local": "$\\hat{r}_{\\text{local},p}$: ローカル観測方向 (サブパッチ $p$ から)",
+        "param-s": "$\\hat{s}$: ステアリング方向",
+        "param-rn": "$\\vec{r}_n$: アンテナ $n$ の中心位置",
+        "param-rnp": "$\\vec{r}_{n,p}$: アンテナ $n$ のサブパッチ $p$ の位置",
+        "param-k": "$k$: 波数 ($2\\pi/\\lambda$)",
+        "param-Fp": "$F_p(\\hat{r}_{\\text{local},p})$: サブパッチ $p$ の指向特性",
+        "param-Fhatr": "$F(\\hat{r})$: 個々の要素のグローバル指向特性",
+        "param-Np": "$N_P$: アンテナあたりのサブパッチ数",
+        "observation-info": "観測点情報:",
+        "direction": "方向:",
+        "exact-field-real-part": "Re(A) サブパッチ:",
+        "approx-field-real-part": "Re(A) 近似:",
+        "required-steering-phases": "アンテナごとのビームステアリングに必要な位相シフト:",
+        "approximation-note-text": "厳密なパターンと近似パターンとの間の違いは、特に<span id=\"distance-link\" class=\"text-blue-600 underline cursor-pointer\">短い距離</span>で予想されます。これは、電界近似がアレイからの長い距離にのみ有効であり、厳密な計算では近接界効果が考慮されるためです。近似界の実数部は、計算方法として「近似」が選択されている場合にのみ表示されます。",
+        "math-foundations-title": "数学的基礎",
+        "math-foundations-desc-helmholtz": "電界の計算は、ヘルムホルツ方程式によって記述される波の伝播の基本原理に基づいています。",
+        "helmholtz-derivation-title": "ヘルムホルツ方程式からの導出",
+        "helmholtz-source-text": "ソース分布 $\\rho(\\vec{r})$ を持つスカラーヘルムホルツ方程式は次のように与えられます。",
+        "helmholtz-source-eq": "$$(\\nabla^2 + k^2) \\phi(\\vec{r}) = -\\rho(\\vec{r})$$",
+        "green-intro-text": "解は、点源（ディラックのデルタ分布）に対する方程式を満たすグリーン関数 $G(\\vec{r}, \\vec{r}')$ との畳み込みによって求められます。",
+        "green-eq": "$$(\\nabla^2 + k^2) G(\\vec{r}, \\vec{r}') = -\\delta(\\vec{r} - \\vec{r}')$$",
+        "superposition-intro-text": "元の方程式の解は、分布 $\\rho(\\vec{r}')$ を構成するすべての点源への応答の重ね合わせ（積分）によって得られます。",
+        "superposition-eq": "$$\\phi(\\vec{r}) = \\int G(\\vec{r}, \\vec{r}') \\rho(\\vec{r}') \\, d^3r'$$",
+        "free-green-intro-text": "3D自由空間における、外向き球面波を表すグリーン関数は次のように知られています。",
+        "free-green-eq": "$$G(\\vec{r}, \\vec{r}') = \\frac{e^{ik|\\vec{r} - \\vec{r}'|}}{4\\pi|\\vec{r} - \\vec{r}'|}$$",
+        "show-this-by-text": "これは次のようにして示すことができます。",
+        "show-this-li-1": "方程式を半径方向距離 $R = |\\vec{r} - \\vec{r}'|$ に関して球面座標で書くこと、",
+        "show-this-li-2": "ディラックソースの分布特性に注意すること、",
+        "show-this-li-3": "そして物理的に意味のある解として外向き球面波を選ぶこと。 ",
+        "total-field-solution-text": "全電界解は、ソースとこのグリーン関数の畳み込みです。",
+        "total-field-solution-eq": "$$\\phi(\\vec{r}) = \\int \\frac{e^{ik|\\vec{r} - \\vec{r}'|}}{4\\pi|\\vec{r} - \\vec{r}'|} \\rho(\\vec{r}') \\, d^3r'$$",
+        "application-to-surfaces-title": "アンテナ表面への応用",
+        "application-to-surfaces-text": "既知の近接場分布を持つ、ソースフリーだが有界な表面S（例：パッチアンテナ）の場合、ソースを表面上に分布しているとモデル化します。積分は面積分に単純化されます。これは、波面のすべての点が二次球面波のソースと見なせるというホイヘンス-フレネルの原理の基礎です。遠方界における電界 $A(\\vec{R})$ は、これらの波の重ね合わせです。",
+        "application-to-surfaces-eq": "$$A(\\vec{R}) = \\int_S F(\\hat{r}) \\cdot \\frac{e^{ik|\\vec{R} - \\vec{r}|}}{|\\vec{R} - \\vec{r}|} \\, d^2r$$",
+        "application-to-surfaces-conclusion": "ここで、$F(\\hat{r})$ は放射特性であり、表面から放射される波の方向依存性を記述します。この式は、シミュレーションで表面Sをサブパッチに離散化することによる「厳密な」計算に使用されます。",
+        "distance-approx-title": "距離近似（遠方界）",
+        "distance-approx-intro": "遠方界では、観測点 $\\vec{R}$ からアンテナ素子 $\\vec{r}_n$ までの距離を近似できます。正確な距離は $|\\vec{R} - \\vec{r}_n|$ です。$R = |\\vec{R}|$ が原点から観測点までの距離で、$\\hat{d} = \\vec{R}/R$ が観測方向の場合、次のようになります。",
+        "distance-approx-exact-eq": "$$\\begin{aligned}\n|\\vec{R}-\\vec{r}_n| &= \\sqrt{Q_n}\\\\\nQ_n &= R^2 - 2R(\\hat{d}\\cdot\\vec{r}_n) + |\\vec{r}_n|^2\n\\end{aligned}$$",
+        "distance-approx-explanation": "長距離 $R \\gg |\\vec{r}_n|$ の場合、テイラー展開を使用して高次の項を無視できます（フラウンホーファー近似）。これにより、距離の近似が得られます。",
+        "distance-approx-approx-eq": "$$|\\vec{R} - \\vec{r}_n| \\approx R - (\\hat{d} \\cdot \\vec{r}_n)$$",
+        "phase-delay-title": "経路差からの位相遅延",
+        "phase-delay-eq": "$$\\Delta l_n = -(\\hat{d} \\cdot \\vec{r}_n) \\quad\\Rightarrow\\quad \\phi_n = -k(\\hat{d} \\cdot \\vec{r}_n) \\text{ with } k = \\frac{2\\pi}{\\lambda}$$",
+        "beam-steering-explained": "ビームステアリングの説明",
+        "beam-steering-desc": "ビームフォーミングは、主ビームの電子的な方向付けを可能にします。これは、各アンテナ要素に特定の位相シフトを適用することによって実現されます。ビームを方向 $\\hat{s}$ に向けるには、アンテナ $n$ の位相を $k(\\vec{r}_n \\cdot \\hat{s})$ だけ進める必要があります。",
+        "steering-phase-formula": "ステアリング位相:",
+        "combined-element-response-formula": "結合された要素応答:",
+        "steering-tip": "特定の観測方向にビームを向ける場合は、ステアリング方向 $\\hat{s}$ を観測方向 $\\hat{d}$ と同じにします。必要な位相シフトは、観測点での経路差によって引き起こされる位相と正確に逆になります。",
+        "fourier-transform-connection": "フーリエ変換と近接界/遠方界",
+        "fourier-transform-desc": "アンテナアレイの電界パターンは、近接界の電流分布のフーリエ変換です。これは、遠方界の各観測方向がフーリエ空間における「空間周波数」に対応することを意味します。",
+        "array-factor-fourier": "フーリエ変換としてのアレイファクター:",
+        "inverse-fourier": "逆フーリエ変換を適用することにより、近接界分布（アンテナ励起）を遠方界パターンから再構築できます。",
+        "symbol-definitions": "記号の定義",
+        "show-symbols": "記号の定義を表示するにはここをクリック",
+        "def-A": "全界磁（アレイファクター）。絶対振幅や比誘電率、透磁率などの物理定数を考慮しない正規化された表現です。",
+        "def-rn": "アンテナ $n$ の位置ベクトル",
+        "def-d": "観測方向（単位ベクトル）",
+        "def-s": "ステアリング方向（単位ベクトル）",
+        "def-k": "波数 ($2\\pi/\\lambda$)、ここで $\\lambda$ は波長",
+        "def-phi-n": "アンテナ $n$ から観測点までの経路差による位相遅延",
+        "def-phi-n-steer": "ビームフォーミングのためのアンテナ $n$ の追加位相シフト（ステアリング位相）",
+        "def-Fp": "サブパッチ $p$ の指向特性（サブパッチ重ね合わせアプローチにおける因子）",
+        "def-Fhatr": "個々の要素のグローバル指向特性（フラウンホーファーアプローチにおける因子）",
+        "def-An": "アンテナ $n$ の振幅重み",
+        "def-n": "アレイ内のアンテナ要素の総数",
+        "def-Np": "アンテナあたりのサブパッチ数",
+        "def-lambda": "信号の波長",
+        "def-rnp": "アンテナ $n$ のサブパッチ $p$ の位置ベクトル"
+      }
+    };
+
+    // Translation Logic
+    function applyTranslations(lang) {
+      document.querySelectorAll('[data-lang]').forEach(element => {
+        const key = element.getAttribute('data-lang');
+        if (translations[lang] && translations[lang][key]) {
+          element.innerHTML = translations[lang][key];
+        }
+      });
+      document.title = (translations[lang] && translations[lang]["title"]) || "Phased Array Visualizer";
+      if (typeof MathJax !== 'undefined' && MathJax.startup && MathJax.startup.promise) {
+        MathJax.startup.promise.then(() => MathJax.typesetPromise());
+      }
+    }
+
+    // Three.js Scene Setup
+    let scene, camera, renderer, controls;
+    let antennaGroup, waveGroup, vectorGroup, patternMesh;
+    let observationPoint, steeringPoint;
+    const WAVELENGTH = 1; 
+    const WAVENUMBER = 2 * Math.PI / WAVELENGTH;
+    const AXIS_LENGTH = 100;
+    let ANTENNA_POSITIONS = [];
+    const ACTIVE_COLOR = new THREE.Color(0x3b82f6);
+    const INACTIVE_COLOR = new THREE.Color(0x6b7280);
+
+
+    function getArrayConfig() {
+      return {
+        nx: parseInt(document.getElementById('array-x-count')?.value || '5', 10),
+        nz: parseInt(document.getElementById('array-z-count')?.value || '5', 10),
+        spacing: parseFloat(document.getElementById('element-spacing')?.value || '0.5') * WAVELENGTH,
+        taper: document.getElementById('amplitude-taper')?.value || 'uniform',
+        sllDb: parseFloat(document.getElementById('chebyshev-sidelobe')?.value || '25')
+      };
+    }
+
+    function updateAntennaPositions() {
+      const cfg = getArrayConfig();
+      ANTENNA_POSITIONS = [];
+      let index = 0;
+      for (let iz = 0; iz < cfg.nz; iz++) {
+        for (let ix = 0; ix < cfg.nx; ix++) {
+          ANTENNA_POSITIONS.push({
+            index,
+            ix,
+            iz,
+            position: new THREE.Vector3((ix - (cfg.nx - 1) / 2) * cfg.spacing, 0, (iz - (cfg.nz - 1) / 2) * cfg.spacing)
+          });
+          index++;
+        }
+      }
+    }
+
+    function renderAntennaCheckboxes() {
+      updateAntennaPositions();
+      const grid = document.getElementById('antenna-grid');
+      if (!grid) return;
+      grid.innerHTML = '';
+      ANTENNA_POSITIONS.forEach(({ index, position }) => {
+        const wrap = document.createElement('div');
+        wrap.className = 'checkbox-wrapper';
+        const input = document.createElement('input');
+        input.type = 'checkbox';
+        input.checked = true;
+        input.id = `antenna-${index}`;
+        const label = document.createElement('label');
+        label.htmlFor = input.id;
+        label.textContent = `(${position.x.toFixed(2)}, 0, ${position.z.toFixed(2)})`;
+        wrap.appendChild(input);
+        wrap.appendChild(label);
+        grid.appendChild(wrap);
+      });
+    }
+
+    function acoshSafe(x) { return Math.log(x + Math.sqrt(Math.max(0, x * x - 1))); }
+
+    function chebyshevWeights(N, attenuationDb) {
+      if (N <= 1) return [1];
+      const order = N - 1;
+      const beta = Math.cosh(acoshSafe(Math.pow(10, Math.abs(attenuationDb) / 20)) / order);
+      const p = [];
+      for (let k = 0; k < N; k++) {
+        const x = beta * Math.cos(Math.PI * k / N);
+        if (x > 1) p.push(Math.cosh(order * acoshSafe(x)));
+        else if (x < -1) p.push(((order % 2) ? -1 : 1) * Math.cosh(order * acoshSafe(-x)));
+        else p.push(Math.cos(order * Math.acos(x)));
+      }
+      const raw = new Array(N).fill(0);
+      for (let n = 0; n < N; n++) {
+        let sum = 0;
+        for (let k = 0; k < N; k++) sum += p[k] * Math.cos(2 * Math.PI * n * k / N);
+        raw[n] = sum;
+      }
+      const mid = Math.floor(N / 2);
+      const shifted = new Array(N);
+      for (let i = 0; i < N; i++) shifted[i] = Math.abs(raw[(i + mid) % N]);
+      const max = Math.max(...shifted) || 1;
+      return shifted.map(v => v / max);
+    }
+
+    function getArrayWeight(antenna) {
+      const cfg = getArrayConfig();
+      if (cfg.taper !== 'chebyshev') return 1;
+      const wx = chebyshevWeights(cfg.nx, cfg.sllDb);
+      const wz = chebyshevWeights(cfg.nz, cfg.sllDb);
+      return (wx[antenna.ix] || 1) * (wz[antenna.iz] || 1);
+    }
+
+    // Initialization function
+    function init() {
+      // Scene and Camera
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(0xf0f9ff);
+      const container = document.getElementById('canvas-container');
+      if (!container) { console.error("Canvas container not found!"); return; }
+      camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 200);
+      camera.position.set(20, 15, 20);
+      camera.lookAt(0, 0, 0);
+
+      // Renderer
+      renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setSize(container.clientWidth, container.clientHeight);
+      container.appendChild(renderer.domElement);
+
+      // Controls and Lights
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      scene.add(new THREE.AmbientLight(0xffffff, 0.7));
+      const dirLight = new THREE.DirectionalLight(0xffffff, 0.9);
+      dirLight.position.set(5, 10, 7.5);
+      scene.add(dirLight);
+
+      // Scene Objects
+      createCoordinateSystem();
+      antennaGroup = new THREE.Group(); scene.add(antennaGroup);
+      waveGroup = new THREE.Group(); scene.add(waveGroup);
+      vectorGroup = new THREE.Group(); scene.add(vectorGroup);
+      renderAntennaCheckboxes();
+      createAntennas();
+      observationPoint = new THREE.Mesh(new THREE.SphereGeometry(0.15, 16, 16), new THREE.MeshPhongMaterial({ color: 0xef4444 })); scene.add(observationPoint);
+      steeringPoint = new THREE.Mesh(new THREE.SphereGeometry(0.15, 16, 16), new THREE.MeshPhongMaterial({ color: 0x7f7f7f })); scene.add(steeringPoint);
+      createFarFieldPattern();
+
+      // Initial state updates
+      updateAllVisuals();
+      
+      // Event Listeners
+      window.addEventListener('resize', onWindowResize);
+      animate();
+    }
+    
+    // Helper function to create coordinate axes
+    function createCoordinateSystem() {
+      const createAxis = (color, rotation, position) => {
+        const mat = new THREE.MeshBasicMaterial({ color });
+        const geo = new THREE.CylinderGeometry(0.03, 0.03, AXIS_LENGTH);
+        const axis = new THREE.Mesh(geo, mat);
+        Object.assign(axis.rotation, rotation);
+        Object.assign(axis.position, position);
+        scene.add(axis);
+      };
+      createAxis(0xef4444, { z: -Math.PI / 2 }, { x: 0, y: 0, z: 0 }); // X-Axis
+      createAxis(0x22c55e, {}, { x: 0, y: 0, z: 0 }); // Y-Axis
+      createAxis(0x3b82f6, { x: Math.PI / 2 }, { x: 0, y: 0, z: 0 }); // Z-Axis
+    }
+
+    // Create or recreate antenna meshes
+    function createAntennas() {
+      const antennaType = document.getElementById('pattern-type').value;
+      antennaGroup.clear();
+      ANTENNA_POSITIONS.forEach(({ position: posVec, index, ix, iz }) => {
+        const base = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.05, 16), new THREE.MeshPhongMaterial({ color: 0x6b7280 }));
+        base.position.copy(posVec);
+        let element;
+        if (antennaType === 'isotropic') {
+          element = new THREE.Mesh(new THREE.SphereGeometry(0.1, 16, 16), new THREE.MeshPhongMaterial({ color: ACTIVE_COLOR, transparent: true, opacity: 0.75 }));
+          element.position.y = 0.15;
+        } else {
+          // Visual-only patch size: keep the simulation patch aperture below unchanged,
+          // but draw each antenna smaller so neighbouring elements do not look merged
+          // at the common 0.5λ spacing.
+          const cfg = getArrayConfig();
+          const visualPatchWidth = Math.min(WAVELENGTH * 0.34, cfg.spacing * 0.68);
+          const visualPatchDepth = visualPatchWidth * 0.78;
+          element = new THREE.Mesh(
+            new THREE.BoxGeometry(visualPatchWidth, 0.035, visualPatchDepth),
+            new THREE.MeshPhongMaterial({ color: ACTIVE_COLOR, shininess: 65 })
+          );
+          element.position.y = 0.11;
+
+          // Thin outline makes every element readable in the 3D view.
+          const edges = new THREE.LineSegments(
+            new THREE.EdgesGeometry(element.geometry),
+            new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.9 })
+          );
+          edges.position.copy(element.position);
+          base.add(edges);
+        }
+        base.add(element);
+        const checkbox = document.getElementById(`antenna-${index}`);
+        const active = checkbox ? checkbox.checked : true;
+        element.material.color.set(active ? ACTIVE_COLOR : INACTIVE_COLOR);
+        base.userData = { index, ix, iz, position: posVec, active, elementMesh: element };
+        antennaGroup.add(base);
+      });
+    }
+    
+    // Create the mesh for the far-field pattern
+    function createFarFieldPattern() {
+      const geometry = new THREE.SphereGeometry(1, 64, 32, 0, Math.PI * 2, 0, Math.PI / 2);
+      const material = new THREE.MeshPhongMaterial({ vertexColors: true, side: THREE.DoubleSide, transparent: true, opacity: 0.75 });
+      patternMesh = new THREE.Mesh(geometry, material);
+      scene.add(patternMesh);
+    }
+    
+    // --- Small complex-number utilities for the simplified coupling model ---
+    function cAdd(a, b) { return { re: a.re + b.re, im: a.im + b.im }; }
+    function cSub(a, b) { return { re: a.re - b.re, im: a.im - b.im }; }
+    function cMul(a, b) { return { re: a.re * b.re - a.im * b.im, im: a.re * b.im + a.im * b.re }; }
+    function cDiv(a, b) {
+      const d = b.re * b.re + b.im * b.im || 1e-12;
+      return { re: (a.re * b.re + a.im * b.im) / d, im: (a.im * b.re - a.re * b.im) / d };
+    }
+    function cExp(phase) { return { re: Math.cos(phase), im: Math.sin(phase) }; }
+    function cScale(a, scale) { return { re: a.re * scale, im: a.im * scale }; }
+
+    function solveComplexLinearSystem(A, b) {
+      const n = b.length;
+      const M = A.map((row, i) => row.map(v => ({ ...v })).concat([{ ...b[i] }]));
+      for (let col = 0; col < n; col++) {
+        let pivot = col;
+        let best = 0;
+        for (let r = col; r < n; r++) {
+          const mag = M[r][col].re * M[r][col].re + M[r][col].im * M[r][col].im;
+          if (mag > best) { best = mag; pivot = r; }
+        }
+        if (best < 1e-14) continue;
+        if (pivot !== col) [M[pivot], M[col]] = [M[col], M[pivot]];
+        const pv = { ...M[col][col] };
+        for (let c = col; c <= n; c++) M[col][c] = cDiv(M[col][c], pv);
+        for (let r = 0; r < n; r++) {
+          if (r === col) continue;
+          const f = { ...M[r][col] };
+          for (let c = col; c <= n; c++) M[r][c] = cSub(M[r][c], cMul(f, M[col][c]));
+        }
+      }
+      return M.map(row => row[n]);
+    }
+
+    let elementCurrentCache = { key: null, currents: null };
+
+    function getElementCurrents(activeAntennas, steeringDir, couplingEnabled, couplingStrength) {
+      const cfgKey = getArrayConfig();
+      const key = activeAntennas.map(a => a.index).join(',') + '|' +
+        steeringDir.x.toFixed(5) + ',' + steeringDir.y.toFixed(5) + ',' + steeringDir.z.toFixed(5) +
+        '|' + couplingEnabled + '|' + couplingStrength.toFixed(4) + '|' + cfgKey.taper + '|' + cfgKey.sllDb.toFixed(1);
+      if (elementCurrentCache.key === key) return elementCurrentCache.currents;
+
+      const n = activeAntennas.length;
+      const excitation = activeAntennas.map(a => cScale(cExp(WAVENUMBER * a.position.dot(steeringDir)), getArrayWeight(a)));
+      if (!couplingEnabled || couplingStrength <= 0 || n <= 1) {
+        const map = new Map(activeAntennas.map((a, i) => [a.index, excitation[i]]));
+        elementCurrentCache = { key, currents: map };
+        return map;
+      }
+
+      // Simplified MoM-inspired element-current model:
+      // (I - alpha G) I_eff = I_feed. G contains pairwise Green-function coupling.
+      // This is intentionally low-order and fast; it is not a full-wave MoM solver.
+      const A = Array.from({ length: n }, () => Array.from({ length: n }, () => ({ re: 0, im: 0 })));
+      for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+          if (i === j) {
+            A[i][j] = { re: 1, im: 0 };
+          } else {
+            const R = activeAntennas[i].position.distanceTo(activeAntennas[j].position);
+            const g = cScale(cExp(WAVENUMBER * R), couplingStrength / Math.max(R, 0.2));
+            A[i][j] = { re: -g.re, im: -g.im };
+          }
+        }
+      }
+      const solved = solveComplexLinearSystem(A, excitation);
+      const map = new Map(activeAntennas.map((a, i) => [a.index, solved[i]]));
+      elementCurrentCache = { key, currents: map };
+      return map;
+    }
+
+    // Core calculation of the field at a specific point
+    function patchElementGain(direction) {
+      // Simple broadside patch model: strongest along +Y, no back radiation.
+      // This is still a visualization model, not a full-wave FEM patch solution.
+      return Math.pow(Math.max(0, direction.clone().normalize().dot(new THREE.Vector3(0, 1, 0))), 2);
+    }
+
+    function patchCurrentDistribution(px, pz, N) {
+      // Prescribed equivalent surface-current weight for one patch element.
+      // u and v are normalized subpatch-center coordinates in [0,1].
+      // This simple standing-wave-like model gives low current near edges
+      // and maximum current near the center. It is illustrative; a real J(r)
+      // would come from measurement, FEM, FDTD or MoM.
+      const u = (px + 0.5) / N;
+      const v = (pz + 0.5) / N;
+      const Jx = Math.sin(Math.PI * u);
+      const Jz = Math.sin(Math.PI * v);
+      return Jx * Jz;
+    }
+
+    function calculateFieldAtPoint(R_vec, activeAntennas, patternType, useFraunhofer, steeringDir, subpatchDensity, couplingEnabled=false, couplingStrength=0) {
+      if (activeAntennas.length === 0) return { real: 0, imag: 0 };
+      const R = R_vec.length();
+      if (R < 1e-6) return { real: 0, imag: 0 };
+      const r_hat = R_vec.clone().normalize();
+      const elementCurrents = getElementCurrents(activeAntennas, steeringDir, couplingEnabled, couplingStrength);
+      let sumReal = 0, sumImag = 0;
+
+      activeAntennas.forEach(antenna => {
+        const antennaPos = antenna.position;
+        const antennaCurrent = elementCurrents.get(antenna.index) || { re: 1, im: 0 };
+
+        if (useFraunhofer) {
+          // Fraunhofer model: common spherical factor e^{ikR}/R, element pattern, and array phase.
+          const gain = (patternType === 'patch') ? patchElementGain(r_hat) : 1.0;
+          const phase = WAVENUMBER * (R - r_hat.dot(antennaPos));
+          const amp = gain / R;
+          const wave = cScale(cExp(phase), amp);
+          const contribution = cMul(antennaCurrent, wave);
+          sumReal += contribution.re;
+          sumImag += contribution.im;
+        } else {
+          // Discrete near-field approximation: split each patch into subpatch sources.
+          // The 1/Np weight keeps the element amplitude stable when density changes.
+          const patchWidthX = WAVELENGTH / 2;
+          const patchWidthZ = patchWidthX * 0.8;
+          const subpatchSizeX = patchWidthX / subpatchDensity;
+          const subpatchSizeZ = patchWidthZ / subpatchDensity;
+          const sourceWeight = 1 / (subpatchDensity * subpatchDensity);
+
+          for (let px = 0; px < subpatchDensity; px++) {
+            for (let pz = 0; pz < subpatchDensity; pz++) {
+              const subpatchPos = new THREE.Vector3(
+                antennaPos.x - patchWidthX / 2 + (px + 0.5) * subpatchSizeX,
+                antennaPos.y,
+                antennaPos.z - patchWidthZ / 2 + (pz + 0.5) * subpatchSizeZ
+              );
+              const r_vec_sub = R_vec.clone().sub(subpatchPos);
+              const dist = r_vec_sub.length();
+              if (dist < 1e-6) continue;
+              const localDir = r_vec_sub.clone().normalize();
+              const gain = (patternType === 'patch') ? patchElementGain(localDir) : 1.0;
+              const currentWeight = (patternType === 'patch') ? patchCurrentDistribution(px, pz, subpatchDensity) : 1.0;
+              const phase = WAVENUMBER * dist;
+              const amp = sourceWeight * currentWeight * gain / dist;
+              const wave = cScale(cExp(phase), amp);
+              const contribution = cMul(antennaCurrent, wave);
+              sumReal += contribution.re;
+              sumImag += contribution.im;
+            }
+          }
+        }
+      });
+      return { real: sumReal, imag: sumImag };
+    }
+
+    // Update the visualization of the far-field pattern
+    function updateFarFieldPattern() {
+      patternMesh.visible = document.getElementById('show-pattern').checked;
+      const activeAntennas = antennaGroup.children.filter(a => a.userData.active).map(a => a.userData);
+      if (!patternMesh.visible || activeAntennas.length === 0) return;
+
+      const { patternType, displayType, useApprox, subpatchDensity, obsDist, normalize, couplingEnabled, couplingStrength } = getControlValues();
+      const steeringDir = getSteeringDirection();
+
+      let maxMag = 1;
+      if (normalize) {
+          maxMag = 0;
+          for (let i = 0; i <= 20; i++) {
+              for (let j = 0; j < 40; j++) {
+                  const theta = (i / 20) * (Math.PI / 2);
+                  const phi = (j / 40) * (2 * Math.PI);
+                  const dir = new THREE.Vector3(Math.sin(theta) * Math.cos(phi), Math.cos(theta), Math.sin(theta) * Math.sin(phi));
+                  const field = calculateFieldAtPoint(dir.multiplyScalar(obsDist), activeAntennas, patternType, useApprox, steeringDir, subpatchDensity, couplingEnabled, couplingStrength);
+                  maxMag = Math.max(maxMag, Math.sqrt(field.real**2 + field.imag**2));
+              }
+          }
+          if (maxMag === 0) maxMag = 1;
+      }
+      
+      const newGeometry = displayType === '3d' ? new THREE.SphereGeometry(1, 64, 32) : new THREE.SphereGeometry(obsDist, 64, 32, 0, Math.PI * 2, 0, Math.PI / 2);
+      const positions = newGeometry.attributes.position;
+      const colors = new Float32Array(positions.count * 3);
+
+      for (let i = 0; i < positions.count; i++) {
+        const vertex = new THREE.Vector3().fromBufferAttribute(positions, i);
+        if (vertex.y < -0.001 && displayType === '3d') continue;
+
+        const dir = vertex.clone().normalize();
+        const field = calculateFieldAtPoint(dir.clone().multiplyScalar(obsDist), activeAntennas, patternType, useApprox, steeringDir, subpatchDensity, couplingEnabled, couplingStrength);
+        const mag = Math.sqrt(field.real**2 + field.imag**2);
+        const normMag = mag / maxMag;
+        
+        if (displayType === '3d') {
+          vertex.multiplyScalar(normMag * obsDist);
+          positions.setXYZ(i, vertex.x, vertex.y, vertex.z);
+        }
+
+        const color = new THREE.Color().setHSL((1 - Math.min(1, normMag)) * 0.7, 1, 0.5);
+        color.toArray(colors, i * 3);
+      }
+
+      newGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+      if (displayType === '3d') {
+          positions.needsUpdate = true;
+          newGeometry.computeVertexNormals();
+      }
+      patternMesh.geometry.dispose();
+      patternMesh.geometry = newGeometry;
+    }
+
+    // Utility to get values from control UI elements
+    function getControlValues() {
+        return {
+            patternType: document.getElementById('pattern-type').value,
+            displayType: document.getElementById('pattern-display').value,
+            useApprox: document.getElementById('calculation-method').value === 'true',
+            subpatchDensity: parseInt(document.getElementById('subpatch-density').value),
+            obsDist: parseFloat(document.getElementById('observation-distance').value),
+            normalize: document.getElementById('normalize-pattern-toggle').checked,
+            couplingEnabled: document.getElementById('mutual-coupling-toggle').checked,
+            couplingDb: parseFloat(document.getElementById('coupling-strength').value),
+            couplingStrength: Math.pow(10, parseFloat(document.getElementById('coupling-strength').value) / 20),
+        };
+    }
+
+    // Get steering direction vector from sliders
+    function getSteeringDirection() {
+        const azimuth = parseFloat(document.getElementById('steering-azimuth').value) * Math.PI / 180;
+        const elevation = parseFloat(document.getElementById('steering-elevation').value) * Math.PI / 180;
+        return new THREE.Vector3(Math.cos(azimuth) * Math.cos(elevation), Math.sin(elevation), Math.sin(azimuth) * Math.cos(elevation)).normalize();
+    }
+    
+    // Get observation point vector from sliders
+    function getObservationDirection() {
+        const azimuth = parseFloat(document.getElementById('observation-azimuth').value) * Math.PI / 180;
+        const elevation = parseFloat(document.getElementById('observation-elevation').value) * Math.PI / 180;
+        const distance = parseFloat(document.getElementById('observation-distance').value);
+        return new THREE.Vector3(Math.cos(azimuth) * Math.cos(elevation), Math.sin(elevation), Math.sin(azimuth) * Math.cos(elevation)).normalize().multiplyScalar(distance);
+    }
+    
+    // Update all visual elements
+    function updateAllVisuals() {
+      elementCurrentCache.key = null;
+      updateObjectPositions();
+      updateFarFieldPattern();
+      updateWaves();
+      updateVectors();
+      updateObservationInfo();
+    }
+    
+    // Update positions of steering and observation points
+    function updateObjectPositions() {
+        const obsPos = getObservationDirection();
+        const steeringDir = getSteeringDirection();
+        observationPoint.position.copy(obsPos);
+        steeringPoint.position.copy(steeringDir).multiplyScalar(obsPos.length());
+    }
+
+    // Update wave line visualizations
+    function updateWaves() {
+      waveGroup.clear();
+      if (!document.getElementById('show-waves').checked) return;
+      const obsPos = observationPoint.position;
+      antennaGroup.children.forEach(base => {
+        if (!base.userData.active) return;
+        const points = [base.position.clone().setY(base.position.y + 0.1), obsPos];
+        const line = new THREE.Line(new THREE.BufferGeometry().setFromPoints(points), new THREE.LineDashedMaterial({ color: 0x0ea5e9, dashSize: 0.2, gapSize: 0.1, opacity: 0.7, transparent: true }));
+        line.computeLineDistances();
+        waveGroup.add(line);
+      });
+    }
+
+    function updateVectors() {
+      vectorGroup.clear();
+      if (!document.getElementById('show-vectors').checked) return;
+      const obsPos = observationPoint.position;
+      antennaGroup.children.forEach(base => {
+        if (!base.userData.active) return;
+        const start = base.position.clone().setY(base.position.y + 0.18);
+        const dir = obsPos.clone().sub(start);
+        const len = dir.length();
+        if (len < 1e-6) return;
+        const arrow = new THREE.ArrowHelper(dir.clone().normalize(), start, Math.min(len, 2.5), 0xf59e0b, 0.18, 0.08);
+        vectorGroup.add(arrow);
+      });
+    }
+
+    // Update the text-based info panel
+    function updateObservationInfo() {
+      const { patternType, subpatchDensity, couplingEnabled, couplingStrength } = getControlValues();
+      const steeringDir = getSteeringDirection();
+      const obsPos = getObservationDirection();
+      const activeAntennas = antennaGroup.children.filter(a => a.userData.active).map(a => a.userData);
+      
+      const exactField = calculateFieldAtPoint(obsPos, activeAntennas, patternType, false, steeringDir, subpatchDensity, couplingEnabled, couplingStrength);
+      document.getElementById('array-factor-value').textContent = Math.sqrt(exactField.real**2 + exactField.imag**2).toFixed(3);
+      document.getElementById('exact-field-real-part-value').textContent = exactField.real.toFixed(3);
+
+      const useApprox = document.getElementById('calculation-method').value === 'true';
+      const approxInfoDiv = document.getElementById('approx-field-info');
+      approxInfoDiv.style.display = useApprox ? 'block' : 'none';
+      if (useApprox) {
+          const approxField = calculateFieldAtPoint(obsPos, activeAntennas, patternType, true, steeringDir, subpatchDensity, couplingEnabled, couplingStrength);
+          document.getElementById('approx-field-real-part-value').textContent = approxField.real.toFixed(3);
+      }
+      
+      const phaseList = document.getElementById('steering-phase-info');
+      phaseList.innerHTML = '';
+      const elementCurrents = getElementCurrents(activeAntennas, steeringDir, couplingEnabled, couplingStrength);
+      activeAntennas.forEach(antenna => {
+          const phaseDeg = (WAVENUMBER * antenna.position.dot(steeringDir) * 180 / Math.PI).toFixed(2);
+          const I = elementCurrents.get(antenna.index) || { re: 1, im: 0 };
+          const magI = Math.sqrt(I.re * I.re + I.im * I.im).toFixed(2);
+          const angleI = (Math.atan2(I.im, I.re) * 180 / Math.PI).toFixed(1);
+          const li = document.createElement('li');
+          li.textContent = couplingEnabled
+            ? `Antenna (${antenna.position.x},${antenna.position.y},${antenna.position.z}): feed ${phaseDeg}°, solved I = ${magI} ∠ ${angleI}°`
+            : `Antenna (${antenna.position.x},${antenna.position.y},${antenna.position.z}): ${phaseDeg}°`;
+          phaseList.appendChild(li);
+      });
+    }
+
+    // Sync observation sliders to steering sliders
+    function syncObservationToSteering() {
+        document.getElementById('observation-azimuth').value = document.getElementById('steering-azimuth').value;
+        document.getElementById('observation-elevation').value = document.getElementById('steering-elevation').value;
+        document.getElementById('observation-azimuth-value').textContent = document.getElementById('steering-azimuth-value').textContent;
+        document.getElementById('observation-elevation-value').textContent = document.getElementById('steering-elevation-value').textContent;
+        updateAllVisuals();
+    }
+    
+    // Animation loop
+    function animate() {
+      requestAnimationFrame(animate);
+      controls.update();
+      renderer.render(scene, camera);
+    }
+
+    // Window resize handler
+    function onWindowResize() {
+      const container = document.getElementById('canvas-container');
+      if (container.clientWidth > 0 && container.clientHeight > 0) {
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+      }
+    }
+
+    function attachAntennaCheckboxListeners() {
+        ANTENNA_POSITIONS.forEach(({ index }) => {
+            const el = document.getElementById(`antenna-${index}`);
+            if (!el) return;
+            el.onchange = e => {
+                const antenna = antennaGroup.children.find(c => c.userData.index === index);
+                if (antenna) {
+                    antenna.userData.active = e.target.checked;
+                    antenna.userData.elementMesh.material.color.set(e.target.checked ? ACTIVE_COLOR : INACTIVE_COLOR);
+                    updateAllVisuals();
+                }
+            };
+        });
+    }
+
+    // Attaching all event listeners
+    function setupEventListeners() {
+        document.getElementById('language-select').addEventListener('change', e => applyTranslations(e.target.value));
+        
+        // Sliders
+        ['steering-azimuth', 'steering-elevation', 'observation-azimuth', 'observation-elevation', 'observation-distance', 'subpatch-density', 'coupling-strength', 'array-x-count', 'array-z-count', 'element-spacing', 'chebyshev-sidelobe'].forEach(id => {
+            const el = document.getElementById(id);
+            el.addEventListener('input', e => {
+                const valueEl = document.getElementById(`${id}-value`);
+                if (id.includes('density')) valueEl.textContent = `${e.target.value}x${e.target.value}`;
+                else if (id === 'array-x-count' || id === 'array-z-count') valueEl.textContent = `${e.target.value}`;
+                else if (id === 'element-spacing') valueEl.textContent = `${Number(e.target.value).toFixed(2)}λ`;
+                else if (id === 'chebyshev-sidelobe') valueEl.textContent = `${e.target.value} dB`;
+                else if (id.includes('coupling-strength')) {
+                    const db = Number(e.target.value);
+                    const lin = Math.pow(10, db / 20);
+                    valueEl.textContent = `${db.toFixed(0)} dB (≈${lin.toFixed(2)})`;
+                }
+                else valueEl.textContent = `${e.target.value}${id.includes('distance') ? '' : '°'}`;
+                
+                if (['array-x-count', 'array-z-count', 'element-spacing'].includes(id)) {
+                    renderAntennaCheckboxes();
+                    createAntennas();
+                    attachAntennaCheckboxListeners();
+                    updateAllVisuals();
+                    return;
+                }
+
+                if (id.startsWith('steering') && document.getElementById('sync-observation-toggle').checked) {
+                    syncObservationToSteering();
+                } else {
+                    updateAllVisuals();
+                }
+            });
+        });
+
+        // Toggles
+        ['sync-observation-toggle', 'show-observation-point-toggle', 'show-steering-point-toggle', 'show-waves', 'show-vectors', 'show-pattern', 'normalize-pattern-toggle', 'mutual-coupling-toggle'].forEach(id => {
+            document.getElementById(id).addEventListener('change', e => {
+                if (id === 'sync-observation-toggle' && e.target.checked) syncObservationToSteering();
+                observationPoint.visible = document.getElementById('show-observation-point-toggle').checked;
+                steeringPoint.visible = document.getElementById('show-steering-point-toggle').checked;
+                updateAllVisuals();
+            });
+        });
+        
+        // Selects
+        ['calculation-method', 'pattern-type', 'pattern-display', 'amplitude-taper'].forEach(id => {
+            document.getElementById(id).addEventListener('change', () => {
+                if (id === 'pattern-type') createAntennas();
+                updateAllVisuals();
+            });
+        });
+
+        attachAntennaCheckboxListeners();
+    }
+
+
+    function setupCanvasViewControls() {
+      const container = document.getElementById('canvas-container');
+      const slider = document.getElementById('canvas-height-slider');
+      const value = document.getElementById('canvas-height-value');
+      const fullBtn = document.getElementById('fullscreen-3d');
+      if (!container || !slider || !value || !fullBtn) return;
+
+      function setCanvasHeight(px) {
+        const height = `${px}px`;
+        container.style.setProperty('--canvas-height', height);
+        value.textContent = height;
+        onWindowResize();
+      }
+
+      slider.addEventListener('input', (e) => setCanvasHeight(e.target.value));
+      fullBtn.addEventListener('click', () => {
+        if (!document.fullscreenElement) container.requestFullscreen();
+        else document.exitFullscreen();
+      });
+      container.addEventListener('dblclick', () => {
+        if (!document.fullscreenElement) container.requestFullscreen();
+      });
+      document.addEventListener('fullscreenchange', onWindowResize);
+      setCanvasHeight(slider.value);
+    }
+
+    // DOM Ready
+    document.addEventListener('DOMContentLoaded', () => {
+        init();
+        setupEventListeners();
+        setupCanvasViewControls();
+        applyTranslations(document.getElementById('language-select').value);
+    });
+  </script>
+</body>
+</html>
