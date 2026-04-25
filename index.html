@@ -430,7 +430,7 @@ window.MathJax = {
     }
 
     .container {
-      padding-bottom: 4.5rem !important;
+      padding-bottom: 2rem !important;
     }
 
     .header-section {
@@ -588,54 +588,7 @@ window.MathJax = {
     .toggle-slider:before {
       box-shadow: 0 2px 8px rgba(0,0,0,0.25);
     }
-
-    .lumeitech-footer {
-      position: fixed;
-      left: 50%;
-      bottom: 14px;
-      transform: translateX(-50%);
-      z-index: 2147483000;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      padding: 0.48rem 0.85rem;
-      border-radius: 999px;
-      border: 1px solid var(--lt-border);
-      background: var(--lt-surface-strong);
-      backdrop-filter: blur(24px) saturate(180%);
-      -webkit-backdrop-filter: blur(24px) saturate(180%);
-      box-shadow: var(--lt-shadow-soft);
-      color: var(--lt-muted);
-      font-size: 12px;
-      line-height: 1;
-      white-space: nowrap;
-      user-select: none;
-    }
-
-    .lumeitech-footer a {
-      color: var(--lt-blue);
-      text-decoration: none;
-      font-weight: 650;
-    }
-
-    .lumeitech-footer a:hover {
-      text-decoration: underline;
-    }
-
-    .lumeitech-mark {
-      width: 18px;
-      height: 18px;
-      border-radius: 6px;
-      display: inline-grid;
-      place-items: center;
-      background: linear-gradient(135deg, #0071e3, #af52de);
-      color: #fff;
-      font-weight: 800;
-      font-size: 11px;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.32);
-    }
-
-    @media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) {
       :root {
         --lt-bg: #0b0b0f;
         --lt-surface: rgba(28, 28, 30, 0.68);
@@ -666,17 +619,7 @@ window.MathJax = {
         background: #f5f5f7 !important;
       }
     }
-
-    @media (max-width: 640px) {
-      .lumeitech-footer {
-        bottom: 10px;
-        max-width: calc(100vw - 24px);
-        font-size: 11px;
-        padding: 0.44rem 0.65rem;
-      }
-    }
-
-    .seo-hero {
+.seo-hero {
       margin: 1rem 0 1.25rem;
       padding: clamp(1.3rem, 3vw, 2.4rem);
       border: 1px solid var(--lt-border);
@@ -826,6 +769,98 @@ window.MathJax = {
       margin: 0;
     }
 
+
+    /* Manual appearance switch: light / dark / system */
+    html[data-theme="light"] {
+      color-scheme: light;
+      --lt-bg: #f5f5f7;
+      --lt-surface: rgba(255, 255, 255, 0.72);
+      --lt-surface-strong: rgba(255, 255, 255, 0.88);
+      --lt-text: #1d1d1f;
+      --lt-muted: #6e6e73;
+      --lt-border: rgba(0, 0, 0, 0.08);
+      --lt-shadow: 0 18px 50px rgba(0, 0, 0, 0.10);
+      --lt-shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.08);
+      --lt-blue: #0071e3;
+      --lt-blue-hover: #0077ed;
+    }
+
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --lt-bg: #0b0b0f;
+      --lt-surface: rgba(28, 28, 30, 0.68);
+      --lt-surface-strong: rgba(36, 36, 38, 0.86);
+      --lt-text: #f5f5f7;
+      --lt-muted: #a1a1a6;
+      --lt-border: rgba(255, 255, 255, 0.12);
+      --lt-shadow: 0 20px 60px rgba(0, 0, 0, 0.42);
+      --lt-shadow-soft: 0 10px 28px rgba(0, 0, 0, 0.32);
+      --lt-blue: #0a84ff;
+      --lt-blue-hover: #2997ff;
+    }
+
+    html[data-theme="light"] body {
+      background:
+        radial-gradient(circle at 15% 0%, rgba(0, 113, 227, 0.13), transparent 30%),
+        radial-gradient(circle at 85% 10%, rgba(175, 82, 222, 0.12), transparent 28%),
+        linear-gradient(180deg, #fbfbfd 0%, var(--lt-bg) 50%, #ffffff 100%) !important;
+      color: var(--lt-text) !important;
+    }
+
+    html[data-theme="dark"] body {
+      background:
+        radial-gradient(circle at 15% 0%, rgba(10, 132, 255, 0.20), transparent 32%),
+        radial-gradient(circle at 85% 8%, rgba(191, 90, 242, 0.18), transparent 30%),
+        linear-gradient(180deg, #050507 0%, var(--lt-bg) 58%, #111114 100%) !important;
+      color: var(--lt-text) !important;
+    }
+
+    html[data-theme="dark"] .canvas-container {
+      border-color: rgba(255,255,255,0.10) !important;
+      background: linear-gradient(180deg, rgba(44,44,46,0.7), rgba(28,28,30,0.45)) !important;
+    }
+
+    html[data-theme="dark"] input[type=range]::-webkit-slider-thumb,
+    html[data-theme="dark"] input[type=range]::-moz-range-thumb {
+      background: #f5f5f7 !important;
+    }
+
+    .header-tools {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+    }
+
+    .theme-selector {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      color: var(--lt-muted);
+      font-size: 0.875rem;
+      font-weight: 650;
+    }
+
+    .canvas-bg-toolbar {
+      flex: 0 0 auto;
+      min-height: 2.25rem;
+      padding: 0.2rem 0.35rem;
+      border-radius: 999px;
+      background: rgba(120, 120, 128, 0.10);
+    }
+
+    @media (max-width: 640px) {
+      .canvas-bg-toolbar {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .canvas-bg-toolbar select {
+        flex: 1;
+        max-width: 220px;
+      }
+    }
+
 </style>
 </head>
 <body>
@@ -833,38 +868,48 @@ window.MathJax = {
 <!-- Header Section -->
 <div class="header-section flex flex-col md:flex-row items-center md:justify-between mb-4">
   <h1 class="text-xl sm:text-2xl font-bold text-gray-800 mb-2 md:mb-0" data-lang="title">Free 3D Phased Array Simulator</h1>
-  <div class="language-selector flex items-center">
-    <select class="border rounded px-2 py-1 text-sm" id="language-select">
-      <option value="de">Deutsch</option>
-      <option value="en" selected>English</option>
-      <option value="fr">Français</option>
-      <option value="es">Español</option>
-      <option value="zh">中文</option>
-      <option value="ja">日本語</option>
-    </select>
+  <div class="header-tools">
+    <div class="theme-selector">
+      <span data-lang="theme-label">Appearance:</span>
+      <select class="border rounded px-2 py-1 text-sm" id="theme-select" aria-label="Appearance">
+        <option value="system" data-lang="theme-system">System</option>
+        <option value="light" data-lang="theme-light">Light</option>
+        <option value="dark" data-lang="theme-dark">Dark</option>
+      </select>
+    </div>
+    <div class="language-selector flex items-center">
+      <select class="border rounded px-2 py-1 text-sm" id="language-select" aria-label="Language">
+        <option value="de">Deutsch</option>
+        <option value="en" selected>English</option>
+        <option value="fr">Français</option>
+        <option value="es">Español</option>
+        <option value="zh">中文</option>
+        <option value="ja">日本語</option>
+      </select>
+    </div>
   </div>
 </div>
 
 <section class="seo-hero" aria-labelledby="seo-title">
-  <h2 id="seo-title">Free 3D Phased Array Simulator for Beamforming & Antenna Array Visualization</h2>
-  <p>
+  <h2 id="seo-title" data-lang="seo-title">Free 3D Phased Array Simulator for Beamforming & Antenna Array Visualization</h2>
+  <p data-lang="seo-desc-1">
     Explore phased array beam steering directly in the browser. This interactive RF engineering tool visualizes antenna array geometry, element spacing, steering direction, 3D radiation lobes, simplified mutual coupling and prescribed-current Huygens-style/Fraunhofer behavior.
   </p>
-  <p>
+  <p data-lang="seo-desc-2">
     The simulator is designed for learning and experimentation: instead of relying only on fixed 2D antenna pattern pictures, it uses vector-based field calculations to show how antenna elements combine in 3D space.
   </p>
   <div class="seo-actions">
-    <a class="seo-pill primary" href="#canvas-container">Start the simulator</a>
-    <a class="seo-pill" href="https://github.com/luumei/phased-array-visualizer" target="_blank" rel="noopener noreferrer">View source code on GitHub</a>
+    <a class="seo-pill primary" href="#canvas-container" data-lang="seo-start">Start the simulator</a>
+    <a class="seo-pill" href="https://github.com/luumei/phased-array-visualizer" target="_blank" rel="noopener noreferrer" data-lang="seo-github">View source code on GitHub</a>
   </div>
   <div class="seo-keywords" aria-label="Main topics">
-    <span>phased array simulator</span>
-    <span>antenna array visualizer</span>
-    <span>beamforming tool</span>
-    <span>3D radiation pattern</span>
-    <span>RF engineering</span>
+    <span data-lang="keyword-phased-array-simulator">phased array simulator</span>
+    <span data-lang="keyword-antenna-array-visualizer">antenna array visualizer</span>
+    <span data-lang="keyword-beamforming-tool">beamforming tool</span>
+    <span data-lang="keyword-3d-radiation-pattern">3D radiation pattern</span>
+    <span data-lang="keyword-rf-engineering">RF engineering</span>
   </div>
-  <div class="source-card">
+  <div class="source-card" data-lang="source-card">
     Source code: inspect, fork or improve the project on
     <a href="https://github.com/luumei/phased-array-visualizer" target="_blank" rel="noopener noreferrer">GitHub</a>.
   </div>
@@ -876,7 +921,7 @@ window.MathJax = {
 <!-- 3D Canvas Section -->
 <div class="canvas-section">
 <details class="canvas-controls-details" open>
-  <summary>3D view settings & controls</summary>
+  <summary data-lang="canvas-controls-summary">3D view settings & controls</summary>
   <div class="canvas-controls-inner">
     <div class="canvas-toolbar">
       <div class="canvas-size-control">
@@ -884,14 +929,22 @@ window.MathJax = {
         <input id="canvas-height-slider" type="range" min="180" max="850" step="10" value="300" />
         <span class="text-sm w-14 text-right" id="canvas-height-value">300 px</span>
       </div>
+      <div class="theme-selector canvas-bg-toolbar">
+        <span data-lang="canvas-theme-label">3D background:</span>
+        <select class="border rounded px-2 py-1 text-sm" id="canvas-theme-select" aria-label="3D background">
+          <option value="auto" data-lang="canvas-theme-auto">Auto</option>
+          <option value="light" data-lang="canvas-theme-light">Light</option>
+          <option value="dark" data-lang="canvas-theme-dark">Dark</option>
+        </select>
+      </div>
       <button class="btn" id="fullscreen-3d" type="button" data-lang="fullscreen-3d">Fullscreen 3D</button>
     </div>
     <div class="mouse-help" aria-label="3D mouse controls">
-      <strong>3D controls:</strong>
-      <span class="mouse-chip">Left mouse: rotate</span>
-      <span class="mouse-chip">Right mouse: move</span>
-      <span class="mouse-chip">Scroll: zoom</span>
-      <span class="mouse-chip">Double-click: fullscreen</span>
+      <strong data-lang="mouse-controls-label">3D controls:</strong>
+      <span class="mouse-chip" data-lang="mouse-left">Left mouse: rotate</span>
+      <span class="mouse-chip" data-lang="mouse-right">Right mouse: move</span>
+      <span class="mouse-chip" data-lang="mouse-scroll">Scroll: zoom</span>
+      <span class="mouse-chip" data-lang="mouse-double">Double-click: fullscreen</span>
     </div>
   </div>
 </details>
@@ -980,33 +1033,33 @@ window.MathJax = {
 <h3 class="font-medium mb-2" data-lang="antenna-array-config">Antenna array configuration (XZ-plane)</h3>
 <div class="array-config-controls grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3 mb-3">
   <div class="slider-container">
-    <label for="array-x-count">X elements:</label>
+    <label for="array-x-count" data-lang="x-elements">X elements:</label>
     <input class="w-full" id="array-x-count" max="9" min="3" step="1" type="range" value="5"/>
     <span class="slider-value" id="array-x-count-value">5</span>
   </div>
   <div class="slider-container">
-    <label for="array-z-count">Z elements:</label>
+    <label for="array-z-count" data-lang="z-elements">Z elements:</label>
     <input class="w-full" id="array-z-count" max="9" min="3" step="1" type="range" value="5"/>
     <span class="slider-value" id="array-z-count-value">5</span>
   </div>
   <div class="slider-container">
-    <label for="element-spacing">Spacing:</label>
+    <label for="element-spacing" data-lang="spacing">Spacing:</label>
     <input class="w-full" id="element-spacing" max="1.00" min="0.25" step="0.05" type="range" value="0.50"/>
     <span class="slider-value" id="element-spacing-value">0.50λ</span>
   </div>
   <div class="flex items-center gap-2">
-    <span class="text-sm font-medium">Taper:</span>
+    <span class="text-sm font-medium" data-lang="taper">Taper:</span>
     <select class="border rounded px-2 py-1 text-sm flex-grow" id="amplitude-taper">
-      <option value="uniform" selected>Uniform</option>
-      <option value="chebyshev">Dolph-Chebyshev</option>
+      <option value="uniform" selected data-lang="uniform">Uniform</option>
+      <option value="chebyshev" data-lang="dolph-chebyshev">Dolph-Chebyshev</option>
     </select>
   </div>
   <div class="slider-container md:col-span-2" id="chebyshev-sidelobe-slider">
-    <label for="chebyshev-sidelobe">Chebyshev SLL:</label>
+    <label for="chebyshev-sidelobe" data-lang="chebyshev-sll">Chebyshev SLL:</label>
     <input class="w-full" id="chebyshev-sidelobe" max="50" min="15" step="1" type="range" value="25"/>
     <span class="slider-value" id="chebyshev-sidelobe-value">25 dB</span>
   </div>
-<div class="taper-note text-xs text-gray-700 mt-2 mb-3 p-2 rounded bg-slate-50 border border-slate-200 md:col-span-2 xl:col-span-4">Chebyshev taper changes amplitudes, not phases. For a 2D array this demo uses separable weights: <span class="font-mono">w(x,z)=w_x(x)·w_z(z)</span>. More elements make the main lobe narrower; tapering mainly controls sidelobes.</div>
+<div class="taper-note text-xs text-gray-700 mt-2 mb-3 p-2 rounded bg-slate-50 border border-slate-200 md:col-span-2 xl:col-span-4" data-lang="taper-note">Chebyshev taper changes amplitudes, not phases. For a 2D array this demo uses separable weights: <span class="font-mono">w(x,z)=w_x(x)·w_z(z)</span>. More elements make the main lobe narrower; tapering mainly controls sidelobes.</div>
 </div>
 <div class="antenna-grid" id="antenna-grid"></div>
 </div>
@@ -1237,8 +1290,8 @@ window.MathJax = {
 <table class="min-w-full bg-white">
 <thead>
 <tr>
-<th class="py-2 px-4 border-b text-left">Symbol</th>
-<th class="py-2 px-4 border-b text-left">Definition</th>
+<th class="py-2 px-4 border-b text-left" data-lang="table-symbol">Symbol</th>
+<th class="py-2 px-4 border-b text-left" data-lang="table-definition">Definition</th>
 </tr>
 </thead>
 <tbody>
@@ -1272,10 +1325,6 @@ window.MathJax = {
 </div>
 </div>
 
-
-<footer class="lumeitech-footer" aria-label="Copyright">
-  <span>© 2026 phased-array-simulator.com – Phased Array Visualization</span>
-</footer>
 
 <script>
     // Self-executing anonymous function for watermark
@@ -2005,15 +2054,336 @@ window.MathJax = {
       }
     };
 
+    // Extra translation coverage for static website/UI text.
+    const translationPatches = {
+      "en": {
+            "seo-title": "Free 3D Phased Array Simulator for Beamforming & Antenna Array Visualization",
+            "seo-desc-1": "Explore phased array beam steering directly in the browser. This interactive RF engineering tool visualizes antenna array geometry, element spacing, steering direction, 3D radiation lobes, simplified mutual coupling and prescribed-current Huygens-style/Fraunhofer behavior.",
+            "seo-desc-2": "The simulator is designed for learning and experimentation: instead of relying only on fixed 2D antenna pattern pictures, it uses vector-based field calculations to show how antenna elements combine in 3D space.",
+            "seo-start": "Start the simulator",
+            "seo-github": "View source code on GitHub",
+            "keyword-phased-array-simulator": "phased array simulator",
+            "keyword-antenna-array-visualizer": "antenna array visualizer",
+            "keyword-beamforming-tool": "beamforming tool",
+            "keyword-3d-radiation-pattern": "3D radiation pattern",
+            "keyword-rf-engineering": "RF engineering",
+            "source-card": "Source code: inspect, fork or improve the project on <a href=\"https://github.com/luumei/phased-array-visualizer\" target=\"_blank\" rel=\"noopener noreferrer\">GitHub</a>.",
+            "canvas-controls-summary": "3D view settings & controls",
+            "mouse-controls-label": "3D controls:",
+            "mouse-left": "Left mouse: rotate",
+            "mouse-right": "Right mouse: move",
+            "mouse-scroll": "Scroll: zoom",
+            "mouse-double": "Double-click: fullscreen",
+            "x-elements": "X elements:",
+            "z-elements": "Z elements:",
+            "spacing": "Spacing:",
+            "taper": "Taper:",
+            "uniform": "Uniform",
+            "dolph-chebyshev": "Dolph-Chebyshev",
+            "chebyshev-sll": "Chebyshev SLL:",
+            "taper-note": "Chebyshev taper changes amplitudes, not phases. For a 2D array this demo uses separable weights: <span class=\"font-mono\">w(x,z)=w_x(x)·w_z(z)</span>. More elements make the main lobe narrower; tapering mainly controls sidelobes.",
+            "table-symbol": "Symbol",
+            "table-definition": "Definition",
+            "practical-workflow-title": "Practical workflow: solve sources first, then combine fields",
+            "practical-workflow-desc": "The method shown here is the second step: it computes fields from known or assumed equivalent currents. In real antenna projects, those sources are often obtained first from measurement or a full-wave method, then many array elements are combined quickly by superposition.",
+            "practical-workflow-li-1": "FEM or FDTD solve fields in a volume; Method of Moments (MoM) usually solves surface currents through an integral equation.",
+            "practical-workflow-li-2": "Once $J(\\vec r)$ is known, the radiation integral can be evaluated directly without solving MoM again.",
+            "practical-workflow-li-3": "For close arrays, mutual coupling and changed element currents still matter. As a rough rule, $\\lambda/2$ spacing is much safer than $\\lambda/4$ for weak coupling.",
+            "mutual-coupling": "Mutual coupling:",
+            "coupling-strength": "Coupling estimate:",
+            "param-w": "$w_{n,p} \\propto J(\\vec r_{n,p})\\Delta S_p$: subpatch weight from local current density and area",
+            "subpatch-accuracy-note": "Important: the subpatch sum is a Huygens/current-source approximation. It improves when subpatches get smaller and when the local current distribution $J(\\vec r)$ is known. In this demo $J$ is heavily simplified. The optional coupling model modifies each antenna element current, but it is still not a full-wave solution; real patch currents, substrate effects and strong mutual coupling require FEM/MoM/FDTD or measurements."
+      },
+      "de": {
+            "seo-title": "Kostenloser 3D Phased-Array-Simulator für Beamforming & Antennenarray-Visualisierung",
+            "seo-desc-1": "Erkunde Phased-Array-Beam-Steering direkt im Browser. Dieses interaktive RF-Engineering-Tool visualisiert Antennenarray-Geometrie, Elementabstand, Lenkrichtung, 3D-Strahlungskeulen, vereinfachte gegenseitige Kopplung und vorgeschriebene Huygens-/Fraunhofer-Feldmodelle.",
+            "seo-desc-2": "Der Simulator ist für Lernen und Experimente gedacht: statt nur feste 2D-Antennendiagramme zu zeigen, nutzt er vektorbasierte Feldberechnungen, um darzustellen, wie Antennenelemente im 3D-Raum zusammenwirken.",
+            "seo-start": "Simulator starten",
+            "seo-github": "Quellcode auf GitHub ansehen",
+            "keyword-phased-array-simulator": "Phased-Array-Simulator",
+            "keyword-antenna-array-visualizer": "Antennenarray-Visualizer",
+            "keyword-beamforming-tool": "Beamforming-Tool",
+            "keyword-3d-radiation-pattern": "3D-Strahlungsdiagramm",
+            "keyword-rf-engineering": "RF Engineering",
+            "source-card": "Quellcode: Projekt auf <a href=\"https://github.com/luumei/phased-array-visualizer\" target=\"_blank\" rel=\"noopener noreferrer\">GitHub</a> ansehen, forken oder verbessern.",
+            "canvas-controls-summary": "3D-Ansicht: Einstellungen & Steuerung",
+            "mouse-controls-label": "3D-Steuerung:",
+            "mouse-left": "Linke Maus: drehen",
+            "mouse-right": "Rechte Maus: verschieben",
+            "mouse-scroll": "Scrollen: zoomen",
+            "mouse-double": "Doppelklick: Vollbild",
+            "x-elements": "X-Elemente:",
+            "z-elements": "Z-Elemente:",
+            "spacing": "Abstand:",
+            "taper": "Taper:",
+            "uniform": "Uniform",
+            "dolph-chebyshev": "Dolph-Chebyshev",
+            "chebyshev-sll": "Chebyshev SLL:",
+            "taper-note": "Chebyshev-Taper verändert Amplituden, nicht Phasen. Für ein 2D-Array nutzt diese Demo separierbare Gewichte: <span class=\"font-mono\">w(x,z)=w_x(x)·w_z(z)</span>. Mehr Elemente machen die Hauptkeule schmaler; Tapering kontrolliert vor allem Nebenkeulen.",
+            "table-symbol": "Symbol",
+            "table-definition": "Definition",
+            "practical-workflow-title": "Praktischer Ablauf: zuerst Quellen lösen, dann Felder kombinieren",
+            "practical-workflow-desc": "Die hier gezeigte Methode ist der zweite Schritt: Sie berechnet Felder aus bekannten oder angenommenen äquivalenten Strömen. In realen Antennenprojekten werden diese Quellen oft zuerst aus Messungen oder Full-Wave-Methoden gewonnen; danach lassen sich viele Array-Elemente schnell durch Superposition kombinieren.",
+            "practical-workflow-li-1": "FEM oder FDTD lösen Felder in einem Volumen; die Momentenmethode (MoM) löst meist Oberflächenströme über eine Integralgleichung.",
+            "practical-workflow-li-2": "Sobald $J(\\vec r)$ bekannt ist, kann das Strahlungsintegral direkt ausgewertet werden, ohne MoM erneut zu lösen.",
+            "practical-workflow-li-3": "Bei engen Arrays bleiben gegenseitige Kopplung und veränderte Elementströme wichtig. Als grobe Regel ist $\\lambda/2$ Abstand deutlich sicherer als $\\lambda/4$ für schwache Kopplung.",
+            "mutual-coupling": "Gegenseitige Kopplung:",
+            "coupling-strength": "Kopplungsschätzung:",
+            "param-w": "$w_{n,p} \\propto J(\\vec r_{n,p})\\Delta S_p$: Gewicht des Subpatchs durch lokale Stromdichte und Fläche",
+            "subpatch-accuracy-note": "Wichtig: Die Subpatch-Summe ist eine Huygens-/Stromquellen-Näherung. Sie wird genauer, wenn die Subpatches kleiner werden und wenn die lokale Stromverteilung $J(\\vec r)$ bekannt ist. In dieser Demo ist $J$ stark vereinfacht. Das optionale Kopplungsmodell verändert die Ströme der Antennenelemente, ist aber weiterhin keine Full-Wave-Lösung; echte Patch-Ströme, Substrat und starke Kopplung brauchen FEM/MoM/FDTD oder Messungen."
+      },
+      "fr": {
+            "seo-title": "Simulateur 3D gratuit de réseau phasé pour le beamforming et la visualisation d’antennes",
+            "seo-desc-1": "Explorez le pointage de faisceau d’un réseau phasé directement dans le navigateur. Cet outil RF interactif visualise la géométrie du réseau, l’espacement des éléments, la direction de pointage, les lobes 3D, le couplage mutuel simplifié et des modèles de champ de type Huygens/Fraunhofer à courants prescrits.",
+            "seo-desc-2": "Le simulateur est conçu pour l’apprentissage et l’expérimentation : au lieu de s’appuyer seulement sur des diagrammes 2D fixes, il utilise des calculs de champ vectoriels pour montrer comment les éléments d’antenne se combinent en 3D.",
+            "seo-start": "Lancer le simulateur",
+            "seo-github": "Voir le code source sur GitHub",
+            "keyword-phased-array-simulator": "simulateur de réseau phasé",
+            "keyword-antenna-array-visualizer": "visualiseur de réseau d’antennes",
+            "keyword-beamforming-tool": "outil de beamforming",
+            "keyword-3d-radiation-pattern": "diagramme de rayonnement 3D",
+            "keyword-rf-engineering": "ingénierie RF",
+            "source-card": "Code source : consultez, forkez ou améliorez le projet sur <a href=\"https://github.com/luumei/phased-array-visualizer\" target=\"_blank\" rel=\"noopener noreferrer\">GitHub</a>.",
+            "canvas-controls-summary": "Paramètres et commandes de la vue 3D",
+            "mouse-controls-label": "Commandes 3D :",
+            "mouse-left": "Souris gauche : rotation",
+            "mouse-right": "Souris droite : déplacement",
+            "mouse-scroll": "Molette : zoom",
+            "mouse-double": "Double-clic : plein écran",
+            "x-elements": "Éléments X :",
+            "z-elements": "Éléments Z :",
+            "spacing": "Espacement :",
+            "taper": "Pondération :",
+            "uniform": "Uniforme",
+            "dolph-chebyshev": "Dolph-Chebyshev",
+            "chebyshev-sll": "SLL Chebyshev :",
+            "taper-note": "La pondération de Chebyshev modifie les amplitudes, pas les phases. Pour un réseau 2D, cette démo utilise des poids séparables : <span class=\"font-mono\">w(x,z)=w_x(x)·w_z(z)</span>. Plus d’éléments rendent le lobe principal plus étroit ; la pondération contrôle surtout les lobes secondaires.",
+            "table-symbol": "Symbole",
+            "table-definition": "Définition",
+            "practical-workflow-title": "Flux pratique : résoudre les sources, puis combiner les champs",
+            "practical-workflow-desc": "La méthode montrée ici est la deuxième étape : elle calcule les champs à partir de courants équivalents connus ou supposés. Dans de vrais projets d’antenne, ces sources sont souvent obtenues d’abord par mesure ou par une méthode full-wave, puis les éléments du réseau sont combinés rapidement par superposition.",
+            "practical-workflow-li-1": "FEM ou FDTD résolvent les champs dans un volume ; la méthode des moments (MoM) résout généralement les courants de surface par une équation intégrale.",
+            "practical-workflow-li-2": "Une fois $J(\\vec r)$ connu, l’intégrale de rayonnement peut être évaluée directement sans relancer MoM.",
+            "practical-workflow-li-3": "Pour les réseaux compacts, le couplage mutuel et les courants modifiés restent importants. En règle générale, un espacement $\\lambda/2$ est plus sûr que $\\lambda/4$ pour un couplage faible.",
+            "mutual-coupling": "Couplage mutuel :",
+            "coupling-strength": "Estimation du couplage :",
+            "param-w": "$w_{n,p} \\propto J(\\vec r_{n,p})\\Delta S_p$ : poids du sous-patch issu de la densité de courant locale et de la surface",
+            "subpatch-accuracy-note": "Important : la somme des sous-patches est une approximation de type Huygens/source de courant. Elle s’améliore avec des sous-patches plus petits et lorsque la distribution locale $J(\\vec r)$ est connue. Dans cette démo, $J$ est fortement simplifié. Le modèle de couplage optionnel modifie le courant de chaque élément, mais ce n’est toujours pas une solution full-wave ; les vrais courants de patch, le substrat et le couplage fort nécessitent FEM/MoM/FDTD ou des mesures."
+      },
+      "es": {
+            "seo-title": "Simulador 3D gratuito de phased array para beamforming y visualización de antenas",
+            "seo-desc-1": "Explora la dirección de haz de un phased array directamente en el navegador. Esta herramienta interactiva de RF visualiza la geometría del array, el espaciado de elementos, la dirección de apuntamiento, lóbulos 3D, acoplamiento mutuo simplificado y modelos de campo tipo Huygens/Fraunhofer con corrientes prescritas.",
+            "seo-desc-2": "El simulador está diseñado para aprender y experimentar: en vez de usar solo patrones 2D fijos, utiliza cálculos vectoriales de campo para mostrar cómo se combinan los elementos de antena en 3D.",
+            "seo-start": "Iniciar el simulador",
+            "seo-github": "Ver código fuente en GitHub",
+            "keyword-phased-array-simulator": "simulador phased array",
+            "keyword-antenna-array-visualizer": "visualizador de arrays de antenas",
+            "keyword-beamforming-tool": "herramienta de beamforming",
+            "keyword-3d-radiation-pattern": "patrón de radiación 3D",
+            "keyword-rf-engineering": "ingeniería RF",
+            "source-card": "Código fuente: consulta, bifurca o mejora el proyecto en <a href=\"https://github.com/luumei/phased-array-visualizer\" target=\"_blank\" rel=\"noopener noreferrer\">GitHub</a>.",
+            "canvas-controls-summary": "Ajustes y controles de la vista 3D",
+            "mouse-controls-label": "Controles 3D:",
+            "mouse-left": "Ratón izquierdo: rotar",
+            "mouse-right": "Ratón derecho: mover",
+            "mouse-scroll": "Rueda: zoom",
+            "mouse-double": "Doble clic: pantalla completa",
+            "x-elements": "Elementos X:",
+            "z-elements": "Elementos Z:",
+            "spacing": "Espaciado:",
+            "taper": "Ponderación:",
+            "uniform": "Uniforme",
+            "dolph-chebyshev": "Dolph-Chebyshev",
+            "chebyshev-sll": "SLL Chebyshev:",
+            "taper-note": "La ponderación Chebyshev cambia amplitudes, no fases. Para un array 2D esta demo usa pesos separables: <span class=\"font-mono\">w(x,z)=w_x(x)·w_z(z)</span>. Más elementos estrechan el lóbulo principal; la ponderación controla sobre todo los lóbulos laterales.",
+            "table-symbol": "Símbolo",
+            "table-definition": "Definición",
+            "practical-workflow-title": "Flujo práctico: resolver fuentes y luego combinar campos",
+            "practical-workflow-desc": "El método mostrado aquí es el segundo paso: calcula campos a partir de corrientes equivalentes conocidas o asumidas. En proyectos reales de antenas, esas fuentes suelen obtenerse primero mediante medición o métodos full-wave; después se combinan muchos elementos rápidamente por superposición.",
+            "practical-workflow-li-1": "FEM o FDTD resuelven campos en un volumen; el Método de Momentos (MoM) normalmente resuelve corrientes superficiales mediante una ecuación integral.",
+            "practical-workflow-li-2": "Una vez conocido $J(\\vec r)$, la integral de radiación puede evaluarse directamente sin volver a resolver MoM.",
+            "practical-workflow-li-3": "En arrays compactos, el acoplamiento mutuo y los cambios de corriente siguen siendo importantes. Como regla aproximada, $\\lambda/2$ es más seguro que $\\lambda/4$ para acoplamiento débil.",
+            "mutual-coupling": "Acoplamiento mutuo:",
+            "coupling-strength": "Estimación de acoplamiento:",
+            "param-w": "$w_{n,p} \\propto J(\\vec r_{n,p})\\Delta S_p$: peso del subparche por densidad de corriente local y área",
+            "subpatch-accuracy-note": "Importante: la suma de subparches es una aproximación de Huygens/fuentes de corriente. Mejora con subparches más pequeños y cuando se conoce la distribución local $J(\\vec r)$. En esta demo $J$ está muy simplificada. El modelo opcional de acoplamiento modifica la corriente de cada elemento, pero sigue sin ser una solución full-wave; corrientes reales de patch, sustrato y acoplamiento fuerte requieren FEM/MoM/FDTD o mediciones."
+      },
+      "zh": {
+            "seo-title": "免费 3D 相控阵模拟器：波束成形与天线阵列可视化",
+            "seo-desc-1": "直接在浏览器中探索相控阵波束指向。这个交互式射频工程工具可视化天线阵列几何、阵元间距、指向方向、3D 辐射瓣、简化互耦以及规定电流的 Huygens/Fraunhofer 场模型。",
+            "seo-desc-2": "该模拟器用于学习和实验：它不只依赖固定的 2D 天线方向图，而是使用基于矢量的场计算展示天线阵元如何在三维空间中叠加。",
+            "seo-start": "启动模拟器",
+            "seo-github": "在 GitHub 查看源代码",
+            "keyword-phased-array-simulator": "相控阵模拟器",
+            "keyword-antenna-array-visualizer": "天线阵列可视化",
+            "keyword-beamforming-tool": "波束成形工具",
+            "keyword-3d-radiation-pattern": "3D 辐射方向图",
+            "keyword-rf-engineering": "射频工程",
+            "source-card": "源代码：可在 <a href=\"https://github.com/luumei/phased-array-visualizer\" target=\"_blank\" rel=\"noopener noreferrer\">GitHub</a> 查看、fork 或改进项目。",
+            "canvas-controls-summary": "3D 视图设置与控制",
+            "mouse-controls-label": "3D 控制：",
+            "mouse-left": "左键：旋转",
+            "mouse-right": "右键：移动",
+            "mouse-scroll": "滚轮：缩放",
+            "mouse-double": "双击：全屏",
+            "x-elements": "X 阵元：",
+            "z-elements": "Z 阵元：",
+            "spacing": "间距：",
+            "taper": "加权：",
+            "uniform": "均匀",
+            "dolph-chebyshev": "Dolph-Chebyshev",
+            "chebyshev-sll": "Chebyshev 旁瓣电平：",
+            "taper-note": "Chebyshev 加权改变幅度而不是相位。对于 2D 阵列，本演示使用可分离权重：<span class=\"font-mono\">w(x,z)=w_x(x)·w_z(z)</span>。阵元越多，主瓣越窄；加权主要控制旁瓣。",
+            "table-symbol": "符号",
+            "table-definition": "定义",
+            "practical-workflow-title": "实际流程：先求解源，再组合场",
+            "practical-workflow-desc": "这里展示的方法是第二步：由已知或假设的等效电流计算场。在真实天线项目中，这些源通常先通过测量或全波方法获得，然后再用叠加快速组合多个阵元。",
+            "practical-workflow-li-1": "FEM 或 FDTD 在体积中求解场；矩量法（MoM）通常通过积分方程求解表面电流。",
+            "practical-workflow-li-2": "一旦已知 $J(\\vec r)$，就可以直接计算辐射积分，而不必再次求解 MoM。",
+            "practical-workflow-li-3": "对于紧密阵列，互耦和变化的阵元电流仍然重要。粗略来说，$\\lambda/2$ 间距比 $\\lambda/4$ 更适合弱耦合。",
+            "mutual-coupling": "互耦：",
+            "coupling-strength": "耦合估计：",
+            "param-w": "$w_{n,p} \\propto J(\\vec r_{n,p})\\Delta S_p$：由局部电流密度和面积得到的子面片权重",
+            "subpatch-accuracy-note": "重要：子面片求和是 Huygens/电流源近似。子面片越小、局部电流分布 $J(\\vec r)$ 越准确，结果越好。在本演示中 $J$ 被大幅简化。可选互耦模型会修改每个天线阵元电流，但仍不是全波解；真实 patch 电流、基板效应和强互耦需要 FEM/MoM/FDTD 或测量。"
+      },
+      "ja": {
+            "seo-title": "無料3Dフェーズドアレイシミュレータ：ビームフォーミングとアンテナアレイ可視化",
+            "seo-desc-1": "ブラウザ上でフェーズドアレイのビームステアリングを確認できます。このRFエンジニアリング向けインタラクティブツールは、アンテナアレイ形状、素子間隔、ステアリング方向、3D放射ローブ、簡易相互結合、規定電流によるHuygens/Fraunhofer場モデルを可視化します。",
+            "seo-desc-2": "このシミュレータは学習と実験向けです。固定された2Dアンテナパターンだけに頼らず、ベクトルベースの場計算でアンテナ素子が3D空間でどのように合成されるかを示します。",
+            "seo-start": "シミュレータを開始",
+            "seo-github": "GitHubでソースコードを見る",
+            "keyword-phased-array-simulator": "フェーズドアレイシミュレータ",
+            "keyword-antenna-array-visualizer": "アンテナアレイ可視化",
+            "keyword-beamforming-tool": "ビームフォーミングツール",
+            "keyword-3d-radiation-pattern": "3D放射パターン",
+            "keyword-rf-engineering": "RFエンジニアリング",
+            "source-card": "ソースコード：<a href=\"https://github.com/luumei/phased-array-visualizer\" target=\"_blank\" rel=\"noopener noreferrer\">GitHub</a> で閲覧、フォーク、改善できます。",
+            "canvas-controls-summary": "3D表示設定と操作",
+            "mouse-controls-label": "3D操作：",
+            "mouse-left": "左クリック：回転",
+            "mouse-right": "右クリック：移動",
+            "mouse-scroll": "スクロール：ズーム",
+            "mouse-double": "ダブルクリック：全画面",
+            "x-elements": "X素子：",
+            "z-elements": "Z素子：",
+            "spacing": "間隔：",
+            "taper": "テーパー：",
+            "uniform": "均一",
+            "dolph-chebyshev": "Dolph-Chebyshev",
+            "chebyshev-sll": "Chebyshev SLL：",
+            "taper-note": "Chebyshevテーパーは位相ではなく振幅を変えます。2Dアレイでは、このデモは分離可能な重み <span class=\"font-mono\">w(x,z)=w_x(x)·w_z(z)</span> を使います。素子数が増えると主ローブは狭くなり、テーパーは主にサイドローブを制御します。",
+            "table-symbol": "記号",
+            "table-definition": "定義",
+            "practical-workflow-title": "実用的な流れ：まず源を解き、その後に場を合成",
+            "practical-workflow-desc": "ここで示す方法は第2段階です。既知または仮定した等価電流から場を計算します。実際のアンテナ設計では、これらの源は測定や全波解析で先に求められ、その後、多数のアレイ素子を重ね合わせで高速に合成します。",
+            "practical-workflow-li-1": "FEMやFDTDは体積内の場を解きます。モーメント法（MoM）は通常、積分方程式で表面電流を解きます。",
+            "practical-workflow-li-2": "$J(\\vec r)$ が分かれば、MoMを再度解かずに放射積分を直接評価できます。",
+            "practical-workflow-li-3": "近接したアレイでは、相互結合と変化した素子電流が重要です。経験則として、弱い結合には $\\lambda/4$ より $\\lambda/2$ 間隔の方が安全です。",
+            "mutual-coupling": "相互結合：",
+            "coupling-strength": "結合の推定：",
+            "param-w": "$w_{n,p} \\propto J(\\vec r_{n,p})\\Delta S_p$：局所電流密度と面積によるサブパッチ重み",
+            "subpatch-accuracy-note": "重要：サブパッチ和はHuygens/電流源近似です。サブパッチを小さくし、局所電流分布 $J(\\vec r)$ が分かっているほど改善します。このデモでは $J$ を大きく単純化しています。オプションの結合モデルは各アンテナ素子電流を変更しますが、全波解ではありません。実際のパッチ電流、基板効果、強い相互結合にはFEM/MoM/FDTDまたは測定が必要です。"
+      }
+};
+    Object.keys(translationPatches).forEach(lang => {
+      translations[lang] = Object.assign({}, translations[lang] || {}, translationPatches[lang]);
+    });
+
+    const themeTranslationPatches = {
+      de: { "theme-label": "Darstellung:", "theme-system": "System", "theme-light": "Hell", "theme-dark": "Dunkel", "canvas-theme-label": "3D-Hintergrund:", "canvas-theme-auto": "Auto", "canvas-theme-light": "Hell", "canvas-theme-dark": "Dunkel" },
+      en: { "theme-label": "Appearance:", "theme-system": "System", "theme-light": "Light", "theme-dark": "Dark", "canvas-theme-label": "3D background:", "canvas-theme-auto": "Auto", "canvas-theme-light": "Light", "canvas-theme-dark": "Dark" },
+      fr: { "theme-label": "Apparence :", "theme-system": "Système", "theme-light": "Clair", "theme-dark": "Sombre", "canvas-theme-label": "Fond 3D :", "canvas-theme-auto": "Auto", "canvas-theme-light": "Clair", "canvas-theme-dark": "Sombre" },
+      es: { "theme-label": "Apariencia:", "theme-system": "Sistema", "theme-light": "Claro", "theme-dark": "Oscuro", "canvas-theme-label": "Fondo 3D:", "canvas-theme-auto": "Auto", "canvas-theme-light": "Claro", "canvas-theme-dark": "Oscuro" },
+      zh: { "theme-label": "外观：", "theme-system": "系统", "theme-light": "浅色", "theme-dark": "深色", "canvas-theme-label": "3D背景：", "canvas-theme-auto": "自动", "canvas-theme-light": "浅色", "canvas-theme-dark": "深色" },
+      ja: { "theme-label": "表示：", "theme-system": "システム", "theme-light": "ライト", "theme-dark": "ダーク", "canvas-theme-label": "3D背景：", "canvas-theme-auto": "自動", "canvas-theme-light": "ライト", "canvas-theme-dark": "ダーク" }
+    };
+    Object.keys(themeTranslationPatches).forEach(lang => {
+      translations[lang] = Object.assign({}, translations[lang] || {}, themeTranslationPatches[lang]);
+    });
+
+    // Theme Logic
+    function applyTheme(theme) {
+      const resolvedTheme = theme || 'system';
+      const root = document.documentElement;
+      if (resolvedTheme === 'system') {
+        root.removeAttribute('data-theme');
+      } else {
+        root.setAttribute('data-theme', resolvedTheme);
+      }
+      localStorage.setItem('appearance-theme', resolvedTheme);
+      const selector = document.getElementById('theme-select');
+      if (selector) selector.value = resolvedTheme;
+      applyCanvasBackground();
+      if (typeof onWindowResize === 'function') setTimeout(onWindowResize, 0);
+    }
+
+    function getResolvedAppearanceTheme() {
+      const savedTheme = localStorage.getItem('appearance-theme') || 'system';
+      if (savedTheme === 'light' || savedTheme === 'dark') return savedTheme;
+      return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    function getResolvedCanvasTheme() {
+      const savedCanvasTheme = localStorage.getItem('canvas-background-theme') || 'auto';
+      if (savedCanvasTheme === 'light' || savedCanvasTheme === 'dark') return savedCanvasTheme;
+      return getResolvedAppearanceTheme();
+    }
+
+    function applyCanvasBackground() {
+      const selected = localStorage.getItem('canvas-background-theme') || 'auto';
+      const selector = document.getElementById('canvas-theme-select');
+      if (selector) selector.value = selected;
+
+      const resolvedCanvasTheme = getResolvedCanvasTheme();
+      const bgColor = resolvedCanvasTheme === 'dark' ? 0x05070d : 0xf0f9ff;
+      const containerBg = resolvedCanvasTheme === 'dark'
+        ? 'linear-gradient(180deg, #05070d 0%, #0f172a 100%)'
+        : 'linear-gradient(180deg, #f0f9ff 0%, #e0f2fe 100%)';
+
+      if (scene) scene.background = new THREE.Color(bgColor);
+      if (renderer) renderer.setClearColor(bgColor, 1);
+
+      const container = document.getElementById('canvas-container');
+      if (container) container.style.background = containerBg;
+    }
+
+    function setupCanvasThemeSelector() {
+      const selector = document.getElementById('canvas-theme-select');
+      if (!selector) return;
+      const savedCanvasTheme = localStorage.getItem('canvas-background-theme') || 'auto';
+      selector.value = savedCanvasTheme;
+      applyCanvasBackground();
+      selector.addEventListener('change', e => {
+        localStorage.setItem('canvas-background-theme', e.target.value || 'auto');
+        applyCanvasBackground();
+      });
+      if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => applyCanvasBackground());
+      }
+    }
+
+    function setupThemeSelector() {
+      const selector = document.getElementById('theme-select');
+      if (!selector) return;
+      const savedTheme = localStorage.getItem('appearance-theme') || 'system';
+      applyTheme(savedTheme);
+      selector.addEventListener('change', e => applyTheme(e.target.value));
+    }
+
     // Translation Logic
     function applyTranslations(lang) {
+      const active = translations[lang] || translations.en;
+      document.documentElement.lang = lang || 'en';
       document.querySelectorAll('[data-lang]').forEach(element => {
         const key = element.getAttribute('data-lang');
-        if (translations[lang] && translations[lang][key]) {
-          element.innerHTML = translations[lang][key];
+        const value = active[key] || translations.en[key];
+        if (value) {
+          element.innerHTML = value;
+        } else {
+          console.warn('Missing translation key:', key);
         }
       });
-      document.title = "Free 3D Phased Array Simulator – Beamforming & Antenna Array Visualizer";
+      document.title = active['seo-title'] || "Free 3D Phased Array Simulator – Beamforming & Antenna Array Visualizer";
       if (typeof MathJax !== 'undefined' && MathJax.startup && MathJax.startup.promise) {
         MathJax.startup.promise.then(() => MathJax.typesetPromise());
       }
@@ -2128,6 +2498,7 @@ window.MathJax = {
       renderer = new THREE.WebGLRenderer({ antialias: true });
       renderer.setSize(container.clientWidth, container.clientHeight);
       container.appendChild(renderer.domElement);
+      applyCanvasBackground();
 
       // Controls and Lights
       controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -2665,17 +3036,11 @@ window.MathJax = {
         init();
         setupEventListeners();
         setupCanvasViewControls();
+        setupThemeSelector();
+        setupCanvasThemeSelector();
         applyTranslations(document.getElementById('language-select').value);
     });
   </script>
-
-<footer style="margin-top:40px; font-size:0.9em; color:#666; text-align:center;">
-  © 2026 phased-array-simulator.com – Phased Array Visualization<br>
-  Open source:
-  <a href="https://github.com/DEIN-USERNAME/DEIN-REPO" target="_blank" style="color:#666;">
-    GitHub Repository
-  </a>
-</footer>
 
 </body>
 </html>
