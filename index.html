@@ -24,6 +24,7 @@ SOFTWARE.
 Project website: https://phased-array-simulator.com
 -->
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <script>
@@ -37,23 +38,23 @@ window.MathJax = {
 <script async="True" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Free 3D Phased Array Simulator – Beamforming & Antenna Array Visualizer</title>
-<meta name="description" content="Free interactive 3D phased array simulator for antenna array beamforming, steering direction, element spacing, radiation patterns and simplified prescribed-current Huygens-style/Fraunhofer field visualization.">
-<meta name="keywords" content="phased array simulator, antenna array simulator, beamforming simulator, phased array visualizer, antenna array visualization, 3D radiation pattern, RF engineering tool, antenna pattern calculator, 3D field far field, Fraunhofer array factor">
-<meta name="author" content="phased-array-simulator.com">
-<meta name="copyright" content="Copyright (c) 2026 phased-array-simulator.com">
-<meta name="license" content="MIT">
-<meta name="application-name" content="Phased Array Simulator">
-<meta name="robots" content="index, follow, max-image-preview:large">
-<link rel="canonical" href="https://phased-array-simulator.com/">
-<meta property="og:title" content="Free 3D Phased Array Simulator">
-<meta property="og:description" content="Explore phased array beam steering, antenna array spacing, radiation lobes and simplified prescribed-current Huygens-style/Fraunhofer models in an interactive 3D browser tool.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://phased-array-simulator.com/">
-<meta property="og:site_name" content="phased-array-simulator.com">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Free 3D Phased Array Simulator">
-<meta name="twitter:description" content="Interactive RF tool for phased array beamforming and antenna array visualization in 3D.">
+<title>Free 3D Phased Array Simulator – Beamforming &amp; Antenna Array Visualizer</title>
+<meta content="Free interactive 3D phased array simulator for antenna array beamforming, steering direction, element spacing, radiation patterns and simplified prescribed-current Huygens-style/Fraunhofer field visualization." name="description"/>
+<meta content="phased array simulator, antenna array simulator, beamforming simulator, phased array visualizer, antenna array visualization, 3D radiation pattern, RF engineering tool, antenna pattern calculator, 3D field far field, Fraunhofer array factor" name="keywords"/>
+<meta content="phased-array-simulator.com" name="author"/>
+<meta content="Copyright (c) 2026 phased-array-simulator.com" name="copyright"/>
+<meta content="MIT" name="license"/>
+<meta content="Phased Array Simulator" name="application-name"/>
+<meta content="index, follow, max-image-preview:large" name="robots"/>
+<link href="https://phased-array-simulator.com/" rel="canonical"/>
+<meta content="Free 3D Phased Array Simulator" property="og:title"/>
+<meta content="Explore phased array beam steering, antenna array spacing, radiation lobes and simplified prescribed-current Huygens-style/Fraunhofer models in an interactive 3D browser tool." property="og:description"/>
+<meta content="website" property="og:type"/>
+<meta content="https://phased-array-simulator.com/" property="og:url"/>
+<meta content="phased-array-simulator.com" property="og:site_name"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Free 3D Phased Array Simulator" name="twitter:title"/>
+<meta content="Interactive RF tool for phased array beamforming and antenna array visualization in 3D." name="twitter:description"/>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -79,8 +80,8 @@ window.MathJax = {
   "keywords": "phased array simulator, antenna array simulator, beamforming, antenna visualizer, RF engineering"
 }
 </script>
-<meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0b0b0f" media="(prefers-color-scheme: dark)">
+<meta content="#f5f5f7" media="(prefers-color-scheme: light)" name="theme-color"/>
+<meta content="#0b0b0f" media="(prefers-color-scheme: dark)" name="theme-color"/>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
@@ -430,7 +431,7 @@ window.MathJax = {
     }
 
     .container {
-      padding-bottom: 2rem !important;
+      padding-bottom: 4.5rem !important;
     }
 
     .header-section {
@@ -588,7 +589,54 @@ window.MathJax = {
     .toggle-slider:before {
       box-shadow: 0 2px 8px rgba(0,0,0,0.25);
     }
-@media (prefers-color-scheme: dark) {
+
+    .lumeitech-footer {
+      position: fixed;
+      left: 50%;
+      bottom: 14px;
+      transform: translateX(-50%);
+      z-index: 2147483000;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.48rem 0.85rem;
+      border-radius: 999px;
+      border: 1px solid var(--lt-border);
+      background: var(--lt-surface-strong);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      box-shadow: var(--lt-shadow-soft);
+      color: var(--lt-muted);
+      font-size: 12px;
+      line-height: 1;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .lumeitech-footer a {
+      color: var(--lt-blue);
+      text-decoration: none;
+      font-weight: 650;
+    }
+
+    .lumeitech-footer a:hover {
+      text-decoration: underline;
+    }
+
+    .lumeitech-mark {
+      width: 18px;
+      height: 18px;
+      border-radius: 6px;
+      display: inline-grid;
+      place-items: center;
+      background: linear-gradient(135deg, #0071e3, #af52de);
+      color: #fff;
+      font-weight: 800;
+      font-size: 11px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.32);
+    }
+
+    @media (prefers-color-scheme: dark) {
       :root {
         --lt-bg: #0b0b0f;
         --lt-surface: rgba(28, 28, 30, 0.68);
@@ -619,7 +667,17 @@ window.MathJax = {
         background: #f5f5f7 !important;
       }
     }
-.seo-hero {
+
+    @media (max-width: 640px) {
+      .lumeitech-footer {
+        bottom: 10px;
+        max-width: calc(100vw - 24px);
+        font-size: 11px;
+        padding: 0.44rem 0.65rem;
+      }
+    }
+
+    .seo-hero {
       margin: 1rem 0 1.25rem;
       padding: clamp(1.3rem, 3vw, 2.4rem);
       border: 1px solid var(--lt-border);
@@ -867,92 +925,88 @@ window.MathJax = {
 <div class="container mx-auto max-w-7xl">
 <!-- Header Section -->
 <div class="header-section flex flex-col md:flex-row items-center md:justify-between mb-4">
-  <h1 class="text-xl sm:text-2xl font-bold text-gray-800 mb-2 md:mb-0" data-lang="title">Free 3D Phased Array Simulator</h1>
-  <div class="header-tools">
-    <div class="theme-selector">
-      <span data-lang="theme-label">Appearance:</span>
-      <select class="border rounded px-2 py-1 text-sm" id="theme-select" aria-label="Appearance">
-        <option value="system" data-lang="theme-system">System</option>
-        <option value="light" data-lang="theme-light">Light</option>
-        <option value="dark" data-lang="theme-dark">Dark</option>
-      </select>
-    </div>
-    <div class="language-selector flex items-center">
-      <select class="border rounded px-2 py-1 text-sm" id="language-select" aria-label="Language">
-        <option value="de">Deutsch</option>
-        <option value="en" selected>English</option>
-        <option value="fr">Français</option>
-        <option value="es">Español</option>
-        <option value="zh">中文</option>
-        <option value="ja">日本語</option>
-      </select>
-    </div>
-  </div>
+<h1 class="text-xl sm:text-2xl font-bold text-gray-800 mb-2 md:mb-0" data-lang="title">Free 3D Phased Array Simulator</h1>
+<div class="header-tools">
+<div class="theme-selector">
+<span data-lang="theme-label">Appearance:</span>
+<select aria-label="Appearance" class="border rounded px-2 py-1 text-sm" id="theme-select">
+<option data-lang="theme-system" value="system">System</option>
+<option data-lang="theme-light" value="light">Light</option>
+<option data-lang="theme-dark" value="dark">Dark</option>
+</select>
 </div>
-
-<section class="seo-hero" aria-labelledby="seo-title">
-  <h2 id="seo-title" data-lang="seo-title">Free 3D Phased Array Simulator for Beamforming & Antenna Array Visualization</h2>
-  <p data-lang="seo-desc-1">
+<div class="language-selector flex items-center">
+<select aria-label="Language" class="border rounded px-2 py-1 text-sm" id="language-select">
+<option value="de">Deutsch</option>
+<option selected="" value="en">English</option>
+<option value="fr">Français</option>
+<option value="es">Español</option>
+<option value="zh">中文</option>
+<option value="ja">日本語</option>
+</select>
+</div>
+</div>
+</div>
+<section aria-labelledby="seo-title" class="seo-hero">
+<h2 data-lang="seo-title" id="seo-title">Free 3D Phased Array Simulator for Beamforming &amp; Antenna Array Visualization</h2>
+<p data-lang="seo-desc-1">
     Explore phased array beam steering directly in the browser. This interactive RF engineering tool visualizes antenna array geometry, element spacing, steering direction, 3D radiation lobes, simplified mutual coupling and prescribed-current Huygens-style/Fraunhofer behavior.
   </p>
-  <p data-lang="seo-desc-2">
+<p data-lang="seo-desc-2">
     The simulator is designed for learning and experimentation: instead of relying only on fixed 2D antenna pattern pictures, it uses vector-based field calculations to show how antenna elements combine in 3D space.
   </p>
-  <div class="seo-actions">
-    <a class="seo-pill primary" href="#canvas-container" data-lang="seo-start">Start the simulator</a>
-    <a class="seo-pill" href="https://github.com/luumei/phased-array-visualizer" target="_blank" rel="noopener noreferrer" data-lang="seo-github">View source code on GitHub</a>
-  </div>
-  <div class="seo-keywords" aria-label="Main topics">
-    <span data-lang="keyword-phased-array-simulator">phased array simulator</span>
-    <span data-lang="keyword-antenna-array-visualizer">antenna array visualizer</span>
-    <span data-lang="keyword-beamforming-tool">beamforming tool</span>
-    <span data-lang="keyword-3d-radiation-pattern">3D radiation pattern</span>
-    <span data-lang="keyword-rf-engineering">RF engineering</span>
-  </div>
-  <div class="source-card" data-lang="source-card">
+<div class="seo-actions">
+<a class="seo-pill primary" data-lang="seo-start" href="#canvas-container">Start the simulator</a>
+<a class="seo-pill" data-lang="seo-github" href="https://github.com/luumei/phased-array-visualizer" rel="noopener noreferrer" target="_blank">View source code on GitHub</a>
+</div>
+<div aria-label="Main topics" class="seo-keywords">
+<span data-lang="keyword-phased-array-simulator">phased array simulator</span>
+<span data-lang="keyword-antenna-array-visualizer">antenna array visualizer</span>
+<span data-lang="keyword-beamforming-tool">beamforming tool</span>
+<span data-lang="keyword-3d-radiation-pattern">3D radiation pattern</span>
+<span data-lang="keyword-rf-engineering">RF engineering</span>
+</div>
+<div class="source-card" data-lang="source-card">
     Source code: inspect, fork or improve the project on
-    <a href="https://github.com/luumei/phased-array-visualizer" target="_blank" rel="noopener noreferrer">GitHub</a>.
+    <a href="https://github.com/luumei/phased-array-visualizer" rel="noopener noreferrer" target="_blank">GitHub</a>.
   </div>
 </section>
-
 <!-- Main Grid Container -->
 <div class="grid-container">
-
 <!-- 3D Canvas Section -->
 <div class="canvas-section">
-<details class="canvas-controls-details" open>
-  <summary data-lang="canvas-controls-summary">3D view settings & controls</summary>
-  <div class="canvas-controls-inner">
-    <div class="canvas-toolbar">
-      <div class="canvas-size-control">
-        <label class="text-sm font-medium whitespace-nowrap" for="canvas-height-slider" data-lang="view-size">3D view size:</label>
-        <input id="canvas-height-slider" type="range" min="180" max="850" step="10" value="300" />
-        <span class="text-sm w-14 text-right" id="canvas-height-value">300 px</span>
-      </div>
-      <div class="theme-selector canvas-bg-toolbar">
-        <span data-lang="canvas-theme-label">3D background:</span>
-        <select class="border rounded px-2 py-1 text-sm" id="canvas-theme-select" aria-label="3D background">
-          <option value="auto" data-lang="canvas-theme-auto">Auto</option>
-          <option value="light" data-lang="canvas-theme-light">Light</option>
-          <option value="dark" data-lang="canvas-theme-dark">Dark</option>
-        </select>
-      </div>
-      <button class="btn" id="fullscreen-3d" type="button" data-lang="fullscreen-3d">Fullscreen 3D</button>
-    </div>
-    <div class="mouse-help" aria-label="3D mouse controls">
-      <strong data-lang="mouse-controls-label">3D controls:</strong>
-      <span class="mouse-chip" data-lang="mouse-left">Left mouse: rotate</span>
-      <span class="mouse-chip" data-lang="mouse-right">Right mouse: move</span>
-      <span class="mouse-chip" data-lang="mouse-scroll">Scroll: zoom</span>
-      <span class="mouse-chip" data-lang="mouse-double">Double-click: fullscreen</span>
-    </div>
-  </div>
+<details class="canvas-controls-details" open="">
+<summary data-lang="canvas-controls-summary">3D view settings &amp; controls</summary>
+<div class="canvas-controls-inner">
+<div class="canvas-toolbar">
+<div class="canvas-size-control">
+<label class="text-sm font-medium whitespace-nowrap" data-lang="view-size" for="canvas-height-slider">3D view size:</label>
+<input id="canvas-height-slider" max="850" min="180" step="10" type="range" value="300"/>
+<span class="text-sm w-14 text-right" id="canvas-height-value">300 px</span>
+</div>
+<div class="theme-selector canvas-bg-toolbar">
+<span data-lang="canvas-theme-label">3D background:</span>
+<select aria-label="3D background" class="border rounded px-2 py-1 text-sm" id="canvas-theme-select">
+<option data-lang="canvas-theme-auto" value="auto">Auto</option>
+<option data-lang="canvas-theme-light" value="light">Light</option>
+<option data-lang="canvas-theme-dark" value="dark">Dark</option>
+</select>
+</div>
+<button class="btn" data-lang="fullscreen-3d" id="fullscreen-3d" type="button">Fullscreen 3D</button>
+</div>
+<div aria-label="3D mouse controls" class="mouse-help">
+<strong data-lang="mouse-controls-label">3D controls:</strong>
+<span class="mouse-chip" data-lang="mouse-left">Left mouse: rotate</span>
+<span class="mouse-chip" data-lang="mouse-right">Right mouse: move</span>
+<span class="mouse-chip" data-lang="mouse-scroll">Scroll: zoom</span>
+<span class="mouse-chip" data-lang="mouse-double">Double-click: fullscreen</span>
+</div>
+</div>
 </details>
 <div class="canvas-container" id="canvas-container">
-    <canvas id="watermark-canvas"></canvas>
+<canvas id="watermark-canvas"></canvas>
 </div>
 </div>
-
 <!-- Controls and Info Section -->
 <div class="controls-and-info controls-panel-grid">
 <div class="controls mb-6">
@@ -960,21 +1014,27 @@ window.MathJax = {
 <h2 class="text-lg sm:text-xl font-semibold" data-lang="visualization-settings">Visualisierungseinstellungen</h2>
 </div>
 <div class="flex items-center mb-2 w-full">
-  <span class="mr-2 text-sm font-medium" data-lang="antenna-type">Antennentyp:</span>
-  <select class="border rounded px-2 py-1 text-sm pattern-type-selector flex-grow" id="pattern-type">
-    <option data-lang="isotropic" value="isotropic">Isotrop</option>
-    <option data-lang="patch" value="patch" selected>Patch (Direktional)</option>
-  </select>
+<span class="mr-2 text-sm font-medium" data-lang="antenna-type">Antennentyp:</span>
+<select class="border rounded px-2 py-1 text-sm pattern-type-selector flex-grow" id="pattern-type">
+<option data-lang="isotropic" value="isotropic">Isotrop</option>
+<option data-lang="patch" selected="" value="patch">Patch (Direktional)</option>
+</select>
 </div>
 <div class="flex items-center mb-4 w-full">
-    <span class="mr-2 text-sm" data-lang="pattern-display">Musterdarstellung:</span>
-    <select class="border rounded px-2 py-1 flex-grow" id="pattern-display">
-        <!-- Default: lobe/3D magnitude shape, easier for non-specialists to understand. -->
-        <option data-lang="hemisphere" value="hemisphere">Farbkodierte Hemisphäre</option>
-        <option data-lang="3d-shape" value="3d" selected>Keulenform (3D-Magnitude)</option>
-    </select>
+<span class="mr-2 text-sm" data-lang="pattern-display">Musterdarstellung:</span>
+<select class="border rounded px-2 py-1 flex-grow" id="pattern-display">
+<!-- Default: lobe/3D magnitude shape, easier for non-specialists to understand. -->
+<option data-lang="hemisphere" value="hemisphere">Farbkodierte Hemisphäre</option>
+<option data-lang="3d-shape" selected="" value="3d">Keulenform (3D-Magnitude)</option>
+</select>
 </div>
-
+<div class="flex items-center mb-4 w-full">
+<span class="mr-2 text-sm" data-lang="field-quantity-label">Displayed quantity:</span>
+<select class="border rounded px-2 py-1 flex-grow" id="field-quantity">
+<option data-lang="field-power" selected="" value="power">Power / intensity |E|²</option>
+<option data-lang="field-amplitude" value="amplitude">Field amplitude |E|</option>
+</select>
+</div>
 <div class="flex flex-wrap -mx-2">
 <div class="w-full px-2 mb-4">
 <h3 class="font-medium mb-2" data-lang="steering-direction">Steuerungsrichtung (Beam Steering)</h3>
@@ -989,11 +1049,11 @@ window.MathJax = {
 <span class="slider-value" id="steering-elevation-value">75°</span>
 </div>
 <div class="flex items-center mt-2">
-    <span class="mr-2 text-sm" data-lang="show-steering-point">Steuerungspunkt anzeigen:</span>
-    <label class="toggle-switch">
-        <input id="show-steering-point-toggle" type="checkbox" checked/>
-        <span class="toggle-slider"></span>
-    </label>
+<span class="mr-2 text-sm" data-lang="show-steering-point">Steuerungspunkt anzeigen:</span>
+<label class="toggle-switch">
+<input checked="" id="show-steering-point-toggle" type="checkbox"/>
+<span class="toggle-slider"></span>
+</label>
 </div>
 </div>
 <div class="w-full px-2 mb-4">
@@ -1014,51 +1074,51 @@ window.MathJax = {
 <span class="slider-value" id="observation-distance-value">20</span>
 </div>
 <div class="flex items-center mt-2">
-    <span class="mr-2 text-sm" data-lang="sync-observation">Beobachtung = Steuerung:</span>
-    <label class="toggle-switch">
-        <input id="sync-observation-toggle" type="checkbox" checked/>
-        <span class="toggle-slider"></span>
-    </label>
+<span class="mr-2 text-sm" data-lang="sync-observation">Beobachtung = Steuerung:</span>
+<label class="toggle-switch">
+<input checked="" id="sync-observation-toggle" type="checkbox"/>
+<span class="toggle-slider"></span>
+</label>
 </div>
 <div class="flex items-center mt-2">
-    <span class="mr-2 text-sm" data-lang="show-observation-point">Beobachtungspunkt anzeigen:</span>
-    <label class="toggle-switch">
-        <input id="show-observation-point-toggle" type="checkbox" checked/>
-        <span class="toggle-slider"></span>
-    </label>
+<span class="mr-2 text-sm" data-lang="show-observation-point">Beobachtungspunkt anzeigen:</span>
+<label class="toggle-switch">
+<input checked="" id="show-observation-point-toggle" type="checkbox"/>
+<span class="toggle-slider"></span>
+</label>
 </div>
 </div>
 </div>
 <div class="array-config-section mt-4">
 <h3 class="font-medium mb-2" data-lang="antenna-array-config">Antenna array configuration (XZ-plane)</h3>
 <div class="array-config-controls grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3 mb-3">
-  <div class="slider-container">
-    <label for="array-x-count" data-lang="x-elements">X elements:</label>
-    <input class="w-full" id="array-x-count" max="9" min="3" step="1" type="range" value="5"/>
-    <span class="slider-value" id="array-x-count-value">5</span>
-  </div>
-  <div class="slider-container">
-    <label for="array-z-count" data-lang="z-elements">Z elements:</label>
-    <input class="w-full" id="array-z-count" max="9" min="3" step="1" type="range" value="5"/>
-    <span class="slider-value" id="array-z-count-value">5</span>
-  </div>
-  <div class="slider-container">
-    <label for="element-spacing" data-lang="spacing">Spacing:</label>
-    <input class="w-full" id="element-spacing" max="1.00" min="0.25" step="0.05" type="range" value="0.50"/>
-    <span class="slider-value" id="element-spacing-value">0.50λ</span>
-  </div>
-  <div class="flex items-center gap-2">
-    <span class="text-sm font-medium" data-lang="taper">Taper:</span>
-    <select class="border rounded px-2 py-1 text-sm flex-grow" id="amplitude-taper">
-      <option value="uniform" selected data-lang="uniform">Uniform</option>
-      <option value="chebyshev" data-lang="dolph-chebyshev">Dolph-Chebyshev</option>
-    </select>
-  </div>
-  <div class="slider-container md:col-span-2" id="chebyshev-sidelobe-slider">
-    <label for="chebyshev-sidelobe" data-lang="chebyshev-sll">Chebyshev SLL:</label>
-    <input class="w-full" id="chebyshev-sidelobe" max="50" min="15" step="1" type="range" value="25"/>
-    <span class="slider-value" id="chebyshev-sidelobe-value">25 dB</span>
-  </div>
+<div class="slider-container">
+<label data-lang="x-elements" for="array-x-count">X elements:</label>
+<input class="w-full" id="array-x-count" max="9" min="3" step="1" type="range" value="5"/>
+<span class="slider-value" id="array-x-count-value">5</span>
+</div>
+<div class="slider-container">
+<label data-lang="z-elements" for="array-z-count">Z elements:</label>
+<input class="w-full" id="array-z-count" max="9" min="3" step="1" type="range" value="5"/>
+<span class="slider-value" id="array-z-count-value">5</span>
+</div>
+<div class="slider-container">
+<label data-lang="spacing" for="element-spacing">Spacing:</label>
+<input class="w-full" id="element-spacing" max="1.00" min="0.25" step="0.05" type="range" value="0.50"/>
+<span class="slider-value" id="element-spacing-value">0.50λ</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-sm font-medium" data-lang="taper">Taper:</span>
+<select class="border rounded px-2 py-1 text-sm flex-grow" id="amplitude-taper">
+<option data-lang="uniform" selected="" value="uniform">Uniform</option>
+<option data-lang="dolph-chebyshev" value="chebyshev">Dolph-Chebyshev</option>
+</select>
+</div>
+<div class="slider-container md:col-span-2" id="chebyshev-sidelobe-slider">
+<label data-lang="chebyshev-sll" for="chebyshev-sidelobe">Chebyshev SLL:</label>
+<input class="w-full" id="chebyshev-sidelobe" max="50" min="15" step="1" type="range" value="25"/>
+<span class="slider-value" id="chebyshev-sidelobe-value">25 dB</span>
+</div>
 <div class="taper-note text-xs text-gray-700 mt-2 mb-3 p-2 rounded bg-slate-50 border border-slate-200 md:col-span-2 xl:col-span-4" data-lang="taper-note">Chebyshev taper changes amplitudes, not phases. For a 2D array this demo uses separable weights: <span class="font-mono">w(x,z)=w_x(x)·w_z(z)</span>. More elements make the main lobe narrower; tapering mainly controls sidelobes.</div>
 </div>
 <div class="antenna-grid" id="antenna-grid"></div>
@@ -1067,82 +1127,79 @@ window.MathJax = {
 <div class="flex items-center mr-4 mb-2">
 <span class="mr-2" data-lang="waves">Wellen:</span>
 <label class="toggle-switch">
-<input checked id="show-waves" type="checkbox"/>
+<input checked="" id="show-waves" type="checkbox"/>
 <span class="toggle-slider"></span>
 </label>
 </div>
 <div class="flex items-center mr-4 mb-2">
 <span class="mr-2" data-lang="vectors">Vektoren:</span>
 <label class="toggle-switch">
-<input checked id="show-vectors" type="checkbox"/>
+<input checked="" id="show-vectors" type="checkbox"/>
 <span class="toggle-slider"></span>
 </label>
 </div>
 <div class="flex items-center mr-4 mb-2">
 <span class="mr-2" data-lang="far-field-pattern">Feldmuster:</span>
 <label class="toggle-switch">
-<input checked id="show-pattern" type="checkbox"/>
+<input checked="" id="show-pattern" type="checkbox"/>
 <span class="toggle-slider"></span>
 </label>
 </div>
 <div class="flex items-center mr-4 mb-2">
-    <span class="mr-2" data-lang="normalize-pattern">Muster normalisieren:</span>
-    <label class="toggle-switch">
-        <input id="normalize-pattern-toggle" type="checkbox" checked/>
-        <span class="toggle-slider"></span>
-    </label>
+<span class="mr-2" data-lang="normalize-pattern">Muster normalisieren:</span>
+<label class="toggle-switch">
+<input checked="" id="normalize-pattern-toggle" type="checkbox"/>
+<span class="toggle-slider"></span>
+</label>
 </div>
 <div class="flex items-center mr-4 mb-2">
-    <span class="mr-2" data-lang="mutual-coupling">Mutual coupling:</span>
-    <label class="toggle-switch">
-        <input id="mutual-coupling-toggle" type="checkbox"/>
-        <span class="toggle-slider"></span>
-    </label>
+<span class="mr-2" data-lang="mutual-coupling">Mutual coupling:</span>
+<label class="toggle-switch">
+<input id="mutual-coupling-toggle" type="checkbox"/>
+<span class="toggle-slider"></span>
+</label>
 </div>
 <div class="slider-container w-full md:w-1/2 mt-2" id="coupling-strength-slider">
-    <label data-lang="coupling-strength" for="coupling-strength">Coupling estimate:</label>
-    <input class="w-full" id="coupling-strength" max="-6" min="-30" step="1" type="range" value="-20"/>
-    <span class="slider-value" id="coupling-strength-value">-20 dB</span>
+<label data-lang="coupling-strength" for="coupling-strength">Coupling estimate:</label>
+<input class="w-full" id="coupling-strength" max="-6" min="-30" step="1" type="range" value="-20"/>
+<span class="slider-value" id="coupling-strength-value">-20 dB</span>
 </div>
 <div class="flex items-center mb-2">
-    <span class="mr-2 text-sm" data-lang="calculation-method-label">Berechnungsmethode:</span>
-    <select class="border rounded px-2 py-1" id="calculation-method">
-        <option value="false" data-lang="exact-method">Prescribed-current Huygens model</option>
-        <option value="true" data-lang="approximation-method" selected>Fraunhofer far field</option>
-    </select>
+<span class="mr-2 text-sm" data-lang="calculation-method-label">Berechnungsmethode:</span>
+<select class="border rounded px-2 py-1" id="calculation-method">
+<option data-lang="approximation-method" selected="" value="true">Fraunhofer far field</option>
+<option data-lang="exact-method" value="false">Prescribed-current Huygens model</option>
+</select>
 </div>
-
 </div>
 <div class="slider-container mt-4" id="subpatch-density-slider">
-    <label data-lang="subpatch-density" for="subpatch-density">Subpatch-Dichte:</label>
-    <input class="w-full" id="subpatch-density" max="10" min="1" step="1" type="range" value="3"/>
-    <span class="slider-value" id="subpatch-density-value">3x3</span>
+<label data-lang="subpatch-density" for="subpatch-density">Subpatch-Dichte:</label>
+<input class="w-full" id="subpatch-density" max="10" min="1" step="1" type="range" value="3"/>
+<span class="slider-value" id="subpatch-density-value">3x3</span>
 </div>
-
-<div id="approximation-note" class="text-sm text-gray-600 mt-2 p-2 bg-yellow-50 rounded">
-    <span data-lang="approximation-note-text"></span>
+<div class="text-sm text-gray-600 mt-2 p-2 bg-yellow-50 rounded" id="approximation-note">
+<span data-lang="approximation-note-text"></span>
 </div>
 </div>
 <div class="mt-4">
 <h3 class="font-medium mb-2 text-base" data-lang="observation-info">Beobachtungspunkt-Info:</h3>
 <div class="bg-blue-50 p-3 rounded" id="observation-info">
 <p class="text-sm"><span data-lang="direction">Richtung:</span> <span id="obs-direction">θ=75°, φ=10°</span></p>
-<p class="text-sm"><span data-lang="total-field-magnitude">Betrag des Gesamtfeldes:</span> <span id="array-factor-value">1.0</span></p>
+<p class="text-sm"><span data-lang="displayed-field-value">Displayed field value:</span> <span id="array-factor-value">1.0</span></p>
 <p class="text-sm"><span data-lang="exact-field-real-part">Re(A) Huygens model:</span> <span id="exact-field-real-part-value">0.0</span></p>
 <p class="text-sm" id="approx-field-info" style="display: none;"><span data-lang="approx-field-real-part">Re(A) Fraunhofer:</span> <span id="approx-field-real-part-value">0.0</span></p>
 <h4 class="font-medium mt-4 mb-2 text-base" data-lang="required-steering-phases">Erforderliche Phasenverschiebung zur Strahlsteuerung pro Antenne:</h4>
-<ul id="steering-phase-info" class="text-sm pl-5 list-disc">
+<ul class="text-sm pl-5 list-disc" id="steering-phase-info">
 </ul>
 </div>
 </div>
 </div>
-
 <!-- Explanations and Formulas Section -->
 <div class="explanations mt-6">
 <div class="bg-white rounded-lg shadow p-4 mb-6">
 <h2 class="text-lg sm:text-xl font-semibold mb-4" data-lang="array-factor"></h2>
 <p class="mb-4 text-sm" data-lang="array-factor-desc">
-          </p>
+</p>
 <div class="mb-4">
 <h3 class="font-medium mb-2 text-base" data-lang="formula-exact"></h3>
 <div class="bg-gray-100 p-3 rounded mb-2 math-box">
@@ -1174,71 +1231,81 @@ window.MathJax = {
 </div>
 <div class="physics-note text-sm" data-lang="subpatch-accuracy-note"></div>
 </div>
-
 <div class="bg-white rounded-lg shadow p-4 mb-6">
-    <h2 class="text-lg sm:text-xl font-semibold mb-4" data-lang="math-foundations-title"></h2>
-    <p class="mb-4 text-sm" data-lang="math-foundations-desc-helmholtz"></p>
-
-    <h3 class="font-medium mb-2 text-base" data-lang="helmholtz-derivation-title"></h3>
-    <p class="mb-2 text-sm" data-lang="helmholtz-source-text"></p>
-    <div class="bg-gray-100 p-3 rounded mb-4 math-box">
-        <p class="font-mono text-sm text-center" data-lang="helmholtz-source-eq"></p>
-    </div>
-
-    <p class="mb-2 text-sm" data-lang="green-intro-text"></p>
-    <div class="bg-gray-100 p-3 rounded mb-4 math-box">
-        <p class="font-mono text-sm text-center" data-lang="green-eq"></p>
-    </div>
-
-    <p class="mb-2 text-sm" data-lang="superposition-intro-text"></p>
-    <div class="bg-gray-100 p-3 rounded mb-4 math-box">
-        <p class="font-mono text-sm text-center" data-lang="superposition-eq"></p>
-    </div>
-
-    <p class="mb-2 text-sm" data-lang="free-green-intro-text"></p>
-    <div class="bg-gray-100 p-3 rounded mb-4 math-box">
-        <p class="font-mono text-sm text-center" data-lang="free-green-eq"></p>
-    </div>
-    
-    <p class="mb-2 text-sm" data-lang="show-this-by-text"></p>
-    <ul class="list-disc pl-5 space-y-1 text-sm mb-4">
-        <li data-lang="show-this-li-1"></li>
-        <li data-lang="show-this-li-2"></li>
-        <li data-lang="show-this-li-3"></li>
-    </ul>
-
-    <p class="mb-2 text-sm" data-lang="total-field-solution-text"></p>
-    <div class="bg-gray-100 p-3 rounded mb-4 math-box">
-        <p class="font-mono text-sm text-center" data-lang="total-field-solution-eq"></p>
-    </div>
-
-    <h3 class="font-medium mb-2 text-base" data-lang="application-to-surfaces-title"></h3>
-    <p class="mb-2 text-sm" data-lang="application-to-surfaces-text"></p>
-    <div class="bg-gray-100 p-3 rounded mb-4 math-box">
-        <p class="font-mono text-sm text-center" data-lang="application-to-surfaces-eq"></p>
-    </div>
-    <p class="text-sm" data-lang="application-to-surfaces-conclusion"></p>
+<h2 class="text-lg sm:text-xl font-semibold mb-4" data-lang="phasor-power-title"></h2>
+<p class="mb-3 text-sm" data-lang="phasor-power-desc-1"></p>
+<div class="bg-gray-100 p-3 rounded mb-4 math-box">
+<p class="font-mono text-sm text-center">
+$$E_{\text{phys}}(t)=\operatorname{Re}\left\{\tilde E(\vec R)e^{i\omega t}\right\}=|\tilde E(\vec R)|\cos(\omega t+\angle\tilde E)$$
+</p>
 </div>
-
+<p class="mb-3 text-sm" data-lang="phasor-power-desc-2"></p>
+<div class="bg-gray-100 p-3 rounded mb-4 math-box">
+<p class="font-mono text-sm text-center">
+$$\left\langle E_{\text{phys}}^2(t)\right\rangle_t=\frac{1}{2}|\tilde E(\vec R)|^2$$
+</p>
+</div>
+<p class="mb-3 text-sm" data-lang="phasor-power-desc-3"></p>
+<ul class="list-disc pl-5 space-y-1 text-sm">
+<li data-lang="phasor-power-li-1"></li>
+<li data-lang="phasor-power-li-2"></li>
+<li data-lang="phasor-power-li-3"></li>
+</ul>
+</div>
 <div class="bg-white rounded-lg shadow p-4 mb-6">
-    <h3 class="font-medium mb-2 text-base" data-lang="distance-approx-title"></h3>
-    <p class="mb-2 text-sm" data-lang="distance-approx-intro"></p>
-    <div class="bg-gray-100 p-3 rounded mb-4 math-box">
-        <p class="font-mono text-sm text-center" data-lang="distance-approx-exact-eq"></p>
-    </div>
-    <p class="mb-2 text-sm" data-lang="distance-approx-explanation"></p>
-    <div class="bg-gray-100 p-3 rounded mb-4 math-box">
-        <p class="font-mono text-sm text-center" data-lang="distance-approx-approx-eq"></p>
-    </div>
+<h2 class="text-lg sm:text-xl font-semibold mb-4" data-lang="math-foundations-title"></h2>
+<p class="mb-4 text-sm" data-lang="math-foundations-desc-helmholtz"></p>
+<h3 class="font-medium mb-2 text-base" data-lang="helmholtz-derivation-title"></h3>
+<p class="mb-2 text-sm" data-lang="helmholtz-source-text"></p>
+<div class="bg-gray-100 p-3 rounded mb-4 math-box">
+<p class="font-mono text-sm text-center" data-lang="helmholtz-source-eq"></p>
 </div>
-
+<p class="mb-2 text-sm" data-lang="green-intro-text"></p>
+<div class="bg-gray-100 p-3 rounded mb-4 math-box">
+<p class="font-mono text-sm text-center" data-lang="green-eq"></p>
+</div>
+<p class="mb-2 text-sm" data-lang="superposition-intro-text"></p>
+<div class="bg-gray-100 p-3 rounded mb-4 math-box">
+<p class="font-mono text-sm text-center" data-lang="superposition-eq"></p>
+</div>
+<p class="mb-2 text-sm" data-lang="free-green-intro-text"></p>
+<div class="bg-gray-100 p-3 rounded mb-4 math-box">
+<p class="font-mono text-sm text-center" data-lang="free-green-eq"></p>
+</div>
+<p class="mb-2 text-sm" data-lang="show-this-by-text"></p>
+<ul class="list-disc pl-5 space-y-1 text-sm mb-4">
+<li data-lang="show-this-li-1"></li>
+<li data-lang="show-this-li-2"></li>
+<li data-lang="show-this-li-3"></li>
+</ul>
+<p class="mb-2 text-sm" data-lang="total-field-solution-text"></p>
+<div class="bg-gray-100 p-3 rounded mb-4 math-box">
+<p class="font-mono text-sm text-center" data-lang="total-field-solution-eq"></p>
+</div>
+<h3 class="font-medium mb-2 text-base" data-lang="application-to-surfaces-title"></h3>
+<p class="mb-2 text-sm" data-lang="application-to-surfaces-text"></p>
+<div class="bg-gray-100 p-3 rounded mb-4 math-box">
+<p class="font-mono text-sm text-center" data-lang="application-to-surfaces-eq"></p>
+</div>
+<p class="text-sm" data-lang="application-to-surfaces-conclusion"></p>
+</div>
 <div class="bg-white rounded-lg shadow p-4 mb-6">
-    <h3 class="font-medium mb-2 text-base" data-lang="phase-delay-title"></h3>
-    <div class="bg-gray-100 p-3 rounded mb-4 math-box">
-        <p class="font-mono text-sm text-center" data-lang="phase-delay-eq"></p>
-    </div>
+<h3 class="font-medium mb-2 text-base" data-lang="distance-approx-title"></h3>
+<p class="mb-2 text-sm" data-lang="distance-approx-intro"></p>
+<div class="bg-gray-100 p-3 rounded mb-4 math-box">
+<p class="font-mono text-sm text-center" data-lang="distance-approx-exact-eq"></p>
 </div>
-
+<p class="mb-2 text-sm" data-lang="distance-approx-explanation"></p>
+<div class="bg-gray-100 p-3 rounded mb-4 math-box">
+<p class="font-mono text-sm text-center" data-lang="distance-approx-approx-eq"></p>
+</div>
+</div>
+<div class="bg-white rounded-lg shadow p-4 mb-6">
+<h3 class="font-medium mb-2 text-base" data-lang="phase-delay-title"></h3>
+<div class="bg-gray-100 p-3 rounded mb-4 math-box">
+<p class="font-mono text-sm text-center" data-lang="phase-delay-eq"></p>
+</div>
+</div>
 <div class="bg-white rounded-lg shadow p-4 mb-6">
 <h2 class="text-lg sm:text-xl font-semibold mb-4" data-lang="beam-steering-explained"></h2>
 <p class="mb-4 text-sm" data-lang="beam-steering-desc">
@@ -1258,7 +1325,6 @@ window.MathJax = {
 <p class="mb-4 text-sm" data-lang="steering-tip">
 </p>
 </div>
-
 <div class="bg-white rounded-lg shadow p-4 mb-6">
 <h2 class="text-lg sm:text-xl font-semibold mb-4" data-lang="fourier-transform-connection"></h2>
 <p class="mb-4 text-sm" data-lang="fourier-transform-desc">
@@ -1272,17 +1338,15 @@ window.MathJax = {
 <p class="mb-4 text-sm" data-lang="inverse-fourier">
 </p>
 </div>
-
 <div class="bg-white rounded-lg shadow p-4 mb-6">
 <h2 class="text-lg sm:text-xl font-semibold mb-4" data-lang="practical-workflow-title"></h2>
 <p class="mb-3 text-sm" data-lang="practical-workflow-desc"></p>
 <ul class="list-disc pl-5 space-y-1 text-sm">
-  <li data-lang="practical-workflow-li-1"></li>
-  <li data-lang="practical-workflow-li-2"></li>
-  <li data-lang="practical-workflow-li-3"></li>
+<li data-lang="practical-workflow-li-1"></li>
+<li data-lang="practical-workflow-li-2"></li>
+<li data-lang="practical-workflow-li-3"></li>
 </ul>
 </div>
-
 <div class="bg-white rounded-lg shadow p-4">
 <h2 class="text-lg sm:text-xl font-semibold mb-4" data-lang="symbol-definitions"></h2>
 <details>
@@ -1321,11 +1385,8 @@ window.MathJax = {
 </table>
 </details>
 </div>
-
 </div>
 </div>
-
-
 <script>
     // Self-executing anonymous function for watermark
     (function () {
@@ -2084,6 +2145,7 @@ window.MathJax = {
             "taper-note": "Chebyshev taper changes amplitudes, not phases. For a 2D array this demo uses separable weights: <span class=\"font-mono\">w(x,z)=w_x(x)·w_z(z)</span>. More elements make the main lobe narrower; tapering mainly controls sidelobes.",
             "table-symbol": "Symbol",
             "table-definition": "Definition",
+            "footer-html": "© 2026 phased-array-simulator.com – Phased Array Visualization <br>Open source: <a href=\"https://github.com/luumei/phased-array-visualizer\" target=\"_blank\" rel=\"noopener noreferrer\" style=\"color:#3b82f6; text-decoration:none;\">GitHub Repository</a> <br>Lukas Meienberger · <a href=\"mailto:lumeitech@gmail.com\" style=\"color:#3b82f6; text-decoration:none;\">lumeitech@gmail.com</a>",
             "practical-workflow-title": "Practical workflow: solve sources first, then combine fields",
             "practical-workflow-desc": "The method shown here is the second step: it computes fields from known or assumed equivalent currents. In real antenna projects, those sources are often obtained first from measurement or a full-wave method, then many array elements are combined quickly by superposition.",
             "practical-workflow-li-1": "FEM or FDTD solve fields in a volume; Method of Moments (MoM) usually solves surface currents through an integral equation.",
@@ -2122,6 +2184,7 @@ window.MathJax = {
             "taper-note": "Chebyshev-Taper verändert Amplituden, nicht Phasen. Für ein 2D-Array nutzt diese Demo separierbare Gewichte: <span class=\"font-mono\">w(x,z)=w_x(x)·w_z(z)</span>. Mehr Elemente machen die Hauptkeule schmaler; Tapering kontrolliert vor allem Nebenkeulen.",
             "table-symbol": "Symbol",
             "table-definition": "Definition",
+            "footer-html": "© 2026 phased-array-simulator.com – Phased Array Visualization <br>Open Source: <a href=\"https://github.com/luumei/phased-array-visualizer\" target=\"_blank\" rel=\"noopener noreferrer\" style=\"color:#3b82f6; text-decoration:none;\">GitHub Repository</a> <br>Lukas Meienberger · <a href=\"mailto:lumeitech@gmail.com\" style=\"color:#3b82f6; text-decoration:none;\">lumeitech@gmail.com</a>",
             "practical-workflow-title": "Praktischer Ablauf: zuerst Quellen lösen, dann Felder kombinieren",
             "practical-workflow-desc": "Die hier gezeigte Methode ist der zweite Schritt: Sie berechnet Felder aus bekannten oder angenommenen äquivalenten Strömen. In realen Antennenprojekten werden diese Quellen oft zuerst aus Messungen oder Full-Wave-Methoden gewonnen; danach lassen sich viele Array-Elemente schnell durch Superposition kombinieren.",
             "practical-workflow-li-1": "FEM oder FDTD lösen Felder in einem Volumen; die Momentenmethode (MoM) löst meist Oberflächenströme über eine Integralgleichung.",
@@ -2160,6 +2223,7 @@ window.MathJax = {
             "taper-note": "La pondération de Chebyshev modifie les amplitudes, pas les phases. Pour un réseau 2D, cette démo utilise des poids séparables : <span class=\"font-mono\">w(x,z)=w_x(x)·w_z(z)</span>. Plus d’éléments rendent le lobe principal plus étroit ; la pondération contrôle surtout les lobes secondaires.",
             "table-symbol": "Symbole",
             "table-definition": "Définition",
+            "footer-html": "© 2026 phased-array-simulator.com – Phased Array Visualization <br>Open source : <a href=\"https://github.com/luumei/phased-array-visualizer\" target=\"_blank\" rel=\"noopener noreferrer\" style=\"color:#3b82f6; text-decoration:none;\">GitHub Repository</a> <br>Lukas Meienberger · <a href=\"mailto:lumeitech@gmail.com\" style=\"color:#3b82f6; text-decoration:none;\">lumeitech@gmail.com</a>",
             "practical-workflow-title": "Flux pratique : résoudre les sources, puis combiner les champs",
             "practical-workflow-desc": "La méthode montrée ici est la deuxième étape : elle calcule les champs à partir de courants équivalents connus ou supposés. Dans de vrais projets d’antenne, ces sources sont souvent obtenues d’abord par mesure ou par une méthode full-wave, puis les éléments du réseau sont combinés rapidement par superposition.",
             "practical-workflow-li-1": "FEM ou FDTD résolvent les champs dans un volume ; la méthode des moments (MoM) résout généralement les courants de surface par une équation intégrale.",
@@ -2198,6 +2262,7 @@ window.MathJax = {
             "taper-note": "La ponderación Chebyshev cambia amplitudes, no fases. Para un array 2D esta demo usa pesos separables: <span class=\"font-mono\">w(x,z)=w_x(x)·w_z(z)</span>. Más elementos estrechan el lóbulo principal; la ponderación controla sobre todo los lóbulos laterales.",
             "table-symbol": "Símbolo",
             "table-definition": "Definición",
+            "footer-html": "© 2026 phased-array-simulator.com – Phased Array Visualization <br>Código abierto: <a href=\"https://github.com/luumei/phased-array-visualizer\" target=\"_blank\" rel=\"noopener noreferrer\" style=\"color:#3b82f6; text-decoration:none;\">GitHub Repository</a> <br>Lukas Meienberger · <a href=\"mailto:lumeitech@gmail.com\" style=\"color:#3b82f6; text-decoration:none;\">lumeitech@gmail.com</a>",
             "practical-workflow-title": "Flujo práctico: resolver fuentes y luego combinar campos",
             "practical-workflow-desc": "El método mostrado aquí es el segundo paso: calcula campos a partir de corrientes equivalentes conocidas o asumidas. En proyectos reales de antenas, esas fuentes suelen obtenerse primero mediante medición o métodos full-wave; después se combinan muchos elementos rápidamente por superposición.",
             "practical-workflow-li-1": "FEM o FDTD resuelven campos en un volumen; el Método de Momentos (MoM) normalmente resuelve corrientes superficiales mediante una ecuación integral.",
@@ -2236,6 +2301,7 @@ window.MathJax = {
             "taper-note": "Chebyshev 加权改变幅度而不是相位。对于 2D 阵列，本演示使用可分离权重：<span class=\"font-mono\">w(x,z)=w_x(x)·w_z(z)</span>。阵元越多，主瓣越窄；加权主要控制旁瓣。",
             "table-symbol": "符号",
             "table-definition": "定义",
+            "footer-html": "© 2026 phased-array-simulator.com – Phased Array Visualization <br>开源：<a href=\"https://github.com/luumei/phased-array-visualizer\" target=\"_blank\" rel=\"noopener noreferrer\" style=\"color:#3b82f6; text-decoration:none;\">GitHub Repository</a> <br>Lukas Meienberger · <a href=\"mailto:lumeitech@gmail.com\" style=\"color:#3b82f6; text-decoration:none;\">lumeitech@gmail.com</a>",
             "practical-workflow-title": "实际流程：先求解源，再组合场",
             "practical-workflow-desc": "这里展示的方法是第二步：由已知或假设的等效电流计算场。在真实天线项目中，这些源通常先通过测量或全波方法获得，然后再用叠加快速组合多个阵元。",
             "practical-workflow-li-1": "FEM 或 FDTD 在体积中求解场；矩量法（MoM）通常通过积分方程求解表面电流。",
@@ -2274,6 +2340,7 @@ window.MathJax = {
             "taper-note": "Chebyshevテーパーは位相ではなく振幅を変えます。2Dアレイでは、このデモは分離可能な重み <span class=\"font-mono\">w(x,z)=w_x(x)·w_z(z)</span> を使います。素子数が増えると主ローブは狭くなり、テーパーは主にサイドローブを制御します。",
             "table-symbol": "記号",
             "table-definition": "定義",
+            "footer-html": "© 2026 phased-array-simulator.com – Phased Array Visualization <br>オープンソース：<a href=\"https://github.com/luumei/phased-array-visualizer\" target=\"_blank\" rel=\"noopener noreferrer\" style=\"color:#3b82f6; text-decoration:none;\">GitHub Repository</a> <br>Lukas Meienberger · <a href=\"mailto:lumeitech@gmail.com\" style=\"color:#3b82f6; text-decoration:none;\">lumeitech@gmail.com</a>",
             "practical-workflow-title": "実用的な流れ：まず源を解き、その後に場を合成",
             "practical-workflow-desc": "ここで示す方法は第2段階です。既知または仮定した等価電流から場を計算します。実際のアンテナ設計では、これらの源は測定や全波解析で先に求められ、その後、多数のアレイ素子を重ね合わせで高速に合成します。",
             "practical-workflow-li-1": "FEMやFDTDは体積内の場を解きます。モーメント法（MoM）は通常、積分方程式で表面電流を解きます。",
@@ -2299,6 +2366,39 @@ window.MathJax = {
     };
     Object.keys(themeTranslationPatches).forEach(lang => {
       translations[lang] = Object.assign({}, translations[lang] || {}, themeTranslationPatches[lang]);
+    });
+
+    const powerTheoryPatches = {
+      de: {
+        "field-quantity-label": "Darstellung:",
+        "field-power": "Leistung / Intensität |E|²",
+        "field-amplitude": "Feldamplitude |E|",
+        "displayed-field-value": "Angezeigter Feldwert:",
+        "phasor-power-title": "Komplexe Feldamplitude, Realfeld und Leistung",
+        "phasor-power-desc-1": "Die Simulation rechnet mit der komplexen Feldamplitude $\\tilde E(\\vec R)$. Das ist kein zusätzlicher physikalischer Anteil, sondern ein Phasor: Betrag und Phase werden zusammen gespeichert. Das reale zeitabhängige Feld erhält man als Realteil.",
+        "phasor-power-desc-2": "Für ein stabiles Antennendiagramm schaut man normalerweise nicht auf die momentane Cosinus-Schwingung, sondern auf die zeitlich gemittelte Stärke. Der Mittelwert des Feldes selbst wäre null; der Mittelwert des Quadrats ist proportional zur Leistung.",
+        "phasor-power-desc-3": "Darum ist im Simulator standardmäßig Leistung / Intensität $|\\tilde E|^2$ ausgewählt. Die Alternative Feldamplitude $|\\tilde E|$ zeigt dieselben Maxima und Nullstellen, aber mit anderer Skalierung.",
+        "phasor-power-li-1": "$|\\tilde E|$ = Feldamplitude: gut für eine weiche visuelle Darstellung.",
+        "phasor-power-li-2": "$|\\tilde E|^2$ = Power Pattern / Intensität: Standard für Antennendiagramme.",
+        "phasor-power-li-3": "Der Faktor $1/R$ betrifft die Feldamplitude; die Leistung fällt wie $1/R^2$. Bei normalisierten Patterns wird dieser globale Abstandsfaktor entfernt."
+      },
+      en: {
+        "field-quantity-label": "Displayed quantity:",
+        "field-power": "Power / intensity |E|²",
+        "field-amplitude": "Field amplitude |E|",
+        "displayed-field-value": "Displayed field value:",
+        "phasor-power-title": "Complex field amplitude, real field, and power",
+        "phasor-power-desc-1": "The simulation computes the complex field amplitude $\\tilde E(\\vec R)$. This is not extra physics; it is a phasor that stores amplitude and phase together. The real time-dependent field is obtained by taking the real part.",
+        "phasor-power-desc-2": "For a stable antenna pattern, we normally do not plot the instantaneous cosine oscillation. We plot the time-averaged strength. The average field itself is zero, but the average squared field is proportional to power.",
+        "phasor-power-desc-3": "Therefore the simulator defaults to power / intensity $|\\tilde E|^2$. The alternative field amplitude $|\\tilde E|$ has the same maxima and nulls, but a different visual scaling.",
+        "phasor-power-li-1": "$|\\tilde E|$ = field amplitude: useful for a smoother visual shape.",
+        "phasor-power-li-2": "$|\\tilde E|^2$ = power pattern / intensity: standard for antenna diagrams.",
+        "phasor-power-li-3": "The factor $1/R$ affects field amplitude; power falls as $1/R^2$. In normalized patterns this global distance factor is removed."
+      }
+    };
+    ['fr','es','zh','ja'].forEach(lang => { powerTheoryPatches[lang] = powerTheoryPatches.en; });
+    Object.keys(powerTheoryPatches).forEach(lang => {
+      translations[lang] = Object.assign({}, translations[lang] || {}, powerTheoryPatches[lang]);
     });
 
     // Theme Logic
@@ -2739,13 +2839,22 @@ window.MathJax = {
       return { real: sumReal, imag: sumImag };
     }
 
+    function fieldAmplitude(field) {
+      return Math.sqrt(field.real * field.real + field.imag * field.imag);
+    }
+
+    function fieldDisplayValue(field, quantity) {
+      const amp = fieldAmplitude(field);
+      return quantity === 'power' ? amp * amp : amp;
+    }
+
     // Update the visualization of the far-field pattern
     function updateFarFieldPattern() {
       patternMesh.visible = document.getElementById('show-pattern').checked;
       const activeAntennas = antennaGroup.children.filter(a => a.userData.active).map(a => a.userData);
       if (!patternMesh.visible || activeAntennas.length === 0) return;
 
-      const { patternType, displayType, useApprox, subpatchDensity, obsDist, normalize, couplingEnabled, couplingStrength } = getControlValues();
+      const { patternType, displayType, fieldQuantity, useApprox, subpatchDensity, obsDist, normalize, couplingEnabled, couplingStrength } = getControlValues();
       const steeringDir = getSteeringDirection();
 
       let maxMag = 1;
@@ -2757,7 +2866,7 @@ window.MathJax = {
                   const phi = (j / 40) * (2 * Math.PI);
                   const dir = new THREE.Vector3(Math.sin(theta) * Math.cos(phi), Math.cos(theta), Math.sin(theta) * Math.sin(phi));
                   const field = calculateFieldAtPoint(dir.multiplyScalar(obsDist), activeAntennas, patternType, useApprox, steeringDir, subpatchDensity, couplingEnabled, couplingStrength);
-                  maxMag = Math.max(maxMag, Math.sqrt(field.real**2 + field.imag**2));
+                  maxMag = Math.max(maxMag, fieldDisplayValue(field, fieldQuantity));
               }
           }
           if (maxMag === 0) maxMag = 1;
@@ -2773,7 +2882,7 @@ window.MathJax = {
 
         const dir = vertex.clone().normalize();
         const field = calculateFieldAtPoint(dir.clone().multiplyScalar(obsDist), activeAntennas, patternType, useApprox, steeringDir, subpatchDensity, couplingEnabled, couplingStrength);
-        const mag = Math.sqrt(field.real**2 + field.imag**2);
+        const mag = fieldDisplayValue(field, fieldQuantity);
         const normMag = mag / maxMag;
         
         if (displayType === '3d') {
@@ -2799,6 +2908,7 @@ window.MathJax = {
         return {
             patternType: document.getElementById('pattern-type').value,
             displayType: document.getElementById('pattern-display').value,
+            fieldQuantity: document.getElementById('field-quantity')?.value || 'power',
             useApprox: document.getElementById('calculation-method').value === 'true',
             subpatchDensity: parseInt(document.getElementById('subpatch-density').value),
             obsDist: parseFloat(document.getElementById('observation-distance').value),
@@ -2873,13 +2983,13 @@ window.MathJax = {
 
     // Update the text-based info panel
     function updateObservationInfo() {
-      const { patternType, subpatchDensity, couplingEnabled, couplingStrength } = getControlValues();
+      const { patternType, fieldQuantity, subpatchDensity, couplingEnabled, couplingStrength } = getControlValues();
       const steeringDir = getSteeringDirection();
       const obsPos = getObservationDirection();
       const activeAntennas = antennaGroup.children.filter(a => a.userData.active).map(a => a.userData);
       
       const exactField = calculateFieldAtPoint(obsPos, activeAntennas, patternType, false, steeringDir, subpatchDensity, couplingEnabled, couplingStrength);
-      document.getElementById('array-factor-value').textContent = Math.sqrt(exactField.real**2 + exactField.imag**2).toFixed(3);
+      document.getElementById('array-factor-value').textContent = fieldDisplayValue(exactField, fieldQuantity).toFixed(3);
       document.getElementById('exact-field-real-part-value').textContent = exactField.real.toFixed(3);
 
       const useApprox = document.getElementById('calculation-method').value === 'true';
@@ -2994,7 +3104,7 @@ window.MathJax = {
         });
         
         // Selects
-        ['calculation-method', 'pattern-type', 'pattern-display', 'amplitude-taper'].forEach(id => {
+        ['calculation-method', 'pattern-type', 'pattern-display', 'field-quantity', 'amplitude-taper'].forEach(id => {
             document.getElementById(id).addEventListener('change', () => {
                 if (id === 'pattern-type') createAntennas();
                 updateAllVisuals();
@@ -3042,5 +3152,5 @@ window.MathJax = {
     });
   </script>
 
-</body>
+</div></body>
 </html>
