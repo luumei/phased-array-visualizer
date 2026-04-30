@@ -2,9 +2,6 @@
 
 Interactive 3D visualization tool for understanding phased antenna arrays and beamforming.
 
-[![Live Demo](https://img.shields.io/badge/demo-live-blue)](https://phased-array-simulator.com)
-[![Example Calculation Video](https://img.shields.io/badge/video-explanation-red)](https://www.youtube.com/watch?v=kK-Z_O9Yjw0&t=456s)
-
 🌐 Live Tool: https://phased-array-simulator.com  
 📘 Example Calculation Video: https://www.youtube.com/watch?v=kK-Z_O9Yjw0&t=456s  
 
