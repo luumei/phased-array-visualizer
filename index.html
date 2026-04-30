@@ -34,36 +34,38 @@ window.MathJax = {
   }
 };
 </script>
-<script async="True" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js?v=2026-04-30-db-cache-v1"></script>
+<script async="True" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js?v=2026-04-30-db-restored-v1"></script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<!-- Cache control: force browsers to revalidate the HTML page after updates. -->
+<!-- Cache/version control: forces browsers and crawlers to revalidate after updates. -->
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<meta name="app-version" content="2026-04-30-db-cache-v1">
-<title>Free 3D Phased Array Simulator – Beamforming & Antenna Array Visualizer</title>
-<meta name="description" content="Free interactive 3D phased array simulator for antenna array beamforming, steering direction, element spacing, radiation patterns and simplified prescribed-current Huygens-style/Fraunhofer field visualization.">
-<meta name="keywords" content="phased array simulator, antenna array simulator, beamforming simulator, phased array visualizer, antenna array visualization, 3D radiation pattern, RF engineering tool, antenna pattern calculator, 3D field far field, Fraunhofer array factor">
+<meta name="app-version" content="2026-04-30-db-restored-v1">
+<meta name="last-modified" content="2026-04-30">
+
+<title>Phased Array Simulator – 3D Beamforming Tool</title>
+<meta name="description" content="Free interactive phased array simulator for 3D beamforming, antenna array visualization, steering angle, element spacing, radiation patterns, array factor and dB display.">
+<meta name="keywords" content="phased array simulator, 3D beamforming tool, antenna array simulator, antenna array visualizer, radiation pattern simulator, array factor, beam steering, RF engineering, Fraunhofer far field, dB antenna pattern">
 <meta name="author" content="phased-array-simulator.com">
 <meta name="copyright" content="Copyright (c) 2026 phased-array-simulator.com">
 <meta name="license" content="MIT">
 <meta name="application-name" content="Phased Array Simulator">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://phased-array-simulator.com/">
-<meta property="og:title" content="Free 3D Phased Array Simulator">
-<meta property="og:description" content="Explore phased array beam steering, antenna array spacing, radiation lobes and simplified prescribed-current Huygens-style/Fraunhofer models in an interactive 3D browser tool.">
+<meta property="og:title" content="Phased Array Simulator – 3D Beamforming Tool">
+<meta property="og:description" content="Interactive 3D phased array simulator for antenna array beamforming, steering, radiation patterns, array factor and dB visualization.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://phased-array-simulator.com/">
 <meta property="og:site_name" content="phased-array-simulator.com">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Free 3D Phased Array Simulator">
-<meta name="twitter:description" content="Interactive RF tool for phased array beamforming and antenna array visualization in 3D.">
+<meta name="twitter:title" content="Phased Array Simulator – 3D Beamforming Tool">
+<meta name="twitter:description" content="Free browser tool for 3D phased array beamforming and antenna array radiation pattern visualization.">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  "name": "Free 3D Phased Array Simulator",
+  "name": "Phased Array Simulator – 3D Beamforming Tool",
   "applicationCategory": "EngineeringApplication",
   "operatingSystem": "Web browser",
   "url": "https://phased-array-simulator.com/",
@@ -79,16 +81,17 @@ window.MathJax = {
     "url": "https://phased-array-simulator.com/"
   },
   "license": "https://opensource.org/licenses/MIT",
-  "description": "Interactive 3D phased array antenna simulator for beamforming, steering, antenna array spacing, radiation lobes and simplified prescribed-current Huygens-style/Fraunhofer visualization.",
+  "description": "Free interactive 3D phased array simulator for beamforming, antenna array visualization, steering angle, element spacing, radiation patterns, array factor and dB display.",
   "isAccessibleForFree": true,
+  "dateModified": "2026-04-30",
   "keywords": "phased array simulator, antenna array simulator, beamforming, antenna visualizer, RF engineering"
 }
 </script>
 <meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0b0b0f" media="(prefers-color-scheme: dark)">
-<script src="https://cdn.tailwindcss.com?v=2026-04-30-db-cache-v1"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js?v=2026-04-30-db-cache-v1"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js?v=2026-04-30-db-cache-v1"></script>
+<script src="https://cdn.tailwindcss.com?v=2026-04-30-db-restored-v1"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js?v=2026-04-30-db-restored-v1"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js?v=2026-04-30-db-restored-v1"></script>
 <style>
     /* Grundlegende Stildefinitionen */
     html, body {
@@ -748,6 +751,18 @@ window.MathJax = {
       font-size: 0.82rem;
       font-weight: 650;
     }
+
+    .seo-update {
+      display: inline-block;
+      margin-top: 0.85rem !important;
+      padding: 0.45rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(0, 113, 227, 0.10);
+      color: var(--lt-text) !important;
+      font-size: 0.88rem !important;
+      font-weight: 700;
+    }
+
     .source-card {
       margin-top: 1rem;
       padding: 1rem;
@@ -923,7 +938,59 @@ window.MathJax = {
       }
     }
 
+    .seo-content {
+      margin: 1rem 0 1.5rem;
+      padding: clamp(1.1rem, 2.5vw, 1.8rem);
+      border: 1px solid var(--lt-border);
+      border-radius: var(--lt-radius);
+      background: var(--lt-surface);
+      backdrop-filter: blur(22px) saturate(180%);
+      -webkit-backdrop-filter: blur(22px) saturate(180%);
+      box-shadow: var(--lt-shadow-soft);
+    }
+    .seo-content h2 {
+      color: var(--lt-text);
+      font-size: clamp(1.35rem, 2.2vw, 2rem);
+      letter-spacing: -0.035em;
+      font-weight: 800;
+      margin: 0 0 0.65rem;
+    }
+    .seo-content h3 {
+      color: var(--lt-text);
+      font-size: 1.05rem;
+      font-weight: 760;
+      margin: 1.1rem 0 0.45rem;
+    }
+    .seo-content p,
+    .seo-content li {
+      color: var(--lt-muted);
+      line-height: 1.72;
+      font-size: 0.98rem;
+    }
+    .seo-content ul {
+      padding-left: 1.25rem;
+      margin: 0.4rem 0 0;
+    }
+    .seo-content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-top: 0.8rem;
+    }
+    .seo-content-card {
+      padding: 0.95rem;
+      border-radius: 18px;
+      border: 1px solid var(--lt-border);
+      background: rgba(120, 120, 128, 0.08);
+    }
+
 </style>
+
+<script>
+// Runtime version marker for easier cache debugging.
+window.PHASOR_APP_VERSION = "2026-04-30-db-restored-v1";
+try { localStorage.setItem("phasor_app_version", window.PHASOR_APP_VERSION); } catch (e) {}
+</script>
 </head>
 <body>
 <div class="container mx-auto max-w-7xl">
@@ -960,7 +1027,7 @@ window.MathJax = {
   <p data-lang="seo-desc-2">
     The simulator is designed for learning and experimentation: instead of relying only on fixed 2D antenna pattern pictures, it uses vector-based field calculations to show how antenna elements combine in 3D space.
   </p>
-  <div class="seo-actions">
+<div class="seo-actions">
     <a class="seo-pill primary" href="#canvas-container" data-lang="seo-start">Start the simulator</a>
     <a class="seo-pill" href="https://github.com/luumei/phased-array-visualizer" target="_blank" rel="noopener noreferrer" data-lang="seo-github">View source code on GitHub</a>
   </div>
@@ -975,6 +1042,46 @@ window.MathJax = {
     Source code: inspect, fork or improve the project on
     <a href="https://github.com/luumei/phased-array-visualizer" target="_blank" rel="noopener noreferrer">GitHub</a>.
   </div>
+</section>
+
+<section class="seo-content" aria-labelledby="seo-learning-title">
+  <h2 id="seo-learning-title" data-lang="seo-learning-title">What is a phased array simulator?</h2>
+  <p data-lang="seo-learning-p1">
+    A phased array simulator is an interactive tool for visualizing how multiple antenna elements combine their electromagnetic fields. By changing phase shifts, steering angle, element spacing and amplitude taper, you can see how the main beam, sidelobes, nulls and radiation pattern change in 3D.
+  </p>
+  <p data-lang="seo-learning-p2">
+    This browser-based antenna array simulator is useful for students, RF engineers and makers who want to understand beamforming without starting with a full electromagnetic solver. The visualization connects the array factor, Fraunhofer far-field approximation and simplified prescribed-current Huygens-style field model in one place.
+  </p>
+
+  <div class="seo-content-grid">
+    <div class="seo-content-card">
+      <h3 data-lang="seo-beamforming-title">Beamforming and steering</h3>
+      <p data-lang="seo-beamforming-p">
+        Beamforming works by applying a progressive phase shift to each antenna element. Mathematically this phase is based on the projection of the element position onto the steering direction. In the desired direction, the geometric phase differences cancel and the fields add constructively.
+      </p>
+    </div>
+    <div class="seo-content-card">
+      <h3 data-lang="seo-spacing-title">Element spacing and grating lobes</h3>
+      <p data-lang="seo-spacing-p">
+        Element spacing strongly affects the array pattern. Around half-wavelength spacing is commonly used because it helps avoid strong grating lobes, while very small spacing increases mutual coupling and changes the real element currents.
+      </p>
+    </div>
+    <div class="seo-content-card">
+      <h3 data-lang="seo-db-title">Linear and dB radiation patterns</h3>
+      <p data-lang="seo-db-p">
+        Linear scale is intuitive for beginners, while normalized dB scale makes sidelobes and nulls easier to compare. For field amplitude the correct form is 20 log10(|AF|/max|AF|); for power it is 10 log10(P/Pmax).
+      </p>
+    </div>
+  </div>
+
+  <h3 data-lang="seo-use-title">What you can test with this tool</h3>
+  <ul>
+    <li data-lang="seo-use-li-1">Visualize phased array beam steering in 3D.</li>
+    <li data-lang="seo-use-li-2">Compare field amplitude |E| and power/intensity |E|².</li>
+    <li data-lang="seo-use-li-3">Switch between linear and normalized dB display.</li>
+    <li data-lang="seo-use-li-4">Explore array factor behavior, sidelobes, nulls and tapering.</li>
+    <li data-lang="seo-use-li-5">Compare Fraunhofer far-field behavior with a simplified finite-distance Huygens-style model.</li>
+  </ul>
 </section>
 
 <!-- Main Grid Container -->
@@ -1229,7 +1336,7 @@ window.MathJax = {
 <h3 class="font-medium mb-2 text-base" data-lang="formula-approx"></h3>
 <div class="bg-gray-100 p-3 rounded math-box">
 <p class="font-mono text-sm">
-                $$A_{\text{Fraunhofer}}(\vec{R}) = \frac{e^{ikR}}{R} F(\hat{r}) \sum_{n=1}^N e^{-ik(\hat{r}\cdot\vec{r}_n)} e^{ik(\vec{r}_n\cdot\hat{s})}$$
+                $$A_{\text{Fraunhofer}}(\hat{d}-\hat{s}) = \frac{e^{ikR}}{R} F(\hat{d}) \sum_{n=1}^N e^{-ik\left((\hat{d}-\hat{s})\cdot\vec{r}_n\right)}$$
               </p>
 </div>
 </div>
@@ -1259,6 +1366,7 @@ window.MathJax = {
 $$E_{\text{phys}}(t)=\operatorname{Re}\left\{\tilde E(\vec R)e^{i\omega t}\right\}=|\tilde E(\vec R)|\cos(\omega t+\angle\tilde E)$$
 </p>
 </div>
+<p class="mb-3 text-sm" data-lang="phasor-convention-note"></p>
 <p class="mb-3 text-sm" data-lang="phasor-power-desc-2"></p>
 <div class="bg-gray-100 p-3 rounded mb-4 math-box">
 <p class="font-mono text-sm text-center">
@@ -1366,9 +1474,17 @@ $$AF_{dB}=20\log_{10}\left(\frac{|AF|}{|AF|_{max}}\right)=10\log_{10}\left(\frac
 <h3 class="font-medium mb-2 text-base" data-lang="combined-element-response-formula"></h3>
 <div class="bg-gray-100 p-3 rounded mb-4 math-box">
 <p class="font-mono text-sm">
-                    $$A_n(\hat{d}) = A_n \cdot e^{-i k (\hat{d} \cdot \vec{r}_n) + i k (\vec{r}_n \cdot \hat{s})}$$
+                    $$A_n(\hat{d}) = A_n \cdot e^{-ik(\hat{d}\cdot\vec{r}_n)} e^{ik(\vec{r}_n\cdot\hat{s})}
+= A_n \cdot e^{-ik\left((\hat{d}-\hat{s})\cdot\vec{r}_n\right)}$$
                 </p>
 </div>
+<h3 class="font-medium mb-2 text-base" data-lang="steering-convention-title"></h3>
+<div class="bg-gray-100 p-3 rounded mb-4 math-box">
+<p class="font-mono text-sm text-center">
+$$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R.$$
+</p>
+</div>
+<p class="mb-4 text-sm" data-lang="steering-convention-desc"></p>
 <p class="mb-4 text-sm" data-lang="steering-tip">
 </p>
 </div>
@@ -2409,6 +2525,127 @@ $$AF_{dB}=20\log_{10}\left(\frac{|AF|}{|AF|_{max}}\right)=10\log_{10}\left(\frac
       translations[lang] = Object.assign({}, translations[lang] || {}, translationPatches[lang]);
     });
 
+    const seoRankingTranslationPatches = {
+      "en": {
+            "title": "Phased Array Simulator – 3D Beamforming Tool",
+            "seo-title": "Phased Array Simulator – 3D Beamforming & Antenna Tool",
+            "seo-learning-title": "What is a phased array simulator?",
+            "seo-learning-p1": "A phased array simulator is an interactive tool for visualizing how multiple antenna elements combine their electromagnetic fields. By changing phase shifts, steering angle, element spacing and amplitude taper, you can see how the main beam, sidelobes, nulls and radiation pattern change in 3D.",
+            "seo-learning-p2": "This browser-based antenna array simulator is useful for students, RF engineers and makers who want to understand beamforming without starting with a full electromagnetic solver. The visualization connects the array factor, Fraunhofer far-field approximation and simplified prescribed-current Huygens-style field model in one place.",
+            "seo-beamforming-title": "Beamforming and steering",
+            "seo-beamforming-p": "Beamforming works by applying a progressive phase shift to each antenna element. Mathematically this phase is based on the projection of the element position onto the steering direction. In the desired direction, the geometric phase differences cancel and the fields add constructively.",
+            "seo-spacing-title": "Element spacing and grating lobes",
+            "seo-spacing-p": "Element spacing strongly affects the array pattern. Around half-wavelength spacing is commonly used because it helps avoid strong grating lobes, while very small spacing increases mutual coupling and changes the real element currents.",
+            "seo-db-title": "Linear and dB radiation patterns",
+            "seo-db-p": "Linear scale is intuitive for beginners, while normalized dB scale makes sidelobes and nulls easier to compare. For field amplitude the correct form is 20 log10(|AF|/max|AF|); for power it is 10 log10(P/Pmax).",
+            "seo-use-title": "What you can test with this tool",
+            "seo-use-li-1": "Visualize phased array beam steering in 3D.",
+            "seo-use-li-2": "Compare field amplitude |E| and power/intensity |E|².",
+            "seo-use-li-3": "Switch between linear and normalized dB display.",
+            "seo-use-li-4": "Explore array factor behavior, sidelobes, nulls and tapering.",
+            "seo-use-li-5": "Compare Fraunhofer far-field behavior with a simplified finite-distance Huygens-style model."
+      },
+      "de": {
+            "title": "Phased Array Simulator – 3D Beamforming Tool",
+            "seo-title": "Phased Array Simulator – 3D Beamforming & Antennen-Tool",
+            "seo-learning-title": "Was ist ein Phased-Array-Simulator?",
+            "seo-learning-p1": "Ein Phased-Array-Simulator ist ein interaktives Tool, das zeigt, wie mehrere Antennenelemente ihre elektromagnetischen Felder überlagern. Durch Änderung von Phasenverschiebung, Lenkwinkel, Elementabstand und Amplituden-Taper sieht man direkt, wie Hauptkeule, Nebenkeulen, Nullstellen und 3D-Strahlungsdiagramm entstehen.",
+            "seo-learning-p2": "Dieser browserbasierte Antennenarray-Simulator ist hilfreich für Studierende, RF-Ingenieure und Maker, die Beamforming verstehen möchten, ohne direkt mit einem vollständigen elektromagnetischen Solver zu starten. Die Visualisierung verbindet Array-Faktor, Fraunhofer-Fernfeldnäherung und ein vereinfachtes vorgeschriebenes Huygens-Stromquellenmodell.",
+            "seo-beamforming-title": "Beamforming und Steering",
+            "seo-beamforming-p": "Beamforming funktioniert durch eine progressive Phasenverschiebung an jedem Antennenelement. In der gewünschten Lenkrichtung addieren sich die Felder konstruktiv, in anderen Richtungen teilweise destruktiv. Dadurch entsteht ein gerichtetes 3D-Strahlungsdiagramm.",
+            "seo-spacing-title": "Elementabstand und Grating Lobes",
+            "seo-spacing-p": "Der Elementabstand beeinflusst das Array-Pattern stark. Ein Abstand um eine halbe Wellenlänge wird häufig verwendet, weil er starke Grating Lobes vermeidet. Sehr kleiner Abstand erhöht dagegen gegenseitige Kopplung und verändert reale Elementströme.",
+            "seo-db-title": "Lineare und dB-Strahlungsdiagramme",
+            "seo-db-p": "Die lineare Skala ist für Einsteiger intuitiv. Die normalisierte dB-Skala macht Nebenkeulen und Nullstellen besser vergleichbar. Für Feldamplitude ist die korrekte Form 20 log10(|AF|/max|AF|); für Leistung 10 log10(P/Pmax).",
+            "seo-use-title": "Was du mit diesem Tool testen kannst",
+            "seo-use-li-1": "Phased-Array-Beam-Steering in 3D visualisieren.",
+            "seo-use-li-2": "Feldamplitude |E| und Leistung/Intensität |E|² vergleichen.",
+            "seo-use-li-3": "Zwischen linearer und normalisierter dB-Darstellung wechseln.",
+            "seo-use-li-4": "Array-Faktor, Nebenkeulen, Nullstellen und Tapering untersuchen.",
+            "seo-use-li-5": "Fraunhofer-Fernfeld mit einem vereinfachten Huygens-Modell bei endlicher Distanz vergleichen."
+      },
+      "fr": {
+            "title": "Simulateur Phased Array – Outil 3D Beamforming",
+            "seo-title": "Simulateur Phased Array – Beamforming 3D & outil d’antenne",
+            "seo-learning-title": "Qu’est-ce qu’un simulateur de réseau phasé ?",
+            "seo-learning-p1": "Un simulateur de réseau phasé est un outil interactif qui visualise comment plusieurs éléments d’antenne combinent leurs champs électromagnétiques. En modifiant les déphasages, l’angle de pointage, l’espacement des éléments et la pondération d’amplitude, on observe en 3D le lobe principal, les lobes secondaires, les zéros et le diagramme de rayonnement.",
+            "seo-learning-p2": "Ce simulateur d’antenne en ligne est utile pour les étudiants, ingénieurs RF et makers qui veulent comprendre le beamforming sans commencer par un solveur électromagnétique complet. Il relie le facteur de réseau, l’approximation de Fraunhofer et un modèle Huygens simplifié à courants prescrits.",
+            "seo-beamforming-title": "Beamforming et pointage",
+            "seo-beamforming-p": "Le beamforming applique un déphasage progressif à chaque élément d’antenne. Les champs s’additionnent constructivement dans la direction voulue et destructivement ailleurs, créant un diagramme de rayonnement 3D directionnel.",
+            "seo-spacing-title": "Espacement des éléments et lobes de réseau",
+            "seo-spacing-p": "L’espacement des éléments influence fortement le diagramme. Un espacement d’environ une demi-longueur d’onde est courant car il limite les lobes de réseau forts, tandis qu’un espacement très faible augmente le couplage mutuel et modifie les courants réels.",
+            "seo-db-title": "Diagrammes linéaires et en dB",
+            "seo-db-p": "L’échelle linéaire est intuitive pour les débutants, tandis que l’échelle dB normalisée rend les lobes secondaires et les zéros plus faciles à comparer. Pour l’amplitude de champ : 20 log10(|AF|/max|AF|); pour la puissance : 10 log10(P/Pmax).",
+            "seo-use-title": "Ce que vous pouvez tester",
+            "seo-use-li-1": "Visualiser le pointage de faisceau d’un réseau phasé en 3D.",
+            "seo-use-li-2": "Comparer l’amplitude de champ |E| et la puissance/intensité |E|².",
+            "seo-use-li-3": "Basculer entre affichage linéaire et dB normalisé.",
+            "seo-use-li-4": "Explorer facteur de réseau, lobes secondaires, zéros et pondération.",
+            "seo-use-li-5": "Comparer le champ lointain de Fraunhofer avec un modèle Huygens simplifié à distance finie."
+      },
+      "es": {
+            "title": "Simulador Phased Array – Herramienta 3D Beamforming",
+            "seo-title": "Simulador Phased Array – Beamforming 3D y herramienta de antenas",
+            "seo-learning-title": "¿Qué es un simulador phased array?",
+            "seo-learning-p1": "Un simulador phased array es una herramienta interactiva para visualizar cómo varios elementos de antena combinan sus campos electromagnéticos. Al cambiar fases, ángulo de apuntamiento, espaciado y taper de amplitud, se ve cómo cambian el lóbulo principal, los lóbulos laterales, los nulos y el patrón de radiación 3D.",
+            "seo-learning-p2": "Este simulador de arrays de antenas en navegador ayuda a estudiantes, ingenieros RF y makers a entender el beamforming sin empezar con un solver electromagnético completo. Conecta el factor de array, la aproximación de Fraunhofer y un modelo Huygens simplificado de corrientes prescritas.",
+            "seo-beamforming-title": "Beamforming y apuntamiento",
+            "seo-beamforming-p": "El beamforming aplica un desfase progresivo a cada elemento. Los campos se suman constructivamente en la dirección deseada y destructivamente en otras direcciones, creando un patrón de radiación 3D direccional.",
+            "seo-spacing-title": "Espaciado y grating lobes",
+            "seo-spacing-p": "El espaciado de elementos afecta fuertemente al patrón. Un espaciado cercano a media longitud de onda se usa a menudo porque ayuda a evitar grating lobes fuertes, mientras que un espaciado muy pequeño aumenta el acoplamiento mutuo.",
+            "seo-db-title": "Patrones lineales y en dB",
+            "seo-db-p": "La escala lineal es intuitiva para principiantes, mientras que la escala dB normalizada facilita comparar lóbulos laterales y nulos. Para amplitud de campo: 20 log10(|AF|/max|AF|); para potencia: 10 log10(P/Pmax).",
+            "seo-use-title": "Qué puedes probar con esta herramienta",
+            "seo-use-li-1": "Visualizar beam steering de phased arrays en 3D.",
+            "seo-use-li-2": "Comparar amplitud de campo |E| y potencia/intensidad |E|².",
+            "seo-use-li-3": "Cambiar entre escala lineal y dB normalizado.",
+            "seo-use-li-4": "Explorar factor de array, lóbulos laterales, nulos y tapering.",
+            "seo-use-li-5": "Comparar Fraunhofer con un modelo Huygens simplificado a distancia finita."
+      },
+      "zh": {
+            "title": "相控阵模拟器 – 3D 波束成形工具",
+            "seo-title": "相控阵模拟器 – 3D 波束成形与天线工具",
+            "seo-learning-title": "什么是相控阵模拟器？",
+            "seo-learning-p1": "相控阵模拟器是一种交互式工具，用于可视化多个天线阵元如何叠加电磁场。通过改变相移、指向角、阵元间距和幅度加权，可以在 3D 中看到主瓣、旁瓣、零点和辐射方向图的变化。",
+            "seo-learning-p2": "这个基于浏览器的天线阵列模拟器适合学生、射频工程师和创客理解波束成形，而不必一开始就使用完整的电磁求解器。它把阵列因子、Fraunhofer 远场近似和简化的规定电流 Huygens 模型连接在一起。",
+            "seo-beamforming-title": "波束成形与指向",
+            "seo-beamforming-p": "波束成形通过给每个天线阵元施加递进相移实现。电磁场在目标方向相长叠加，在其他方向部分相消，从而形成定向的 3D 辐射方向图。",
+            "seo-spacing-title": "阵元间距与栅瓣",
+            "seo-spacing-p": "阵元间距会强烈影响阵列方向图。约半波长间距常用于避免强栅瓣，而非常小的间距会增加互耦并改变真实阵元电流。",
+            "seo-db-title": "线性和 dB 辐射方向图",
+            "seo-db-p": "线性刻度对初学者直观；归一化 dB 刻度更容易比较旁瓣和零点。场幅度使用 20 log10(|AF|/max|AF|)，功率使用 10 log10(P/Pmax)。",
+            "seo-use-title": "你可以用这个工具测试什么",
+            "seo-use-li-1": "在 3D 中可视化相控阵波束指向。",
+            "seo-use-li-2": "比较场幅度 |E| 和功率/强度 |E|²。",
+            "seo-use-li-3": "在线性和归一化 dB 显示之间切换。",
+            "seo-use-li-4": "探索阵列因子、旁瓣、零点和加权。",
+            "seo-use-li-5": "比较 Fraunhofer 远场与有限距离的简化 Huygens 模型。"
+      },
+      "ja": {
+            "title": "フェーズドアレイシミュレータ – 3Dビームフォーミングツール",
+            "seo-title": "フェーズドアレイシミュレータ – 3Dビームフォーミングとアンテナツール",
+            "seo-learning-title": "フェーズドアレイシミュレータとは？",
+            "seo-learning-p1": "フェーズドアレイシミュレータは、複数のアンテナ素子が電磁界をどのように合成するかを可視化するインタラクティブツールです。位相シフト、ステアリング角、素子間隔、振幅テーパーを変更すると、主ローブ、サイドローブ、ヌル、3D放射パターンの変化を確認できます。",
+            "seo-learning-p2": "このブラウザベースのアンテナアレイシミュレータは、完全な電磁界ソルバーから始めなくてもビームフォーミングを理解したい学生、RFエンジニア、メーカーに役立ちます。アレイファクター、Fraunhofer遠方界近似、簡略化された規定電流Huygensモデルを一つの表示でつなぎます。",
+            "seo-beamforming-title": "ビームフォーミングとステアリング",
+            "seo-beamforming-p": "ビームフォーミングは各アンテナ素子に進行的な位相シフトを与えることで機能します。希望方向では電界が強め合い、他の方向では弱め合うため、指向性のある3D放射パターンが形成されます。",
+            "seo-spacing-title": "素子間隔とグレーティングローブ",
+            "seo-spacing-p": "素子間隔はアレイパターンに大きく影響します。半波長程度の間隔は強いグレーティングローブを避けやすいため一般的です。一方、非常に小さい間隔では相互結合が増え、実際の素子電流が変化します。",
+            "seo-db-title": "線形表示とdB放射パターン",
+            "seo-db-p": "線形スケールは初心者に直感的です。正規化dBスケールはサイドローブやヌルを比較しやすくします。電界振幅では 20 log10(|AF|/max|AF|)、電力では 10 log10(P/Pmax) を使います。",
+            "seo-use-title": "このツールで試せること",
+            "seo-use-li-1": "フェーズドアレイのビームステアリングを3Dで可視化する。",
+            "seo-use-li-2": "電界振幅 |E| と電力/強度 |E|² を比較する。",
+            "seo-use-li-3": "線形表示と正規化dB表示を切り替える。",
+            "seo-use-li-4": "アレイファクター、サイドローブ、ヌル、テーパーを調べる。",
+            "seo-use-li-5": "Fraunhofer遠方界と有限距離の簡略Huygensモデルを比較する。"
+      }
+};
+    Object.keys(seoRankingTranslationPatches).forEach(lang => {
+      translations[lang] = Object.assign({}, translations[lang] || {}, seoRankingTranslationPatches[lang]);
+    });
+
+
     const themeTranslationPatches = {
       de: { "theme-label": "Darstellung:", "theme-system": "System", "theme-light": "Hell", "theme-dark": "Dunkel", "canvas-theme-label": "3D-Hintergrund:", "canvas-theme-auto": "Auto", "canvas-theme-light": "Hell", "canvas-theme-dark": "Dunkel" },
       en: { "theme-label": "Appearance:", "theme-system": "System", "theme-light": "Light", "theme-dark": "Dark", "canvas-theme-label": "3D background:", "canvas-theme-auto": "Auto", "canvas-theme-light": "Light", "canvas-theme-dark": "Dark" },
@@ -2513,6 +2750,20 @@ $$AF_{dB}=20\log_{10}\left(\frac{|AF|}{|AF|_{max}}\right)=10\log_{10}\left(\frac
     };
     Object.keys(dbScaleTranslationPatches).forEach(lang => {
       translations[lang] = Object.assign({}, translations[lang] || {}, dbScaleTranslationPatches[lang]);
+    });
+
+
+    const steeringConventionPatches = {"en": {"seo-beamforming-p": "Beamforming works by applying a progressive phase shift to each antenna element. Mathematically, this phase is based on the scalar product between the element position and the steering direction: it is the projection of the element onto the desired wave direction. In the desired direction, the geometric phase differences cancel and the fields add constructively.", "beam-steering-desc": "Beam steering is based on the far-field distance approximation. For an element at position $\\vec r_n$, the observation-direction projection $\\hat d\\cdot\\vec r_n$ determines the relative path difference and therefore the relative phase. In the convention used on this page, the propagation contribution is $e^{-ik(\\hat d\\cdot\\vec r_n)}$ and the steering excitation is chosen as $e^{+ik(\\vec r_n\\cdot\\hat s)}$.", "steering-phase-formula": "Steering phase used in this simulator:", "combined-element-response-formula": "Propagation phase plus steering phase:", "steering-tip": "If the observation direction equals the steering direction, $\\hat d=\\hat s$, the exponent becomes zero for every element. All elements are then in phase in that direction, so the fields add constructively and the main beam points there. In other directions the remaining phase terms do not align and the field is reduced.", "steering-convention-title": "Sign convention note:", "steering-convention-desc": "The plus/minus signs are not arbitrary mistakes; they follow from the chosen wave convention. This page uses the common engineering phasor convention $E(t)=\\operatorname{Re}\\{\\tilde E e^{i\\omega t}\\}$ together with an outgoing Green function proportional to $e^{ikR}/R$. With the opposite time convention, many books write all propagation and steering signs flipped. Both forms are physically equivalent as long as propagation and steering use the same convention consistently."}, "de": {"seo-beamforming-p": "Beamforming funktioniert durch eine progressive Phasenverschiebung an jedem Antennenelement. Mathematisch basiert diese Phase auf dem Skalarprodukt zwischen Elementposition und Lenkrichtung: Es ist die Projektion des Elements auf die gewünschte Ausbreitungsrichtung. In der Zielrichtung heben sich die geometrischen Phasendifferenzen auf und die Felder addieren sich konstruktiv.", "beam-steering-desc": "Beam Steering folgt direkt aus der Fernfeld-Abstandsapproximation. Für ein Element an Position $\\vec r_n$ bestimmt die Projektion $\\hat d\\cdot\\vec r_n$ den relativen Wegunterschied und damit die relative Phase. In der auf dieser Seite verwendeten Konvention ist der Ausbreitungsbeitrag $e^{-ik(\\hat d\\cdot\\vec r_n)}$ und die Steering-Anregung wird als $e^{+ik(\\vec r_n\\cdot\\hat s)}$ gewählt.", "steering-phase-formula": "Im Simulator verwendete Steering-Phase:", "combined-element-response-formula": "Ausbreitungsphase plus Steering-Phase:", "steering-tip": "Wenn Beobachtungsrichtung und Lenkrichtung gleich sind, also $\\hat d=\\hat s$, wird der Exponent für jedes Element null. Dann sind alle Elemente in dieser Richtung in Phase, die Felder addieren sich konstruktiv und der Hauptstrahl zeigt dorthin. In anderen Richtungen bleiben Phasenunterschiede übrig und das Feld wird kleiner.", "steering-convention-title": "Hinweis zur Vorzeichenkonvention:", "steering-convention-desc": "Die Plus-/Minuszeichen sind keine willkürlichen Fehler, sondern folgen aus der gewählten Wellenkonvention. Diese Seite verwendet die übliche Engineering-Phasor-Konvention $E(t)=\\operatorname{Re}\\{\\tilde E e^{i\\omega t}\\}$ zusammen mit einer auslaufenden Greenschen Funktion proportional zu $e^{ikR}/R$. Mit der entgegengesetzten Zeitkonvention schreiben viele Bücher alle Ausbreitungs- und Steering-Vorzeichen gespiegelt. Beide Formen sind physikalisch äquivalent, solange Ausbreitung und Steering konsistent dieselbe Konvention verwenden."}, "fr": {"seo-beamforming-p": "Le beamforming applique un déphasage progressif à chaque élément d’antenne. Mathématiquement, cette phase vient du produit scalaire entre la position de l’élément et la direction de pointage : c’est la projection de l’élément sur la direction de propagation voulue. Dans cette direction, les différences de phase géométriques s’annulent et les champs s’additionnent.", "beam-steering-desc": "Le pointage du faisceau vient directement de l’approximation de distance en champ lointain. Pour un élément en position $\\vec r_n$, la projection $\\hat d\\cdot\\vec r_n$ détermine la différence de trajet relative et donc la phase relative. Dans la convention utilisée ici, la propagation contribue par $e^{-ik(\\hat d\\cdot\\vec r_n)}$ et l’excitation de pointage est choisie comme $e^{+ik(\\vec r_n\\cdot\\hat s)}$.", "steering-phase-formula": "Phase de pointage utilisée dans ce simulateur :", "combined-element-response-formula": "Phase de propagation plus phase de pointage :", "steering-tip": "Si la direction d’observation est égale à la direction de pointage, $\\hat d=\\hat s$, l’exposant devient nul pour chaque élément. Tous les éléments sont alors en phase dans cette direction, les champs s’additionnent constructivement et le lobe principal pointe là.", "steering-convention-title": "Note sur la convention de signe :", "steering-convention-desc": "Les signes plus/moins ne sont pas des erreurs arbitraires ; ils suivent la convention d’onde choisie. Cette page utilise la convention de phaseur $E(t)=\\operatorname{Re}\\{\\tilde E e^{i\\omega t}\\}$ avec une fonction de Green sortante proportionnelle à $e^{ikR}/R$. Avec la convention temporelle opposée, de nombreux livres écrivent tous les signes de propagation et de pointage inversés. Les deux formes sont équivalentes si la convention est utilisée de façon cohérente."}, "es": {"seo-beamforming-p": "El beamforming aplica un desfase progresivo a cada elemento de antena. Matemáticamente, esta fase se basa en el producto escalar entre la posición del elemento y la dirección de apuntamiento: es la proyección del elemento sobre la dirección deseada de propagación. En esa dirección, las diferencias geométricas de fase se cancelan y los campos se suman constructivamente.", "beam-steering-desc": "El apuntamiento del haz sale directamente de la aproximación de distancia en campo lejano. Para un elemento en la posición $\\vec r_n$, la proyección $\\hat d\\cdot\\vec r_n$ determina la diferencia relativa de camino y por tanto la fase relativa. En la convención usada en esta página, la propagación aporta $e^{-ik(\\hat d\\cdot\\vec r_n)}$ y la excitación de steering se elige como $e^{+ik(\\vec r_n\\cdot\\hat s)}$.", "steering-phase-formula": "Fase de steering usada en este simulador:", "combined-element-response-formula": "Fase de propagación más fase de steering:", "steering-tip": "Si la dirección de observación coincide con la dirección de steering, $\\hat d=\\hat s$, el exponente se vuelve cero para cada elemento. Entonces todos los elementos están en fase en esa dirección, los campos se suman constructivamente y el lóbulo principal apunta allí.", "steering-convention-title": "Nota sobre la convención de signos:", "steering-convention-desc": "Los signos más/menos no son errores arbitrarios; dependen de la convención de onda elegida. Esta página usa la convención de fasores $E(t)=\\operatorname{Re}\\{\\tilde E e^{i\\omega t}\\}$ junto con una función de Green saliente proporcional a $e^{ikR}/R$. Con la convención temporal opuesta, muchos libros escriben todos los signos de propagación y steering invertidos. Ambas formas son físicamente equivalentes si se usan de forma consistente."}, "zh": {"seo-beamforming-p": "波束成形通过给每个天线阵元施加递进相移实现。数学上，这个相位来自阵元位置与指向方向之间的点积，也就是把阵元位置投影到期望传播方向上。在目标方向，几何相位差被抵消，电场相长叠加。", "beam-steering-desc": "波束指向直接来自远场距离近似。对于位置为 $\\vec r_n$ 的阵元，投影 $\\hat d\\cdot\\vec r_n$ 决定相对路程差，因此也决定相对相位。本页采用的约定中，传播项为 $e^{-ik(\\hat d\\cdot\\vec r_n)}$，指向激励选择为 $e^{+ik(\\vec r_n\\cdot\\hat s)}$。", "steering-phase-formula": "本模拟器使用的指向相位：", "combined-element-response-formula": "传播相位加指向相位：", "steering-tip": "当观察方向等于指向方向，即 $\\hat d=\\hat s$ 时，每个阵元的指数项都变为零。因此所有阵元在该方向同相，电场相长叠加，主瓣指向该方向。", "steering-convention-title": "符号约定说明：", "steering-convention-desc": "正负号不是随意的错误，而是由所选波的约定决定。本页使用工程相量约定 $E(t)=\\operatorname{Re}\\{\\tilde E e^{i\\omega t}\\}$，并使用与 $e^{ikR}/R$ 成正比的出射格林函数。若采用相反的时间约定，许多教材会把传播和指向的符号全部反过来。只要传播和指向始终使用同一套约定，两种写法在物理上等价。"}, "ja": {"seo-beamforming-p": "ビームフォーミングは各アンテナ素子に進行的な位相シフトを与えることで機能します。数学的には、この位相は素子位置とステアリング方向の内積、つまり素子位置を目的の伝搬方向へ射影した量に基づきます。目的方向では幾何学的な位相差が打ち消され、電界が強め合います。", "beam-steering-desc": "ビームステアリングは遠方界の距離近似から直接出てきます。位置 $\\vec r_n$ の素子では、射影 $\\hat d\\cdot\\vec r_n$ が相対的な経路差を決め、それが相対位相を決めます。このページの規約では、伝搬項は $e^{-ik(\\hat d\\cdot\\vec r_n)}$、ステアリング励振は $e^{+ik(\\vec r_n\\cdot\\hat s)}$ とします。", "steering-phase-formula": "このシミュレータで使うステアリング位相：", "combined-element-response-formula": "伝搬位相とステアリング位相：", "steering-tip": "観測方向とステアリング方向が等しい、つまり $\\hat d=\\hat s$ のとき、各素子の指数部はゼロになります。その方向では全素子が同相になり、電界が強め合って主ローブがそこを向きます。", "steering-convention-title": "符号規約について：", "steering-convention-desc": "プラス/マイナスの符号は任意のミスではなく、選んだ波の規約から決まります。このページでは工学でよく使うフェーザ規約 $E(t)=\\operatorname{Re}\\{\\tilde E e^{i\\omega t}\\}$ と、$e^{ikR}/R$ に比例する外向きグリーン関数を使います。逆の時間規約を使う教科書では、伝搬とステアリングの符号がすべて反転して書かれることがあります。伝搬とステアリングで同じ規約を一貫して使えば、どちらも物理的に等価です。"}};
+
+    Object.keys(steeringConventionPatches).forEach(lang => {
+      translations[lang] = Object.assign({}, translations[lang] || {}, steeringConventionPatches[lang]);
+    });
+
+
+    const phasorConventionPatches = {"en": {"phasor-convention-note": "The plus sign in $e^{i\\omega t}$ is the time convention used on this page. With this convention, the outgoing spatial Green function is written proportional to $e^{ikR}/R$. If the opposite time convention $e^{-i\\omega t}$ is used, the spatial phase signs are flipped, but the physical field is the same when the convention is used consistently."}, "de": {"phasor-convention-note": "Das Pluszeichen in $e^{i\\omega t}$ ist die Zeitkonvention dieser Seite. Mit dieser Konvention schreibt man die auslaufende räumliche Greensche Funktion proportional zu $e^{ikR}/R$. Wenn man die entgegengesetzte Zeitkonvention $e^{-i\\omega t}$ verwendet, drehen sich die räumlichen Phasenvorzeichen um. Das physikalische Feld bleibt gleich, solange die Konvention konsistent benutzt wird."}, "fr": {"phasor-convention-note": "Le signe plus dans $e^{i\\omega t}$ est la convention temporelle utilisée ici. Avec cette convention, la fonction de Green sortante s’écrit proportionnelle à $e^{ikR}/R$. Avec la convention opposée $e^{-i\\omega t}$, les signes de phase spatiale sont inversés, mais le champ physique reste le même si la convention est cohérente."}, "es": {"phasor-convention-note": "El signo positivo en $e^{i\\omega t}$ es la convención temporal usada en esta página. Con esta convención, la función de Green saliente se escribe proporcional a $e^{ikR}/R$. Si se usa la convención opuesta $e^{-i\\omega t}$, los signos de fase espacial se invierten, pero el campo físico es el mismo si la convención se usa de forma consistente."}, "zh": {"phasor-convention-note": "$e^{i\\omega t}$ 中的正号是本页采用的时间约定。在这个约定下，出射空间格林函数写作与 $e^{ikR}/R$ 成正比。如果采用相反的时间约定 $e^{-i\\omega t}$，空间相位符号会反过来；只要约定一致，物理场相同。"}, "ja": {"phasor-convention-note": "$e^{i\\omega t}$ のプラス符号は、このページで使う時間規約です。この規約では外向き空間グリーン関数を $e^{ikR}/R$ に比例して書きます。反対の時間規約 $e^{-i\\omega t}$ を使うと空間位相の符号は反転しますが、規約を一貫して使えば物理的な場は同じです。"}};
+
+    Object.keys(phasorConventionPatches).forEach(lang => {
+      translations[lang] = Object.assign({}, translations[lang] || {}, phasorConventionPatches[lang]);
     });
 
     // Theme Logic
@@ -3123,17 +3374,13 @@ $$AF_{dB}=20\log_{10}\left(\frac{|AF|}{|AF|_{max}}\right)=10\log_{10}\left(\frac
 
     // Update the text-based info panel
     function updateObservationInfo() {
-      const { patternType, fieldQuantity, displayScale, subpatchDensity, couplingEnabled, couplingStrength } = getControlValues();
+      const { patternType, fieldQuantity, subpatchDensity, couplingEnabled, couplingStrength } = getControlValues();
       const steeringDir = getSteeringDirection();
       const obsPos = getObservationDirection();
       const activeAntennas = antennaGroup.children.filter(a => a.userData.active).map(a => a.userData);
       
       const exactField = calculateFieldAtPoint(obsPos, activeAntennas, patternType, false, steeringDir, subpatchDensity, couplingEnabled, couplingStrength);
-      const referenceValue = displayScale === 'db' && activeAntennas.length > 0
-        ? calculateReferenceValue(activeAntennas, patternType, false, steeringDir, subpatchDensity, obsPos.length(), fieldQuantity, couplingEnabled, couplingStrength)
-        : 1;
-      const shownValue = fieldDisplayValue(exactField, fieldQuantity, displayScale, referenceValue);
-      document.getElementById('array-factor-value').textContent = `${shownValue.toFixed(3)}${displayScale === 'db' ? ' dB' : ''}`;
+      document.getElementById('array-factor-value').textContent = fieldDisplayValue(exactField, fieldQuantity).toFixed(3);
       document.getElementById('exact-field-real-part-value').textContent = exactField.real.toFixed(3);
 
       const useApprox = document.getElementById('calculation-method').value === 'true';
@@ -3297,23 +3544,19 @@ $$AF_{dB}=20\log_{10}\left(\frac{|AF|}{|AF|_{max}}\right)=10\log_{10}\left(\frac
   </script>
 
 <script>
-// Cache-busting version check for phased-array-simulator.com.
-// Increase APP_VERSION on every deployment where users should receive a fresh page.
-(function () {
-  const APP_VERSION = "2026-04-30-db-cache-v1";
-  const KEY = "phased_array_simulator_app_version";
-  const previousVersion = localStorage.getItem(KEY);
-  localStorage.setItem(KEY, APP_VERSION);
-
-  // Only reload when an older version was already stored. First-time visitors do not get a reload loop.
-  if (previousVersion && previousVersion !== APP_VERSION && !sessionStorage.getItem(KEY + "_reloaded")) {
-    sessionStorage.setItem(KEY + "_reloaded", "1");
-    const url = new URL(window.location.href);
-    url.searchParams.set("v", APP_VERSION);
-    window.location.replace(url.toString());
+  // App version marker: when this value changes, normal browsers reload once and store the new version.
+  const APP_VERSION = "2026-04-30-v6";
+  try {
+    const storedVersion = localStorage.getItem('phased_array_app_version');
+    if (storedVersion && storedVersion !== APP_VERSION) {
+      localStorage.setItem('phased_array_app_version', APP_VERSION);
+      location.reload();
+    } else if (!storedVersion) {
+      localStorage.setItem('phased_array_app_version', APP_VERSION);
+    }
+  } catch (e) {
+    console.warn('Version check skipped:', e);
   }
-})();
 </script>
-
 </body>
 </html>
