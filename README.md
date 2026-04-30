@@ -15,6 +15,9 @@ This project provides an intuitive way to explore phased antenna arrays.
 It focuses on visual understanding of how steering direction and array configuration influence radiation patterns.  
 The model is intentionally simplified to emphasize concepts rather than full electromagnetic accuracy.
 
+For a step-by-step explanation of the underlying calculations (Huygens model → Fraunhofer approximation → steering), see this example calculation video:  
+https://www.youtube.com/watch?v=kK-Z_O9Yjw0&t=456s
+
 ---
 
 ## Live Demo
