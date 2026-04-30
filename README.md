@@ -24,12 +24,6 @@ The included example calculation video walks step-by-step through:
 
 ---
 
-## Live Demo
-
-https://phased-array-simulator.com
-
----
-
 ## Features
 
 - Interactive 3D radiation pattern visualization  
@@ -43,6 +37,12 @@ https://phased-array-simulator.com
 ## Usage
 
 Adjust array parameters and steering direction to observe real-time changes in the radiation pattern.
+
+---
+
+## Live GitHub Demo
+
+[![GitHub Demo](https://img.shields.io/badge/demo-github--pages-lightgrey)](https://luumei.github.io/phased-array-visualizer/)
 
 ---
 
