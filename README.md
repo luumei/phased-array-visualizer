@@ -2,9 +2,8 @@
 
 Interactive 3D visualization tool for understanding phased antenna arrays and beamforming.
 
-[![Live Demo](https://img.shields.io/badge/demo-online-blue)](https://luumei.github.io/phased-array-visualizer/?v=3)
-
-🌐 https://phased-array-simulator.com
+🌐 Live Tool: https://phased-array-simulator.com  
+📘 Example Calculation Video: https://www.youtube.com/watch?v=kK-Z_O9Yjw0&t=456s  
 
 ---
 
@@ -15,11 +14,10 @@ This project provides an intuitive way to explore phased antenna arrays.
 It focuses on visual understanding of how steering direction and array configuration influence radiation patterns.  
 The model is intentionally simplified to emphasize concepts rather than full electromagnetic accuracy.
 
----
-
-## Live Demo
-
-https://luumei.github.io/phased-array-visualizer/?v=3
+The included example calculation video walks step-by-step through:
+- Huygens-type model  
+- Fraunhofer approximation  
+- Beam steering  
 
 ---
 
@@ -39,6 +37,12 @@ Adjust array parameters and steering direction to observe real-time changes in t
 
 ---
 
+## Live GitHub Demo
+
+[![GitHub Demo](https://img.shields.io/badge/demo-github--pages-lightgrey)](https://luumei.github.io/phased-array-visualizer/)
+
+---
+
 ## Concepts
 
 - Phased arrays  
@@ -51,7 +55,8 @@ Adjust array parameters and steering direction to observe real-time changes in t
 
 ## About
 
-Maintained by Lukas Meienberger · https://phased-array-simulator.com
+Maintained by Lukas Meienberger  
+https://phased-array-simulator.com  
 
 ---
 
