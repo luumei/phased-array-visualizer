@@ -34,14 +34,14 @@ window.MathJax = {
   }
 };
 </script>
-<script async="True" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js?v=2026-05-01-angle-inputs-v1"></script>
+<script async="True" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js?v=2026-05-01-tablet-stable-preview-v1"></script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <!-- Cache/version control: forces browsers and crawlers to revalidate after updates. -->
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<meta name="app-version" content="2026-05-01-angle-inputs-v1">
+<meta name="app-version" content="2026-05-01-tablet-stable-preview-v1">
 <meta name="last-modified" content="2026-05-01">
 
 <title>Phased Array Simulator – 3D Beamforming Tool</title>
@@ -89,9 +89,9 @@ window.MathJax = {
 </script>
 <meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0b0b0f" media="(prefers-color-scheme: dark)">
-<script src="https://cdn.tailwindcss.com?v=2026-05-01-angle-inputs-v1"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js?v=2026-05-01-angle-inputs-v1"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js?v=2026-05-01-angle-inputs-v1"></script>
+<script src="https://cdn.tailwindcss.com?v=2026-05-01-tablet-stable-preview-v1"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js?v=2026-05-01-tablet-stable-preview-v1"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js?v=2026-05-01-tablet-stable-preview-v1"></script>
 <style>
     /* Grundlegende Stildefinitionen */
     html, body {
@@ -1220,10 +1220,65 @@ window.MathJax = {
       max-height: 220px;
     }
 
-    @media (max-width: 820px) {
+    /* Tablet fix: keep the result visible while changing sliders, but avoid the
+       old stacked 420px + sticky layout that could trap touch scrolling. */
+    @media (min-width: 641px) and (max-width: 1024px) {
+      .canvas-section {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        padding-top: 0.35rem;
+        padding-bottom: 0.45rem;
+        background: var(--lt-bg, #f5f5f7) !important;
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
+      }
+      .canvas-controls-details { display: none; }
+      .workspace-details > summary { padding: 0.48rem 0.75rem; font-size: 0.9rem; }
+      .workspace-details-inner { padding: 0 0.45rem 0.45rem; }
+      .workspace-toolbar-inline { margin-bottom: 0.3rem; }
+      .visual-workspace {
+        --workspace-height: min(38vh, 320px);
+        --left-panel-width: 48%;
+        flex-direction: row;
+        height: var(--workspace-height) !important;
+        min-height: 230px;
+        max-height: 320px;
+        overflow: hidden;
+      }
+      .slice-dashboard {
+        flex: 0 0 var(--left-panel-width);
+        width: var(--left-panel-width);
+        min-width: 190px;
+        height: 100% !important;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
+      }
+      .visual-workspace .canvas-container {
+        flex: 1 1 auto;
+        width: auto;
+        height: 100% !important;
+        min-width: 180px;
+        touch-action: none;
+      }
+      .slice-dashboard-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.42rem; }
+      .slice-card { padding: 0.33rem; border-radius: 13px; }
+      .slice-card svg { margin: 0.22rem 0 0.16rem; }
+      .slice-note { display: none; }
+      .workspace-resizer { display: block; flex-basis: 8px; }
+      .workspace-height-resizer { display: none; }
+      .controls { max-height: none; overflow: visible; }
+    }
+
+    /* Phones: prioritize reliable page scroll. A visible 2D/3D result still sits
+       directly above the controls, but it is not sticky on very small screens. */
+    @media (max-width: 640px) {
+      .canvas-section { position: relative; top: auto; z-index: auto; }
       .visual-workspace { flex-direction: column; height: auto; max-height: none; overflow: visible; }
-      .slice-dashboard, .visual-workspace .canvas-container { width: 100%; flex-basis: auto; height: 420px !important; min-width: 0; }
+      .slice-dashboard, .visual-workspace .canvas-container { width: 100%; flex-basis: auto; height: 320px !important; min-width: 0; }
       .workspace-resizer, .workspace-height-resizer { display: none; }
+      .slice-dashboard { overflow: auto; -webkit-overflow-scrolling: touch; }
     }
 
     .slice-dashboard-toolbar {
@@ -1363,7 +1418,7 @@ window.MathJax = {
 
 <script>
 // Runtime version marker for easier cache debugging.
-window.PHASOR_APP_VERSION = "2026-05-01-angle-inputs-v1";
+window.PHASOR_APP_VERSION = "2026-05-01-tablet-stable-preview-v1";
 try { localStorage.setItem("phasor_app_version", window.PHASOR_APP_VERSION); } catch (e) {}
 </script>
 </head>
@@ -2062,7 +2117,7 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
         } catch { crash(); }
       }
       createWatermark();
-      setInterval(createWatermark, 1000);
+      setInterval(createWatermark, 5000);
       new MutationObserver(verify).observe(document.body, { childList: true, subtree: true, attributes: true });
     })();
 
@@ -5122,7 +5177,7 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
       const sliceStyle = document.getElementById('field-slice-style')?.value || 'contour';
       if (sliceMode !== 'off' && sliceStyle === 'waves') updateFieldSlice();
       updateSlicePanelAnimation();
-      updateSliceHoverTooltip();
+      if (!window.matchMedia || !window.matchMedia("(pointer: coarse)").matches) updateSliceHoverTooltip();
       renderer.render(scene, camera);
     }
 
