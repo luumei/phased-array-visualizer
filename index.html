@@ -34,15 +34,15 @@ window.MathJax = {
   }
 };
 </script>
-<script async="True" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js?v=2026-04-30-db-restored-v1"></script>
+<script async="True" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js?v=2026-05-01-angle-inputs-v1"></script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <!-- Cache/version control: forces browsers and crawlers to revalidate after updates. -->
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<meta name="app-version" content="2026-04-30-db-restored-v1">
-<meta name="last-modified" content="2026-04-30">
+<meta name="app-version" content="2026-05-01-angle-inputs-v1">
+<meta name="last-modified" content="2026-05-01">
 
 <title>Phased Array Simulator – 3D Beamforming Tool</title>
 <meta name="description" content="Free interactive phased array simulator for 3D beamforming, antenna array visualization, steering angle, element spacing, radiation patterns, array factor and dB display.">
@@ -83,15 +83,15 @@ window.MathJax = {
   "license": "https://opensource.org/licenses/MIT",
   "description": "Free interactive 3D phased array simulator for beamforming, antenna array visualization, steering angle, element spacing, radiation patterns, array factor and dB display.",
   "isAccessibleForFree": true,
-  "dateModified": "2026-04-30",
+  "dateModified": "2026-05-01",
   "keywords": "phased array simulator, antenna array simulator, beamforming, antenna visualizer, RF engineering"
 }
 </script>
 <meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0b0b0f" media="(prefers-color-scheme: dark)">
-<script src="https://cdn.tailwindcss.com?v=2026-04-30-db-restored-v1"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js?v=2026-04-30-db-restored-v1"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js?v=2026-04-30-db-restored-v1"></script>
+<script src="https://cdn.tailwindcss.com?v=2026-05-01-angle-inputs-v1"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js?v=2026-05-01-angle-inputs-v1"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js?v=2026-05-01-angle-inputs-v1"></script>
 <style>
     /* Grundlegende Stildefinitionen */
     html, body {
@@ -195,6 +195,13 @@ window.MathJax = {
     .controls .mt-4 { margin-top: 0; }
     .controls .slider-container { margin-bottom: 0.65rem; }
     .controls #subpatch-density-slider { align-self: end; }
+    .visual-select-block { grid-column: 1 / -1; }
+    .visual-select-control label { color: var(--lt-muted, #6e6e73) !important; line-height: 1.2; }
+    .visual-select-control select { min-width: 0; }
+    #subpatch-density-slider.is-disabled { opacity: 0.45; }
+    #subpatch-density-slider.is-disabled label,
+    #subpatch-density-slider.is-disabled .slider-value { color: var(--lt-muted, #6e6e73) !important; }
+    #subpatch-density:disabled { cursor: not-allowed; }
     .controls-and-info.controls-panel-grid {
       display: grid;
       grid-template-columns: minmax(0, 3fr) minmax(320px, 1fr);
@@ -223,6 +230,41 @@ window.MathJax = {
       text-align: right;
       margin-left: 0.5rem;
       font-size: 0.875rem;
+    }
+    .angle-number-input {
+      width: 4.8rem;
+      margin-left: 0.55rem;
+      padding: 0.25rem 0.45rem;
+      border: 1px solid var(--lt-border, rgba(0,0,0,0.12));
+      border-radius: 999px;
+      background: var(--lt-surface-strong, rgba(255,255,255,0.88));
+      color: var(--lt-text, #1d1d1f);
+      font-size: 0.82rem;
+      font-weight: 650;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      outline: none;
+    }
+    .angle-number-input:focus {
+      border-color: var(--lt-blue, #0071e3);
+      box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.14);
+    }
+    .angle-unit {
+      margin-left: 0.25rem;
+      color: var(--lt-muted, #6e6e73);
+      font-size: 0.82rem;
+      font-weight: 650;
+    }
+    .angle-hidden-value {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
     }
     /* Custom Slider Styles */
     input[type=range] {
@@ -984,11 +1026,340 @@ window.MathJax = {
       background: rgba(120, 120, 128, 0.08);
     }
 
+
+
+    /* Stable 2D + 3D workspace. Flex is used instead of mixed grid/resize states
+       so the panels do not jump below each other after fullscreen or mode changes. */
+    .visual-workspace {
+      --workspace-height: clamp(420px, 58vh, 720px);
+      --left-panel-width: 50%;
+      display: flex;
+      flex-direction: row;
+      gap: 0;
+      align-items: stretch;
+      justify-content: stretch;
+      width: 100%;
+      height: var(--workspace-height);
+      min-height: 320px;
+      max-height: 82vh;
+      overflow: hidden;
+      border-radius: calc(var(--lt-radius, 22px) + 4px);
+    }
+    .visual-workspace .canvas-container {
+      flex: 1 1 auto;
+      width: auto;
+      max-width: none;
+      height: 100% !important;
+      min-width: 180px;
+      min-height: 0;
+      resize: none !important;
+      overflow: hidden;
+      border-radius: calc(var(--lt-radius, 22px) + 4px) !important;
+    }
+    .canvas-size-control { display: none !important; }
+    .canvas-toolbar::before {
+      content: "2D/3D workspace: drag divider for width; drag bottom edge to resize both panels together";
+      color: var(--lt-muted, #6e6e73);
+      font-size: 0.82rem;
+      font-weight: 650;
+    }
+    .workspace-resizer {
+      flex: 0 0 10px;
+      cursor: col-resize;
+      position: relative;
+      background: transparent;
+      touch-action: none;
+    }
+    .workspace-resizer::before {
+      content: "";
+      position: absolute;
+      top: 14px; bottom: 14px; left: 4px;
+      width: 2px;
+      border-radius: 999px;
+      background: rgba(120,120,128,0.35);
+    }
+    .workspace-height-resizer {
+      height: 12px;
+      cursor: row-resize;
+      touch-action: none;
+      position: relative;
+      margin: 0.2rem auto 0.65rem;
+      width: min(360px, 65%);
+    }
+    .workspace-height-resizer::before {
+      content: "";
+      position: absolute;
+      left: 0; right: 0; top: 5px;
+      height: 2px;
+      border-radius: 999px;
+      background: rgba(120,120,128,0.35);
+    }
+    .visual-workspace.two-d-compact { --left-panel-width: 220px; }
+    .visual-workspace.two-d-collapsed { --left-panel-width: 72px; }
+    .visual-workspace.two-d-collapsed .slice-dashboard {
+      min-width: 72px;
+      padding: 0.45rem 0.35rem;
+      overflow: hidden;
+    }
+    .visual-workspace.two-d-collapsed .slice-dashboard-head > div:first-child,
+    .visual-workspace.two-d-collapsed .slice-cut-control,
+    .visual-workspace.two-d-collapsed .slice-mini-toggle,
+    .visual-workspace.two-d-collapsed #print-report,
+    .visual-workspace.two-d-collapsed #slice-dashboard-fullscreen,
+    .visual-workspace.two-d-collapsed #workspace-fullscreen,
+    .visual-workspace.two-d-collapsed #equal-panels,
+    .visual-workspace.two-d-collapsed #toggle-3d-panel,
+    .visual-workspace.two-d-collapsed .slice-dashboard-grid,
+    .visual-workspace.two-d-collapsed .slice-note { display: none !important; }
+    .visual-workspace.two-d-collapsed .slice-dashboard-head {
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      margin: 0;
+    }
+    .visual-workspace.two-d-collapsed .slice-dashboard-toolbar {
+      justify-content: center;
+      align-items: center;
+      writing-mode: vertical-rl;
+    }
+    .visual-workspace.three-d-compact .canvas-container {
+      flex: 0 0 240px;
+      min-width: 180px;
+    }
+    .visual-workspace.three-d-collapsed .canvas-container {
+      flex: 0 0 72px;
+      min-width: 72px;
+      opacity: 0.72;
+    }
+    .visual-workspace.three-d-collapsed .canvas-container::after {
+      content: "3D";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      color: var(--lt-muted, #6e6e73);
+      font-weight: 850;
+      letter-spacing: 0.08em;
+      background: rgba(120,120,128,0.08);
+      pointer-events: none;
+    }
+    .visual-workspace.slice-panel-hidden .slice-dashboard,
+    .visual-workspace.slice-panel-hidden .workspace-resizer { display: none !important; }
+    .visual-workspace.slice-panel-hidden .canvas-container { min-width: 100%; }
+    .visual-workspace:fullscreen {
+      padding: 0.75rem;
+      background: var(--lt-bg, #f5f5f7);
+      height: 100vh;
+      max-height: none;
+      border-radius: 0;
+    }
+    .visual-workspace:fullscreen .canvas-container,
+    .visual-workspace:fullscreen .slice-dashboard { height: calc(100vh - 1.5rem) !important; max-height: calc(100vh - 1.5rem); }
+    .slice-dashboard {
+      flex: 0 0 var(--left-panel-width);
+      width: var(--left-panel-width);
+      max-width: none;
+      min-width: 190px;
+      border: 1px solid var(--lt-border, rgba(0,0,0,0.08));
+      border-radius: calc(var(--lt-radius, 22px) + 2px);
+      background: var(--lt-surface, rgba(255,255,255,0.78));
+      backdrop-filter: blur(22px) saturate(180%);
+      -webkit-backdrop-filter: blur(22px) saturate(180%);
+      box-shadow: var(--lt-shadow-soft, 0 8px 24px rgba(0,0,0,0.08));
+      padding: 0.65rem;
+      height: 100%;
+      min-height: 0;
+      overflow: auto;
+    }
+
+    .workspace-details {
+      border: 1px solid var(--lt-border, rgba(0,0,0,0.08));
+      border-radius: calc(var(--lt-radius, 22px) + 6px);
+      background: var(--lt-surface, rgba(255,255,255,0.72));
+      backdrop-filter: blur(22px) saturate(180%);
+      -webkit-backdrop-filter: blur(22px) saturate(180%);
+      box-shadow: var(--lt-shadow-soft, 0 8px 24px rgba(0,0,0,0.08));
+      overflow: hidden;
+    }
+    .workspace-details > summary {
+      cursor: pointer;
+      list-style: none;
+      padding: 0.7rem 0.9rem;
+      color: var(--lt-text, #1d1d1f);
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      user-select: none;
+    }
+    .workspace-details > summary::-webkit-details-marker { display: none; }
+    .workspace-details > summary::after {
+      content: "▾";
+      font-size: 0.9rem;
+      color: var(--lt-muted, #6e6e73);
+      transition: transform 0.18s ease;
+    }
+    .workspace-details:not([open]) > summary::after { transform: rotate(-90deg); }
+    .workspace-details-inner { padding: 0 0.55rem 0.55rem; }
+    .workspace-toolbar-inline {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      justify-content: flex-end;
+      align-items: center;
+      margin-bottom: 0.45rem;
+    }
+    .visual-workspace.workspace-compact-height {
+      --workspace-height: 180px;
+      min-height: 140px;
+      max-height: 220px;
+    }
+
+    @media (max-width: 820px) {
+      .visual-workspace { flex-direction: column; height: auto; max-height: none; overflow: visible; }
+      .slice-dashboard, .visual-workspace .canvas-container { width: 100%; flex-basis: auto; height: 420px !important; min-width: 0; }
+      .workspace-resizer, .workspace-height-resizer { display: none; }
+    }
+
+    .slice-dashboard-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      align-items: center;
+      justify-content: flex-end;
+    }
+    .slice-cut-control {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      border: 1px solid var(--lt-border, rgba(0,0,0,0.10));
+      border-radius: 999px;
+      padding: 0.18rem 0.45rem;
+      background: var(--lt-surface-strong, rgba(255,255,255,0.88));
+      color: var(--lt-muted, #6e6e73);
+      font-size: 0.72rem;
+      font-weight: 650;
+      white-space: nowrap;
+    }
+    .slice-cut-control select { font-size: 0.72rem !important; padding: 0.05rem 0.35rem !important; }
+    .slice-mini-btn {
+      border: 1px solid var(--lt-border, rgba(0,0,0,0.10));
+      border-radius: 999px;
+      background: var(--lt-surface-strong, rgba(255,255,255,0.88));
+      color: var(--lt-text, #1d1d1f);
+      font-size: 0.72rem;
+      font-weight: 750;
+      padding: 0.28rem 0.52rem;
+      cursor: pointer;
+    }
+    .slice-mini-btn:hover { transform: translateY(-1px); }
+    .slice-dashboard-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.55rem;
+      color: var(--lt-text, #1d1d1f);
+      font-size: 0.86rem;
+    }
+    .slice-dashboard-head strong { display: block; letter-spacing: -0.02em; }
+    .slice-dashboard-head span { display: block; color: var(--lt-muted, #6e6e73); font-size: 0.73rem; margin-top: 0.05rem; }
+    .slice-mini-toggle { color: var(--lt-muted, #6e6e73); font-size: 0.75rem; white-space: nowrap; }
+    .slice-dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(150px, 1fr));
+      gap: 0.55rem;
+    }
+    .slice-card {
+      border: 1px solid var(--lt-border, rgba(0,0,0,0.08));
+      border-radius: 16px;
+      background: rgba(120, 120, 128, 0.08);
+      padding: 0.45rem;
+      min-width: 0;
+    }
+    .slice-card-head, .slice-card-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.28rem;
+      color: var(--lt-muted, #6e6e73);
+      font-size: 0.62rem;
+      line-height: 1.12;
+      min-height: 1.25rem;
+    }
+    .slice-card-foot span { flex: 1 1 0; min-width: 0; overflow-wrap: anywhere; }
+    .slice-card-foot span:nth-child(2) { text-align: center; }
+    .slice-card-foot span:last-child { text-align: right; }
+    .slice-card-head label, .slice-card-head strong { color: var(--lt-text, #1d1d1f); font-weight: 800; font-size: 0.74rem; line-height: 1.12; }
+    .slice-marker-choice { display:flex; align-items:center; gap:0.28rem; margin-top:0.28rem; color:var(--lt-muted,#6e6e73); font-size:0.68rem; line-height:1.1; }
+    .slice-card.slice-card-hover { outline: 2px solid var(--lt-blue, #0071e3); outline-offset: 2px; }
+    .slice-card-head { flex-wrap: wrap; }
+    .slice-card-head span { text-align: right; font-variant-numeric: tabular-nums; max-width: 100%; flex: 1 1 100%; overflow-wrap: anywhere; margin-top: 0.15rem; }
+    .slice-card svg {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      display: block;
+      margin: 0.35rem 0 0.25rem;
+      border-radius: 12px;
+      background: #ffffff;
+      overflow: hidden;
+    }
+    .slice-dashboard[data-plot-theme="dark"] .slice-card svg { background: #050816; }
+    .slice-dashboard[data-plot-theme="light"] .slice-card svg { background: #ffffff; }
+    .slice-vector-label { font: 4.0px system-ui, -apple-system, Segoe UI, sans-serif; pointer-events: none; }
+    .slice-axis-label { font: 3.25px system-ui, -apple-system, Segoe UI, sans-serif; pointer-events: none; opacity: 0.82; }
+    .slice-ring-label { font: 3.05px system-ui, -apple-system, Segoe UI, sans-serif; pointer-events: none; opacity: 0.78; }
+    .custom-array-panel textarea { width: 100%; min-height: 8rem; resize: vertical; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.78rem; line-height: 1.35; }
+    .custom-array-panel code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .slice-wave-circle { fill: none; stroke-width: 0.55; opacity: 0.42; }
+    .slice-contour-main { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .slice-axis-line { stroke-width: 0.45; vector-effect: non-scaling-stroke; }
+    .slice-note {
+      margin-top: 0.5rem;
+      color: var(--lt-muted, #6e6e73);
+      font-size: 0.7rem;
+      line-height: 1.35;
+    }
+    .slice-tooltip {
+      position: absolute;
+      z-index: 2147482500;
+      pointer-events: none;
+      padding: 0.35rem 0.55rem;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.72);
+      color: white;
+      font-size: 12px;
+      line-height: 1;
+      transform: translate(-50%, -120%);
+      opacity: 0;
+      transition: opacity 0.12s ease;
+      white-space: nowrap;
+    }
+    .slice-tooltip.visible { opacity: 1; }
+    @media (max-width: 980px) {
+      .visual-workspace { grid-template-columns: 1fr; }
+      .slice-dashboard-grid { grid-template-columns: repeat(4, minmax(130px, 1fr)); overflow-x: auto; padding-bottom: 0.2rem; }
+      .slice-dashboard { overflow: visible; }
+    }
+    @media (max-width: 640px) {
+      .slice-dashboard-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    .print-report-btn {
+      font-weight: 750;
+      background: linear-gradient(180deg, #111827, #374151) !important;
+      color: white !important;
+    }
+    @media (prefers-color-scheme: dark) {
+      .print-report-btn { background: linear-gradient(180deg, #f5f5f7, #d1d5db) !important; color: #111827 !important; }
+    }
+
 </style>
 
 <script>
 // Runtime version marker for easier cache debugging.
-window.PHASOR_APP_VERSION = "2026-04-30-db-restored-v1";
+window.PHASOR_APP_VERSION = "2026-05-01-angle-inputs-v1";
 try { localStorage.setItem("phasor_app_version", window.PHASOR_APP_VERSION); } catch (e) {}
 </script>
 </head>
@@ -1117,9 +1488,74 @@ try { localStorage.setItem("phasor_app_version", window.PHASOR_APP_VERSION); } c
     </div>
   </div>
 </details>
-<div class="canvas-container" id="canvas-container">
-    <canvas id="watermark-canvas"></canvas>
+<details class="workspace-details" id="workspace-details" open>
+  <summary>2D + 3D workspace</summary>
+  <div class="workspace-details-inner">
+    <div class="workspace-toolbar-inline">
+      <button class="slice-mini-btn" id="toggle-workspace-compact" type="button" title="Make the 2D/3D workspace shorter or restore it">2D/3D small</button>
+    </div>
+<div class="visual-workspace" id="visual-workspace">
+  <aside class="slice-dashboard" id="slice-dashboard" data-plot-theme="light" aria-label="2D radiation pattern and visual projection dashboard">
+    <div class="slice-dashboard-head">
+      <div>
+        <strong>2D radiation views</strong>
+        <span>angular patterns plus a visual top projection</span>
+      </div>
+      <div class="slice-dashboard-toolbar">
+        <label class="slice-cut-control">Azimuth cut elevation
+          <select id="azimuth-cut-elevation" class="border rounded px-1 py-0 text-xs">
+            <option value="steering">steering</option>
+            <option value="0" selected>0°</option>
+            <option value="15">15°</option>
+            <option value="30">30°</option>
+            <option value="45">45°</option>
+            <option value="60">60°</option>
+            <option value="75">75°</option>
+            <option value="90">90°</option>
+          </select>
+        </label>
+        <label class="slice-mini-toggle">plot <select id="slice-plot-theme" class="border rounded px-1 py-0 text-xs"><option value="auto" selected>auto</option><option value="light">white</option><option value="dark">black</option></select></label>
+        <button class="slice-mini-btn print-report-btn" id="print-report" type="button">Print report</button>
+        <button class="slice-mini-btn" id="slice-dashboard-fullscreen" type="button">Fullscreen</button>
+        <button class="slice-mini-btn" id="workspace-fullscreen" type="button">3D + 2D</button>
+      </div>
+    </div>
+    <div class="slice-dashboard-grid">
+      <article class="slice-card" data-slice-card="azimuth" title="Azimuth pattern: horizontal angular cut around the antenna">
+        <div class="slice-card-head"><strong>Azimuth pattern</strong><span id="slice-panel-azimuth-range">—</span></div>
+        <label class="slice-marker-choice"><input id="slice-marker-azimuth" type="checkbox"> show azimuth cut surface in 3D</label>
+        <svg id="slice-panel-canvas-azimuth" viewBox="0 0 120 120" role="img" aria-label="Azimuth radiation pattern"></svg>
+        <div class="slice-card-foot"><span>front</span><span>azimuth cut</span><span>side</span></div>
+      </article>
+      <article class="slice-card" data-slice-card="elevation" title="Elevation pattern: vertical angular cut through the current steering azimuth">
+        <div class="slice-card-head"><strong>Elevation pattern</strong><span id="slice-panel-elevation-range">—</span></div>
+        <label class="slice-marker-choice"><input id="slice-marker-elevation" type="checkbox"> show vertical circular cut in 3D</label>
+        <svg id="slice-panel-canvas-elevation" viewBox="0 0 120 120" role="img" aria-label="Elevation radiation pattern"></svg>
+        <div class="slice-card-foot"><span>front</span><span>elevation cut</span><span>up</span></div>
+      </article>
+      <article class="slice-card" data-slice-card="beam" title="Beam-plane pattern: angular cut through the current main steering direction">
+        <div class="slice-card-head"><strong>Beam-plane pattern</strong><span id="slice-panel-beam-range">—</span></div>
+        <label class="slice-marker-choice"><input id="slice-marker-beam" type="checkbox"> show beam circular cut in 3D</label>
+        <svg id="slice-panel-canvas-beam" viewBox="0 0 120 120" role="img" aria-label="Beam-plane radiation pattern"></svg>
+        <div class="slice-card-foot"><span>beam</span><span>steering cut</span><span>orthogonal</span></div>
+      </article>
+      <article class="slice-card" data-slice-card="top" title="Top projection: visual footprint of the 3D pattern on the horizontal view">
+        <div class="slice-card-head"><strong>Top projection</strong><span id="slice-panel-top-range">—</span></div>
+        <label class="slice-marker-choice"><input id="slice-marker-top" type="checkbox"> show top projection screen in 3D</label>
+        <svg id="slice-panel-canvas-top" viewBox="0 0 120 120" role="img" aria-label="Top projection of radiation pattern"></svg>
+        <div class="slice-card-foot"><span>left/right</span><span>top footprint</span><span>front/back</span></div>
+      </article>
+    </div>
+    <div class="slice-note">Angular patterns use the same direction-based field formula as the 3D view. The azimuth plot is a horizontal angular cut at the selected elevation; when elevation is 0°, it is the standard top-direction pattern. The elevation plot is a vertical angular cut at the steering azimuth. The beam-plane plot cuts through the steered beam direction, so it always includes the main beam. The top projection is only a visual footprint from above, not a physical radiation cut.</div>
+  </aside>
+  <div class="workspace-resizer" id="workspace-resizer" aria-label="Resize 2D and 3D panels" title="Drag to resize 2D and 3D panels"></div>
+  <div class="canvas-container" id="canvas-container">
+      <canvas id="watermark-canvas"></canvas>
+  </div>
 </div>
+<div class="workspace-height-resizer" id="workspace-height-resizer" aria-label="Resize 2D and 3D workspace height" title="Drag to change the 2D/3D workspace height"></div>
+  </div>
+</details>
 </div>
 
 <!-- Controls and Info Section -->
@@ -1128,48 +1564,64 @@ try { localStorage.setItem("phasor_app_version", window.PHASOR_APP_VERSION); } c
 <div class="flex justify-between items-center mb-4">
 <h2 class="text-lg sm:text-xl font-semibold" data-lang="visualization-settings">Visualisierungseinstellungen</h2>
 </div>
-<div class="flex items-center mb-2 w-full">
-  <span class="mr-2 text-sm font-medium" data-lang="antenna-type">Antennentyp:</span>
-  <select class="border rounded px-2 py-1 text-sm pattern-type-selector flex-grow" id="pattern-type">
-    <option data-lang="isotropic" value="isotropic">Isotrop</option>
-    <option data-lang="patch" value="patch" selected>Patch (Direktional)</option>
-  </select>
-</div>
-<div class="flex items-center mb-4 w-full">
-    <span class="mr-2 text-sm" data-lang="pattern-display">Musterdarstellung:</span>
-    <select class="border rounded px-2 py-1 flex-grow" id="pattern-display">
-        <!-- Default: lobe/3D magnitude shape, easier for non-specialists to understand. -->
-        <option data-lang="hemisphere" value="hemisphere">Farbkodierte Hemisphäre</option>
-        <option data-lang="3d-shape" value="3d" selected>Keulenform (3D-Magnitude)</option>
-    </select>
-</div>
-<div class="flex items-center mb-4 w-full">
-    <span class="mr-2 text-sm" data-lang="field-quantity-label">Displayed quantity:</span>
-    <select class="border rounded px-2 py-1 flex-grow" id="field-quantity">
-        <option data-lang="field-power" value="power" selected>Power / intensity |E|²</option>
-        <option data-lang="field-amplitude" value="amplitude">Field amplitude |E|</option>
-    </select>
-</div>
-<div class="flex items-center mb-4 w-full">
-    <span class="mr-2 text-sm" data-lang="display-scale-label">Display scale:</span>
-    <select class="border rounded px-2 py-1 flex-grow" id="display-scale">
-        <option data-lang="scale-linear" value="linear" selected>Linear</option>
-        <option data-lang="scale-db" value="db">dB (normalized)</option>
-    </select>
+<div class="visual-select-block grid gap-3 mb-4 col-span-full">
+  <div class="visual-select-row grid grid-cols-1 md:grid-cols-2 gap-3">
+    <div class="visual-select-control flex flex-col gap-1 min-w-0">
+      <label class="text-sm font-medium" data-lang="antenna-type" for="pattern-type">Antennentyp:</label>
+      <select class="border rounded px-2 py-1 text-sm pattern-type-selector w-full" id="pattern-type">
+        <option data-lang="isotropic" value="isotropic">Isotrop</option>
+        <option data-lang="patch" value="patch" selected>Patch (Direktional)</option>
+      </select>
+    </div>
+    <div class="visual-select-control flex flex-col gap-1 min-w-0">
+      <label class="text-sm font-medium" for="radiation-model">Radiation model:</label>
+      <select class="border rounded px-2 py-1 text-sm w-full" id="radiation-model" aria-label="Radiation model">
+        <option value="ground" selected>Ground plane (upper half-space)</option>
+        <option value="free">Free space (no ground plane)</option>
+      </select>
+    </div>
+  </div>
+  <div class="visual-select-row grid grid-cols-1 md:grid-cols-3 gap-3">
+    <div class="visual-select-control flex flex-col gap-1 min-w-0">
+      <label class="text-sm font-medium" data-lang="pattern-display" for="pattern-display">Musterdarstellung:</label>
+      <select class="border rounded px-2 py-1 text-sm w-full" id="pattern-display">
+          <!-- Default: lobe/3D magnitude shape, easier for non-specialists to understand. -->
+          <option data-lang="hemisphere" value="hemisphere">Farbkodierte Hemisphäre</option>
+          <option data-lang="3d-shape" value="3d" selected>Keulenform (3D-Magnitude)</option>
+      </select>
+    </div>
+    <div class="visual-select-control flex flex-col gap-1 min-w-0">
+      <label class="text-sm font-medium" data-lang="field-quantity-label" for="field-quantity">Displayed quantity:</label>
+      <select class="border rounded px-2 py-1 text-sm w-full" id="field-quantity">
+          <option data-lang="field-power" value="power" selected>Power / intensity |E|²</option>
+          <option data-lang="field-amplitude" value="amplitude">Field amplitude |E|</option>
+      </select>
+    </div>
+    <div class="visual-select-control flex flex-col gap-1 min-w-0">
+      <label class="text-sm font-medium" data-lang="display-scale-label" for="display-scale">Display scale:</label>
+      <select class="border rounded px-2 py-1 text-sm w-full" id="display-scale">
+          <option data-lang="scale-linear" value="linear">Linear</option>
+          <option data-lang="scale-db" value="db" selected>dB (normalized)</option>
+      </select>
+    </div>
+  </div>
 </div>
 
+<!-- Old in-3D slice/cutaway controls removed: 2D radiation views are shown in the separate dashboard. -->
 <div class="flex flex-wrap -mx-2">
 <div class="w-full px-2 mb-4">
 <h3 class="font-medium mb-2" data-lang="steering-direction">Steuerungsrichtung (Beam Steering)</h3>
 <div class="slider-container">
 <label data-lang="azimuth" for="steering-azimuth">Azimut (φ):</label>
-<input class="w-full" id="steering-azimuth" max="360" min="0" type="range" value="10"/>
-<span class="slider-value" id="steering-azimuth-value">10°</span>
+<input class="w-full" id="steering-azimuth" max="360" min="0" step="0.1" type="range" value="10"/>
+<input class="angle-number-input" id="steering-azimuth-input" max="360" min="0" step="0.1" type="number" value="10" aria-label="Steering azimuth degrees"/><span class="angle-unit">°</span>
+<span class="slider-value angle-hidden-value" id="steering-azimuth-value">10°</span>
 </div>
 <div class="slider-container">
 <label data-lang="elevation" for="steering-elevation">Elevation (θ):</label>
-<input class="w-full" id="steering-elevation" max="90" min="0" type="range" value="75"/>
-<span class="slider-value" id="steering-elevation-value">75°</span>
+<input class="w-full" id="steering-elevation" max="90" min="0" step="0.1" type="range" value="75"/>
+<input class="angle-number-input" id="steering-elevation-input" max="90" min="0" step="0.1" type="number" value="75" aria-label="Steering elevation degrees"/><span class="angle-unit">°</span>
+<span class="slider-value angle-hidden-value" id="steering-elevation-value">75°</span>
 </div>
 <div class="flex items-center mt-2">
     <span class="mr-2 text-sm" data-lang="show-steering-point">Steuerungspunkt anzeigen:</span>
@@ -1183,13 +1635,15 @@ try { localStorage.setItem("phasor_app_version", window.PHASOR_APP_VERSION); } c
 <h3 class="font-medium mb-2" data-lang="observation-point">Beobachtungspunkt</h3>
 <div class="slider-container">
 <label data-lang="azimuth" for="observation-azimuth">Azimut (φ):</label>
-<input class="w-full" id="observation-azimuth" max="360" min="0" type="range" value="10"/>
-<span class="slider-value" id="observation-azimuth-value">10°</span>
+<input class="w-full" id="observation-azimuth" max="360" min="0" step="0.1" type="range" value="10"/>
+<input class="angle-number-input" id="observation-azimuth-input" max="360" min="0" step="0.1" type="number" value="10" aria-label="Observation azimuth degrees"/><span class="angle-unit">°</span>
+<span class="slider-value angle-hidden-value" id="observation-azimuth-value">10°</span>
 </div>
 <div class="slider-container">
 <label data-lang="elevation" for="observation-elevation">Elevation (θ):</label>
-<input class="w-full" id="observation-elevation" max="90" min="0" type="range" value="75"/>
-<span class="slider-value" id="observation-elevation-value">75°</span>
+<input class="w-full" id="observation-elevation" max="90" min="0" step="0.1" type="range" value="75"/>
+<input class="angle-number-input" id="observation-elevation-input" max="90" min="0" step="0.1" type="number" value="75" aria-label="Observation elevation degrees"/><span class="angle-unit">°</span>
+<span class="slider-value angle-hidden-value" id="observation-elevation-value">75°</span>
 </div>
 <div class="slider-container">
 <label data-lang="distance" for="observation-distance">Entfernung:</label>
@@ -1213,7 +1667,7 @@ try { localStorage.setItem("phasor_app_version", window.PHASOR_APP_VERSION); } c
 </div>
 </div>
 <div class="array-config-section mt-4">
-<h3 class="font-medium mb-2" data-lang="antenna-array-config">Antenna array configuration (XZ-plane)</h3>
+<h3 class="font-medium mb-2" data-lang="antenna-array-config">Antenna array configuration</h3>
 <div class="array-config-controls grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3 mb-3">
   <div class="slider-container">
     <label for="array-x-count" data-lang="x-elements">X elements:</label>
@@ -1245,6 +1699,29 @@ try { localStorage.setItem("phasor_app_version", window.PHASOR_APP_VERSION); } c
 <div class="taper-note text-xs text-gray-700 mt-2 mb-3 p-2 rounded bg-slate-50 border border-slate-200 md:col-span-2 xl:col-span-4" data-lang="taper-note">Chebyshev taper changes amplitudes, not phases. For a 2D array this demo uses separable weights: <span class="font-mono">w(x,z)=w_x(x)·w_z(z)</span>. More elements make the main lobe narrower; tapering mainly controls sidelobes.</div>
 </div>
 <div class="antenna-grid" id="antenna-grid"></div>
+<details class="custom-array-panel mt-3 p-3 rounded bg-slate-50 border border-slate-200">
+  <summary class="cursor-pointer font-medium text-sm">Advanced custom antenna coordinates</summary>
+  <div class="mt-3 text-sm space-y-2">
+    <label class="checkbox-wrapper" style="background:transparent;border:0;padding:0;">
+      <input id="custom-array-enabled" type="checkbox" />
+      <span>Use custom element positions</span>
+    </label>
+    <p class="text-xs text-gray-600">Enter one antenna per line as <code>[x, y, z]</code>. In the UI, <code>x</code> and <code>y</code> are the array-surface coordinates and <code>z</code> is height. The simulator maps this automatically to its internal 3D axes.</p>
+    <textarea id="custom-array-coordinates" class="border rounded p-2" spellcheck="false">[-1, -1, 0]
+[ 0, -1, 0]
+[ 1, -1, 0]
+[-1,  0, 0]
+[ 0,  0, 0]
+[ 1,  0, 0]
+[-1,  1, 0]
+[ 0,  1, 0]
+[ 1,  1, 0]</textarea>
+    <div class="flex flex-wrap gap-2 items-center">
+      <button class="btn" id="apply-custom-array" type="button">Apply custom coordinates</button>
+      <span class="text-xs text-gray-600" id="custom-array-status">Regular grid active</span>
+    </div>
+  </div>
+</details>
 </div>
 <div class="mt-4 flex flex-wrap justify-between items-center">
 <div class="flex items-center mr-4 mb-2">
@@ -1603,7 +2080,7 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
         "sync-observation": "Beobachtung = Steuerung:",
         "show-observation-point": "Beobachtungspunkt anzeigen:",
         "show-steering-point": "Steuerungspunkt anzeigen:",
-        "antenna-array-config": "Antennenarray-Konfiguration (XZ-Ebene)",
+        "antenna-array-config": "Antennenarray-Konfiguration",
         "waves": "Wellen:",
         "vectors": "Vektoren:",
         "far-field-pattern": "Feldmuster:",
@@ -1726,7 +2203,7 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
         "sync-observation": "Observation = Steering:",
         "show-observation-point": "Show Observation Point:",
         "show-steering-point": "Show Steering Point:",
-        "antenna-array-config": "Antenna Array Configuration (XZ-Plane)",
+        "antenna-array-config": "Antenna array configuration",
         "waves": "Waves:",
         "vectors": "Vectors:",
         "far-field-pattern": "Field Pattern:",
@@ -2304,8 +2781,8 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
             "mouse-right": "Right mouse: move",
             "mouse-scroll": "Scroll: zoom",
             "mouse-double": "Double-click: fullscreen",
-            "x-elements": "X elements:",
-            "z-elements": "Z elements:",
+            "x-elements": "Surface x elements:",
+            "z-elements": "Surface y elements:",
             "spacing": "Spacing:",
             "taper": "Taper:",
             "uniform": "Uniform",
@@ -2343,8 +2820,8 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
             "mouse-right": "Rechte Maus: verschieben",
             "mouse-scroll": "Scrollen: zoomen",
             "mouse-double": "Doppelklick: Vollbild",
-            "x-elements": "X-Elemente:",
-            "z-elements": "Z-Elemente:",
+            "x-elements": "Flächen-x-Elemente:",
+            "z-elements": "Flächen-y-Elemente:",
             "spacing": "Abstand:",
             "taper": "Taper:",
             "uniform": "Uniform",
@@ -2779,6 +3256,7 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
       const selector = document.getElementById('theme-select');
       if (selector) selector.value = resolvedTheme;
       applyCanvasBackground();
+      if (typeof applySlicePlotTheme === 'function') applySlicePlotTheme();
       if (typeof onWindowResize === 'function') setTimeout(onWindowResize, 0);
     }
 
@@ -2792,6 +3270,18 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
       const savedCanvasTheme = localStorage.getItem('canvas-background-theme') || 'auto';
       if (savedCanvasTheme === 'light' || savedCanvasTheme === 'dark') return savedCanvasTheme;
       return getResolvedAppearanceTheme();
+    }
+
+    function getResolvedSlicePlotTheme() {
+      const selected = document.getElementById('slice-plot-theme')?.value || 'auto';
+      if (selected === 'light' || selected === 'dark') return selected;
+      return getResolvedAppearanceTheme();
+    }
+
+    function applySlicePlotTheme() {
+      const resolved = getResolvedSlicePlotTheme();
+      document.getElementById('slice-dashboard')?.setAttribute('data-plot-theme', resolved);
+      for (const mode of getSlicePanelModes()) if (slicePanelCache[mode]) drawSlicePanelFrame(slicePanelCache[mode], false);
     }
 
     function applyCanvasBackground() {
@@ -2823,7 +3313,7 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
         applyCanvasBackground();
       });
       if (window.matchMedia) {
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => applyCanvasBackground());
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { applyCanvasBackground(); applySlicePlotTheme(); });
       }
     }
 
@@ -2857,6 +3347,13 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
     // Three.js Scene Setup
     let scene, camera, renderer, controls;
     let antennaGroup, waveGroup, vectorGroup, patternMesh;
+    let fieldSliceMesh, fieldSliceTexture, fieldSliceCanvas, fieldSliceCtx, fieldSliceNeedsRedraw = true;
+    let fieldSliceTime = 0;
+    let slicePanelCache = {};
+    let slicePanelNeedsRebuild = true;
+    let slicePlaneMarkerGroup, sliceTooltip, sliceRaycaster, sliceMouse = new THREE.Vector2(999, 999);
+    let cutawayPlane = new THREE.Plane(new THREE.Vector3(1, 0, 0), 0);
+    let cutawayCapMesh, cutawayOutlineGroup;
     let observationPoint, steeringPoint;
     const WAVELENGTH = 1; 
     const WAVENUMBER = 2 * Math.PI / WAVELENGTH;
@@ -2866,27 +3363,88 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
     const INACTIVE_COLOR = new THREE.Color(0x6b7280);
 
 
+    function parseCustomArrayCoordinates() {
+      const text = document.getElementById('custom-array-coordinates')?.value || '';
+      const rows = [];
+      text.split(/\n+/).forEach((line) => {
+        const clean = line.replace(/#.*/, '').trim();
+        if (!clean) return;
+        const nums = clean.match(/[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?/g)?.map(Number) || [];
+        if (nums.length >= 3) {
+          const [ux, uy, uz] = nums;
+          rows.push({
+            user: { x: ux, y: uy, z: uz },
+            position: new THREE.Vector3(ux, uz, uy),
+            amp: Number.isFinite(nums[3]) ? nums[3] : 1,
+            phaseDeg: Number.isFinite(nums[4]) ? nums[4] : 0,
+            enabledByDefault: nums.length >= 6 ? nums[5] !== 0 : true
+          });
+        }
+      });
+      return rows;
+    }
+
+    function updateCustomArrayStatus(message, isError=false) {
+      const el = document.getElementById('custom-array-status');
+      if (!el) return;
+      el.textContent = message;
+      el.style.color = isError ? '#dc2626' : '';
+    }
+
     function getArrayConfig() {
+      const customEnabled = !!document.getElementById('custom-array-enabled')?.checked;
       return {
         nx: parseInt(document.getElementById('array-x-count')?.value || '5', 10),
         nz: parseInt(document.getElementById('array-z-count')?.value || '5', 10),
         spacing: parseFloat(document.getElementById('element-spacing')?.value || '0.5') * WAVELENGTH,
         taper: document.getElementById('amplitude-taper')?.value || 'uniform',
-        sllDb: parseFloat(document.getElementById('chebyshev-sidelobe')?.value || '25')
+        sllDb: parseFloat(document.getElementById('chebyshev-sidelobe')?.value || '25'),
+        customEnabled
       };
     }
 
     function updateAntennaPositions() {
       const cfg = getArrayConfig();
       ANTENNA_POSITIONS = [];
+      if (cfg.customEnabled) {
+        const rows = parseCustomArrayCoordinates();
+        if (rows.length) {
+          rows.forEach((row, index) => {
+            ANTENNA_POSITIONS.push({
+              index,
+              ix: index,
+              iz: 0,
+              position: row.position,
+              userCoords: row.user,
+              amp: row.amp,
+              phaseDeg: row.phaseDeg,
+              enabledByDefault: row.enabledByDefault,
+              custom: true
+            });
+          });
+          updateCustomArrayStatus(`Custom array active: ${rows.length} elements`);
+          return;
+        }
+        updateCustomArrayStatus('No valid custom coordinates found. Using regular grid.', true);
+      } else {
+        updateCustomArrayStatus('Regular grid active');
+      }
       let index = 0;
       for (let iz = 0; iz < cfg.nz; iz++) {
         for (let ix = 0; ix < cfg.nx; ix++) {
+          const ux = (ix - (cfg.nx - 1) / 2) * cfg.spacing;
+          const uy = (iz - (cfg.nz - 1) / 2) * cfg.spacing;
+          const uz = 0;
           ANTENNA_POSITIONS.push({
             index,
             ix,
             iz,
-            position: new THREE.Vector3((ix - (cfg.nx - 1) / 2) * cfg.spacing, 0, (iz - (cfg.nz - 1) / 2) * cfg.spacing)
+            position: new THREE.Vector3(ux, uz, uy),
+            userCoords: { x: ux, y: uy, z: uz },
+            amp: 1,
+            phaseDeg: 0,
+            enabledByDefault: true,
+            custom: false
           });
           index++;
         }
@@ -2898,16 +3456,17 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
       const grid = document.getElementById('antenna-grid');
       if (!grid) return;
       grid.innerHTML = '';
-      ANTENNA_POSITIONS.forEach(({ index, position }) => {
+      ANTENNA_POSITIONS.forEach(({ index, position, userCoords, enabledByDefault }) => {
         const wrap = document.createElement('div');
         wrap.className = 'checkbox-wrapper';
         const input = document.createElement('input');
         input.type = 'checkbox';
-        input.checked = true;
+        input.checked = enabledByDefault !== false;
         input.id = `antenna-${index}`;
         const label = document.createElement('label');
         label.htmlFor = input.id;
-        label.textContent = `(${position.x.toFixed(2)}, 0, ${position.z.toFixed(2)})`;
+        const uc = userCoords || { x: position.x, y: position.z, z: position.y };
+        label.textContent = `(${uc.x.toFixed(2)}, ${uc.y.toFixed(2)}, ${uc.z.toFixed(2)})`;
         wrap.appendChild(input);
         wrap.appendChild(label);
         grid.appendChild(wrap);
@@ -2942,10 +3501,12 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
 
     function getArrayWeight(antenna) {
       const cfg = getArrayConfig();
-      if (cfg.taper !== 'chebyshev') return 1;
+      const amp = Number.isFinite(antenna.amp) ? antenna.amp : 1;
+      if (antenna.custom || cfg.customEnabled) return amp;
+      if (cfg.taper !== 'chebyshev') return amp;
       const wx = chebyshevWeights(cfg.nx, cfg.sllDb);
       const wz = chebyshevWeights(cfg.nz, cfg.sllDb);
-      return (wx[antenna.ix] || 1) * (wz[antenna.iz] || 1);
+      return amp * (wx[antenna.ix] || 1) * (wz[antenna.iz] || 1);
     }
 
     // Initialization function
@@ -2961,6 +3522,7 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
 
       // Renderer
       renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.localClippingEnabled = true;
       renderer.setSize(container.clientWidth, container.clientHeight);
       container.appendChild(renderer.domElement);
       applyCanvasBackground();
@@ -2983,6 +3545,9 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
       observationPoint = new THREE.Mesh(new THREE.SphereGeometry(0.15, 16, 16), new THREE.MeshPhongMaterial({ color: 0xef4444 })); scene.add(observationPoint);
       steeringPoint = new THREE.Mesh(new THREE.SphereGeometry(0.15, 16, 16), new THREE.MeshPhongMaterial({ color: 0x7f7f7f })); scene.add(steeringPoint);
       createFarFieldPattern();
+      createFieldSlicePlane();
+      createSlicePlaneMarkers();
+      createCutawayHelpers();
 
       // Initial state updates
       updateAllVisuals();
@@ -3011,7 +3576,7 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
     function createAntennas() {
       const antennaType = document.getElementById('pattern-type').value;
       antennaGroup.clear();
-      ANTENNA_POSITIONS.forEach(({ position: posVec, index, ix, iz }) => {
+      ANTENNA_POSITIONS.forEach(({ position: posVec, index, ix, iz, userCoords, amp, phaseDeg, custom }) => {
         const base = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.05, 16), new THREE.MeshPhongMaterial({ color: 0x6b7280 }));
         base.position.copy(posVec);
         let element;
@@ -3043,15 +3608,16 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
         const checkbox = document.getElementById(`antenna-${index}`);
         const active = checkbox ? checkbox.checked : true;
         element.material.color.set(active ? ACTIVE_COLOR : INACTIVE_COLOR);
-        base.userData = { index, ix, iz, position: posVec, active, elementMesh: element };
+        base.userData = { index, ix, iz, position: posVec, userCoords, amp, phaseDeg, custom, active, elementMesh: element };
         antennaGroup.add(base);
       });
     }
     
     // Create the mesh for the far-field pattern
     function createFarFieldPattern() {
-      const geometry = new THREE.SphereGeometry(1, 64, 32, 0, Math.PI * 2, 0, Math.PI / 2);
-      const material = new THREE.MeshPhongMaterial({ vertexColors: true, side: THREE.DoubleSide, transparent: true, opacity: 0.75 });
+      const thetaLength = hasGroundPlane() ? Math.PI / 2 : Math.PI;
+      const geometry = new THREE.SphereGeometry(1, 64, 32, 0, Math.PI * 2, 0, thetaLength);
+      const material = new THREE.MeshPhongMaterial({ vertexColors: true, side: THREE.DoubleSide, transparent: true, opacity: 0.75, clippingPlanes: [], clipShadows: true });
       patternMesh = new THREE.Mesh(geometry, material);
       scene.add(patternMesh);
     }
@@ -3094,13 +3660,13 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
 
     function getElementCurrents(activeAntennas, steeringDir, couplingEnabled, couplingStrength) {
       const cfgKey = getArrayConfig();
-      const key = activeAntennas.map(a => a.index).join(',') + '|' +
+      const key = activeAntennas.map(a => `${a.index}:${a.position.x.toFixed(3)},${a.position.y.toFixed(3)},${a.position.z.toFixed(3)},${(a.amp||1).toFixed(3)},${(a.phaseDeg||0).toFixed(1)}`).join(';') + '|' +
         steeringDir.x.toFixed(5) + ',' + steeringDir.y.toFixed(5) + ',' + steeringDir.z.toFixed(5) +
         '|' + couplingEnabled + '|' + couplingStrength.toFixed(4) + '|' + cfgKey.taper + '|' + cfgKey.sllDb.toFixed(1);
       if (elementCurrentCache.key === key) return elementCurrentCache.currents;
 
       const n = activeAntennas.length;
-      const excitation = activeAntennas.map(a => cScale(cExp(WAVENUMBER * a.position.dot(steeringDir)), getArrayWeight(a)));
+      const excitation = activeAntennas.map(a => cScale(cExp(WAVENUMBER * a.position.dot(steeringDir) + ((a.phaseDeg || 0) * Math.PI / 180)), getArrayWeight(a)));
       if (!couplingEnabled || couplingStrength <= 0 || n <= 1) {
         const map = new Map(activeAntennas.map((a, i) => [a.index, excitation[i]]));
         elementCurrentCache = { key, currents: map };
@@ -3128,11 +3694,21 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
       return map;
     }
 
+    // Radiation environment: ground plane = upper half-space model; free space = bidirectional element model.
+    function getRadiationModel() {
+      return document.getElementById('radiation-model')?.value || 'ground';
+    }
+
+    function hasGroundPlane() {
+      return getRadiationModel() !== 'free';
+    }
+
     // Core calculation of the field at a specific point
     function patchElementGain(direction) {
-      // Simple broadside patch model: strongest along +Y, no back radiation.
+      const c = direction.clone().normalize().dot(new THREE.Vector3(0, 1, 0));
+      // Ground plane mode: suppress lower half-space. Free-space mode: allow both sides.
       // This is still a visualization model, not a full-wave FEM patch solution.
-      return Math.pow(Math.max(0, direction.clone().normalize().dot(new THREE.Vector3(0, 1, 0))), 2);
+      return hasGroundPlane() ? Math.pow(Math.max(0, c), 2) : Math.pow(Math.abs(c), 2);
     }
 
     function patchCurrentDistribution(px, pz, N) {
@@ -3237,7 +3813,7 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
       let maxValue = 0;
       for (let i = 0; i <= 20; i++) {
         for (let j = 0; j < 40; j++) {
-          const theta = (i / 20) * (Math.PI / 2);
+          const theta = (i / 20) * (hasGroundPlane() ? Math.PI / 2 : Math.PI);
           const phi = (j / 40) * (2 * Math.PI);
           const dir = new THREE.Vector3(Math.sin(theta) * Math.cos(phi), Math.cos(theta), Math.sin(theta) * Math.sin(phi));
           const field = calculateFieldAtPoint(dir.multiplyScalar(obsDist), activeAntennas, patternType, useApprox, steeringDir, subpatchDensity, couplingEnabled, couplingStrength);
@@ -3249,7 +3825,9 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
 
     // Update the visualization of the far-field pattern
     function updateFarFieldPattern() {
-      patternMesh.visible = document.getElementById('show-pattern').checked;
+      const sliceOnly = (document.getElementById('field-slice-mode')?.value || 'off') !== 'off'
+        && (document.getElementById('field-slice-view')?.value || 'overlay') === 'only';
+      patternMesh.visible = document.getElementById('show-pattern').checked && !sliceOnly;
       const activeAntennas = antennaGroup.children.filter(a => a.userData.active).map(a => a.userData);
       if (!patternMesh.visible || activeAntennas.length === 0) return;
 
@@ -3260,13 +3838,14 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
         ? calculateReferenceValue(activeAntennas, patternType, useApprox, steeringDir, subpatchDensity, obsDist, fieldQuantity, couplingEnabled, couplingStrength)
         : 1;
       
-      const newGeometry = displayType === '3d' ? new THREE.SphereGeometry(1, 64, 32) : new THREE.SphereGeometry(obsDist, 64, 32, 0, Math.PI * 2, 0, Math.PI / 2);
+      const thetaLength = hasGroundPlane() ? Math.PI / 2 : Math.PI;
+      const newGeometry = displayType === '3d' ? new THREE.SphereGeometry(1, 64, 32, 0, Math.PI * 2, 0, thetaLength) : new THREE.SphereGeometry(obsDist, 64, 32, 0, Math.PI * 2, 0, thetaLength);
       const positions = newGeometry.attributes.position;
       const colors = new Float32Array(positions.count * 3);
 
       for (let i = 0; i < positions.count; i++) {
         const vertex = new THREE.Vector3().fromBufferAttribute(positions, i);
-        if (vertex.y < -0.001 && displayType === '3d') continue;
+        if (hasGroundPlane() && vertex.y < -0.001 && displayType === '3d') continue;
 
         const dir = vertex.clone().normalize();
         const field = calculateFieldAtPoint(dir.clone().multiplyScalar(obsDist), activeAntennas, patternType, useApprox, steeringDir, subpatchDensity, couplingEnabled, couplingStrength);
@@ -3291,6 +3870,7 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
       }
       patternMesh.geometry.dispose();
       patternMesh.geometry = newGeometry;
+      updateCutaway();
     }
 
     // Utility to get values from control UI elements
@@ -3325,14 +3905,898 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
         return new THREE.Vector3(Math.cos(azimuth) * Math.cos(elevation), Math.sin(elevation), Math.sin(azimuth) * Math.cos(elevation)).normalize().multiplyScalar(distance);
     }
     
+
+    // Lightweight 2D slice system: one plane + one CanvasTexture.
+    // It shows a real cross-section through the scalar field, not a projection.
+    function createFieldSlicePlane() {
+      fieldSliceCanvas = document.createElement('canvas');
+      fieldSliceCanvas.width = 320;
+      fieldSliceCanvas.height = 320;
+      fieldSliceCtx = fieldSliceCanvas.getContext('2d', { willReadFrequently: true });
+      fieldSliceTexture = new THREE.CanvasTexture(fieldSliceCanvas);
+      fieldSliceTexture.minFilter = THREE.LinearFilter;
+      fieldSliceTexture.magFilter = THREE.LinearFilter;
+      fieldSliceTexture.generateMipmaps = false;
+
+      const geo = new THREE.PlaneGeometry(1, 1, 1, 1);
+      const mat = new THREE.MeshBasicMaterial({
+        map: fieldSliceTexture,
+        transparent: true,
+        opacity: 0.96,
+        side: THREE.DoubleSide,
+        depthWrite: false
+      });
+      fieldSliceMesh = new THREE.Mesh(geo, mat);
+      fieldSliceMesh.renderOrder = 15;
+      fieldSliceMesh.visible = false;
+      scene.add(fieldSliceMesh);
+    }
+
+    function getFieldSliceControls() {
+      return {
+        mode: document.getElementById('field-slice-mode')?.value || 'off',
+        style: document.getElementById('field-slice-style')?.value || 'contour',
+        view: document.getElementById('field-slice-view')?.value || 'overlay',
+        sizeOverride: parseFloat(document.getElementById('slice-size')?.value || '30')
+      };
+    }
+
+    function sliceColorMap(t) {
+      // Perceptual-ish blue -> cyan -> yellow -> red palette for readable field slices.
+      t = Math.max(0, Math.min(1, t));
+      const stops = [
+        [0.00, [7, 12, 45]],
+        [0.10, [20, 35, 110]],
+        [0.24, [30, 110, 210]],
+        [0.40, [25, 190, 210]],
+        [0.56, [55, 210, 120]],
+        [0.72, [245, 220, 70]],
+        [0.86, [245, 135, 45]],
+        [1.00, [210, 35, 40]]
+      ];
+      for (let i = 0; i < stops.length - 1; i++) {
+        const [a, ca] = stops[i], [b, cb] = stops[i + 1];
+        if (t >= a && t <= b) {
+          const u0 = (t - a) / (b - a);
+          const u = u0 * u0 * (3 - 2 * u0);
+          return [
+            Math.round(ca[0] + (cb[0] - ca[0]) * u),
+            Math.round(ca[1] + (cb[1] - ca[1]) * u),
+            Math.round(ca[2] + (cb[2] - ca[2]) * u)
+          ];
+        }
+      }
+      return stops[stops.length - 1][1];
+    }
+
+    function getActiveAntennaUserData() {
+      return antennaGroup.children.filter(a => a.userData.active).map(a => a.userData);
+    }
+
+    function getSliceBasis(mode, steeringDir) {
+      const ex = new THREE.Vector3(1, 0, 0);
+      const ey = new THREE.Vector3(0, 1, 0);
+      const ez = new THREE.Vector3(0, 0, 1);
+
+      // UI uses antenna terms, not programming-axis names. In this simulator y is the vertical/up direction.
+      if (mode === 'azimuth' || mode === 'top') return { u: ex, v: ez, normal: ey };
+
+      if (mode === 'elevation') {
+        const az = parseFloat(document.getElementById('steering-azimuth')?.value || '0') * Math.PI / 180;
+        const forward = new THREE.Vector3(Math.cos(az), 0, Math.sin(az)).normalize();
+        const up = ey.clone();
+        const normal = new THREE.Vector3().crossVectors(forward, up).normalize();
+        return { u: forward, v: up, normal };
+      }
+
+      // Beam-plane: vertical principal plane through the current beam direction.
+      // This keeps the diagonal helper plane physically meaningful while steering changes.
+      const beam = steeringDir.clone().normalize();
+      const horiz = new THREE.Vector3(beam.x, 0, beam.z);
+      if (horiz.lengthSq() < 1e-8) {
+        const u = ex.clone();
+        const v = ey.clone();
+        const normal = new THREE.Vector3().crossVectors(u, v).normalize();
+        return { u, v, normal };
+      }
+      const u = horiz.normalize();
+      const v = ey.clone();
+      const normal = new THREE.Vector3().crossVectors(u, v).normalize();
+      return { u, v, normal };
+    }
+
+    function getAzimuthCutElevationRad() {
+      const selector = document.getElementById('azimuth-cut-elevation');
+      const choice = selector?.value || 'steering';
+      if (choice === 'steering') {
+        return parseFloat(document.getElementById('steering-elevation')?.value || '0') * Math.PI / 180;
+      }
+      return parseFloat(choice || '0') * Math.PI / 180;
+    }
+
+    function getAngularDirectionForPattern(mode, angleRad, steeringDir) {
+      const ey = new THREE.Vector3(0, 1, 0);
+      if (mode === 'azimuth') {
+        const el = getAzimuthCutElevationRad();
+        const c = Math.cos(el);
+        return new THREE.Vector3(Math.cos(angleRad) * c, Math.sin(el), Math.sin(angleRad) * c).normalize();
+      }
+      if (mode === 'elevation') {
+        const az = parseFloat(document.getElementById('steering-azimuth')?.value || '0') * Math.PI / 180;
+        const forward = new THREE.Vector3(Math.cos(az), 0, Math.sin(az)).normalize();
+        return forward.multiplyScalar(Math.cos(angleRad)).add(ey.clone().multiplyScalar(Math.sin(angleRad))).normalize();
+      }
+      const { u, v } = getSliceBasis('beam', steeringDir);
+      return u.clone().multiplyScalar(Math.cos(angleRad)).add(v.clone().multiplyScalar(Math.sin(angleRad))).normalize();
+    }
+
+    function orientSliceMesh(mode, steeringDir, size) {
+      const { u, v, normal } = getSliceBasis(mode, steeringDir);
+      const matrix = new THREE.Matrix4().makeBasis(u, v, normal);
+      fieldSliceMesh.quaternion.setFromRotationMatrix(matrix);
+      fieldSliceMesh.position.set(0, 0, 0);
+      fieldSliceMesh.scale.set(size, size, 1);
+    }
+
+    function drawSliceLegend(ctx, W, H, displayScale, fieldQuantity) {
+      ctx.save();
+      ctx.globalAlpha = 0.92;
+      ctx.fillStyle = 'rgba(0,0,0,0.45)';
+      ctx.fillRect(8, 8, 172, 23);
+      ctx.fillStyle = '#fff';
+      ctx.font = '12px system-ui, -apple-system, Segoe UI, sans-serif';
+      const q = fieldQuantity === 'power' ? '|E|²' : '|E|';
+      ctx.fillText(`${q} ${displayScale === 'db' ? 'dB slice' : 'linear slice'}`, 16, 24);
+      ctx.restore();
+    }
+
+    function updateFieldSlice() {
+      if (!fieldSliceMesh || !fieldSliceCanvas || !fieldSliceCtx) return;
+
+      const { mode, style, view, sizeOverride } = getFieldSliceControls();
+
+      // In slice-only mode, hide the 3D lobe and cutaway helpers.
+      const sliceOnly = mode !== 'off' && view === 'only';
+      if (patternMesh) patternMesh.visible = document.getElementById('show-pattern')?.checked && !sliceOnly;
+      if (cutawayCapMesh && sliceOnly) cutawayCapMesh.visible = false;
+      if (cutawayOutlineGroup && sliceOnly) cutawayOutlineGroup.clear();
+
+      if (mode === 'off') {
+        fieldSliceMesh.visible = false;
+        return;
+      }
+
+      const activeAntennas = getActiveAntennaUserData();
+      if (activeAntennas.length === 0) {
+        fieldSliceMesh.visible = false;
+        return;
+      }
+
+      const controlsValues = getControlValues();
+      const { patternType, fieldQuantity, displayScale, useApprox, subpatchDensity, obsDist, couplingEnabled, couplingStrength } = controlsValues;
+      const steeringDir = getSteeringDirection();
+
+      const cfg = getArrayConfig();
+      const aperture = Math.max(cfg.nx, cfg.nz) * cfg.spacing;
+      const autoSize = Math.max(10, Math.min(70, Math.max(obsDist * 1.35, aperture * 7)));
+      const size = Math.max(8, Math.min(80, sizeOverride || autoSize));
+      orientSliceMesh(mode, steeringDir, size);
+
+      // In slice-only mode make it face the camera better after orientation by keeping it huge and bright.
+      fieldSliceMesh.material.opacity = sliceOnly ? 1.0 : 0.88;
+      fieldSliceMesh.material.depthTest = !sliceOnly;
+
+      if (style !== 'waves' && !fieldSliceNeedsRedraw) {
+        fieldSliceMesh.visible = true;
+        return;
+      }
+
+      const W = fieldSliceCanvas.width;
+      const H = fieldSliceCanvas.height;
+      const ctx = fieldSliceCtx;
+      const img = ctx.createImageData(W, H);
+      const data = img.data;
+      const { u, v } = getSliceBasis(mode, steeringDir);
+
+      const linValues = new Float32Array(W * H);
+      const normValues = new Float32Array(W * H);
+      let maxLinear = 1e-18;
+
+      for (let py = 0; py < H; py++) {
+        const b = (0.5 - py / (H - 1)) * size;
+        for (let px = 0; px < W; px++) {
+          const a = (px / (W - 1) - 0.5) * size;
+          const Rvec = u.clone().multiplyScalar(a).add(v.clone().multiplyScalar(b));
+
+          // Slight lift avoids singular points at the source plane without changing the visible slice idea.
+          if (Rvec.length() < 0.35) Rvec.add(steeringDir.clone().multiplyScalar(0.35));
+
+          const field = calculateFieldAtPoint(Rvec, activeAntennas, patternType, useApprox, steeringDir, subpatchDensity, couplingEnabled, couplingStrength);
+          const lin = fieldLinearValue(field, fieldQuantity);
+          linValues[py * W + px] = lin;
+          if (Number.isFinite(lin)) maxLinear = Math.max(maxLinear, lin);
+        }
+      }
+
+      const gamma = displayScale === 'db' ? 0.72 : 0.30;
+      for (let i = 0; i < linValues.length; i++) {
+        let norm;
+        if (displayScale === 'db') {
+          const db = fieldQuantity === 'power'
+            ? 10 * Math.log10(Math.max(linValues[i] / maxLinear, 1e-12))
+            : 20 * Math.log10(Math.max(linValues[i] / maxLinear, 1e-6));
+          norm = Math.max(0, Math.min(1, (Math.max(DB_FLOOR, db) - DB_FLOOR) / Math.abs(DB_FLOOR)));
+          norm = Math.pow(norm, gamma);
+        } else {
+          norm = Math.pow(Math.max(0, Math.min(1, linValues[i] / maxLinear)), gamma);
+        }
+        normValues[i] = norm;
+      }
+
+      for (let py = 0; py < H; py++) {
+        for (let px = 0; px < W; px++) {
+          const i = py * W + px;
+          const norm = normValues[i];
+          let r, g, b, alpha;
+
+          if (style === 'outline') {
+            const shade = Math.round(10 + 95 * norm);
+            r = g = b = shade;
+            alpha = Math.round(150 + 105 * norm);
+          } else if (style === 'waves') {
+            const x = (px / (W - 1) - 0.5) * size;
+            const y = (0.5 - py / (H - 1)) * size;
+            const phaseBand = 0.5 + 0.5 * Math.cos(WAVENUMBER * Math.hypot(x, y) - fieldSliceTime * 2.5);
+            const bandSharp = Math.pow(phaseBand, 2.4);
+            const waveNorm = Math.max(0, Math.min(1, 0.18 * norm + 0.82 * norm * bandSharp));
+            [r, g, b] = sliceColorMap(waveNorm);
+            alpha = Math.round(sliceOnly ? 255 : 190 + 65 * norm);
+          } else {
+            [r, g, b] = sliceColorMap(norm);
+            if (style === 'heat') {
+              alpha = Math.round(sliceOnly ? 255 : 180 + 60 * norm);
+            } else {
+              alpha = Math.round(sliceOnly ? 255 : 200 + 55 * norm);
+            }
+          }
+
+          const di = i * 4;
+          data[di] = r;
+          data[di + 1] = g;
+          data[di + 2] = b;
+          data[di + 3] = alpha;
+        }
+      }
+
+      ctx.putImageData(img, 0, 0);
+
+      // Smooth plot-like overlay: contour lines with real marching-square style segments.
+      const levels = displayScale === 'db'
+        ? [0.18, 0.30, 0.42, 0.54, 0.66, 0.78, 0.90]
+        : [0.08, 0.14, 0.22, 0.34, 0.48, 0.64, 0.82];
+
+      function interp(p1, p2, v1, v2, level) {
+        const t = (level - v1) / ((v2 - v1) || 1e-9);
+        return [p1[0] + (p2[0] - p1[0]) * t, p1[1] + (p2[1] - p1[1]) * t];
+      }
+
+      ctx.save();
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      for (const level of levels) {
+        ctx.beginPath();
+        ctx.lineWidth = level > 0.75 ? 2.0 : 1.15;
+        ctx.strokeStyle = level > 0.75 ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.55)';
+
+        for (let y = 0; y < H - 1; y += 2) {
+          for (let x = 0; x < W - 1; x += 2) {
+            const i00 = y * W + x;
+            const i10 = y * W + (x + 1);
+            const i11 = (y + 1) * W + (x + 1);
+            const i01 = (y + 1) * W + x;
+            const v00 = normValues[i00], v10 = normValues[i10], v11 = normValues[i11], v01 = normValues[i01];
+
+            const pts = [];
+            if ((v00 - level) * (v10 - level) < 0) pts.push(interp([x,y],[x+1,y],v00,v10,level));
+            if ((v10 - level) * (v11 - level) < 0) pts.push(interp([x+1,y],[x+1,y+1],v10,v11,level));
+            if ((v11 - level) * (v01 - level) < 0) pts.push(interp([x+1,y+1],[x,y+1],v11,v01,level));
+            if ((v01 - level) * (v00 - level) < 0) pts.push(interp([x,y+1],[x,y],v01,v00,level));
+
+            if (pts.length >= 2) {
+              ctx.moveTo(pts[0][0], pts[0][1]);
+              ctx.lineTo(pts[1][0], pts[1][1]);
+              if (pts.length === 4) {
+                ctx.moveTo(pts[2][0], pts[2][1]);
+                ctx.lineTo(pts[3][0], pts[3][1]);
+              }
+            }
+          }
+        }
+        ctx.stroke();
+      }
+
+      // Strong center cross and border makes orientation understandable.
+      ctx.globalAlpha = 0.65;
+      ctx.strokeStyle = 'rgba(0,0,0,0.65)';
+      ctx.lineWidth = 1.4;
+      ctx.beginPath();
+      ctx.moveTo(W/2, 0); ctx.lineTo(W/2, H);
+      ctx.moveTo(0, H/2); ctx.lineTo(W, H/2);
+      ctx.stroke();
+
+      ctx.globalAlpha = 0.95;
+      ctx.strokeStyle = 'rgba(255,255,255,0.88)';
+      ctx.lineWidth = 2.2;
+      ctx.strokeRect(1.5, 1.5, W - 3, H - 3);
+      drawSliceLegend(ctx, W, H, displayScale, fieldQuantity);
+      ctx.restore();
+
+      fieldSliceTexture.needsUpdate = true;
+      fieldSliceMesh.visible = true;
+      fieldSliceNeedsRedraw = false;
+    }
+
+
+
+    // Fast separate 2D slice dashboard.
+    // Heavy field calculations are cached on parameter changes; animation only redraws cached pixels.
+    function getSlicePanelModes() { return ['azimuth', 'elevation', 'beam', 'top']; }
+
+    function isSlicePanelModeEnabled(mode) {
+      return true;
+    }
+
+    function getSliceExtent(mode='xy') {
+      // Automatic sampled lambda width for polar cuts; no manual span UI.
+      const dist = parseFloat(document.getElementById('observation-distance')?.value || '20');
+      const xs = getActiveAntennaUserData().map(a => Math.abs(a.position.x || 0));
+      const zs = getActiveAntennaUserData().map(a => Math.abs(a.position.z || 0));
+      const aperture = Math.max(1, ...(xs.length ? xs : [1]), ...(zs.length ? zs : [1]));
+      const autoWidth = Math.max(6, Math.min(2 * dist, 4 * aperture + 6));
+      return Math.max(2, Math.min(160, autoWidth));
+    }
+
+    function isSliceDashboardVisible() {
+      return true;
+    }
+
+    function applySliceDashboardVisibility() {
+      const workspace = document.getElementById('visual-workspace');
+      if (!workspace) return;
+      workspace.classList.toggle('slice-panel-hidden', !isSliceDashboardVisible());
+      updateSlicePlaneMarkers();
+      onWindowResize();
+    }
+
+    function formatSliceValue(v, displayScale) {
+      if (!Number.isFinite(v)) return '—';
+      if (displayScale === 'db') return `${v.toFixed(1)} dB`;
+      if (Math.abs(v) >= 100) return v.toFixed(0);
+      if (Math.abs(v) >= 10) return v.toFixed(1);
+      return v.toFixed(3);
+    }
+
+    function svgEl(name, attrs = {}) {
+      const el = document.createElementNS('http://www.w3.org/2000/svg', name);
+      for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, String(v));
+      return el;
+    }
+
+    function sliceThemeColors() {
+      const theme = getResolvedSlicePlotTheme();
+      return theme === 'dark'
+        ? { bg:'#050816', grid:'rgba(255,255,255,0.28)', axis:'rgba(255,255,255,0.78)', text:'#f8fafc', muted:'#cbd5e1', line:'#38bdf8', line2:'#f97316', hot:'#ffffff' }
+        : { bg:'#ffffff', grid:'rgba(0,0,0,0.24)', axis:'rgba(0,0,0,0.80)', text:'#111827', muted:'#374151', line:'#2563eb', line2:'#dc2626', hot:'#111827' };
+    }
+
+    function contourPathFromGrid(values, W, H, level, VB) {
+      function interp(p1, p2, v1, v2) {
+        const t = (level - v1) / ((v2 - v1) || 1e-9);
+        return [p1[0] + (p2[0] - p1[0]) * t, p1[1] + (p2[1] - p1[1]) * t];
+      }
+      function sx(x) { return x / (W - 1) * VB; }
+      function sy(y) { return y / (H - 1) * VB; }
+      let d = '';
+      for (let y = 0; y < H - 1; y++) {
+        for (let x = 0; x < W - 1; x++) {
+          const i00 = y * W + x;
+          const i10 = y * W + (x + 1);
+          const i11 = (y + 1) * W + (x + 1);
+          const i01 = (y + 1) * W + x;
+          const v00 = values[i00], v10 = values[i10], v11 = values[i11], v01 = values[i01];
+          const pts = [];
+          if ((v00 - level) * (v10 - level) < 0) pts.push(interp([sx(x),sy(y)],[sx(x+1),sy(y)],v00,v10));
+          if ((v10 - level) * (v11 - level) < 0) pts.push(interp([sx(x+1),sy(y)],[sx(x+1),sy(y+1)],v10,v11));
+          if ((v11 - level) * (v01 - level) < 0) pts.push(interp([sx(x+1),sy(y+1)],[sx(x),sy(y+1)],v11,v01));
+          if ((v01 - level) * (v00 - level) < 0) pts.push(interp([sx(x),sy(y+1)],[sx(x),sy(y)],v01,v00));
+          if (pts.length >= 2) {
+            d += `M${pts[0][0].toFixed(2)},${pts[0][1].toFixed(2)}L${pts[1][0].toFixed(2)},${pts[1][1].toFixed(2)}`;
+            if (pts.length === 4) d += `M${pts[2][0].toFixed(2)},${pts[2][1].toFixed(2)}L${pts[3][0].toFixed(2)},${pts[3][1].toFixed(2)}`;
+          }
+        }
+      }
+      return d;
+    }
+
+    function drawTopProjectionFrame(cache) {
+      const svg = document.getElementById(`slice-panel-canvas-${cache.mode}`);
+      if (!svg) return;
+      const VB = 120, cx = 60, cy = 60, R = 47;
+      const colors = sliceThemeColors();
+      const theme = getResolvedSlicePlotTheme();
+      const gridStroke = theme === 'dark' ? 'rgba(255,255,255,0.28)' : 'rgba(0,0,0,0.22)';
+      const gridStrokeStrong = theme === 'dark' ? 'rgba(255,255,255,0.58)' : 'rgba(0,0,0,0.55)';
+      svg.setAttribute('viewBox', `0 0 ${VB} ${VB}`);
+      svg.replaceChildren();
+      svg.appendChild(svgEl('rect', { x:0, y:0, width:VB, height:VB, fill:colors.bg }));
+      for (const rr of [0.25,0.5,0.75,1]) svg.appendChild(svgEl('circle', { cx, cy, r:(R*rr).toFixed(2), fill:'none', stroke:rr===1?gridStrokeStrong:gridStroke, 'stroke-width':rr===1?0.75:0.45 }));
+      for (let deg=0; deg<360; deg+=30) {
+        const a=deg*Math.PI/180;
+        svg.appendChild(svgEl('line',{x1:cx,y1:cy,x2:(cx+Math.cos(a)*R).toFixed(2),y2:(cy-Math.sin(a)*R).toFixed(2),stroke:deg%90===0?gridStrokeStrong:gridStroke,'stroke-width':deg%90===0?0.55:0.32}));
+      }
+      const samples = cache.projectionSamples || [];
+      const maxVal = Math.max(cache.projectionMax || 1e-18, 1e-18);
+      const sorted = samples.slice().sort((a,b)=>a.val-b.val);
+      for (const s of sorted) {
+        const dbDivisor = cache.fieldQuantity === 'power' ? 10 : 20;
+        const rn = cache.displayScale === 'db'
+          ? Math.max(0, Math.min(1, ((dbDivisor*Math.log10(Math.max(s.val,1e-18)/maxVal)) + 40)/40))
+          : Math.pow(Math.max(0, Math.min(1, s.val/maxVal)), 0.55);
+        if (rn <= 0.015) continue;
+        const rgb = sliceColorMap(rn);
+        const alpha = 0.08 + 0.62 * rn;
+        svg.appendChild(svgEl('circle', { cx:s.x.toFixed(2), cy:s.y.toFixed(2), r:(0.45 + 1.4*rn).toFixed(2), fill:`rgba(${rgb[0]},${rgb[1]},${rgb[2]},${alpha.toFixed(3)})`, stroke:'none' }));
+      }
+      svg.appendChild(svgEl('circle', { cx, cy, r:R, fill:'none', stroke:colors.axis, 'stroke-width':0.75 }));
+      const axisLabels = [['front', cx, cy - R - 3, 'middle'], ['back', cx, cy + R + 6, 'middle'], ['left', cx - R - 7, cy + 1, 'end'], ['right', cx + R + 7, cy + 1, 'start']];
+      for (const [txt,x,y,anchor] of axisLabels) { const t = svgEl('text',{x:x.toFixed(1),y:y.toFixed(1),fill:colors.muted,class:'slice-axis-label','text-anchor':anchor}); t.textContent = txt; svg.appendChild(t); }
+      // Numeric details are shown in the card header to avoid text overlapping the plot.
+      svg.appendChild(svgEl('rect', { x:0.8, y:0.8, width:VB-1.6, height:VB-1.6, fill:'none', stroke:colors.axis, 'stroke-width':0.65 }));
+    }
+
+    function drawSlicePanelFrame(cache, animated) {
+      if (cache.mode === 'top') { drawTopProjectionFrame(cache); return; }
+      const svg = document.getElementById(`slice-panel-canvas-${cache.mode}`);
+      if (!svg || !cache.normValues) return;
+      const VB = 120;
+      const colors = sliceThemeColors();
+      const theme = getResolvedSlicePlotTheme();
+      const size = cache.size || 1;
+      const cx = 60, cy = 60, R = 45;
+      svg.setAttribute('viewBox', `0 0 ${VB} ${VB}`);
+      svg.replaceChildren();
+      svg.appendChild(svgEl('rect', { x:0, y:0, width:VB, height:VB, fill:colors.bg }));
+
+      const gridStroke = theme === 'dark' ? 'rgba(255,255,255,0.30)' : 'rgba(0,0,0,0.26)';
+      const gridStrokeStrong = theme === 'dark' ? 'rgba(255,255,255,0.58)' : 'rgba(0,0,0,0.55)';
+      const fillUnder = theme === 'dark' ? 'rgba(56,189,248,0.13)' : 'rgba(37,99,235,0.10)';
+
+      // Classic polar engineering grid: circular rings and angular spokes.
+      const ringSpec = cache.displayScale === 'db'
+        ? [{r:0.25,t:'-30'}, {r:0.50,t:'-20'}, {r:0.75,t:'-10'}, {r:0.92,t:'-3'}, {r:1.00,t:'0 dB'}]
+        : [{r:0.25,t:'0.25'}, {r:0.50,t:'0.50'}, {r:0.75,t:'0.75'}, {r:1.00,t:'1.00'}];
+      for (const item of ringSpec) {
+        const rr = R * item.r;
+        svg.appendChild(svgEl('circle', { cx, cy, r:rr.toFixed(2), fill:'none', stroke:item.r === 1 ? gridStrokeStrong : gridStroke, 'stroke-width': item.r === 1 ? 0.75 : 0.45 }));
+      }
+      for (let deg = 0; deg < 360; deg += 15) {
+        const a = deg * Math.PI / 180;
+        const x2 = cx + Math.cos(a) * R;
+        const y2 = cy + Math.sin(a) * R;
+        const major = deg % 45 === 0;
+        svg.appendChild(svgEl('line', { x1:cx, y1:cy, x2:x2.toFixed(2), y2:y2.toFixed(2), stroke: major ? gridStrokeStrong : gridStroke, 'stroke-width': major ? 0.55 : 0.32, class:'slice-axis-line' }));
+      }
+
+      const angleLabels = [{t:'0°',x:cx+R+4,y:cy+1,a:'start'}, {t:'90°',x:cx,y:cy+R+6,a:'middle'}, {t:'180°',x:cx-R-4,y:cy+1,a:'end'}, {t:'270°',x:cx,y:cy-R-3,a:'middle'}];
+      for (const l of angleLabels) { const txt = svgEl('text', { x:l.x.toFixed(1), y:l.y.toFixed(1), fill:colors.muted, class:'slice-axis-label', 'text-anchor':l.a }); txt.textContent = l.t; svg.appendChild(txt); }
+      // Put radial scale labels on a diagonal helper line instead of the 0° axis,
+      // so labels like 1.00 / 0 dB do not collide with the 0° angle marker.
+      const labelAngle = -135 * Math.PI / 180;
+      for (const item of ringSpec) {
+        const rr = R * item.r;
+        const txt = svgEl('text', {
+          x:(cx + Math.cos(labelAngle) * rr - 1.0).toFixed(1),
+          y:(cy + Math.sin(labelAngle) * rr - 0.8).toFixed(1),
+          fill:colors.muted,
+          class:'slice-ring-label',
+          'text-anchor':'end'
+        });
+        txt.textContent = item.t;
+        svg.appendChild(txt);
+      }
+
+      // Polar plot uses true angular samples in this cut plane, not a small image-space circle.
+      // This fixes the old behaviour where steering changes only moved the lobe slightly.
+      const samples = cache.polarSamples || [];
+      let polarMax = Math.max(cache.polarMax || 0, 1e-18);
+      let polarMaxDeg = Number.isFinite(cache.polarMaxDeg) ? cache.polarMaxDeg : 0;
+      const pts = [];
+      for (const s of samples) {
+        let rn;
+        if (cache.displayScale === 'db') {
+          const dbDivisor = cache.fieldQuantity === 'power' ? 10 : 20;
+          const db = dbDivisor * Math.log10(Math.max(s.val, 1e-18) / Math.max(polarMax, 1e-18));
+          rn = Math.max(0, Math.min(1, (db + 40) / 40));
+        } else {
+          rn = Math.pow(Math.max(0, Math.min(1, s.val / Math.max(polarMax, 1e-18))), 0.72);
+        }
+        const th = s.deg * Math.PI / 180;
+        pts.push([cx + Math.cos(th) * R * rn, cy + Math.sin(th) * R * rn, rn]);
+      }
+      let d = '';
+      pts.forEach((p, i) => { d += `${i ? 'L' : 'M'}${p[0].toFixed(2)},${p[1].toFixed(2)}`; });
+      d += 'Z';
+      svg.appendChild(svgEl('path', { d, fill:fillUnder, stroke:'none' }));
+      svg.appendChild(svgEl('path', { d, fill:'none', stroke:colors.line, 'stroke-width':1.15, 'stroke-linejoin':'round', 'stroke-linecap':'round' }));
+
+      const maxA = polarMaxDeg * Math.PI / 180;
+      const mx = cx + Math.cos(maxA) * R;
+      const my = cy + Math.sin(maxA) * R;
+      svg.appendChild(svgEl('circle', { cx:mx.toFixed(2), cy:my.toFixed(2), r:2.0, fill:colors.hot, stroke:colors.line2, 'stroke-width':0.75 }));
+      svg.appendChild(svgEl('line', { x1:cx, y1:cy, x2:mx.toFixed(2), y2:my.toFixed(2), stroke:colors.line2, 'stroke-width':0.55, 'stroke-dasharray':'2 1.5' }));
+
+      // Keep the plot area clean; labels, max value and dB comparison are outside the SVG.
+      svg.appendChild(svgEl('rect', { x:0.8, y:0.8, width:VB-1.6, height:VB-1.6, fill:'none', stroke:colors.axis, 'stroke-width':0.65 }));
+    }
+
+    function rebuildSlicePanelCache() {
+      if (!isSliceDashboardVisible()) { slicePanelNeedsRebuild = false; return; }
+      updateSliceCardText();
+      const modes = getSlicePanelModes();
+      const controlsValues = getControlValues();
+      const { patternType, fieldQuantity, displayScale, useApprox, subpatchDensity, couplingEnabled, couplingStrength } = controlsValues;
+      const activeAntennas = getActiveAntennaUserData();
+      const steeringDir = getSteeringDirection();
+      const refObsDist = parseFloat(document.getElementById('observation-distance')?.value || '20');
+      const referenceValue = activeAntennas.length
+        ? calculateReferenceValue(activeAntennas, patternType, useApprox, steeringDir, subpatchDensity, refObsDist, fieldQuantity, couplingEnabled, couplingStrength)
+        : 1;
+      for (const mode of modes) {
+        const card = document.querySelector(`[data-slice-card="${mode}"]`);
+        const rangeEl = document.getElementById(`slice-panel-${mode}-range`);
+        const enabled = isSlicePanelModeEnabled(mode);
+        if (card) card.classList.toggle('slice-card-active', enabled);
+        if (!enabled || activeAntennas.length === 0) {
+          const svg = document.getElementById(`slice-panel-canvas-${mode}`);
+          if (svg) {
+            const colors = sliceThemeColors();
+            svg.replaceChildren();
+            svg.appendChild(svgEl('rect', {x:0,y:0,width:120,height:120,fill:colors.bg}));
+            const txt = svgEl('text', {x:10,y:18,fill:colors.muted,class:'slice-vector-label'});
+            txt.textContent = 'off';
+            svg.appendChild(txt);
+          }
+          if (rangeEl) rangeEl.textContent = 'off';
+          delete slicePanelCache[mode];
+          continue;
+        }
+
+        const svg = document.getElementById(`slice-panel-canvas-${mode}`);
+        if (!svg) continue;
+
+        // Fast path: 2D views are angular patterns / projection maps, not old image-space slices.
+        // Therefore we do not compute a dense 72×72 near-field grid for every panel anymore.
+        // This removes thousands of field evaluations per slider movement and prevents stutter.
+        const W = 1, H = 1;
+        const rawValues = new Float32Array(1);
+        const normValues = new Float32Array(1);
+        let minRaw = 0, maxRaw = 0, maxIndex = 0;
+        const size = getSliceExtent(mode);
+        const { u, v } = getSliceBasis(mode, steeringDir);
+
+        // Correct 2D antenna-pattern view:
+        // It is the same field function used for the 3D radiation pattern, evaluated only
+        // for directions constrained to a named antenna plane/cut. The UI avoids XYZ names.
+        const patternRadius = Math.max(20, refObsDist);
+        const polarSamples = [];
+        const projectionSamples = [];
+        let polarMax = 1e-18;
+        let polarMaxDeg = 0;
+        let polarRawAtMax = 1e-18;
+        let projectionMax = 1e-18;
+        if (mode === 'top') {
+          for (let elDeg = -90; elDeg <= 90; elDeg += 5) {
+            const el = elDeg * Math.PI / 180;
+            const c = Math.cos(el), sy = Math.sin(el);
+            for (let azDeg = 0; azDeg < 360; azDeg += 5) {
+              const az = azDeg * Math.PI / 180;
+              const dir = new THREE.Vector3(Math.cos(az) * c, sy, Math.sin(az) * c).normalize();
+              const field = calculateFieldAtPoint(dir.clone().multiplyScalar(patternRadius), activeAntennas, patternType, useApprox, steeringDir, subpatchDensity, couplingEnabled, couplingStrength);
+              const val = Math.max(0, fieldLinearValue(field, fieldQuantity));
+              const safeVal = Number.isFinite(val) ? val : 0;
+              projectionMax = Math.max(projectionMax, safeVal);
+              projectionSamples.push({ x: 60 + dir.x * 47, y: 60 + dir.z * 47, val: safeVal });
+            }
+          }
+          polarMax = projectionMax;
+        } else {
+          for (let deg = 0; deg <= 360; deg++) {
+            const a = deg * Math.PI / 180;
+            const dir = getAngularDirectionForPattern(mode, a, steeringDir);
+            const field = calculateFieldAtPoint(dir.multiplyScalar(patternRadius), activeAntennas, patternType, useApprox, steeringDir, subpatchDensity, couplingEnabled, couplingStrength);
+            const val = Math.max(0, fieldLinearValue(field, fieldQuantity));
+            const safeVal = Number.isFinite(val) ? val : 0;
+            polarSamples.push({ deg, val: safeVal, raw3d: safeVal });
+            if (safeVal > polarMax) { polarMax = safeVal; polarMaxDeg = deg; polarRawAtMax = safeVal; }
+          }
+        }
+
+        const sourcePoints = activeAntennas.map(a => {
+          const aa = a.position.dot(u);
+          const bb = a.position.dot(v);
+          return { x: (aa / size + 0.5) * 120, y: (0.5 - bb / size) * 120 };
+        }).filter(p => p.x >= -20 && p.x <= 140 && p.y >= -20 && p.y <= 140);
+        slicePanelCache[mode] = { mode, rawValues, normValues, minRaw, maxRaw, maxIndex, size, displayScale, fieldQuantity, referenceValue, W, H, sourcePoints, polarSamples, polarMax, polarMaxDeg, polarRawAtMax, projectionSamples, projectionMax };
+        if (rangeEl) {
+          const ratio = Math.max(polarMax, 1e-18) / Math.max(referenceValue, 1e-18);
+          const dbFactor = fieldQuantity === 'power' ? 10 : 20;
+          rangeEl.textContent = `${formatSliceValue(polarMax, 'linear')} max, ${(dbFactor * Math.log10(Math.max(ratio, 1e-18))).toFixed(1)} dB vs 3D${mode === 'azimuth' ? ', elev ' + (getAzimuthCutElevationRad()*180/Math.PI).toFixed(0) + '°' : ''}`;
+        }
+        drawSlicePanelFrame(slicePanelCache[mode], false);
+      }
+      slicePanelNeedsRebuild = false;
+    }
+
+    function updateSlicePanelAnimation() {
+      if (!isSliceDashboardVisible()) return;
+      if (slicePanelNeedsRebuild) rebuildSlicePanelCache();
+      const waves = document.getElementById('slice-panel-waves')?.checked;
+      if (!waves) return;
+      for (const mode of getSlicePanelModes()) {
+        if (slicePanelCache[mode]) drawSlicePanelFrame(slicePanelCache[mode], false);
+      }
+    }
+
+    function createSlicePlaneMarkers() {
+      slicePlaneMarkerGroup = new THREE.Group();
+      slicePlaneMarkerGroup.name = 'slice-plane-markers';
+      scene.add(slicePlaneMarkerGroup);
+      sliceRaycaster = new THREE.Raycaster();
+      sliceTooltip = document.createElement('div');
+      sliceTooltip.className = 'slice-tooltip';
+      document.body.appendChild(sliceTooltip);
+      const dom = renderer?.domElement;
+      if (dom) {
+        dom.addEventListener('pointermove', e => {
+          const rect = dom.getBoundingClientRect();
+          sliceMouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+          sliceMouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+        });
+        dom.addEventListener('pointerleave', () => { sliceMouse.set(999,999); if (sliceTooltip) sliceTooltip.classList.remove('visible'); });
+      }
+    }
+
+    function updateSlicePlaneMarkers() {
+      if (!slicePlaneMarkerGroup) return;
+      slicePlaneMarkerGroup.clear();
+      if (!isSliceDashboardVisible()) return;
+      const steeringDir = getSteeringDirection();
+      const hoverMode = window.__hoveredSliceMode || null;
+      const modes = getSlicePanelModes().filter(mode => document.getElementById(`slice-marker-${mode}`)?.checked || mode === hoverMode);
+      const colors = { azimuth: 0x38bdf8, elevation: 0xf59e0b, beam: 0x34d399, top: 0xa78bfa };
+
+      // Marker geometry is only an explanation helper. The plots themselves are calculated from directions.
+      // Azimuth is a constant-elevation angular cut. Its helper is drawn as a horizontal cut level
+      // on a reference sphere, not as the same plane as the Top Projection.
+      // Top Projection uses a separate horizontal plane above the pattern, because it represents the footprint screen.
+      const refRadius = Math.max(8, Math.min(36, parseFloat(document.getElementById('observation-distance')?.value || '20')));
+
+      for (const mode of modes) {
+        let mesh, edges;
+        const color = colors[mode] || 0xffffff;
+
+        if (mode === 'azimuth') {
+          const elevRad = getAzimuthCutElevationRad();
+          const elevDeg = elevRad * 180 / Math.PI;
+          // Same spherical definition as the observation/steering point:
+          // elevation 0° is the horizontal equator, elevation 90° is the top of the reference sphere.
+          const y = Math.sin(elevRad) * refRadius;
+          const diskRadius = Math.max(0.35, Math.cos(elevRad) * refRadius);
+
+          const geo = new THREE.CircleGeometry(diskRadius, 160);
+          const mat = new THREE.MeshBasicMaterial({ color, transparent: true, opacity: mode === hoverMode ? 0.24 : 0.105, side: THREE.DoubleSide, depthWrite: false });
+          mesh = new THREE.Mesh(geo, mat);
+          mesh.rotation.x = -Math.PI / 2;             // transparent horizontal circular cut surface
+          mesh.position.y = y;
+          mesh.renderOrder = 11;
+          mesh.userData.sliceName = `Azimuth circular cut (${elevDeg.toFixed(0)}° elevation)`;
+          slicePlaneMarkerGroup.add(mesh);
+
+          const curve = new THREE.EllipseCurve(0, 0, diskRadius, diskRadius, 0, Math.PI * 2, false, 0);
+          const pts = curve.getPoints(180).map(p => new THREE.Vector3(p.x, y, p.y));
+          const lineGeo = new THREE.BufferGeometry().setFromPoints(pts);
+          const lineMat = new THREE.LineBasicMaterial({ color, transparent: true, opacity: mode === hoverMode ? 1.0 : 0.9 });
+          edges = new THREE.LineLoop(lineGeo, lineMat);
+          edges.renderOrder = 12;
+          edges.userData.sliceName = mesh.userData.sliceName;
+          slicePlaneMarkerGroup.add(edges);
+          continue;
+        }
+
+        if (mode === 'top') {
+          const diskRadius = refRadius * 1.12;
+          const geo = new THREE.CircleGeometry(diskRadius, 160);
+          const mat = new THREE.MeshBasicMaterial({ color, transparent: true, opacity: mode === hoverMode ? 0.24 : 0.105, side: THREE.DoubleSide, depthWrite: false });
+          mesh = new THREE.Mesh(geo, mat);
+          mesh.rotation.x = -Math.PI / 2;             // circular horizontal projection screen
+          mesh.position.y = refRadius * 1.08;         // above the lobe/pattern as projection screen
+          mesh.renderOrder = 11;
+          mesh.userData.sliceName = 'Top projection circular screen (visual footprint)';
+          slicePlaneMarkerGroup.add(mesh);
+
+          const curve = new THREE.EllipseCurve(0, 0, diskRadius, diskRadius, 0, Math.PI * 2, false, 0);
+          const pts = curve.getPoints(180).map(p => new THREE.Vector3(p.x, mesh.position.y, p.y));
+          const lineGeo = new THREE.BufferGeometry().setFromPoints(pts);
+          edges = new THREE.LineLoop(lineGeo, new THREE.LineBasicMaterial({ color, transparent: true, opacity: mode === hoverMode ? 1.0 : 0.9 }));
+          edges.renderOrder = 12;
+          edges.userData.sliceName = mesh.userData.sliceName;
+          slicePlaneMarkerGroup.add(edges);
+          continue;
+        }
+
+        const diskRadius = refRadius;
+        const geo = new THREE.CircleGeometry(diskRadius, 160);
+        const mat = new THREE.MeshBasicMaterial({
+          color,
+          transparent: true,
+          opacity: mode === hoverMode ? 0.24 : 0.105,
+          side: THREE.DoubleSide,
+          depthWrite: false
+        });
+        mesh = new THREE.Mesh(geo, mat);
+        const { u, v, normal } = getSliceBasis(mode, steeringDir);
+        mesh.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeBasis(u, v, normal));
+        mesh.renderOrder = 11;
+        const markerNames = {
+          elevation:'Elevation circular vertical cut through current steering azimuth',
+          beam:'Beam-plane circular vertical cut through current beam direction'
+        };
+        mesh.userData.sliceName = markerNames[mode] || 'Pattern helper';
+        slicePlaneMarkerGroup.add(mesh);
+
+        const curve = new THREE.EllipseCurve(0, 0, diskRadius, diskRadius, 0, Math.PI * 2, false, 0);
+        const edgePtsLocal = curve.getPoints(180).map(p => new THREE.Vector3(p.x, p.y, 0));
+        const edgeGeo = new THREE.BufferGeometry().setFromPoints(edgePtsLocal);
+        edges = new THREE.LineLoop(
+          edgeGeo,
+          new THREE.LineBasicMaterial({ color, transparent: true, opacity: mode === hoverMode ? 1.0 : 0.9 })
+        );
+        edges.quaternion.copy(mesh.quaternion);
+        edges.renderOrder = 12;
+        edges.userData.sliceName = mesh.userData.sliceName;
+        slicePlaneMarkerGroup.add(edges);
+      }
+    }
+
+    function updateSliceHoverTooltip() {
+      if (!sliceRaycaster || !slicePlaneMarkerGroup || !sliceTooltip || sliceMouse.x > 10) return;
+      sliceRaycaster.setFromCamera(sliceMouse, camera);
+      const hits = sliceRaycaster.intersectObjects(slicePlaneMarkerGroup.children, false);
+      if (hits.length) {
+        const label = hits[0].object.userData.sliceName || 'Slice plane';
+        const dom = renderer.domElement;
+        const rect = dom.getBoundingClientRect();
+        sliceTooltip.textContent = label;
+        sliceTooltip.style.left = `${rect.left + (sliceMouse.x + 1) * 0.5 * rect.width}px`;
+        sliceTooltip.style.top = `${rect.top + (-sliceMouse.y + 1) * 0.5 * rect.height}px`;
+        sliceTooltip.classList.add('visible');
+      } else {
+        sliceTooltip.classList.remove('visible');
+      }
+    }
+
+
+
+    // Real 3D cutaway: remove one half of the lobe with a GPU clipping plane.
+    function createCutawayHelpers() {
+      cutawayOutlineGroup = new THREE.Group();
+      scene.add(cutawayOutlineGroup);
+
+      const capGeo = new THREE.PlaneGeometry(1, 1, 1, 1);
+      const capMat = new THREE.MeshBasicMaterial({
+        color: 0xffffff,
+        transparent: true,
+        opacity: 0.08,
+        side: THREE.DoubleSide,
+        depthWrite: false
+      });
+      cutawayCapMesh = new THREE.Mesh(capGeo, capMat);
+      cutawayCapMesh.renderOrder = 20;
+      cutawayCapMesh.visible = false;
+      scene.add(cutawayCapMesh);
+    }
+
+    function getCutawayControls() {
+      return {
+        mode: document.getElementById('cutaway-mode')?.value || 'off',
+        offset: parseFloat(document.getElementById('cutaway-offset')?.value || '0')
+      };
+    }
+
+    function cutawayBasisFromNormal(normal) {
+      const n = normal.clone().normalize();
+      const helper = Math.abs(n.y) > 0.88 ? new THREE.Vector3(1, 0, 0) : new THREE.Vector3(0, 1, 0);
+      const u = new THREE.Vector3().crossVectors(helper, n).normalize();
+      const v = new THREE.Vector3().crossVectors(n, u).normalize();
+      return { u, v, n };
+    }
+
+    function updateCutawayHelpers(normal, offset, size) {
+      if (!cutawayCapMesh || !cutawayOutlineGroup) return;
+      const { u, v, n } = cutawayBasisFromNormal(normal);
+      const matrix = new THREE.Matrix4().makeBasis(u, v, n);
+      cutawayCapMesh.quaternion.setFromRotationMatrix(matrix);
+      cutawayCapMesh.position.copy(n.clone().multiplyScalar(offset));
+      cutawayCapMesh.scale.set(size, size, 1);
+      cutawayCapMesh.visible = true;
+
+      cutawayOutlineGroup.clear();
+      const half = size / 2;
+      const corners = [
+        u.clone().multiplyScalar(-half).add(v.clone().multiplyScalar(-half)).add(n.clone().multiplyScalar(offset)),
+        u.clone().multiplyScalar( half).add(v.clone().multiplyScalar(-half)).add(n.clone().multiplyScalar(offset)),
+        u.clone().multiplyScalar( half).add(v.clone().multiplyScalar( half)).add(n.clone().multiplyScalar(offset)),
+        u.clone().multiplyScalar(-half).add(v.clone().multiplyScalar( half)).add(n.clone().multiplyScalar(offset)),
+        u.clone().multiplyScalar(-half).add(v.clone().multiplyScalar(-half)).add(n.clone().multiplyScalar(offset))
+      ];
+      const geo = new THREE.BufferGeometry().setFromPoints(corners);
+      const line = new THREE.Line(geo, new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.75 }));
+      line.renderOrder = 21;
+      cutawayOutlineGroup.add(line);
+    }
+
+    function updateCutaway() {
+      if (!patternMesh || !patternMesh.material) return;
+      const { mode, offset } = getCutawayControls();
+
+      if (mode === 'off') {
+        patternMesh.material.clippingPlanes = [];
+        patternMesh.material.needsUpdate = true;
+        if (cutawayCapMesh) cutawayCapMesh.visible = false;
+        if (cutawayOutlineGroup) cutawayOutlineGroup.clear();
+        return;
+      }
+
+      let normal;
+      if (mode === 'xpos') normal = new THREE.Vector3(-1, 0, 0);      // keep x <= offset
+      else if (mode === 'xneg') normal = new THREE.Vector3(1, 0, 0);   // keep x >= offset
+      else if (mode === 'ypos') normal = new THREE.Vector3(0, -1, 0);  // keep y <= offset
+      else if (mode === 'zpos') normal = new THREE.Vector3(0, 0, -1);  // keep z <= offset
+      else {
+        // Beam cut: remove the half in front of the steering-normal side,
+        // so rotating steering gives a meaningful opened view.
+        normal = getSteeringDirection().clone().multiplyScalar(-1).normalize();
+      }
+
+      // Three.js plane keeps points where normal.dot(point) + constant >= 0.
+      cutawayPlane.normal.copy(normal);
+      cutawayPlane.constant = -normal.dot(normal.clone().multiplyScalar(offset));
+
+      patternMesh.material.clippingPlanes = [cutawayPlane];
+      patternMesh.material.needsUpdate = true;
+
+      const obsDist = parseFloat(document.getElementById('observation-distance')?.value || '20');
+      const size = Math.max(8, Math.min(65, obsDist * 1.45));
+      updateCutawayHelpers(normal, offset, size);
+    }
+
+
+
     // Update all visual elements
     function updateAllVisuals() {
+        updateSubpatchDensityAvailability();
       elementCurrentCache.key = null;
       updateObjectPositions();
       updateFarFieldPattern();
       updateWaves();
       updateVectors();
       updateObservationInfo();
+      fieldSliceNeedsRedraw = true;
+      updateFieldSlice();
+      slicePanelNeedsRebuild = true;
+      updateSlicePlaneMarkers();
+      rebuildSlicePanelCache();
+      updateCutaway();
     }
     
     // Update positions of steering and observation points
@@ -3409,17 +4873,252 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
 
     // Sync observation sliders to steering sliders
     function syncObservationToSteering() {
-        document.getElementById('observation-azimuth').value = document.getElementById('steering-azimuth').value;
-        document.getElementById('observation-elevation').value = document.getElementById('steering-elevation').value;
+        const steerAz = document.getElementById('steering-azimuth').value;
+        const steerEl = document.getElementById('steering-elevation').value;
+        document.getElementById('observation-azimuth').value = steerAz;
+        document.getElementById('observation-elevation').value = steerEl;
         document.getElementById('observation-azimuth-value').textContent = document.getElementById('steering-azimuth-value').textContent;
         document.getElementById('observation-elevation-value').textContent = document.getElementById('steering-elevation-value').textContent;
+        const obsAzInput = document.getElementById('observation-azimuth-input');
+        const obsElInput = document.getElementById('observation-elevation-input');
+        if (obsAzInput) obsAzInput.value = steerAz;
+        if (obsElInput) obsElInput.value = steerEl;
         updateAllVisuals();
     }
     
+
+    function escapeReportHTML(value) {
+      return String(value ?? '').replace(/[&<>"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]));
+    }
+
+    function getSelectText(id) {
+      const el = document.getElementById(id);
+      if (!el) return '—';
+      return el.options && el.selectedIndex >= 0 ? el.options[el.selectedIndex].textContent.trim() : el.value;
+    }
+
+    function getInputValue(id, suffix='') {
+      const el = document.getElementById(id);
+      return el ? `${el.value}${suffix}` : '—';
+    }
+
+    function getDegreeInput(id) {
+      const el = document.getElementById(id);
+      const v = el ? Number(el.value) : NaN;
+      return Number.isFinite(v) ? Math.round(v) : 0;
+    }
+
+    function getAzimuthCutTitle() {
+      const choice = document.getElementById('azimuth-cut-elevation')?.value || 'steering';
+      const elDeg = Math.round(getAzimuthCutElevationRad() * 180 / Math.PI);
+      if (choice === 'steering') return `Azimuth pattern — horizontal cut at steering elevation = ${elDeg}°`;
+      if (elDeg === 0) return 'Azimuth pattern — horizontal cut at elevation = 0°';
+      return `Azimuth pattern — horizontal cut at elevation = ${elDeg}°`;
+    }
+
+    function getAzimuthCutShort() {
+      const choice = document.getElementById('azimuth-cut-elevation')?.value || 'steering';
+      const elDeg = Math.round(getAzimuthCutElevationRad() * 180 / Math.PI);
+      return choice === 'steering' ? `steering elevation ${elDeg}°` : `elevation ${elDeg}°`;
+    }
+
+    function getElevationCutTitle() {
+      return `Elevation pattern — vertical cut at azimuth = ${getDegreeInput('steering-azimuth')}°`;
+    }
+
+    function getBeamPlaneTitle() {
+      return `Beam-plane pattern — cut through steering direction (${getDegreeInput('steering-azimuth')}°, ${getDegreeInput('steering-elevation')}°)`;
+    }
+
+    function getTopProjectionTitle() {
+      return 'Top projection — visual footprint from above';
+    }
+
+    function updateSliceCardText() {
+      const titles = {
+        azimuth: getAzimuthCutTitle(),
+        elevation: getElevationCutTitle(),
+        beam: getBeamPlaneTitle(),
+        top: getTopProjectionTitle()
+      };
+      for (const [mode, title] of Object.entries(titles)) {
+        const card = document.querySelector(`[data-slice-card="${mode}"]`);
+        const label = card?.querySelector('.slice-card-head strong');
+        if (label) label.textContent = title;
+        if (card) card.title = title;
+      }
+    }
+
+    function getReportExplanationHTML() {
+      const azTitle = getAzimuthCutTitle();
+      const elTitle = getElevationCutTitle();
+      const beamTitle = getBeamPlaneTitle();
+      const topTitle = getTopProjectionTitle();
+      return `
+        <section class="report-card">
+          <h2>How to read this report</h2>
+          <p><strong>3D radiation view:</strong> the distance from the centre in each direction represents relative radiation strength.</p>
+          <p><strong>Radiation model:</strong> in <em>Ground plane</em> mode, the lower half-space (user-facing −z direction) is suppressed and the pattern represents upward radiation. In <em>Free space</em> mode, no ground plane is assumed and radiation can exist on both sides of the array.</p>
+          <p><strong>${escapeReportHTML(azTitle)}:</strong> horizontal angular cut at a fixed elevation. When this cut is set to <strong>elevation = 0°</strong>, it is the standard top-direction pattern. If set to steering, it follows the current steering elevation.</p>
+          <p><strong>${escapeReportHTML(elTitle)}:</strong> vertical angular cut at the current steering azimuth. This shows how the pattern changes upward and downward in that azimuth plane.</p>
+          <p><strong>${escapeReportHTML(beamTitle)}:</strong> angular cut through the currently steered beam direction. This view is useful because it always contains the main beam.</p>
+          <p><strong>${escapeReportHTML(topTitle)}:</strong> visual footprint of the 3D pattern from above. It is a helper visualization, not the physical radiation pattern.</p>
+          <p><strong>Distance in Fraunhofer mode:</strong> in the Fraunhofer far-field model the normalized pattern depends on direction, not on the selected observation distance. The distance slider only moves the visual observation marker; it does not change the normalized dB lobe shape.</p>
+          <p><strong>Subpatch density:</strong> this setting only affects the prescribed-current Huygens model. In Fraunhofer far-field mode it is disabled because the far-field array-factor calculation does not use subpatch discretization.</p>
+        </section>`;
+    }
+
+    function getCurrentSettingsHTML() {
+      const cfg = getArrayConfig ? getArrayConfig() : {};
+      const sp = cfg.spacing;
+      const distanceText = isFraunhoferMode()
+        ? `${escapeReportHTML(getInputValue('observation-distance',' λ'))} <span class="report-muted">(display marker only; Fraunhofer far field uses direction, so distance does not change the normalized pattern)</span>`
+        : `${escapeReportHTML(getInputValue('observation-distance',' λ'))}`;
+      return `
+        <section class="report-card">
+          <h2>Current settings</h2>
+          <table class="report-table"><tbody>
+            <tr><th>Steering direction</th><td>Azimuth ${escapeReportHTML(getInputValue('steering-azimuth','°'))}, Elevation ${escapeReportHTML(getInputValue('steering-elevation','°'))}</td></tr>
+            <tr><th>Observation direction</th><td>Azimuth ${escapeReportHTML(getInputValue('observation-azimuth','°'))}, Elevation ${escapeReportHTML(getInputValue('observation-elevation','°'))}, Distance ${distanceText}</td></tr>
+            <tr><th>Antenna type</th><td>${escapeReportHTML(getSelectText('pattern-type'))}</td></tr>
+            <tr><th>Radiation model</th><td>${escapeReportHTML(getSelectText('radiation-model'))}</td></tr>
+            <tr><th>Pattern display</th><td>${escapeReportHTML(getSelectText('pattern-display'))}</td></tr>
+            <tr><th>Displayed quantity</th><td>${escapeReportHTML(getSelectText('field-quantity'))}</td></tr>
+            <tr><th>Display scale</th><td>${escapeReportHTML(getSelectText('display-scale'))}</td></tr>
+            <tr><th>Field model</th><td>${escapeReportHTML(getSelectText('calculation-method'))}</td></tr>
+            <tr><th>Azimuth cut elevation</th><td>${escapeReportHTML(getAzimuthCutShort())}</td></tr>
+            <tr><th>Array mode</th><td>${document.getElementById('custom-array-enabled')?.checked ? 'Advanced custom coordinates' : 'Regular rectangular grid'}</td></tr>
+            <tr><th>Taper</th><td>${escapeReportHTML(getSelectText('amplitude-taper'))}, Chebyshev SLL ${escapeReportHTML(getInputValue('chebyshev-sidelobe',' dB'))}</td></tr>
+            <tr><th>Mutual coupling</th><td>${document.getElementById('mutual-coupling-toggle')?.checked ? 'On' : 'Off'} (${escapeReportHTML(getInputValue('coupling-strength',' dB'))})</td></tr>
+            <tr><th>Subpatch density</th><td>${isFraunhoferMode() ? 'Not used in Fraunhofer far-field mode; only active in the prescribed-current Huygens model.' : escapeReportHTML(getInputValue('subpatch-density',' × ' + (document.getElementById('subpatch-density')?.value || '')))}</td></tr>
+          </tbody></table>
+        </section>`;
+    }
+
+    function getPlotSnapshotsHTML() {
+      return [
+        ['slice-panel-canvas-azimuth', getAzimuthCutTitle()],
+        ['slice-panel-canvas-elevation', getElevationCutTitle()],
+        ['slice-panel-canvas-beam', getBeamPlaneTitle()],
+        ['slice-panel-canvas-top', getTopProjectionTitle()]
+      ].map(([id,title]) => {
+        const svg = document.getElementById(id);
+        return `<figure class="report-plot"><figcaption>${escapeReportHTML(title)}</figcaption>${svg ? svg.outerHTML : '<p>Missing plot</p>'}</figure>`;
+      }).join('');
+    }
+
+    function getAntennaReportHTML() {
+      let rows = [];
+      try {
+        const steeringDir = getSteeringDirection();
+        const cv = getControlValues();
+        const activeAntennas = antennaGroup?.children?.filter(a => a.userData?.active).map(a => a.userData) || [];
+        const currents = getElementCurrents(activeAntennas, steeringDir, cv.couplingEnabled, cv.couplingStrength);
+        rows = activeAntennas.map(a => {
+          const u = a.userCoords || { x: a.position.x, y: a.position.z, z: a.position.y };
+          const feedDeg = WAVENUMBER * a.position.dot(steeringDir) * 180 / Math.PI;
+          const I = currents.get(a.index) || { re: 1, im: 0 };
+          const imag = Math.sqrt(I.re*I.re + I.im*I.im);
+          const iph = Math.atan2(I.im, I.re) * 180 / Math.PI;
+          const amp = Number.isFinite(a.amp) ? a.amp.toFixed(3) : (a.amp ?? 1);
+          const ph = Number.isFinite(a.phaseDeg) ? a.phaseDeg.toFixed(2) : (a.phaseDeg ?? 0);
+          return `<tr><td>${escapeReportHTML(a.index)}</td><td>[${Number(u.x).toFixed(3)}, ${Number(u.y).toFixed(3)}, ${Number(u.z).toFixed(3)}]</td><td>${escapeReportHTML(amp)}</td><td>${escapeReportHTML(ph)}°</td><td>${feedDeg.toFixed(2)}°</td><td>${imag.toFixed(3)} ∠ ${iph.toFixed(1)}°</td></tr>`;
+        });
+      } catch (e) {
+        rows = [`<tr><td colspan="6">Could not read antenna table: ${escapeReportHTML(e.message)}</td></tr>`];
+      }
+      return `
+        <section class="report-card">
+          <h2>Active antenna elements and currents</h2>
+          <p class="report-small">Positions are <strong>normalized to wavelength λ</strong>. Example: <strong>[1, 1, 1]</strong> means x = 1λ, y = 1λ and z = 1λ. User coordinates use <strong>[x, y, z]</strong>: x/y are the array surface coordinates and z is height. The report uses the user-facing convention.</p>
+          <table class="report-table report-elements"><thead><tr><th>#</th><th>Position [x,y,z] λ</th><th>Amplitude</th><th>Manual phase</th><th>Steering feed phase</th><th>Solved current</th></tr></thead><tbody>${rows.join('')}</tbody></table>
+        </section>`;
+    }
+
+    function getRadiationModelReportHTML() {
+      const ground = hasGroundPlane();
+      const body = ground
+        ? `<p><strong>Ground plane mode:</strong> a perfect ground plane is assumed below the array. Radiation into the user-facing <strong>−z</strong> half-space is suppressed, so the patch model effectively radiates into the <strong>+z</strong> half-space. For beginners: the ground plane can be imagined like a mirror that redirects radiation upward. This is a simplified visualization model, not a full EM ground-plane solver.</p>`
+        : `<p><strong>Free-space mode:</strong> no ground plane is assumed. The element pattern is allowed to radiate on both sides of the array, so the lower half-space is not suppressed and no mirror source is used.</p>`;
+      return `<section class="report-card"><h2>Radiation environment</h2>${body}</section>`;
+    }
+
+    function getCustomCoordinatesHTML() {
+      const enabled = document.getElementById('custom-array-enabled')?.checked;
+      const text = document.getElementById('custom-array-coordinates')?.value || '';
+      if (!enabled) return '';
+      return `<section class="report-card"><h2>Advanced custom coordinate input</h2><pre class="report-pre">${escapeReportHTML(text)}</pre></section>`;
+    }
+
+    function printPhasedArrayReport() {
+      try { updateSliceCardText(); } catch (e) {}
+      try { updateAllVisuals(); } catch (e) {}
+      try { controls?.update(); renderer?.render(scene, camera); } catch (e) {}
+      let image3d = '';
+      try { image3d = renderer.domElement.toDataURL('image/png'); } catch (e) { image3d = ''; }
+      const generated = new Date().toLocaleString();
+      const reportHTML = `<!doctype html><html><head><meta charset="utf-8"><title>Phased Array Radiation Pattern Report</title>
+        <style>
+          @page { size: A4 landscape; margin: 12mm; }
+          * { box-sizing: border-box; }
+          body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; color: #111827; background: #fff; }
+          h1 { margin: 0 0 0.25rem; font-size: 24px; letter-spacing: -0.02em; }
+          h2 { margin: 0 0 0.55rem; font-size: 15px; }
+          p { margin: 0.25rem 0; line-height: 1.35; }
+          .report-header { display: flex; justify-content: space-between; gap: 1rem; align-items: flex-start; border-bottom: 2px solid #111827; padding-bottom: 0.5rem; margin-bottom: 0.65rem; }
+          .report-sub { color: #4b5563; font-size: 12px; }
+          .report-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; align-items: stretch; }
+          .report-card { border: 1px solid #d1d5db; border-radius: 12px; padding: 0.65rem; break-inside: avoid; background: #fff; }
+          .report-3d img { width: 100%; height: 420px; object-fit: contain; display: block; background: #f9fafb; border-radius: 10px; border: 1px solid #e5e7eb; }
+          .report-plots { display: grid; grid-template-columns: 1fr 1fr; gap: 0.45rem; }
+          .report-plot { margin: 0; border: 1px solid #e5e7eb; border-radius: 10px; padding: 0.4rem; min-height: 210px; }
+          .report-plot figcaption { font-weight: 700; font-size: 9px; margin-bottom: 0.12rem; line-height: 1.1; }
+          .report-plot svg { width: 100%; height: 158px; display: block; }
+          .report-plot .slice-vector-label { font-size: 2.45px !important; }
+          .report-plot .slice-axis-label { font-size: 2.15px !important; }
+          .report-plot .slice-ring-label { font-size: 2px !important; }
+          .report-table { border-collapse: collapse; width: 100%; font-size: 10px; }
+          .report-table th, .report-table td { border: 1px solid #e5e7eb; padding: 0.25rem 0.35rem; text-align: left; vertical-align: top; }
+          .report-table th { background: #f3f4f6; font-weight: 750; }
+          .report-elements { font-size: 8.5px; }
+          .report-small { font-size: 10px; color: #4b5563; }
+          .report-muted { color: #6b7280; font-size: 9px; }
+          .report-pre { white-space: pre-wrap; font-size: 9px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 0.5rem; max-height: 220px; overflow: hidden; }
+          .report-section-full { margin-top: 0.65rem; }
+          @media print { .no-print { display: none; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+        </style></head><body>
+          <div class="report-header">
+            <div><h1>Phased Array Radiation Pattern Report</h1><div class="report-sub">Generated ${escapeReportHTML(generated)} · phased-array-simulator.com</div></div>
+            <button class="no-print" onclick="window.print()" style="padding:8px 14px;border-radius:999px;border:0;background:#111827;color:white;font-weight:700;">Print / Save PDF</button>
+          </div>
+          <div class="report-grid">
+            <section class="report-card report-3d"><h2>3D radiation view</h2>${image3d ? `<img src="${image3d}" alt="3D radiation pattern snapshot">` : '<p>3D snapshot unavailable.</p>'}</section>
+            <section class="report-card"><h2>2D radiation views</h2><div class="report-plots">${getPlotSnapshotsHTML()}</div></section>
+          </div>
+          <div class="report-grid report-section-full">${getReportExplanationHTML()}${getCurrentSettingsHTML()}</div>
+          <div class="report-section-full">${getRadiationModelReportHTML()}</div>
+          <div class="report-section-full">${getAntennaReportHTML()}</div>
+          <div class="report-section-full">${getCustomCoordinatesHTML()}</div>
+        </body></html>`;
+      const win = window.open('', '_blank', 'width=1400,height=900');
+      if (!win) { alert('Popup blocked. Please allow popups to print the report.'); return; }
+      win.document.open();
+      win.document.write(reportHTML);
+      win.document.close();
+      win.focus();
+      setTimeout(() => { try { win.print(); } catch (e) {} }, 550);
+    }
+
     // Animation loop
     function animate() {
       requestAnimationFrame(animate);
       controls.update();
+      fieldSliceTime += 0.035;
+      const sliceMode = document.getElementById('field-slice-mode')?.value || 'off';
+      const sliceStyle = document.getElementById('field-slice-style')?.value || 'contour';
+      if (sliceMode !== 'off' && sliceStyle === 'waves') updateFieldSlice();
+      updateSlicePanelAnimation();
+      updateSliceHoverTooltip();
       renderer.render(scene, camera);
     }
 
@@ -3448,25 +5147,93 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
         });
     }
 
+    function isFraunhoferMode() {
+        return document.getElementById('calculation-method')?.value === 'true';
+    }
+
+    function updateSubpatchDensityAvailability() {
+        const sliderWrap = document.getElementById('subpatch-density-slider');
+        const slider = document.getElementById('subpatch-density');
+        const valueEl = document.getElementById('subpatch-density-value');
+        if (!sliderWrap || !slider || !valueEl) return;
+        const disabled = isFraunhoferMode();
+        slider.disabled = disabled;
+        sliderWrap.classList.toggle('is-disabled', disabled);
+        sliderWrap.title = disabled
+          ? 'Subpatch density is only used by the prescribed-current Huygens model. It has no effect in Fraunhofer far-field mode.'
+          : 'Subpatch density is active for the prescribed-current Huygens model.';
+        valueEl.textContent = disabled ? 'not used' : `${slider.value}x${slider.value}`;
+    }
+
+    function formatAngleValue(value) {
+        const n = Number(value);
+        if (!Number.isFinite(n)) return '0';
+        return Number.isInteger(n) ? String(n) : n.toFixed(1).replace(/\.0$/, '');
+    }
+
+    function clampNumberInputValue(inputEl) {
+        const min = Number(inputEl.min || -Infinity);
+        const max = Number(inputEl.max || Infinity);
+        let value = Number(inputEl.value);
+        if (!Number.isFinite(value)) value = min === -Infinity ? 0 : min;
+        value = Math.max(min, Math.min(max, value));
+        inputEl.value = formatAngleValue(value);
+        return inputEl.value;
+    }
+
+    function syncAngleNumberInput(id) {
+        const slider = document.getElementById(id);
+        const numberInput = document.getElementById(`${id}-input`);
+        const valueEl = document.getElementById(`${id}-value`);
+        if (!slider || !numberInput) return;
+        numberInput.value = formatAngleValue(slider.value);
+        if (valueEl) valueEl.textContent = `${formatAngleValue(slider.value)}°`;
+    }
+
+    function setupAngleNumberInput(id) {
+        const slider = document.getElementById(id);
+        const numberInput = document.getElementById(`${id}-input`);
+        if (!slider || !numberInput) return;
+        syncAngleNumberInput(id);
+        numberInput.addEventListener('input', () => {
+            const value = clampNumberInputValue(numberInput);
+            slider.value = value;
+            const valueEl = document.getElementById(`${id}-value`);
+            if (valueEl) valueEl.textContent = `${formatAngleValue(value)}°`;
+            if (id.startsWith('steering') && document.getElementById('sync-observation-toggle')?.checked) {
+                syncObservationToSteering();
+            } else {
+                updateAllVisuals();
+            }
+        });
+    }
+
     // Attaching all event listeners
     function setupEventListeners() {
         document.getElementById('language-select').addEventListener('change', e => applyTranslations(e.target.value));
         
         // Sliders
-        ['steering-azimuth', 'steering-elevation', 'observation-azimuth', 'observation-elevation', 'observation-distance', 'subpatch-density', 'coupling-strength', 'array-x-count', 'array-z-count', 'element-spacing', 'chebyshev-sidelobe'].forEach(id => {
+        ['steering-azimuth', 'steering-elevation', 'observation-azimuth', 'observation-elevation', 'observation-distance', 'subpatch-density', 'coupling-strength', 'array-x-count', 'array-z-count', 'element-spacing', 'chebyshev-sidelobe', 'cutaway-offset', 'slice-size'].forEach(id => {
             const el = document.getElementById(id);
+            if (!el) return;
             el.addEventListener('input', e => {
                 const valueEl = document.getElementById(`${id}-value`);
                 if (id.includes('density')) valueEl.textContent = `${e.target.value}x${e.target.value}`;
                 else if (id === 'array-x-count' || id === 'array-z-count') valueEl.textContent = `${e.target.value}`;
                 else if (id === 'element-spacing') valueEl.textContent = `${Number(e.target.value).toFixed(2)}λ`;
                 else if (id === 'chebyshev-sidelobe') valueEl.textContent = `${e.target.value} dB`;
+                else if (id === 'cutaway-offset') valueEl.textContent = `${Number(e.target.value).toFixed(1)}`;
+                else if (id === 'slice-size') valueEl.textContent = `${Number(e.target.value).toFixed(0)}`;
                 else if (id.includes('coupling-strength')) {
                     const db = Number(e.target.value);
                     const lin = Math.pow(10, db / 20);
                     valueEl.textContent = `${db.toFixed(0)} dB (≈${lin.toFixed(2)})`;
                 }
                 else valueEl.textContent = `${e.target.value}${id.includes('distance') ? '' : '°'}`;
+
+                if (['steering-azimuth', 'steering-elevation', 'observation-azimuth', 'observation-elevation'].includes(id)) {
+                    syncAngleNumberInput(id);
+                }
                 
                 if (['array-x-count', 'array-z-count', 'element-spacing'].includes(id)) {
                     renderAntennaCheckboxes();
@@ -3484,43 +5251,208 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
             });
         });
 
+        ['steering-azimuth', 'steering-elevation', 'observation-azimuth', 'observation-elevation'].forEach(setupAngleNumberInput);
+
         // Toggles
-        ['sync-observation-toggle', 'show-observation-point-toggle', 'show-steering-point-toggle', 'show-waves', 'show-vectors', 'show-pattern', 'normalize-pattern-toggle', 'mutual-coupling-toggle'].forEach(id => {
-            document.getElementById(id).addEventListener('change', e => {
+        ['custom-array-enabled', 'sync-observation-toggle', 'show-observation-point-toggle', 'show-steering-point-toggle', 'show-waves', 'show-vectors', 'show-pattern', 'normalize-pattern-toggle', 'mutual-coupling-toggle', 'slice-marker-azimuth', 'slice-marker-elevation', 'slice-marker-beam', 'slice-marker-top'].forEach(id => {
+            const toggleEl = document.getElementById(id);
+            if (!toggleEl) return;
+            toggleEl.addEventListener('change', e => {
+                if (id === 'custom-array-enabled') { renderAntennaCheckboxes(); createAntennas(); attachAntennaCheckboxListeners(); }
                 if (id === 'sync-observation-toggle' && e.target.checked) syncObservationToSteering();
                 observationPoint.visible = document.getElementById('show-observation-point-toggle').checked;
                 steeringPoint.visible = document.getElementById('show-steering-point-toggle').checked;
                 updateAllVisuals();
             });
         });
+
+        const applyCustomBtn = document.getElementById('apply-custom-array');
+        if (applyCustomBtn) applyCustomBtn.addEventListener('click', () => {
+            const enabled = document.getElementById('custom-array-enabled');
+            if (enabled) enabled.checked = true;
+            renderAntennaCheckboxes();
+            createAntennas();
+            attachAntennaCheckboxListeners();
+            updateAllVisuals();
+        });
+        const customText = document.getElementById('custom-array-coordinates');
+        if (customText) customText.addEventListener('input', () => {
+            if (document.getElementById('custom-array-enabled')?.checked) {
+                renderAntennaCheckboxes();
+                createAntennas();
+                attachAntennaCheckboxListeners();
+                updateAllVisuals();
+            }
+        });
+
+        const slicePanelWaves = document.getElementById('slice-panel-waves');
+        if (slicePanelWaves) slicePanelWaves.addEventListener('change', () => {
+            if (slicePanelWaves.checked) updateSlicePanelAnimation();
+            else { for (const mode of getSlicePanelModes()) if (slicePanelCache[mode]) drawSlicePanelFrame(slicePanelCache[mode], false); }
+        });
+
+        const slicePlotTheme = document.getElementById('slice-plot-theme');
+        if (slicePlotTheme) {
+            applySlicePlotTheme();
+            slicePlotTheme.addEventListener('change', applySlicePlotTheme);
+        }
+
+        // Hovering a 2D plot temporarily shows its matching 3D slice plane.
+        getSlicePanelModes().forEach(mode => {
+            const card = document.querySelector(`[data-slice-card="${mode}"]`);
+            if (!card) return;
+            card.addEventListener("pointerenter", () => {
+                window.__hoveredSliceMode = mode;
+                card.classList.add("slice-card-hover");
+                updateSlicePlaneMarkers();
+            });
+            card.addEventListener("pointerleave", () => {
+                if (window.__hoveredSliceMode === mode) window.__hoveredSliceMode = null;
+                card.classList.remove("slice-card-hover");
+                updateSlicePlaneMarkers();
+            });
+        });
+
+
+        const printReportBtn = document.getElementById('print-report');
+        if (printReportBtn) printReportBtn.addEventListener('click', printPhasedArrayReport);
+        const dashFullscreen = document.getElementById('slice-dashboard-fullscreen');
+        if (dashFullscreen) dashFullscreen.addEventListener('click', () => document.getElementById('slice-dashboard')?.requestFullscreen?.());
+        const workFullscreen = document.getElementById('workspace-fullscreen');
+        if (workFullscreen) workFullscreen.addEventListener('click', () => document.getElementById('visual-workspace')?.requestFullscreen?.());
         
         // Selects
-        ['calculation-method', 'pattern-type', 'pattern-display', 'field-quantity', 'display-scale', 'amplitude-taper'].forEach(id => {
-            document.getElementById(id).addEventListener('change', () => {
+        ['calculation-method', 'pattern-type', 'radiation-model', 'pattern-display', 'field-quantity', 'display-scale', 'amplitude-taper', 'field-slice-mode', 'field-slice-style', 'field-slice-view', 'cutaway-mode', 'azimuth-cut-elevation'].forEach(id => {
+            const selectEl = document.getElementById(id);
+            if (!selectEl) return;
+            selectEl.addEventListener('change', () => {
                 if (id === 'pattern-type') createAntennas();
+                if (id === 'calculation-method') updateSubpatchDensityAvailability();
                 updateAllVisuals();
             });
         });
 
         attachAntennaCheckboxListeners();
+        updateSubpatchDensityAvailability();
     }
 
+
+    function setupWorkspaceResizeControls() {
+      const workspace = document.getElementById('visual-workspace');
+      const divider = document.getElementById('workspace-resizer');
+      const heightHandle = document.getElementById('workspace-height-resizer');
+      if (!workspace) return;
+
+      const savedW = localStorage.getItem('phasor_left_panel_width');
+      const savedH = localStorage.getItem('phasor_workspace_height');
+      if (savedW) workspace.style.setProperty('--left-panel-width', savedW);
+      if (savedH) workspace.style.setProperty('--workspace-height', savedH);
+      // Remove old separate 2D/3D compact states from previous cached versions.
+      workspace.classList.remove('two-d-compact','two-d-collapsed','three-d-compact','three-d-collapsed');
+      localStorage.removeItem('phasor_workspace_layout');
+
+      const updateLayoutButtons = () => {
+        const b = document.getElementById('toggle-workspace-compact');
+        if (b) b.textContent = workspace.classList.contains('workspace-compact-height') ? '2D/3D restore' : '2D/3D small';
+      };
+      const setCompactHeight = (compact) => {
+        if (compact) {
+          const currentH = workspace.style.getPropertyValue('--workspace-height') || localStorage.getItem('phasor_workspace_height') || 'clamp(420px, 58vh, 720px)';
+          if (currentH !== '180px') localStorage.setItem('phasor_workspace_restore_height', currentH);
+          workspace.classList.add('workspace-compact-height');
+          workspace.style.setProperty('--workspace-height', '180px');
+          localStorage.setItem('phasor_workspace_height', '180px');
+          localStorage.setItem('phasor_workspace_compact_height', '1');
+        } else {
+          const restoreH = localStorage.getItem('phasor_workspace_restore_height') || 'clamp(420px, 58vh, 720px)';
+          workspace.classList.remove('workspace-compact-height');
+          workspace.style.setProperty('--workspace-height', restoreH);
+          localStorage.setItem('phasor_workspace_height', restoreH);
+          localStorage.setItem('phasor_workspace_compact_height', '0');
+        }
+        updateLayoutButtons();
+      };
+      if (localStorage.getItem('phasor_workspace_compact_height') === '1') setCompactHeight(true);
+      else updateLayoutButtons();
+      document.getElementById('toggle-workspace-compact')?.addEventListener('click', () => {
+        setCompactHeight(!workspace.classList.contains('workspace-compact-height'));
+        refresh();
+      });
+
+      let draggingX = false;
+      let draggingY = false;
+      const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+      const refresh = () => requestAnimationFrame(() => { onWindowResize(); });
+
+      if (divider) {
+        divider.addEventListener('pointerdown', (e) => {
+          draggingX = true;
+          divider.setPointerCapture?.(e.pointerId);
+          document.body.style.userSelect = 'none';
+          e.preventDefault();
+        });
+      }
+      if (heightHandle) {
+        heightHandle.addEventListener('pointerdown', (e) => {
+          draggingY = true;
+          heightHandle.setPointerCapture?.(e.pointerId);
+          document.body.style.userSelect = 'none';
+          e.preventDefault();
+        });
+      }
+      window.addEventListener('pointermove', (e) => {
+        if (draggingX && workspace) {
+          const rect = workspace.getBoundingClientRect();
+          const minPx = 170;
+          const maxPx = Math.max(minPx, rect.width - 190);
+          const leftPx = clamp(e.clientX - rect.left, minPx, maxPx);
+          const pct = (leftPx / rect.width) * 100;
+          const val = `${pct.toFixed(2)}%`;
+          workspace.style.setProperty('--left-panel-width', val);
+          localStorage.setItem('phasor_left_panel_width', val);
+          updateLayoutButtons();
+          refresh();
+        }
+        if (draggingY && workspace) {
+          const rect = workspace.getBoundingClientRect();
+          const top = rect.top;
+          const maxH = Math.max(340, Math.min(window.innerHeight * 0.86, 900));
+          const h = clamp(e.clientY - top, 120, maxH);
+          workspace.classList.remove('workspace-compact-height');
+          localStorage.setItem('phasor_workspace_compact_height', '0');
+          const val = `${Math.round(h)}px`;
+          workspace.style.setProperty('--workspace-height', val);
+          localStorage.setItem('phasor_workspace_height', val);
+          refresh();
+        }
+      });
+      window.addEventListener('pointerup', () => {
+        if (draggingX || draggingY) {
+          draggingX = draggingY = false;
+          document.body.style.userSelect = '';
+          refresh();
+        }
+      });
+      if (window.ResizeObserver) new ResizeObserver(refresh).observe(workspace);
+      document.addEventListener('fullscreenchange', refresh);
+    }
 
     function setupCanvasViewControls() {
       const container = document.getElementById('canvas-container');
       const slider = document.getElementById('canvas-height-slider');
       const value = document.getElementById('canvas-height-value');
       const fullBtn = document.getElementById('fullscreen-3d');
-      if (!container || !slider || !value || !fullBtn) return;
+      if (!container || !fullBtn) return;
 
       function setCanvasHeight(px) {
         const height = `${px}px`;
         container.style.setProperty('--canvas-height', height);
-        value.textContent = height;
+        if (value) value.textContent = height;
         onWindowResize();
       }
 
-      slider.addEventListener('input', (e) => setCanvasHeight(e.target.value));
+      if (slider) slider.addEventListener('input', (e) => setCanvasHeight(e.target.value));
+      if (window.ResizeObserver) new ResizeObserver(onWindowResize).observe(container);
       fullBtn.addEventListener('click', () => {
         if (!document.fullscreenElement) container.requestFullscreen();
         else document.exitFullscreen();
@@ -3529,7 +5461,8 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
         if (!document.fullscreenElement) container.requestFullscreen();
       });
       document.addEventListener('fullscreenchange', onWindowResize);
-      setCanvasHeight(slider.value);
+      if (slider && value) value.textContent = 'drag';
+      onWindowResize();
     }
 
     // DOM Ready
@@ -3537,15 +5470,17 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
         init();
         setupEventListeners();
         setupCanvasViewControls();
+        setupWorkspaceResizeControls();
         setupThemeSelector();
         setupCanvasThemeSelector();
+        applySliceDashboardVisibility();
         applyTranslations(document.getElementById('language-select').value);
     });
   </script>
 
 <script>
   // App version marker: when this value changes, normal browsers reload once and store the new version.
-  const APP_VERSION = "2026-04-30-v6";
+  const APP_VERSION = "2026-05-01-v6";
   try {
     const storedVersion = localStorage.getItem('phased_array_app_version');
     if (storedVersion && storedVersion !== APP_VERSION) {
@@ -3558,5 +5493,6 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
     console.warn('Version check skipped:', e);
   }
 </script>
+
 </body>
 </html>
