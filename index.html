@@ -34,14 +34,14 @@ window.MathJax = {
   }
 };
 </script>
-<script async="True" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js?v=2026-05-02-mobile-tablet-phone-stack-v3"></script>
+<script async="True" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js?v=2026-05-02-progressive-render-v5-fixed"></script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <!-- Cache/version control: forces browsers and crawlers to revalidate after updates. -->
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<meta name="app-version" content="2026-05-02-mobile-tablet-phone-stack-v3">
+<meta name="app-version" content="2026-05-02-progressive-render-v5-fixed">
 <meta name="last-modified" content="2026-05-02">
 
 <title>Phased Array Simulator – 3D Beamforming Tool</title>
@@ -89,9 +89,9 @@ window.MathJax = {
 </script>
 <meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0b0b0f" media="(prefers-color-scheme: dark)">
-<script src="https://cdn.tailwindcss.com?v=2026-05-02-mobile-tablet-phone-stack-v3"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js?v=2026-05-02-mobile-tablet-phone-stack-v3"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js?v=2026-05-02-mobile-tablet-phone-stack-v3"></script>
+<script src="https://cdn.tailwindcss.com?v=2026-05-02-progressive-render-v5-fixed"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js?v=2026-05-02-progressive-render-v5-fixed"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js?v=2026-05-02-progressive-render-v5-fixed"></script>
 <style>
     /* Grundlegende Stildefinitionen */
     html, body {
@@ -1541,11 +1541,91 @@ window.MathJax = {
       .print-report-btn { background: linear-gradient(180deg, #f5f5f7, #d1d5db) !important; color: #111827 !important; }
     }
 
+
+
+    /* v4 responsive + progressive rendering polish: portrait touch devices stack 3D over 2D,
+       keep the 2D dashboard independently scrollable, and allow the 2D section to collapse. */
+    .visual-workspace.slice-2d-collapsed .slice-dashboard,
+    .visual-workspace.slice-2d-collapsed .workspace-resizer { display: none !important; }
+    .visual-workspace.slice-2d-collapsed .canvas-container { flex: 1 1 100% !important; width: 100% !important; height: 100% !important; }
+    .slice-dashboard { touch-action: pan-y; }
+
+    @media (max-width: 1024px) and (orientation: portrait) {
+      .visual-workspace {
+        flex-direction: column !important;
+        height: clamp(430px, 66vh, 680px) !important;
+        min-height: 430px !important;
+        max-height: 680px !important;
+        overflow: hidden !important;
+        gap: 0.45rem !important;
+      }
+      .visual-workspace .canvas-container {
+        order: 1 !important;
+        width: 100% !important;
+        flex: 0 0 52% !important;
+        height: 52% !important;
+        min-height: 210px !important;
+        touch-action: none !important;
+      }
+      .slice-dashboard {
+        order: 2 !important;
+        width: 100% !important;
+        flex: 1 1 48% !important;
+        height: 48% !important;
+        min-width: 0 !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        -webkit-overflow-scrolling: touch !important;
+        overscroll-behavior: contain !important;
+      }
+      .slice-dashboard-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 0.44rem !important;
+        overflow: visible !important;
+        padding-bottom: 0.5rem !important;
+      }
+      .workspace-resizer, .workspace-height-resizer { display: none !important; }
+      .slice-dashboard-head {
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 4 !important;
+        background: var(--lt-surface-strong, rgba(255,255,255,0.88)) !important;
+        border-radius: 14px !important;
+        padding: 0.35rem !important;
+        margin: -0.12rem -0.12rem 0.35rem !important;
+      }
+      .visual-workspace.slice-2d-collapsed { height: clamp(230px, 40vh, 360px) !important; min-height: 230px !important; }
+    }
+
+    @media (max-width: 640px) and (orientation: portrait) {
+      .visual-workspace {
+        height: clamp(360px, 58vh, 520px) !important;
+        min-height: 360px !important;
+        max-height: 520px !important;
+      }
+      .visual-workspace .canvas-container { flex-basis: 50% !important; height: 50% !important; min-height: 170px !important; }
+      .slice-dashboard { flex-basis: 50% !important; height: 50% !important; padding: 0.42rem !important; }
+      .slice-card:nth-child(n+3) { display: block !important; }
+      .slice-card svg { aspect-ratio: 1 / 0.68 !important; min-height: 64px !important; }
+      .slice-dashboard-toolbar { gap: 0.25rem !important; }
+      #toggle-2d-panel { display: inline-flex !important; }
+    }
+
+    @media (max-width: 1024px) and (orientation: landscape) {
+      .visual-workspace { flex-direction: row !important; }
+      .slice-dashboard { overflow-y: auto !important; -webkit-overflow-scrolling: touch !important; }
+    }
+
+    .visual-workspace.progressive-low .canvas-container,
+    .visual-workspace.progressive-low .slice-dashboard {
+      filter: saturate(0.92);
+    }
+
 </style>
 
 <script>
 // Runtime version marker for easier cache debugging.
-window.PHASOR_APP_VERSION = "2026-05-02-mobile-tablet-phone-stack-v3";
+window.PHASOR_APP_VERSION = "2026-05-02-progressive-render-v5-fixed";
 try { localStorage.setItem("phasor_app_version", window.PHASOR_APP_VERSION); } catch (e) {}
 </script>
 </head>
@@ -1701,6 +1781,7 @@ try { localStorage.setItem("phasor_app_version", window.PHASOR_APP_VERSION); } c
           </select>
         </label>
         <label class="slice-mini-toggle">plot <select id="slice-plot-theme" class="border rounded px-1 py-0 text-xs"><option value="auto" selected>auto</option><option value="light">white</option><option value="dark">black</option></select></label>
+        <button class="slice-mini-btn" id="toggle-2d-panel" type="button" title="Collapse or show the 2D plots">Hide 2D</button>
         <button class="slice-mini-btn print-report-btn" id="print-report" type="button">Print report</button>
         <button class="slice-mini-btn" id="slice-dashboard-fullscreen" type="button">Fullscreen</button>
         <button class="slice-mini-btn" id="workspace-fullscreen" type="button">Big view</button>
@@ -3557,16 +3638,39 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
     function isTabletLayout() {
       return !isPhoneLayout() && (window.innerWidth <= 1024 || isCoarsePointerDevice());
     }
+    let isProgressiveInteracting = false;
+    let progressiveIdleTimer = 0;
+
     function getRenderQuality() {
-      if (isPhoneLayout()) return { phi: 30, theta: 15, dpr: 1.15, polarStep: 4, topStep: 12, frameSkip: 2 };
-      if (isTabletLayout()) return { phi: 48, theta: 24, dpr: 1.35, polarStep: 2, topStep: 7.5, frameSkip: 1 };
-      return { phi: 64, theta: 32, dpr: Math.min(window.devicePixelRatio || 1, 2), polarStep: 1, topStep: 5, frameSkip: 1 };
+      // While dragging sliders, draw a deliberately cheaper preview.
+      // After the user pauses/releases, one full-quality update is rendered automatically.
+      if (isProgressiveInteracting) {
+        if (isPhoneLayout()) return { phi: 18, theta: 9, dpr: 0.85, polarStep: 10, topStep: 24, frameSkip: 3 };
+        if (isTabletLayout()) return { phi: 26, theta: 13, dpr: 1.0, polarStep: 6, topStep: 18, frameSkip: 2 };
+        return { phi: 36, theta: 18, dpr: Math.min(window.devicePixelRatio || 1, 1.25), polarStep: 3, topStep: 10, frameSkip: 1 };
+      }
+      if (isPhoneLayout()) return { phi: 34, theta: 17, dpr: 1.2, polarStep: 4, topStep: 12, frameSkip: 2 };
+      if (isTabletLayout()) return { phi: 54, theta: 27, dpr: 1.45, polarStep: 2, topStep: 7.5, frameSkip: 1 };
+      return { phi: 72, theta: 36, dpr: Math.min(window.devicePixelRatio || 1, 2), polarStep: 1, topStep: 5, frameSkip: 1 };
     }
     let scheduledVisualUpdate = 0;
     let lastVisualUpdateMs = 0;
+
+    function scheduleProgressiveVisuals() {
+      isProgressiveInteracting = true;
+      document.getElementById('visual-workspace')?.classList.add('progressive-low');
+      clearTimeout(progressiveIdleTimer);
+      scheduleAllVisuals();
+      progressiveIdleTimer = setTimeout(() => {
+        isProgressiveInteracting = false;
+        document.getElementById('visual-workspace')?.classList.remove('progressive-low');
+        updateAllVisuals();
+      }, isPhoneLayout() ? 220 : (isTabletLayout() ? 170 : 130));
+    }
+
     function scheduleAllVisuals() {
       const now = performance.now();
-      const minDelay = isPhoneLayout() ? 105 : (isTabletLayout() ? 35 : 0);
+      const minDelay = isProgressiveInteracting ? (isPhoneLayout() ? 95 : (isTabletLayout() ? 45 : 18)) : (isPhoneLayout() ? 105 : (isTabletLayout() ? 35 : 0));
       if (scheduledVisualUpdate) cancelAnimationFrame(scheduledVisualUpdate);
       scheduledVisualUpdate = requestAnimationFrame(() => {
         const elapsed = performance.now() - lastVisualUpdateMs;
@@ -5111,7 +5215,7 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
         const obsElInput = document.getElementById('observation-elevation-input');
         if (obsAzInput) obsAzInput.value = steerAz;
         if (obsElInput) obsElInput.value = steerEl;
-        scheduleAllVisuals();
+        scheduleProgressiveVisuals();
     }
     
 
@@ -5436,7 +5540,7 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
             if (id.startsWith('steering') && document.getElementById('sync-observation-toggle')?.checked) {
                 syncObservationToSteering();
             } else {
-                scheduleAllVisuals();
+                scheduleProgressiveVisuals();
             }
         });
     }
@@ -5472,14 +5576,14 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
                     renderAntennaCheckboxes();
                     createAntennas();
                     attachAntennaCheckboxListeners();
-                    if (isPhoneLayout()) scheduleAllVisuals(); else updateAllVisuals();
+                    scheduleProgressiveVisuals();
                     return;
                 }
 
                 if (id.startsWith('steering') && document.getElementById('sync-observation-toggle').checked) {
                     syncObservationToSteering();
                 } else {
-                    scheduleAllVisuals();
+                    scheduleProgressiveVisuals();
                 }
             });
         });
@@ -5551,6 +5655,16 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
         if (printReportBtn) printReportBtn.addEventListener('click', printPhasedArrayReport);
         const dashFullscreen = document.getElementById('slice-dashboard-fullscreen');
         if (dashFullscreen) dashFullscreen.addEventListener('click', () => document.getElementById('slice-dashboard')?.requestFullscreen?.());
+
+        const toggle2d = document.getElementById('toggle-2d-panel');
+        if (toggle2d) toggle2d.addEventListener('click', () => {
+            const workspace = document.getElementById('visual-workspace');
+            if (!workspace) return;
+            const collapsed = workspace.classList.toggle('slice-2d-collapsed');
+            toggle2d.textContent = collapsed ? 'Show 2D' : 'Hide 2D';
+            requestAnimationFrame(() => { onWindowResize(); updateFieldSlice(); rebuildSlicePanelCache(); });
+        });
+
         const workFullscreen = document.getElementById('workspace-fullscreen');
         if (workFullscreen) workFullscreen.addEventListener('click', () => {
             const workspace = document.getElementById('visual-workspace');
@@ -5731,7 +5845,7 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
 
 <script>
   // App version marker: when this value changes, normal browsers reload once and store the new version.
-  const APP_VERSION = "2026-05-02-v6";
+  const APP_VERSION = "2026-05-02-progressive-render-v5-fixed";
   try {
     const storedVersion = localStorage.getItem('phased_array_app_version');
     if (storedVersion && storedVersion !== APP_VERSION) {
@@ -5743,6 +5857,240 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
   } catch (e) {
     console.warn('Version check skipped:', e);
   }
+</script>
+
+
+
+<style id="v5-mobile-tablet-fixes">
+/* v5 fixes: 2D collapse remains recoverable, touch portrait scroll works, and height resize is available everywhere. */
+.visual-workspace.slice-2d-collapsed {
+  min-height: 210px !important;
+}
+.visual-workspace.slice-2d-collapsed .slice-dashboard {
+  display: block !important;
+  flex: 0 0 auto !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 44px !important;
+  max-height: 58px !important;
+  overflow: visible !important;
+  padding: 0.34rem !important;
+  order: 2 !important;
+}
+.visual-workspace.slice-2d-collapsed .slice-dashboard-head {
+  display: flex !important;
+  position: static !important;
+  margin: 0 !important;
+  padding: 0.18rem 0.22rem !important;
+  min-height: 36px !important;
+}
+.visual-workspace.slice-2d-collapsed .slice-dashboard-head > div:first-child,
+.visual-workspace.slice-2d-collapsed .slice-cut-control,
+.visual-workspace.slice-2d-collapsed .slice-mini-toggle,
+.visual-workspace.slice-2d-collapsed #print-report,
+.visual-workspace.slice-2d-collapsed #slice-dashboard-fullscreen,
+.visual-workspace.slice-2d-collapsed #equal-panels,
+.visual-workspace.slice-2d-collapsed .slice-dashboard-grid,
+.visual-workspace.slice-2d-collapsed .slice-note {
+  display: none !important;
+}
+.visual-workspace.slice-2d-collapsed #toggle-2d-panel,
+.visual-workspace.slice-2d-collapsed #workspace-fullscreen {
+  display: inline-flex !important;
+}
+.visual-workspace.slice-2d-collapsed .canvas-container {
+  flex: 1 1 auto !important;
+  width: 100% !important;
+  min-height: 165px !important;
+}
+.workspace-height-resizer {
+  display: block !important;
+  height: 18px !important;
+  width: min(440px, 88%) !important;
+  margin: 0.22rem auto 0.72rem !important;
+  touch-action: none !important;
+}
+.workspace-height-resizer::after {
+  content: "drag height";
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 10px;
+  line-height: 1;
+  padding: 0.12rem 0.42rem;
+  border-radius: 999px;
+  color: var(--lt-muted, #6e6e73);
+  background: var(--lt-surface-strong, rgba(255,255,255,0.88));
+  border: 1px solid var(--lt-border, rgba(0,0,0,0.08));
+}
+@media (max-width: 1024px) and (orientation: portrait) {
+  .visual-workspace {
+    height: var(--workspace-height, clamp(440px, 66vh, 720px)) !important;
+    max-height: 86vh !important;
+  }
+  .visual-workspace .canvas-container {
+    flex: 0 0 52% !important;
+    height: 52% !important;
+  }
+  .slice-dashboard {
+    flex: 1 1 48% !important;
+    height: 48% !important;
+    min-height: 155px !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    touch-action: pan-y !important;
+  }
+  .visual-workspace.slice-2d-collapsed {
+    height: var(--workspace-height, clamp(270px, 44vh, 420px)) !important;
+  }
+}
+@media (max-width: 640px) and (orientation: portrait) {
+  .visual-workspace {
+    height: var(--workspace-height, clamp(390px, 62vh, 570px)) !important;
+    max-height: 88vh !important;
+  }
+  .slice-card svg { min-height: 82px !important; aspect-ratio: 1 / 0.76 !important; }
+  .visual-workspace.mobile-expanded .slice-dashboard {
+    overflow-y: auto !important;
+    max-height: 46vh !important;
+  }
+}
+.visual-workspace.progressive-low .slice-card svg,
+.visual-workspace.progressive-low .canvas-container canvas {
+  image-rendering: auto;
+}
+</style>
+<script id="v5-behavior-fixes">
+(function(){
+  // Override quality: still cheap while dragging, but better final quality on phones/tablets.
+  window.getRenderQuality = function getRenderQuality() {
+    const coarse = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+    const phone = window.innerWidth <= 640 || (coarse && Math.min(window.innerWidth, window.innerHeight) <= 520);
+    const tablet = !phone && (window.innerWidth <= 1024 || coarse);
+    if (window.isProgressiveInteracting || (typeof isProgressiveInteracting !== 'undefined' && isProgressiveInteracting)) {
+      if (phone) return { phi: 20, theta: 10, dpr: 0.9, polarStep: 8, topStep: 20, frameSkip: 3 };
+      if (tablet) return { phi: 30, theta: 15, dpr: 1.05, polarStep: 5, topStep: 14, frameSkip: 2 };
+      return { phi: 40, theta: 20, dpr: Math.min(window.devicePixelRatio || 1, 1.3), polarStep: 3, topStep: 10, frameSkip: 1 };
+    }
+    if (phone) return { phi: 52, theta: 26, dpr: Math.min(window.devicePixelRatio || 1, 1.55), polarStep: 2.5, topStep: 8, frameSkip: 1 };
+    if (tablet) return { phi: 64, theta: 32, dpr: Math.min(window.devicePixelRatio || 1, 1.65), polarStep: 2, topStep: 6, frameSkip: 1 };
+    return { phi: 80, theta: 40, dpr: Math.min(window.devicePixelRatio || 1, 2), polarStep: 1, topStep: 5, frameSkip: 1 };
+  };
+
+  function touchStackLayout() {
+    const coarse = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+    return coarse && window.innerWidth <= 1024 && window.matchMedia('(orientation: portrait)').matches;
+  }
+  function refreshVisuals() {
+    requestAnimationFrame(function(){
+      try { onWindowResize(); } catch(e) {}
+      try { updateFieldSlice(); } catch(e) {}
+      try { rebuildSlicePanelCache(); } catch(e) {}
+      try { renderer && renderer.setPixelRatio && renderer.setPixelRatio(getRenderQuality().dpr); } catch(e) {}
+    });
+  }
+  function setBigMode(expanded) {
+    const ws = document.getElementById('visual-workspace');
+    const btn = document.getElementById('workspace-fullscreen');
+    if (!ws) return;
+    ws.classList.toggle('mobile-expanded', expanded);
+    document.body.classList.toggle('mobile-big-preview', expanded);
+    if (btn) btn.textContent = expanded ? 'Sticky view' : 'Big view';
+    refreshVisuals();
+    if (expanded) ws.scrollIntoView({ block:'start', behavior:'smooth' });
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    const ws = document.getElementById('visual-workspace');
+    const toggle2d = document.getElementById('toggle-2d-panel');
+    const big = document.getElementById('workspace-fullscreen');
+    const heightHandle = document.getElementById('workspace-height-resizer');
+    if (!ws) return;
+
+    // Ensure old hidden states do not trap the 2D button.
+    ws.classList.remove('slice-panel-hidden','two-d-collapsed','three-d-collapsed');
+
+    if (toggle2d) {
+      toggle2d.addEventListener('click', function(ev){
+        ev.preventDefault();
+        ev.stopImmediatePropagation();
+        const collapsed = ws.classList.toggle('slice-2d-collapsed');
+        toggle2d.textContent = collapsed ? 'Show 2D' : 'Hide 2D';
+        refreshVisuals();
+      }, true);
+      toggle2d.textContent = ws.classList.contains('slice-2d-collapsed') ? 'Show 2D' : 'Hide 2D';
+    }
+
+    if (big) {
+      big.addEventListener('click', function(ev){
+        // On phone and tablet portrait: don't use browser fullscreen; use sticky/expanded switch.
+        if (touchStackLayout() || window.innerWidth <= 640) {
+          ev.preventDefault();
+          ev.stopImmediatePropagation();
+          setBigMode(!ws.classList.contains('mobile-expanded'));
+        } else if (document.fullscreenElement === ws) {
+          ev.preventDefault();
+          ev.stopImmediatePropagation();
+          document.exitFullscreen();
+        }
+      }, true);
+      document.addEventListener('fullscreenchange', function(){
+        if (document.fullscreenElement === ws) big.textContent = 'Exit big view';
+        else if (ws.classList.contains('mobile-expanded')) big.textContent = 'Sticky view';
+        else big.textContent = 'Big view';
+        refreshVisuals();
+      });
+    }
+
+    window.addEventListener('resize', function(){
+      if (!touchStackLayout() && window.innerWidth > 640) setBigMode(false);
+      if (big && !document.fullscreenElement && !ws.classList.contains('mobile-expanded')) big.textContent = 'Big view';
+    });
+
+    // Height drag is allowed also on phone/tablet. Dragging down makes bigger, up makes smaller.
+    if (heightHandle) {
+      let dragging = false;
+      const clamp = (v,min,max)=>Math.max(min, Math.min(max, v));
+      heightHandle.addEventListener('pointerdown', function(e){
+        dragging = true;
+        heightHandle.setPointerCapture && heightHandle.setPointerCapture(e.pointerId);
+        document.body.style.userSelect = 'none';
+        e.preventDefault();
+      });
+      window.addEventListener('pointermove', function(e){
+        if (!dragging) return;
+        const rect = ws.getBoundingClientRect();
+        const minH = window.innerWidth <= 640 ? 280 : 340;
+        const maxH = Math.max(minH + 40, Math.min(window.innerHeight * 0.88, 900));
+        const h = clamp(e.clientY - rect.top, minH, maxH);
+        ws.classList.remove('workspace-compact-height');
+        ws.style.setProperty('--workspace-height', Math.round(h) + 'px');
+        try { localStorage.setItem('phasor_workspace_height', Math.round(h) + 'px'); } catch(e) {}
+        refreshVisuals();
+      });
+      window.addEventListener('pointerup', function(){
+        if (!dragging) return;
+        dragging = false;
+        document.body.style.userSelect = '';
+        refreshVisuals();
+      });
+    }
+
+    // Make sure the full-quality pass happens after touch/mouse release too.
+    ['pointerup','touchend','mouseup','change'].forEach(function(evt){
+      document.addEventListener(evt, function(){
+        try {
+          clearTimeout(progressiveIdleTimer);
+          progressiveIdleTimer = setTimeout(function(){
+            isProgressiveInteracting = false;
+            ws.classList.remove('progressive-low');
+            updateAllVisuals();
+          }, window.innerWidth <= 640 ? 260 : 170);
+        } catch(e) {}
+      }, {passive:true});
+    });
+  });
+})();
 </script>
 
 </body>
