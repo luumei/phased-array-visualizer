@@ -1,0 +1,28 @@
+          @page { size: A4 landscape; margin: 12mm; }
+          * { box-sizing: border-box; }
+          body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; color: #111827; background: #fff; }
+          h1 { margin: 0 0 0.25rem; font-size: 24px; letter-spacing: -0.02em; }
+          h2 { margin: 0 0 0.55rem; font-size: 15px; }
+          p { margin: 0.25rem 0; line-height: 1.35; }
+          .report-header { display: flex; justify-content: space-between; gap: 1rem; align-items: flex-start; border-bottom: 2px solid #111827; padding-bottom: 0.5rem; margin-bottom: 0.65rem; }
+          .report-sub { color: #4b5563; font-size: 12px; }
+          .report-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; align-items: stretch; }
+          .report-card { border: 1px solid #d1d5db; border-radius: 12px; padding: 0.65rem; break-inside: avoid; background: #fff; }
+          .report-3d img { width: 100%; height: 420px; object-fit: contain; display: block; background: #f9fafb; border-radius: 10px; border: 1px solid #e5e7eb; }
+          .report-plots { display: grid; grid-template-columns: 1fr 1fr; gap: 0.45rem; }
+          .report-plot { margin: 0; border: 1px solid #e5e7eb; border-radius: 10px; padding: 0.4rem; min-height: 210px; }
+          .report-plot figcaption { font-weight: 700; font-size: 9px; margin-bottom: 0.12rem; line-height: 1.1; }
+          .report-plot svg { width: 100%; height: 158px; display: block; }
+          .report-plot .slice-vector-label { font-size: 2.45px !important; }
+          .report-plot .slice-axis-label { font-size: 2.15px !important; }
+          .report-plot .slice-ring-label { font-size: 2px !important; }
+          .report-table { border-collapse: collapse; width: 100%; font-size: 10px; }
+          .report-table th, .report-table td { border: 1px solid #e5e7eb; padding: 0.25rem 0.35rem; text-align: left; vertical-align: top; }
+          .report-table th { background: #f3f4f6; font-weight: 750; }
+          .report-elements { font-size: 8.5px; }
+          .report-small { font-size: 10px; color: #4b5563; }
+          .report-muted { color: #6b7280; font-size: 9px; }
+          .report-pre { white-space: pre-wrap; font-size: 9px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 0.5rem; max-height: 220px; overflow: hidden; }
+          .report-section-full { margin-top: 0.65rem; }
+          @media print { .no-print { display: none; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+        
