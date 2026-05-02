@@ -34,14 +34,14 @@ window.MathJax = {
   }
 };
 </script>
-<script async="True" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js?v=2026-05-02-mobile-optimized-v1"></script>
+<script async="True" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js?v=2026-05-02-mobile-tablet-phone-stack-v3"></script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <!-- Cache/version control: forces browsers and crawlers to revalidate after updates. -->
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<meta name="app-version" content="2026-05-02-mobile-optimized-v1">
+<meta name="app-version" content="2026-05-02-mobile-tablet-phone-stack-v3">
 <meta name="last-modified" content="2026-05-02">
 
 <title>Phased Array Simulator – 3D Beamforming Tool</title>
@@ -89,9 +89,9 @@ window.MathJax = {
 </script>
 <meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0b0b0f" media="(prefers-color-scheme: dark)">
-<script src="https://cdn.tailwindcss.com?v=2026-05-02-mobile-optimized-v1"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js?v=2026-05-02-mobile-optimized-v1"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js?v=2026-05-02-mobile-optimized-v1"></script>
+<script src="https://cdn.tailwindcss.com?v=2026-05-02-mobile-tablet-phone-stack-v3"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js?v=2026-05-02-mobile-tablet-phone-stack-v3"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js?v=2026-05-02-mobile-tablet-phone-stack-v3"></script>
 <style>
     /* Grundlegende Stildefinitionen */
     html, body {
@@ -1271,29 +1271,134 @@ window.MathJax = {
       .controls { max-height: none; overflow: visible; }
     }
 
-    /* Phones: prioritize reliable page scroll. A visible 2D/3D result still sits
-       directly above the controls, but it is not sticky on very small screens. */
+    /* Phones: sticky preview, not a huge sticky workspace. The summary can collapse
+       it to a thin bar; the 3D+2D button opens a larger non-sticky view. */
     @media (max-width: 640px) {
-      .canvas-section { position: relative; top: auto; z-index: auto; padding-top: 0.2rem; }
+      .canvas-section {
+        position: sticky;
+        top: 0;
+        z-index: 90;
+        padding: 0.22rem 0 0.38rem;
+        margin-inline: -0.15rem;
+        background: linear-gradient(180deg, var(--lt-bg, #f5f5f7) 88%, rgba(245,245,247,0));
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
+        contain: layout paint;
+      }
       .canvas-controls-details { display: none; }
-      .workspace-details > summary { padding: 0.52rem 0.72rem; font-size: 0.92rem; }
-      .workspace-details-inner { padding: 0 0.38rem 0.45rem; }
+      .workspace-details { border-radius: 18px !important; overflow: hidden; }
+      .workspace-details > summary { padding: 0.46rem 0.68rem; font-size: 0.86rem; min-height: 2.15rem; }
+      .workspace-details:not([open]) { box-shadow: var(--lt-shadow-soft); }
+      .workspace-details-inner { padding: 0 0.32rem 0.34rem; }
       .workspace-toolbar-inline { display: none; }
-      .visual-workspace { flex-direction: column; height: auto; max-height: none; overflow: visible; gap: 0.45rem; }
-      .visual-workspace .canvas-container { order: 1; width: 100%; flex-basis: auto; height: clamp(210px, 42vh, 310px) !important; min-width: 0; touch-action: none; }
-      .slice-dashboard { order: 2; width: 100%; flex-basis: auto; height: auto !important; min-width: 0; max-height: none; overflow: visible; padding: 0.48rem; }
+      .visual-workspace { flex-direction: row; height: clamp(150px, 31vh, 215px) !important; min-height: 150px; max-height: 215px; overflow: hidden; gap: 0.28rem; border-radius: 16px; }
+      .visual-workspace .canvas-container { order: 1; flex: 1 1 62%; width: auto; height: 100% !important; min-width: 0; touch-action: none; border-radius: 14px !important; }
+      .slice-dashboard { order: 2; flex: 0 0 38%; width: 38%; height: 100% !important; min-width: 0; max-height: none; overflow: hidden; padding: 0.34rem; border-radius: 14px; }
       .workspace-resizer, .workspace-height-resizer { display: none; }
-      .slice-dashboard-head { align-items: flex-start; margin-bottom: 0.38rem; }
+      .slice-dashboard-head { align-items: flex-start; margin-bottom: 0.25rem; }
+      .slice-dashboard-head strong { font-size: 0.7rem; line-height: 1; }
       .slice-dashboard-head > div:first-child span { display: none; }
-      .slice-dashboard-toolbar { justify-content: flex-start; gap: 0.28rem; }
-      .slice-cut-control, .slice-mini-toggle, .slice-mini-btn { font-size: 0.68rem; padding: 0.22rem 0.42rem; }
-      .slice-dashboard-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.36rem; }
-      .slice-card { padding: 0.32rem; border-radius: 13px; }
+  
+
+    /* v3: portrait phones/tablets show 3D above 2D. Side-by-side is only used in landscape/wide screens. */
+    @media (min-width: 641px) and (max-width: 1024px) and (orientation: portrait) {
+      .visual-workspace {
+        flex-direction: column !important;
+        --workspace-height: min(58vh, 620px);
+        height: var(--workspace-height) !important;
+        min-height: 500px;
+        max-height: 620px;
+        overflow: hidden;
+        gap: 0.45rem;
+      }
+      .visual-workspace .canvas-container {
+        order: 1;
+        width: 100% !important;
+        flex: 0 0 54% !important;
+        height: 54% !important;
+        min-height: 250px;
+        touch-action: none;
+      }
+      .slice-dashboard {
+        order: 2;
+        width: 100% !important;
+        flex: 1 1 46% !important;
+        height: 46% !important;
+        min-width: 0;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
+      }
+      .slice-dashboard-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 0.5rem !important;
+      }
+      .workspace-resizer { display: none !important; }
+      .workspace-height-resizer { display: none !important; }
+    }
+
+    @media (max-width: 640px) and (orientation: portrait) {
+      .visual-workspace {
+        flex-direction: column !important;
+        height: clamp(285px, 48vh, 405px) !important;
+        min-height: 285px;
+        max-height: 405px;
+        overflow: hidden;
+        gap: 0.34rem;
+      }
+      .visual-workspace .canvas-container {
+        order: 1;
+        width: 100% !important;
+        flex: 0 0 54% !important;
+        height: 54% !important;
+        min-height: 150px;
+      }
+      .slice-dashboard {
+        order: 2;
+        width: 100% !important;
+        flex: 1 1 46% !important;
+        height: 46% !important;
+        min-width: 0;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
+      }
+      .slice-dashboard-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 0.28rem !important;
+      }
+      .slice-card:nth-child(n+3) { display: block !important; }
+      .slice-card svg { aspect-ratio: 1 / 0.52 !important; min-height: 52px; }
+      .slice-dashboard-head { position: sticky; top: 0; z-index: 3; background: var(--lt-surface, rgba(255,255,255,0.78)); padding-bottom: 0.2rem; }
+      .visual-workspace.mobile-expanded { height: auto !important; max-height: none; overflow: visible; }
+      .visual-workspace.mobile-expanded .canvas-container { height: clamp(240px, 48vh, 380px) !important; flex-basis: auto !important; }
+      .visual-workspace.mobile-expanded .slice-dashboard { height: auto !important; max-height: none; overflow: visible !important; }
+    }
+
+    @media (max-width: 1024px) and (orientation: landscape) {
+      .visual-workspace { flex-direction: row !important; }
+    }
+
+    .slice-dashboard-toolbar { justify-content: flex-start; gap: 0.22rem; }
+      .slice-cut-control, .slice-mini-toggle, .slice-mini-btn { font-size: 0.62rem; padding: 0.18rem 0.32rem; }
+      #print-report, #slice-dashboard-fullscreen { display: none !important; }
+      .slice-dashboard-grid { grid-template-columns: 1fr; gap: 0.24rem; }
+      .slice-card { padding: 0.22rem; border-radius: 10px; }
+      .slice-card:nth-child(n+3) { display: none; }
       .slice-card-head { min-height: auto; }
-      .slice-card-head strong { font-size: 0.68rem; }
+      .slice-card-head strong { font-size: 0.6rem; }
       .slice-card-head span { display: none; }
       .slice-marker-choice, .slice-card-foot, .slice-note { display: none !important; }
-      .slice-card svg { aspect-ratio: 1 / 0.82; margin: 0.22rem 0 0; border-radius: 10px; }
+      .slice-card svg { aspect-ratio: 1 / 0.62; margin: 0.12rem 0 0; border-radius: 8px; }
+      .visual-workspace.mobile-expanded { flex-direction: column; height: auto !important; min-height: 0; max-height: none; overflow: visible; }
+      .visual-workspace.mobile-expanded .canvas-container { flex-basis: auto; width: 100%; height: clamp(230px, 48vh, 360px) !important; }
+      .visual-workspace.mobile-expanded .slice-dashboard { flex-basis: auto; width: 100%; height: auto !important; overflow: visible; }
+      .visual-workspace.mobile-expanded .slice-dashboard-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.34rem; }
+      .visual-workspace.mobile-expanded .slice-card:nth-child(n+3) { display: block; }
+      .visual-workspace.mobile-expanded .slice-card svg { aspect-ratio: 1 / 0.82; }
+      body.mobile-big-preview .canvas-section { position: relative; top: auto; z-index: auto; background: transparent; }
       .controls { grid-template-columns: 1fr; padding: 0.72rem; gap: 0.72rem; }
       .slider-container { gap: 0.35rem; margin-bottom: 0.55rem; }
       .slider-container label { width: 96px; font-size: 0.78rem; }
@@ -1440,7 +1545,7 @@ window.MathJax = {
 
 <script>
 // Runtime version marker for easier cache debugging.
-window.PHASOR_APP_VERSION = "2026-05-02-mobile-optimized-v1";
+window.PHASOR_APP_VERSION = "2026-05-02-mobile-tablet-phone-stack-v3";
 try { localStorage.setItem("phasor_app_version", window.PHASOR_APP_VERSION); } catch (e) {}
 </script>
 </head>
@@ -1570,7 +1675,7 @@ try { localStorage.setItem("phasor_app_version", window.PHASOR_APP_VERSION); } c
   </div>
 </details>
 <details class="workspace-details" id="workspace-details" open>
-  <summary>2D + 3D workspace</summary>
+  <summary>Sticky 2D + 3D preview (tap to collapse)</summary>
   <div class="workspace-details-inner">
     <div class="workspace-toolbar-inline">
       <button class="slice-mini-btn" id="toggle-workspace-compact" type="button" title="Make the 2D/3D workspace shorter or restore it">2D/3D small</button>
@@ -1598,7 +1703,7 @@ try { localStorage.setItem("phasor_app_version", window.PHASOR_APP_VERSION); } c
         <label class="slice-mini-toggle">plot <select id="slice-plot-theme" class="border rounded px-1 py-0 text-xs"><option value="auto" selected>auto</option><option value="light">white</option><option value="dark">black</option></select></label>
         <button class="slice-mini-btn print-report-btn" id="print-report" type="button">Print report</button>
         <button class="slice-mini-btn" id="slice-dashboard-fullscreen" type="button">Fullscreen</button>
-        <button class="slice-mini-btn" id="workspace-fullscreen" type="button">3D + 2D</button>
+        <button class="slice-mini-btn" id="workspace-fullscreen" type="button">Big view</button>
       </div>
     </div>
     <div class="slice-dashboard-grid">
@@ -3453,7 +3558,7 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
       return !isPhoneLayout() && (window.innerWidth <= 1024 || isCoarsePointerDevice());
     }
     function getRenderQuality() {
-      if (isPhoneLayout()) return { phi: 32, theta: 16, dpr: 1.15, polarStep: 3, topStep: 10, frameSkip: 2 };
+      if (isPhoneLayout()) return { phi: 30, theta: 15, dpr: 1.15, polarStep: 4, topStep: 12, frameSkip: 2 };
       if (isTabletLayout()) return { phi: 48, theta: 24, dpr: 1.35, polarStep: 2, topStep: 7.5, frameSkip: 1 };
       return { phi: 64, theta: 32, dpr: Math.min(window.devicePixelRatio || 1, 2), polarStep: 1, topStep: 5, frameSkip: 1 };
     }
@@ -3461,7 +3566,7 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
     let lastVisualUpdateMs = 0;
     function scheduleAllVisuals() {
       const now = performance.now();
-      const minDelay = isPhoneLayout() ? 90 : (isTabletLayout() ? 45 : 0);
+      const minDelay = isPhoneLayout() ? 105 : (isTabletLayout() ? 35 : 0);
       if (scheduledVisualUpdate) cancelAnimationFrame(scheduledVisualUpdate);
       scheduledVisualUpdate = requestAnimationFrame(() => {
         const elapsed = performance.now() - lastVisualUpdateMs;
@@ -5367,7 +5472,7 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
                     renderAntennaCheckboxes();
                     createAntennas();
                     attachAntennaCheckboxListeners();
-                    updateAllVisuals();
+                    if (isPhoneLayout()) scheduleAllVisuals(); else updateAllVisuals();
                     return;
                 }
 
@@ -5447,7 +5552,19 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
         const dashFullscreen = document.getElementById('slice-dashboard-fullscreen');
         if (dashFullscreen) dashFullscreen.addEventListener('click', () => document.getElementById('slice-dashboard')?.requestFullscreen?.());
         const workFullscreen = document.getElementById('workspace-fullscreen');
-        if (workFullscreen) workFullscreen.addEventListener('click', () => document.getElementById('visual-workspace')?.requestFullscreen?.());
+        if (workFullscreen) workFullscreen.addEventListener('click', () => {
+            const workspace = document.getElementById('visual-workspace');
+            if (!workspace) return;
+            if (isPhoneLayout()) {
+                const expanded = workspace.classList.toggle('mobile-expanded');
+                document.body.classList.toggle('mobile-big-preview', expanded);
+                workFullscreen.textContent = expanded ? 'Sticky view' : 'Big view';
+                requestAnimationFrame(() => { onWindowResize(); updateFieldSlice(); rebuildSlicePanelCache(); });
+                if (expanded) workspace.scrollIntoView({ block: 'start', behavior: 'smooth' });
+                return;
+            }
+            workspace.requestFullscreen?.();
+        });
         
         // Selects
         ['calculation-method', 'pattern-type', 'radiation-model', 'pattern-display', 'field-quantity', 'display-scale', 'amplitude-taper', 'field-slice-mode', 'field-slice-style', 'field-slice-view', 'cutaway-mode', 'azimuth-cut-elevation'].forEach(id => {
@@ -5475,6 +5592,12 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
       const savedH = isPhoneLayout() ? null : localStorage.getItem('phasor_workspace_height');
       if (savedW) workspace.style.setProperty('--left-panel-width', savedW);
       if (savedH) workspace.style.setProperty('--workspace-height', savedH);
+      if (isPhoneLayout()) {
+        workspace.classList.remove('workspace-compact-height','mobile-expanded');
+        document.body.classList.remove('mobile-big-preview');
+        const wf = document.getElementById('workspace-fullscreen');
+        if (wf) wf.textContent = 'Big view';
+      }
       // Remove old separate 2D/3D compact states from previous cached versions.
       workspace.classList.remove('two-d-compact','two-d-collapsed','three-d-compact','three-d-collapsed');
       localStorage.removeItem('phasor_workspace_layout');
