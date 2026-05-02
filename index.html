@@ -26,15 +26,15 @@ Project website: https://phased-array-simulator.com
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="js/mathjax-config.js"></script>
-<script async="True" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js?v=2026-05-02-progressive-render-v5-fixed"></script>
+<script src="js/mathjax-config.js?v=2026-05-02-desktop-vscode-dragbar-cachebust-v2"></script>
+<script async="True" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js?v=2026-05-02-desktop-vscode-dragbar-cachebust-v2"></script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <!-- Cache/version control: forces browsers and crawlers to revalidate after updates. -->
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<meta name="app-version" content="2026-05-02-progressive-render-v5-fixed">
+<meta name="app-version" content="2026-05-02-desktop-vscode-dragbar-cachebust-v2">
 <meta name="last-modified" content="2026-05-02">
 
 <title>Phased Array Simulator – 3D Beamforming Tool</title>
@@ -82,12 +82,12 @@ Project website: https://phased-array-simulator.com
 </script>
 <meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0b0b0f" media="(prefers-color-scheme: dark)">
-<script src="https://cdn.tailwindcss.com?v=2026-05-02-progressive-render-v5-fixed"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js?v=2026-05-02-progressive-render-v5-fixed"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js?v=2026-05-02-progressive-render-v5-fixed"></script>
-<link rel="stylesheet" href="css/style.css">
+<script src="https://cdn.tailwindcss.com?v=2026-05-02-desktop-vscode-dragbar-cachebust-v2"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js?v=2026-05-02-desktop-vscode-dragbar-cachebust-v2"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js?v=2026-05-02-desktop-vscode-dragbar-cachebust-v2"></script>
+<link rel="stylesheet" href="css/style.css?v=2026-05-02-desktop-vscode-dragbar-cachebust-v2">
 
-<script src="js/version-marker.js"></script>
+<script src="js/version-marker.js?v=2026-05-02-desktop-vscode-dragbar-cachebust-v2"></script>
 </head>
 <body>
 <div class="container mx-auto max-w-7xl">
@@ -218,6 +218,7 @@ Project website: https://phased-array-simulator.com
   <summary>Sticky 2D + 3D preview (tap to collapse)</summary>
   <div class="workspace-details-inner">
     <div class="workspace-toolbar-inline">
+      <button class="slice-mini-btn plot-popout-btn workspace-popout-main" id="workspace-popout" type="button" title="Open the complete live 2D + 3D visualization in a separate browser window">Open in new window</button>
       <button class="slice-mini-btn" id="toggle-workspace-compact" type="button" title="Make the 2D/3D workspace shorter or restore it">2D/3D small</button>
     </div>
 <div class="visual-workspace" id="visual-workspace">
@@ -406,7 +407,7 @@ Project website: https://phased-array-simulator.com
     <input class="w-full" id="array-z-count" max="9" min="3" step="1" type="range" value="5"/>
     <span class="slider-value" id="array-z-count-value">5</span>
   </div>
-  <div class="slider-container">
+  <div class="slider-container spacing-slider">
     <label for="element-spacing" data-lang="spacing">Spacing:</label>
     <input class="w-full" id="element-spacing" max="1.00" min="0.25" step="0.05" type="range" value="0.50"/>
     <span class="slider-value" id="element-spacing-value">0.50λ</span>
@@ -760,9 +761,9 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
 </div>
 
 
-<script src="js/app.js"></script>
+<script src="js/app.js?v=2026-05-02-desktop-vscode-dragbar-cachebust-v2"></script>
 
-<script src="js/cache-version.js"></script>
+<script src="js/cache-version.js?v=2026-05-02-desktop-vscode-dragbar-cachebust-v2"></script>
 
 
 
@@ -865,7 +866,25 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
   image-rendering: auto;
 }
 </style>
-<script src="js/render-quality-overrides.js"></script>
+<script src="js/render-quality-overrides.js?v=2026-05-02-desktop-vscode-dragbar-cachebust-v2"></script>
+
+<footer style="
+  text-align:center;
+  font-size:0.8rem;
+  color:#6b7280;
+  margin-top:2rem;
+  padding:1rem 0;
+" data-lang="footer-html">
+  © 2026 phased-array-simulator.com – Phased Array Visualization <br>
+  Open source: 
+  <a href="https://github.com/luumei/phased-array-visualizer" target="_blank" rel="noopener noreferrer" style="color:#3b82f6; text-decoration:none;">
+    GitHub Repository
+  </a> <br>
+  Lukas Meienberger · 
+  <a href="mailto:lumeitech@gmail.com" style="color:#3b82f6; text-decoration:none;">
+    lumeitech@gmail.com
+  </a>
+</footer>
 
 </body>
 </html>

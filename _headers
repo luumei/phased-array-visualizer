@@ -1,0 +1,9 @@
+# Optional cache rules for Netlify / Cloudflare Pages-style hosts.
+/index.html
+  Cache-Control: no-cache, no-store, must-revalidate, max-age=0
+/*.html
+  Cache-Control: no-cache, no-store, must-revalidate, max-age=0
+/js/*
+  Cache-Control: public, max-age=31536000, immutable
+/css/*
+  Cache-Control: public, max-age=31536000, immutable

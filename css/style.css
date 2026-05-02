@@ -1525,3 +1525,449 @@
     .visual-workspace.progressive-low .slice-dashboard {
       filter: saturate(0.92);
     }
+
+
+/* Desktop workspace upgrade: make the 2D + 3D plots use the available screen width,
+   show pop-out actions clearly, and prevent the element-spacing slider from being squeezed. */
+@media (min-width: 1100px) {
+  .container.mx-auto,
+  .container.max-w-7xl {
+    max-width: min(1920px, calc(100vw - 32px)) !important;
+  }
+  .canvas-section {
+    width: 100%;
+  }
+  .workspace-details-inner {
+    padding-inline: clamp(0.55rem, 1vw, 1rem);
+  }
+  .visual-workspace {
+    --workspace-height: clamp(520px, 68vh, 880px);
+    --left-panel-width: 46%;
+    width: 100%;
+  }
+  .slice-dashboard-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.65rem;
+  }
+  .slice-card svg {
+    min-height: 180px;
+  }
+}
+
+@media (min-width: 1500px) {
+  .visual-workspace {
+    --workspace-height: clamp(600px, 72vh, 940px);
+    --left-panel-width: 44%;
+  }
+  .slice-card svg {
+    min-height: 210px;
+  }
+}
+
+.plot-popout-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+  border-color: rgba(37, 99, 235, 0.38) !important;
+  background: rgba(37, 99, 235, 0.10) !important;
+  color: #1d4ed8 !important;
+  font-weight: 800 !important;
+}
+.plot-popout-btn::before {
+  content: "↗";
+  font-size: 0.9em;
+  line-height: 1;
+}
+.plot-popout-btn:hover {
+  background: rgba(37, 99, 235, 0.16) !important;
+}
+
+/* Let spacing use its own row on dense control grids. */
+.array-config-controls .spacing-slider,
+#element-spacing.slider-wide-row {
+  min-width: 0;
+}
+.array-config-controls .spacing-slider {
+  grid-column: span 2;
+}
+.array-config-controls .spacing-slider .slider-container,
+.spacing-slider.slider-container {
+  display: grid;
+  grid-template-columns: minmax(110px, max-content) minmax(220px, 1fr) minmax(56px, max-content);
+  gap: 0.55rem;
+  align-items: center;
+  width: 100%;
+}
+.array-config-controls .spacing-slider label,
+.spacing-slider.slider-container label {
+  width: auto;
+  margin-right: 0;
+}
+.array-config-controls .spacing-slider .slider-value,
+.spacing-slider.slider-container .slider-value {
+  width: auto;
+  min-width: 56px;
+  margin-left: 0;
+}
+
+@media (max-width: 900px) {
+  .array-config-controls .spacing-slider {
+    grid-column: 1 / -1;
+  }
+  .array-config-controls .spacing-slider .slider-container,
+  .spacing-slider.slider-container {
+    grid-template-columns: 1fr auto;
+    row-gap: 0.35rem;
+  }
+  .array-config-controls .spacing-slider input[type="range"],
+  .spacing-slider.slider-container input[type="range"] {
+    grid-column: 1 / -1;
+    order: 3;
+  }
+}
+
+
+/* Desktop split layout: visual workspace on the left, all controls/info on the right. */
+@media (min-width: 1100px) {
+  .grid-container {
+    display: grid !important;
+    grid-template-columns: minmax(720px, 1.65fr) minmax(380px, 0.95fr);
+    gap: clamp(1rem, 1.4vw, 1.6rem);
+    align-items: start;
+  }
+  .canvas-section {
+    position: sticky;
+    top: 0.75rem;
+    z-index: 25;
+    width: 100%;
+    min-width: 0;
+  }
+  .controls-and-info {
+    width: 100%;
+    min-width: 0;
+  }
+  .controls-and-info.controls-panel-grid,
+  .controls-panel-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 1rem;
+  }
+  .canvas-controls-details {
+    margin-bottom: 0.75rem;
+  }
+  .workspace-details > summary {
+    font-size: 1rem;
+  }
+  .visual-workspace {
+    --workspace-height: clamp(560px, 74vh, 900px) !important;
+    --left-panel-width: 45%;
+  }
+  .workspace-toolbar-inline {
+    justify-content: space-between;
+  }
+  .workspace-toolbar-inline::after {
+    content: "Use ↗ buttons to open 2D/3D on a second monitor";
+    color: var(--lt-muted);
+    font-size: 0.82rem;
+    font-weight: 650;
+  }
+  .slice-dashboard-toolbar {
+    gap: 0.42rem;
+  }
+  .plot-popout-btn {
+    box-shadow: 0 0 0 2px rgba(37,99,235,0.12) inset;
+  }
+}
+
+@media (min-width: 1500px) {
+  .grid-container {
+    grid-template-columns: minmax(900px, 1.8fr) minmax(430px, 0.9fr);
+  }
+  .visual-workspace {
+    --workspace-height: clamp(640px, 78vh, 980px) !important;
+  }
+}
+
+@media (min-width: 1100px) and (max-width: 1280px) {
+  .grid-container {
+    grid-template-columns: minmax(620px, 1.5fr) minmax(360px, 0.9fr);
+  }
+  .visual-workspace {
+    --left-panel-width: 42%;
+  }
+  .slice-dashboard-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Give the element spacing slider its own full-width row in the right control column. */
+@media (min-width: 900px) {
+  .spacing-slider.slider-container,
+  .array-config-controls .spacing-slider .slider-container {
+    grid-template-columns: 1fr !important;
+  }
+  .spacing-slider.slider-container input[type="range"],
+  .array-config-controls .spacing-slider input[type="range"] {
+    width: 100%;
+  }
+  .spacing-slider.slider-container label,
+  .array-config-controls .spacing-slider label {
+    width: auto !important;
+  }
+}
+
+
+/* Final desktop split: left half is ONLY the 2D/3D visualization, right half is everything else. */
+@media (min-width: 1100px) {
+  .container.mx-auto,
+  .container.max-w-7xl {
+    max-width: none !important;
+    width: 100% !important;
+    padding-left: clamp(12px, 1vw, 20px) !important;
+    padding-right: clamp(12px, 1vw, 20px) !important;
+  }
+  .grid-container {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+    gap: clamp(1rem, 1.4vw, 1.7rem) !important;
+    align-items: start !important;
+    width: 100% !important;
+  }
+  .canvas-section {
+    grid-column: 1 !important;
+    position: sticky !important;
+    top: 0.75rem !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+  }
+  .controls-and-info {
+    grid-column: 2 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+  }
+  .controls-and-info.controls-panel-grid,
+  .controls-panel-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+  .workspace-details > summary {
+    display: none !important;
+  }
+  .workspace-details {
+    display: block !important;
+    border-radius: 24px !important;
+  }
+  .workspace-details-inner {
+    padding: clamp(0.7rem, 1vw, 1rem) !important;
+  }
+  .workspace-toolbar-inline {
+    justify-content: stretch !important;
+    margin-bottom: 0.8rem !important;
+  }
+  .workspace-toolbar-inline::after {
+    content: none !important;
+  }
+  .workspace-popout-main {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 0.9rem 1.1rem !important;
+    border-radius: 18px !important;
+    font-size: 1.05rem !important;
+    font-weight: 900 !important;
+    letter-spacing: -0.01em;
+    background: #2563eb !important;
+    color: #fff !important;
+    border: 0 !important;
+    box-shadow: 0 14px 30px rgba(37, 99, 235, 0.28) !important;
+  }
+  .workspace-popout-main::before {
+    content: "↗";
+    margin-right: 0.5rem;
+    font-size: 1.1em;
+  }
+  .visual-workspace {
+    --workspace-height: calc(100vh - 9.5rem) !important;
+    --left-panel-width: 50% !important;
+    height: var(--workspace-height) !important;
+    min-height: 620px !important;
+    max-height: none !important;
+  }
+  .visual-workspace .canvas-container,
+  .slice-dashboard {
+    height: 100% !important;
+  }
+  .slice-dashboard-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 0.65rem !important;
+  }
+  .slice-card svg {
+    min-height: clamp(135px, 16vh, 220px) !important;
+  }
+  .canvas-toolbar,
+  .mouse-help,
+  .canvas-controls-details {
+    display: none !important;
+  }
+  .array-config-controls {
+    grid-template-columns: 1fr !important;
+  }
+  .array-config-controls .spacing-slider {
+    grid-column: 1 / -1 !important;
+  }
+  .array-config-controls .spacing-slider,
+  .spacing-slider.slider-container {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 0.4rem !important;
+  }
+  .array-config-controls .spacing-slider input[type="range"],
+  .spacing-slider.slider-container input[type="range"] {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+}
+
+@media (min-width: 1100px) and (max-width: 1350px) {
+  .slice-dashboard-grid { grid-template-columns: 1fr !important; }
+  .visual-workspace { --left-panel-width: 46% !important; }
+}
+
+/* User requested desktop layout: complete left half = live 2D/3D, complete right half = controls + math/explanations. */
+@media (min-width: 1100px) {
+  body:not(.plot-popout-mode) .grid-container {
+    display: grid !important;
+    grid-template-columns: minmax(0, 50vw) minmax(0, 1fr) !important;
+  }
+  body:not(.plot-popout-mode) .canvas-section {
+    grid-column: 1 !important;
+  }
+  body:not(.plot-popout-mode) .controls-and-info,
+  body:not(.plot-popout-mode) .explanations {
+    grid-column: 2 !important;
+  }
+  body:not(.plot-popout-mode) .explanations {
+    margin-top: 0 !important;
+  }
+  body:not(.plot-popout-mode) .workspace-popout-main,
+  body:not(.plot-popout-mode) #workspace-popout {
+    display: inline-flex !important;
+    width: 100% !important;
+    min-height: 58px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 1rem 1.25rem !important;
+    margin-bottom: .55rem !important;
+    border-radius: 18px !important;
+    font-size: 1.08rem !important;
+    font-weight: 900 !important;
+    background: #2563eb !important;
+    color: #fff !important;
+    box-shadow: 0 16px 34px rgba(37,99,235,.30) !important;
+  }
+  body:not(.plot-popout-mode) #workspace-popout::before {
+    content: "↗";
+    margin-right: .55rem;
+    font-size: 1.2em;
+  }
+  body:not(.plot-popout-mode) .array-config-controls .slider-container:has(#element-spacing),
+  body:not(.plot-popout-mode) .slider-container:has(#element-spacing) {
+    grid-column: 1 / -1 !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: .38rem !important;
+  }
+}
+
+/* Real live second-monitor popout: hide every page section except the live 2D/3D workspace. */
+html.plot-popout-mode,
+body.plot-popout-mode {
+  width: 100% !important;
+  min-height: 100% !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+  background: #0b1020 !important;
+}
+body.plot-popout-mode .header-section,
+body.plot-popout-mode .seo-hero,
+body.plot-popout-mode .seo-content,
+body.plot-popout-mode .canvas-controls-details,
+body.plot-popout-mode .controls-and-info,
+body.plot-popout-mode footer,
+body.plot-popout-mode .workspace-height-resizer,
+body.plot-popout-mode .workspace-toolbar-inline #toggle-workspace-compact {
+  display: none !important;
+}
+body.plot-popout-mode .container,
+body.plot-popout-mode .container.mx-auto,
+body.plot-popout-mode .container.max-w-7xl {
+  width: 100vw !important;
+  max-width: none !important;
+  height: 100vh !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+body.plot-popout-mode .grid-container,
+body.plot-popout-mode .canvas-section,
+body.plot-popout-mode .workspace-details,
+body.plot-popout-mode .workspace-details-inner {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+body.plot-popout-mode .workspace-details > summary {
+  display: none !important;
+}
+body.plot-popout-mode .live-popout-header {
+  position: fixed;
+  z-index: 50;
+  left: 14px;
+  top: 12px;
+  right: 14px;
+  display: flex;
+  gap: .65rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: .7rem .95rem;
+  border-radius: 16px;
+  color: #e5eefb;
+  background: rgba(15,23,42,.82);
+  border: 1px solid rgba(148,163,184,.22);
+  backdrop-filter: blur(10px);
+  font: 14px system-ui, -apple-system, Segoe UI, sans-serif;
+}
+body.plot-popout-mode .live-popout-header span {
+  color: #bfd1ee;
+  font-size: 12px;
+}
+body.plot-popout-mode .visual-workspace {
+  height: 100vh !important;
+  min-height: 100vh !important;
+  max-height: 100vh !important;
+  width: 100vw !important;
+  padding: 72px 12px 12px !important;
+  border-radius: 0 !important;
+  gap: 12px !important;
+  --left-panel-width: 50% !important;
+  background: #0b1020 !important;
+}
+body.plot-popout-mode .slice-dashboard,
+body.plot-popout-mode .visual-workspace .canvas-container {
+  height: calc(100vh - 84px) !important;
+  max-height: none !important;
+}
+body.plot-popout-mode .slice-dashboard {
+  overflow: auto !important;
+}
+body.plot-popout-mode #workspace-popout,
+body.plot-popout-mode #workspace-fullscreen,
+body.plot-popout-mode #print-report {
+  display: none !important;
+}
