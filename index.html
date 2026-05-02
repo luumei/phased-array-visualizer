@@ -34,15 +34,15 @@ window.MathJax = {
   }
 };
 </script>
-<script async="True" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js?v=2026-05-01-tablet-stable-preview-v1"></script>
+<script async="True" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js?v=2026-05-02-mobile-optimized-v1"></script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <!-- Cache/version control: forces browsers and crawlers to revalidate after updates. -->
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<meta name="app-version" content="2026-05-01-tablet-stable-preview-v1">
-<meta name="last-modified" content="2026-05-01">
+<meta name="app-version" content="2026-05-02-mobile-optimized-v1">
+<meta name="last-modified" content="2026-05-02">
 
 <title>Phased Array Simulator – 3D Beamforming Tool</title>
 <meta name="description" content="Free interactive phased array simulator for 3D beamforming, antenna array visualization, steering angle, element spacing, radiation patterns, array factor and dB display.">
@@ -83,15 +83,15 @@ window.MathJax = {
   "license": "https://opensource.org/licenses/MIT",
   "description": "Free interactive 3D phased array simulator for beamforming, antenna array visualization, steering angle, element spacing, radiation patterns, array factor and dB display.",
   "isAccessibleForFree": true,
-  "dateModified": "2026-05-01",
+  "dateModified": "2026-05-02",
   "keywords": "phased array simulator, antenna array simulator, beamforming, antenna visualizer, RF engineering"
 }
 </script>
 <meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0b0b0f" media="(prefers-color-scheme: dark)">
-<script src="https://cdn.tailwindcss.com?v=2026-05-01-tablet-stable-preview-v1"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js?v=2026-05-01-tablet-stable-preview-v1"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js?v=2026-05-01-tablet-stable-preview-v1"></script>
+<script src="https://cdn.tailwindcss.com?v=2026-05-02-mobile-optimized-v1"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js?v=2026-05-02-mobile-optimized-v1"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js?v=2026-05-02-mobile-optimized-v1"></script>
 <style>
     /* Grundlegende Stildefinitionen */
     html, body {
@@ -1274,11 +1274,33 @@ window.MathJax = {
     /* Phones: prioritize reliable page scroll. A visible 2D/3D result still sits
        directly above the controls, but it is not sticky on very small screens. */
     @media (max-width: 640px) {
-      .canvas-section { position: relative; top: auto; z-index: auto; }
-      .visual-workspace { flex-direction: column; height: auto; max-height: none; overflow: visible; }
-      .slice-dashboard, .visual-workspace .canvas-container { width: 100%; flex-basis: auto; height: 320px !important; min-width: 0; }
+      .canvas-section { position: relative; top: auto; z-index: auto; padding-top: 0.2rem; }
+      .canvas-controls-details { display: none; }
+      .workspace-details > summary { padding: 0.52rem 0.72rem; font-size: 0.92rem; }
+      .workspace-details-inner { padding: 0 0.38rem 0.45rem; }
+      .workspace-toolbar-inline { display: none; }
+      .visual-workspace { flex-direction: column; height: auto; max-height: none; overflow: visible; gap: 0.45rem; }
+      .visual-workspace .canvas-container { order: 1; width: 100%; flex-basis: auto; height: clamp(210px, 42vh, 310px) !important; min-width: 0; touch-action: none; }
+      .slice-dashboard { order: 2; width: 100%; flex-basis: auto; height: auto !important; min-width: 0; max-height: none; overflow: visible; padding: 0.48rem; }
       .workspace-resizer, .workspace-height-resizer { display: none; }
-      .slice-dashboard { overflow: auto; -webkit-overflow-scrolling: touch; }
+      .slice-dashboard-head { align-items: flex-start; margin-bottom: 0.38rem; }
+      .slice-dashboard-head > div:first-child span { display: none; }
+      .slice-dashboard-toolbar { justify-content: flex-start; gap: 0.28rem; }
+      .slice-cut-control, .slice-mini-toggle, .slice-mini-btn { font-size: 0.68rem; padding: 0.22rem 0.42rem; }
+      .slice-dashboard-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.36rem; }
+      .slice-card { padding: 0.32rem; border-radius: 13px; }
+      .slice-card-head { min-height: auto; }
+      .slice-card-head strong { font-size: 0.68rem; }
+      .slice-card-head span { display: none; }
+      .slice-marker-choice, .slice-card-foot, .slice-note { display: none !important; }
+      .slice-card svg { aspect-ratio: 1 / 0.82; margin: 0.22rem 0 0; border-radius: 10px; }
+      .controls { grid-template-columns: 1fr; padding: 0.72rem; gap: 0.72rem; }
+      .slider-container { gap: 0.35rem; margin-bottom: 0.55rem; }
+      .slider-container label { width: 96px; font-size: 0.78rem; }
+      .slider-value { width: 42px; font-size: 0.76rem; }
+      .angle-number-input { width: 4.1rem; font-size: 0.76rem; }
+      .seo-hero h2 { font-size: clamp(1.65rem, 9vw, 2.4rem); }
+      .seo-hero, .seo-content { padding: 1rem; }
     }
 
     .slice-dashboard-toolbar {
@@ -1418,7 +1440,7 @@ window.MathJax = {
 
 <script>
 // Runtime version marker for easier cache debugging.
-window.PHASOR_APP_VERSION = "2026-05-01-tablet-stable-preview-v1";
+window.PHASOR_APP_VERSION = "2026-05-02-mobile-optimized-v1";
 try { localStorage.setItem("phasor_app_version", window.PHASOR_APP_VERSION); } catch (e) {}
 </script>
 </head>
@@ -3421,6 +3443,36 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
     const ACTIVE_COLOR = new THREE.Color(0x3b82f6);
     const INACTIVE_COLOR = new THREE.Color(0x6b7280);
 
+    function isCoarsePointerDevice() {
+      return !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+    }
+    function isPhoneLayout() {
+      return window.innerWidth <= 640 || (isCoarsePointerDevice() && Math.min(window.innerWidth, window.innerHeight) <= 520);
+    }
+    function isTabletLayout() {
+      return !isPhoneLayout() && (window.innerWidth <= 1024 || isCoarsePointerDevice());
+    }
+    function getRenderQuality() {
+      if (isPhoneLayout()) return { phi: 32, theta: 16, dpr: 1.15, polarStep: 3, topStep: 10, frameSkip: 2 };
+      if (isTabletLayout()) return { phi: 48, theta: 24, dpr: 1.35, polarStep: 2, topStep: 7.5, frameSkip: 1 };
+      return { phi: 64, theta: 32, dpr: Math.min(window.devicePixelRatio || 1, 2), polarStep: 1, topStep: 5, frameSkip: 1 };
+    }
+    let scheduledVisualUpdate = 0;
+    let lastVisualUpdateMs = 0;
+    function scheduleAllVisuals() {
+      const now = performance.now();
+      const minDelay = isPhoneLayout() ? 90 : (isTabletLayout() ? 45 : 0);
+      if (scheduledVisualUpdate) cancelAnimationFrame(scheduledVisualUpdate);
+      scheduledVisualUpdate = requestAnimationFrame(() => {
+        const elapsed = performance.now() - lastVisualUpdateMs;
+        if (elapsed < minDelay) {
+          setTimeout(() => { scheduledVisualUpdate = 0; updateAllVisuals(); }, minDelay - elapsed);
+        } else {
+          scheduledVisualUpdate = 0;
+          updateAllVisuals();
+        }
+      });
+    }
 
     function parseCustomArrayCoordinates() {
       const text = document.getElementById('custom-array-coordinates')?.value || '';
@@ -3580,9 +3632,10 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
       camera.lookAt(0, 0, 0);
 
       // Renderer
-      renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer = new THREE.WebGLRenderer({ antialias: !isPhoneLayout(), powerPreference: isPhoneLayout() ? "low-power" : "high-performance" });
       renderer.localClippingEnabled = true;
-      renderer.setSize(container.clientWidth, container.clientHeight);
+      renderer.setPixelRatio(getRenderQuality().dpr);
+      renderer.setSize(container.clientWidth, container.clientHeight, false);
       container.appendChild(renderer.domElement);
       applyCanvasBackground();
 
@@ -3609,6 +3662,11 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
       createCutawayHelpers();
 
       // Initial state updates
+      if (isPhoneLayout()) {
+        document.getElementById('show-waves') && (document.getElementById('show-waves').checked = false);
+        document.getElementById('show-vectors') && (document.getElementById('show-vectors').checked = false);
+        document.getElementById('slice-panel-waves') && (document.getElementById('slice-panel-waves').checked = false);
+      }
       updateAllVisuals();
       
       // Event Listeners
@@ -3898,7 +3956,10 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
         : 1;
       
       const thetaLength = hasGroundPlane() ? Math.PI / 2 : Math.PI;
-      const newGeometry = displayType === '3d' ? new THREE.SphereGeometry(1, 64, 32, 0, Math.PI * 2, 0, thetaLength) : new THREE.SphereGeometry(obsDist, 64, 32, 0, Math.PI * 2, 0, thetaLength);
+      const quality = getRenderQuality();
+      const newGeometry = displayType === '3d'
+        ? new THREE.SphereGeometry(1, quality.phi, quality.theta, 0, Math.PI * 2, 0, thetaLength)
+        : new THREE.SphereGeometry(obsDist, quality.phi, quality.theta, 0, Math.PI * 2, 0, thetaLength);
       const positions = newGeometry.attributes.position;
       const colors = new Float32Array(positions.count * 3);
 
@@ -4554,10 +4615,11 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
         let polarRawAtMax = 1e-18;
         let projectionMax = 1e-18;
         if (mode === 'top') {
-          for (let elDeg = -90; elDeg <= 90; elDeg += 5) {
+          const topStep = getRenderQuality().topStep;
+          for (let elDeg = -90; elDeg <= 90; elDeg += topStep) {
             const el = elDeg * Math.PI / 180;
             const c = Math.cos(el), sy = Math.sin(el);
-            for (let azDeg = 0; azDeg < 360; azDeg += 5) {
+            for (let azDeg = 0; azDeg < 360; azDeg += topStep) {
               const az = azDeg * Math.PI / 180;
               const dir = new THREE.Vector3(Math.cos(az) * c, sy, Math.sin(az) * c).normalize();
               const field = calculateFieldAtPoint(dir.clone().multiplyScalar(patternRadius), activeAntennas, patternType, useApprox, steeringDir, subpatchDensity, couplingEnabled, couplingStrength);
@@ -4569,7 +4631,8 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
           }
           polarMax = projectionMax;
         } else {
-          for (let deg = 0; deg <= 360; deg++) {
+          const polarStep = getRenderQuality().polarStep;
+          for (let deg = 0; deg <= 360; deg += polarStep) {
             const a = deg * Math.PI / 180;
             const dir = getAngularDirectionForPattern(mode, a, steeringDir);
             const field = calculateFieldAtPoint(dir.multiplyScalar(patternRadius), activeAntennas, patternType, useApprox, steeringDir, subpatchDensity, couplingEnabled, couplingStrength);
@@ -4843,6 +4906,7 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
 
     // Update all visual elements
     function updateAllVisuals() {
+      lastVisualUpdateMs = performance.now();
         updateSubpatchDensityAvailability();
       elementCurrentCache.key = null;
       updateObjectPositions();
@@ -4942,7 +5006,7 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
         const obsElInput = document.getElementById('observation-elevation-input');
         if (obsAzInput) obsAzInput.value = steerAz;
         if (obsElInput) obsElInput.value = steerEl;
-        updateAllVisuals();
+        scheduleAllVisuals();
     }
     
 
@@ -5169,15 +5233,19 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
     }
 
     // Animation loop
+    let animationFrameCounter = 0;
     function animate() {
       requestAnimationFrame(animate);
+      animationFrameCounter++;
       controls.update();
-      fieldSliceTime += 0.035;
+      const quality = getRenderQuality();
+      const animateThisFrame = animationFrameCounter % quality.frameSkip === 0;
+      fieldSliceTime += isPhoneLayout() ? 0.02 : 0.035;
       const sliceMode = document.getElementById('field-slice-mode')?.value || 'off';
       const sliceStyle = document.getElementById('field-slice-style')?.value || 'contour';
-      if (sliceMode !== 'off' && sliceStyle === 'waves') updateFieldSlice();
-      updateSlicePanelAnimation();
-      if (!window.matchMedia || !window.matchMedia("(pointer: coarse)").matches) updateSliceHoverTooltip();
+      if (animateThisFrame && sliceMode !== 'off' && sliceStyle === 'waves') updateFieldSlice();
+      if (animateThisFrame && !isPhoneLayout()) updateSlicePanelAnimation();
+      if (!isCoarsePointerDevice()) updateSliceHoverTooltip();
       renderer.render(scene, camera);
     }
 
@@ -5187,7 +5255,8 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
       if (container.clientWidth > 0 && container.clientHeight > 0) {
         camera.aspect = container.clientWidth / container.clientHeight;
         camera.updateProjectionMatrix();
-        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setPixelRatio(getRenderQuality().dpr);
+        renderer.setSize(container.clientWidth, container.clientHeight, false);
       }
     }
 
@@ -5262,7 +5331,7 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
             if (id.startsWith('steering') && document.getElementById('sync-observation-toggle')?.checked) {
                 syncObservationToSteering();
             } else {
-                updateAllVisuals();
+                scheduleAllVisuals();
             }
         });
     }
@@ -5305,7 +5374,7 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
                 if (id.startsWith('steering') && document.getElementById('sync-observation-toggle').checked) {
                     syncObservationToSteering();
                 } else {
-                    updateAllVisuals();
+                    scheduleAllVisuals();
                 }
             });
         });
@@ -5402,8 +5471,8 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
       const heightHandle = document.getElementById('workspace-height-resizer');
       if (!workspace) return;
 
-      const savedW = localStorage.getItem('phasor_left_panel_width');
-      const savedH = localStorage.getItem('phasor_workspace_height');
+      const savedW = isPhoneLayout() ? null : localStorage.getItem('phasor_left_panel_width');
+      const savedH = isPhoneLayout() ? null : localStorage.getItem('phasor_workspace_height');
       if (savedW) workspace.style.setProperty('--left-panel-width', savedW);
       if (savedH) workspace.style.setProperty('--workspace-height', savedH);
       // Remove old separate 2D/3D compact states from previous cached versions.
@@ -5539,7 +5608,7 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
 
 <script>
   // App version marker: when this value changes, normal browsers reload once and store the new version.
-  const APP_VERSION = "2026-05-01-v6";
+  const APP_VERSION = "2026-05-02-v6";
   try {
     const storedVersion = localStorage.getItem('phased_array_app_version');
     if (storedVersion && storedVersion !== APP_VERSION) {
