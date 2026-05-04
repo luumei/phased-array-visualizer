@@ -40,7 +40,7 @@
         "azimuth": "Azimut (φ):",
         "elevation": "Elevation (θ):",
         "observation-point": "Beobachtungspunkt",
-        "distance": "Entfernung:",
+        "distance": "Entfernung R / λ:",
         "sync-observation": "Beobachtung = Steuerung:",
         "show-observation-point": "Beobachtungspunkt anzeigen:",
         "show-steering-point": "Steuerungspunkt anzeigen:",
@@ -58,6 +58,7 @@
         "hemisphere": "Farbkodierte Hemisphäre",
         "3d-shape": "Keulenform (3D-Magnitude)",
         "subpatch-density": "Subpatch-Dichte:",
+        "distance-huygens-note": "Fraunhofer: distanzunabhängig. Huygens: kleine R/λ zeigen Nah-/Fresnel-Effekte.",
         "total-field-magnitude": "Betrag des Gesamtfeldes:",
         "array-factor": "Gesamtfeld (Array-Faktor)",
         "array-factor-desc": "Das gezeigte Gesamtfeld ist ein skalares Demonstrationsmodell für die Superposition der Antennenelemente. Im Fernfeld entspricht es dem üblichen Elementpattern-mal-Array-Faktor-Ansatz; im Nah-/Übergangsbereich nutzt die Simulation eine diskrete Huygens-/Subpatch-Näherung. Es ist keine vollständige FEM/MoM-Lösung, weil die echte Stromverteilung und Kopplung nur vereinfacht modelliert werden.",
@@ -163,7 +164,7 @@
         "azimuth": "Azimuth (φ):",
         "elevation": "Elevation (θ):",
         "observation-point": "Observation Point",
-        "distance": "Distance:",
+        "distance": "Distance R / λ:",
         "sync-observation": "Observation = Steering:",
         "show-observation-point": "Show Observation Point:",
         "show-steering-point": "Show Steering Point:",
@@ -181,6 +182,7 @@
         "hemisphere": "Color-Coded Hemisphere",
         "3d-shape": "Lobe Shape (3D Magnitude)",
         "subpatch-density": "Subpatch Density:",
+        "distance-huygens-note": "Fraunhofer: distance-independent. Huygens: small R/λ shows near/Fresnel effects.",
         "total-field-magnitude": "Total Field Magnitude:",
         "array-factor": "Total Field / Array Response",
         "array-factor-desc": "The shown field is a scalar demonstration of antenna-element superposition. The subpatch mode evaluates a discretized radiation integral using prescribed equivalent source weights. The Fraunhofer mode uses the far-field array-factor approximation. This is not a full-wave FEM or MoM solver. However, the optional mutual-coupling switch adds a small MoM-inspired matrix model at element level: nearby elements modify the complex excitation currents before the radiation integral is evaluated. The coupling slider is calibrated like a rough nearest-neighbour $S_{21}$ magnitude in dB, not like a measured material parameter. In subpatch mode, each subpatch still receives a prescribed local current shape.",
@@ -291,7 +293,7 @@
         "azimuth": "Azimut (φ):",
         "elevation": "Élévation (θ):",
         "observation-point": "Point d'Observation",
-        "distance": "Distance:",
+        "distance": "Distance R / λ:",
         "sync-observation": "Observation = Pointage:",
         "show-observation-point": "Afficher le point d'observation:",
         "show-steering-point": "Afficher le point de direction:",
@@ -1900,14 +1902,23 @@
     }
 
     // Utility to get values from control UI elements
+    function getEffectiveSubpatchDensity(useApprox) {
+        const selected = parseInt(document.getElementById('subpatch-density')?.value || '1', 10);
+        // Huygens is expensive: while a slider is actively moving, use one source per patch
+        // as a responsive preview; the idle/full render below uses the selected density.
+        if (!useApprox && isProgressiveInteracting) return 1;
+        return Math.max(1, selected);
+    }
+
     function getControlValues() {
+        const useApprox = document.getElementById('calculation-method').value === 'true';
         return {
             patternType: document.getElementById('pattern-type').value,
             displayType: document.getElementById('pattern-display').value,
             fieldQuantity: document.getElementById('field-quantity')?.value || 'power',
             displayScale: document.getElementById('display-scale')?.value || 'linear',
-            useApprox: document.getElementById('calculation-method').value === 'true',
-            subpatchDensity: parseInt(document.getElementById('subpatch-density').value),
+            useApprox,
+            subpatchDensity: getEffectiveSubpatchDensity(useApprox),
             obsDist: parseFloat(document.getElementById('observation-distance').value),
             normalize: document.getElementById('normalize-pattern-toggle').checked,
             couplingEnabled: document.getElementById('mutual-coupling-toggle').checked,
@@ -2511,7 +2522,7 @@
         // Correct 2D antenna-pattern view:
         // It is the same field function used for the 3D radiation pattern, evaluated only
         // for directions constrained to a named antenna plane/cut. The UI avoids XYZ names.
-        const patternRadius = Math.max(20, refObsDist);
+        const patternRadius = useApprox ? Math.max(20, refObsDist) : Math.max(0.25, refObsDist);
         const polarSamples = [];
         const projectionSamples = [];
         let polarMax = 1e-18;
@@ -2605,7 +2616,8 @@
       // Azimuth is a constant-elevation angular cut. Its helper is drawn as a horizontal cut level
       // on a reference sphere, not as the same plane as the Top Projection.
       // Top Projection uses a separate horizontal plane above the pattern, because it represents the footprint screen.
-      const refRadius = Math.max(8, Math.min(36, parseFloat(document.getElementById('observation-distance')?.value || '20')));
+      const rawRefRadius = parseFloat(document.getElementById('observation-distance')?.value || '20');
+      const refRadius = isFraunhoferMode() ? Math.max(8, Math.min(36, rawRefRadius)) : Math.max(0.25, Math.min(36, rawRefRadius));
 
       for (const mode of modes) {
         let mesh, edges;
@@ -2898,18 +2910,24 @@
       });
     }
 
-    // Sync observation sliders to steering sliders
+    // Keep steering and observation angles coupled when Observation = Steering is enabled.
     function syncObservationToSteering() {
         const steerAz = document.getElementById('steering-azimuth').value;
         const steerEl = document.getElementById('steering-elevation').value;
         document.getElementById('observation-azimuth').value = steerAz;
         document.getElementById('observation-elevation').value = steerEl;
-        document.getElementById('observation-azimuth-value').textContent = document.getElementById('steering-azimuth-value').textContent;
-        document.getElementById('observation-elevation-value').textContent = document.getElementById('steering-elevation-value').textContent;
-        const obsAzInput = document.getElementById('observation-azimuth-input');
-        const obsElInput = document.getElementById('observation-elevation-input');
-        if (obsAzInput) obsAzInput.value = steerAz;
-        if (obsElInput) obsElInput.value = steerEl;
+        syncAngleNumberInput('observation-azimuth');
+        syncAngleNumberInput('observation-elevation');
+        scheduleProgressiveVisuals();
+    }
+
+    function syncSteeringToObservation() {
+        const obsAz = document.getElementById('observation-azimuth').value;
+        const obsEl = document.getElementById('observation-elevation').value;
+        document.getElementById('steering-azimuth').value = obsAz;
+        document.getElementById('steering-elevation').value = obsEl;
+        syncAngleNumberInput('steering-azimuth');
+        syncAngleNumberInput('steering-elevation');
         scheduleProgressiveVisuals();
     }
     
@@ -3159,14 +3177,17 @@
         const sliderWrap = document.getElementById('subpatch-density-slider');
         const slider = document.getElementById('subpatch-density');
         const valueEl = document.getElementById('subpatch-density-value');
+        const inputEl = document.getElementById('subpatch-density-input');
         if (!sliderWrap || !slider || !valueEl) return;
         const disabled = isFraunhoferMode();
         slider.disabled = disabled;
+        if (inputEl) inputEl.disabled = disabled;
         sliderWrap.classList.toggle('is-disabled', disabled);
         sliderWrap.title = disabled
           ? 'Subpatch density is only used by the prescribed-current Huygens model. It has no effect in Fraunhofer far-field mode.'
           : 'Subpatch density is active for the prescribed-current Huygens model.';
         valueEl.textContent = disabled ? 'not used' : `${slider.value}x${slider.value}`;
+        if (inputEl && !disabled && inputEl.value !== slider.value) inputEl.value = slider.value;
     }
 
     function formatAngleValue(value) {
@@ -3175,41 +3196,138 @@
         return Number.isInteger(n) ? String(n) : n.toFixed(1).replace(/\.0$/, '');
     }
 
-    function clampNumberInputValue(inputEl) {
-        const min = Number(inputEl.min || -Infinity);
-        const max = Number(inputEl.max || Infinity);
-        let value = Number(inputEl.value);
-        if (!Number.isFinite(value)) value = min === -Infinity ? 0 : min;
-        value = Math.max(min, Math.min(max, value));
-        inputEl.value = formatAngleValue(value);
-        return inputEl.value;
+    function parseFlexibleNumber(raw) {
+        if (raw == null) return NaN;
+        const normalized = String(raw).trim().replace(',', '.');
+        if (!normalized || normalized === '-' || normalized === '.' || normalized === '-.') return NaN;
+        return Number(normalized);
     }
 
-    function syncAngleNumberInput(id) {
+    function getInputBounds(inputEl) {
+        const minAttr = inputEl.getAttribute('min');
+        const maxAttr = inputEl.getAttribute('max');
+        return {
+            min: minAttr === null || minAttr === '' ? -Infinity : Number(minAttr),
+            max: maxAttr === null || maxAttr === '' ? Infinity : Number(maxAttr)
+        };
+    }
+
+    function clampNumericValue(inputEl, value) {
+        const { min, max } = getInputBounds(inputEl);
+        if (!Number.isFinite(value)) return NaN;
+        return Math.max(min, Math.min(max, value));
+    }
+
+    function isInputBeingEdited(inputEl) {
+        return document.activeElement === inputEl;
+    }
+
+    function syncAngleNumberInput(id, force=false) {
         const slider = document.getElementById(id);
         const numberInput = document.getElementById(`${id}-input`);
         const valueEl = document.getElementById(`${id}-value`);
         if (!slider || !numberInput) return;
-        numberInput.value = formatAngleValue(slider.value);
+        if (force || !isInputBeingEdited(numberInput)) numberInput.value = formatAngleValue(slider.value);
         if (valueEl) valueEl.textContent = `${formatAngleValue(slider.value)}°`;
+    }
+
+    function commitAngleNumberInput(id) {
+        const slider = document.getElementById(id);
+        const numberInput = document.getElementById(`${id}-input`);
+        if (!slider || !numberInput) return;
+        let value = parseFlexibleNumber(numberInput.value);
+        if (!Number.isFinite(value)) {
+            syncAngleNumberInput(id, true);
+            return;
+        }
+        value = clampNumericValue(numberInput, value);
+        slider.value = value;
+        numberInput.value = formatAngleValue(value);
+        const valueEl = document.getElementById(`${id}-value`);
+        if (valueEl) valueEl.textContent = `${formatAngleValue(value)}°`;
+        if (document.getElementById('sync-observation-toggle')?.checked && id.startsWith('steering')) {
+            syncObservationToSteering();
+        } else if (document.getElementById('sync-observation-toggle')?.checked && id.startsWith('observation')) {
+            syncSteeringToObservation();
+        } else {
+            scheduleProgressiveVisuals();
+        }
     }
 
     function setupAngleNumberInput(id) {
         const slider = document.getElementById(id);
         const numberInput = document.getElementById(`${id}-input`);
         if (!slider || !numberInput) return;
-        syncAngleNumberInput(id);
+        syncAngleNumberInput(id, true);
         numberInput.addEventListener('input', () => {
-            const value = clampNumberInputValue(numberInput);
-            slider.value = value;
-            const valueEl = document.getElementById(`${id}-value`);
-            if (valueEl) valueEl.textContent = `${formatAngleValue(value)}°`;
-            if (id.startsWith('steering') && document.getElementById('sync-observation-toggle')?.checked) {
-                syncObservationToSteering();
-            } else {
-                scheduleProgressiveVisuals();
+            // Keep raw text while typing, so values like "0." or "0,5" are possible.
+        });
+        numberInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                commitAngleNumberInput(id);
+                numberInput.blur();
+            } else if (e.key === 'Escape') {
+                syncAngleNumberInput(id, true);
+                numberInput.blur();
             }
         });
+        numberInput.addEventListener('blur', () => commitAngleNumberInput(id));
+    }
+
+
+    function formatLambdaValue(value) {
+        const n = Number(value);
+        if (!Number.isFinite(n)) return '0';
+        return Number.isInteger(n) ? String(n) : n.toFixed(2).replace(/\.?0+$/, '');
+    }
+
+    function syncNumberInputWithSlider(id, suffix='', formatter=formatLambdaValue, force=false) {
+        const slider = document.getElementById(id);
+        const numberInput = document.getElementById(`${id}-input`);
+        const valueEl = document.getElementById(`${id}-value`);
+        if (!slider || !numberInput) return;
+        if (force || !isInputBeingEdited(numberInput)) numberInput.value = formatter(slider.value);
+        if (valueEl) valueEl.textContent = id === 'subpatch-density' ? `${slider.value}x${slider.value}` : `${formatter(slider.value)}${suffix}`;
+    }
+
+    function commitNumberInputForSlider(id, suffix='', formatter=formatLambdaValue) {
+        const slider = document.getElementById(id);
+        const numberInput = document.getElementById(`${id}-input`);
+        if (!slider || !numberInput) return;
+        let value = parseFlexibleNumber(numberInput.value);
+        if (!Number.isFinite(value)) {
+            syncNumberInputWithSlider(id, suffix, formatter, true);
+            return;
+        }
+        value = clampNumericValue(numberInput, value);
+        const step = Number(numberInput.getAttribute('step') || slider.getAttribute('step') || 0);
+        if (id === 'subpatch-density' || (Number.isFinite(step) && step >= 1)) value = Math.round(value);
+        slider.value = value;
+        syncNumberInputWithSlider(id, suffix, formatter, true);
+        scheduleProgressiveVisuals();
+    }
+
+    function setupNumberInputForSlider(id, suffix='', formatter=formatLambdaValue) {
+        const slider = document.getElementById(id);
+        const numberInput = document.getElementById(`${id}-input`);
+        if (!slider || !numberInput) return;
+        syncNumberInputWithSlider(id, suffix, formatter, true);
+        numberInput.addEventListener('input', () => {
+            // Keep raw text while typing; commit on Enter or blur.
+        });
+        numberInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                commitNumberInputForSlider(id, suffix, formatter);
+                numberInput.blur();
+            } else if (e.key === 'Escape') {
+                syncNumberInputWithSlider(id, suffix, formatter, true);
+                numberInput.blur();
+            }
+        });
+        numberInput.addEventListener('blur', () => commitNumberInputForSlider(id, suffix, formatter));
+        slider.addEventListener('change', () => syncNumberInputWithSlider(id, suffix, formatter, true));
     }
 
     // Attaching all event listeners
@@ -3222,7 +3340,7 @@
             if (!el) return;
             el.addEventListener('input', e => {
                 const valueEl = document.getElementById(`${id}-value`);
-                if (id.includes('density')) valueEl.textContent = `${e.target.value}x${e.target.value}`;
+                if (id.includes('density')) { valueEl.textContent = `${e.target.value}x${e.target.value}`; const ni = document.getElementById(`${id}-input`); if (ni && document.activeElement !== ni) ni.value = e.target.value; }
                 else if (id === 'array-x-count' || id === 'array-z-count') valueEl.textContent = `${e.target.value}`;
                 else if (id === 'element-spacing') valueEl.textContent = `${Number(e.target.value).toFixed(2)}λ`;
                 else if (id === 'chebyshev-sidelobe') valueEl.textContent = `${e.target.value} dB`;
@@ -3233,7 +3351,8 @@
                     const lin = Math.pow(10, db / 20);
                     valueEl.textContent = `${db.toFixed(0)} dB (≈${lin.toFixed(2)})`;
                 }
-                else valueEl.textContent = `${e.target.value}${id.includes('distance') ? '' : '°'}`;
+                else if (id.includes('distance')) { valueEl.textContent = `${formatLambdaValue(e.target.value)}λ`; const ni = document.getElementById(`${id}-input`); if (ni && document.activeElement !== ni) ni.value = formatLambdaValue(e.target.value); }
+                else valueEl.textContent = `${e.target.value}°`;
 
                 if (['steering-azimuth', 'steering-elevation', 'observation-azimuth', 'observation-elevation'].includes(id)) {
                     syncAngleNumberInput(id);
@@ -3247,8 +3366,10 @@
                     return;
                 }
 
-                if (id.startsWith('steering') && document.getElementById('sync-observation-toggle').checked) {
+                if (document.getElementById('sync-observation-toggle')?.checked && id.startsWith('steering')) {
                     syncObservationToSteering();
+                } else if (document.getElementById('sync-observation-toggle')?.checked && id.startsWith('observation')) {
+                    syncSteeringToObservation();
                 } else {
                     scheduleProgressiveVisuals();
                 }
@@ -3256,6 +3377,8 @@
         });
 
         ['steering-azimuth', 'steering-elevation', 'observation-azimuth', 'observation-elevation'].forEach(setupAngleNumberInput);
+        setupNumberInputForSlider('observation-distance', 'λ', formatLambdaValue);
+        setupNumberInputForSlider('subpatch-density', '', v => String(Math.round(Number(v) || 1)));
 
         // Toggles
         ['custom-array-enabled', 'sync-observation-toggle', 'show-observation-point-toggle', 'show-steering-point-toggle', 'show-waves', 'show-vectors', 'show-pattern', 'normalize-pattern-toggle', 'mutual-coupling-toggle', 'slice-marker-azimuth', 'slice-marker-elevation', 'slice-marker-beam', 'slice-marker-top'].forEach(id => {

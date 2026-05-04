@@ -26,15 +26,15 @@ Project website: https://phased-array-simulator.com
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="js/mathjax-config.js?v=2026-05-02-desktop-vscode-dragbar-cachebust-v2"></script>
-<script async="True" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js?v=2026-05-02-desktop-vscode-dragbar-cachebust-v2"></script>
+<script src="js/mathjax-config.js?v=2026-05-04-distance-left-layout-v1"></script>
+<script async="True" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js?v=2026-05-04-distance-left-layout-v1"></script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <!-- Cache/version control: forces browsers and crawlers to revalidate after updates. -->
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<meta name="app-version" content="2026-05-02-desktop-vscode-dragbar-cachebust-v2">
+<meta name="app-version" content="2026-05-04-distance-left-layout-v1">
 <meta name="last-modified" content="2026-05-02">
 
 <title>Phased Array Simulator – 3D Beamforming Tool</title>
@@ -82,12 +82,12 @@ Project website: https://phased-array-simulator.com
 </script>
 <meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0b0b0f" media="(prefers-color-scheme: dark)">
-<script src="https://cdn.tailwindcss.com?v=2026-05-02-desktop-vscode-dragbar-cachebust-v2"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js?v=2026-05-02-desktop-vscode-dragbar-cachebust-v2"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js?v=2026-05-02-desktop-vscode-dragbar-cachebust-v2"></script>
-<link rel="stylesheet" href="css/style.css?v=2026-05-02-desktop-vscode-dragbar-cachebust-v2">
+<script src="https://cdn.tailwindcss.com?v=2026-05-04-distance-left-layout-v1"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js?v=2026-05-04-distance-left-layout-v1"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js?v=2026-05-04-distance-left-layout-v1"></script>
+<link rel="stylesheet" href="css/style.css?v=2026-05-04-distance-left-layout-v1">
 
-<script src="js/version-marker.js?v=2026-05-02-desktop-vscode-dragbar-cachebust-v2"></script>
+<script src="js/version-marker.js?v=2026-05-04-distance-left-layout-v1"></script>
 </head>
 <body>
 <div class="container mx-auto max-w-7xl">
@@ -342,13 +342,13 @@ Project website: https://phased-array-simulator.com
 <div class="slider-container">
 <label data-lang="azimuth" for="steering-azimuth">Azimut (φ):</label>
 <input class="w-full" id="steering-azimuth" max="360" min="0" step="0.1" type="range" value="10"/>
-<input class="angle-number-input" id="steering-azimuth-input" max="360" min="0" step="0.1" type="number" value="10" aria-label="Steering azimuth degrees"/><span class="angle-unit">°</span>
+<input class="angle-number-input" id="steering-azimuth-input" max="360" min="0" step="0.1" type="text" inputmode="decimal" value="10" aria-label="Steering azimuth degrees"/><span class="angle-unit">°</span>
 <span class="slider-value angle-hidden-value" id="steering-azimuth-value">10°</span>
 </div>
 <div class="slider-container">
 <label data-lang="elevation" for="steering-elevation">Elevation (θ):</label>
 <input class="w-full" id="steering-elevation" max="90" min="0" step="0.1" type="range" value="75"/>
-<input class="angle-number-input" id="steering-elevation-input" max="90" min="0" step="0.1" type="number" value="75" aria-label="Steering elevation degrees"/><span class="angle-unit">°</span>
+<input class="angle-number-input" id="steering-elevation-input" max="90" min="0" step="0.1" type="text" inputmode="decimal" value="75" aria-label="Steering elevation degrees"/><span class="angle-unit">°</span>
 <span class="slider-value angle-hidden-value" id="steering-elevation-value">75°</span>
 </div>
 <div class="flex items-center mt-2">
@@ -358,34 +358,38 @@ Project website: https://phased-array-simulator.com
         <span class="toggle-slider"></span>
     </label>
 </div>
+<div class="slider-container distance-slider-container">
+  <div class="distance-slider-row">
+    <label data-lang="distance" for="observation-distance">Entfernung R / λ:</label>
+    <input class="w-full" id="observation-distance" max="100" min="0.25" step="0.25" type="range" value="20"/>
+    <input class="angle-number-input" id="observation-distance-input" max="100" min="0.25" step="0.25" type="text" inputmode="decimal" value="20" aria-label="Observation distance in wavelengths"/><span class="angle-unit">λ</span>
+    <span class="slider-value angle-hidden-value" id="observation-distance-value">20λ</span>
+  </div>
+  <p class="distance-huygens-note taper-note text-xs text-gray-700 mt-2 mb-3 p-2 rounded bg-slate-50 border border-slate-200" data-lang="distance-huygens-note">Fraunhofer: distanzunabhängig · Huygens: kleine R/λ zeigen Nah-/Fresnel-Effekte.</p>
+</div>
 </div>
 <div class="w-full px-2 mb-4">
 <h3 class="font-medium mb-2" data-lang="observation-point">Beobachtungspunkt</h3>
 <div class="slider-container">
 <label data-lang="azimuth" for="observation-azimuth">Azimut (φ):</label>
 <input class="w-full" id="observation-azimuth" max="360" min="0" step="0.1" type="range" value="10"/>
-<input class="angle-number-input" id="observation-azimuth-input" max="360" min="0" step="0.1" type="number" value="10" aria-label="Observation azimuth degrees"/><span class="angle-unit">°</span>
+<input class="angle-number-input" id="observation-azimuth-input" max="360" min="0" step="0.1" type="text" inputmode="decimal" value="10" aria-label="Observation azimuth degrees"/><span class="angle-unit">°</span>
 <span class="slider-value angle-hidden-value" id="observation-azimuth-value">10°</span>
 </div>
 <div class="slider-container">
 <label data-lang="elevation" for="observation-elevation">Elevation (θ):</label>
 <input class="w-full" id="observation-elevation" max="90" min="0" step="0.1" type="range" value="75"/>
-<input class="angle-number-input" id="observation-elevation-input" max="90" min="0" step="0.1" type="number" value="75" aria-label="Observation elevation degrees"/><span class="angle-unit">°</span>
+<input class="angle-number-input" id="observation-elevation-input" max="90" min="0" step="0.1" type="text" inputmode="decimal" value="75" aria-label="Observation elevation degrees"/><span class="angle-unit">°</span>
 <span class="slider-value angle-hidden-value" id="observation-elevation-value">75°</span>
 </div>
-<div class="slider-container">
-<label data-lang="distance" for="observation-distance">Entfernung:</label>
-<input class="w-full" id="observation-distance" max="100" min="1" step="1" type="range" value="20"/>
-<span class="slider-value" id="observation-distance-value">20</span>
-</div>
-<div class="flex items-center mt-2">
+<div class="observation-toggle-row">
     <span class="mr-2 text-sm" data-lang="sync-observation">Beobachtung = Steuerung:</span>
     <label class="toggle-switch">
         <input id="sync-observation-toggle" type="checkbox" checked/>
         <span class="toggle-slider"></span>
     </label>
 </div>
-<div class="flex items-center mt-2">
+<div class="observation-toggle-row">
     <span class="mr-2 text-sm" data-lang="show-observation-point">Beobachtungspunkt anzeigen:</span>
     <label class="toggle-switch">
         <input id="show-observation-point-toggle" type="checkbox" checked/>
@@ -393,63 +397,6 @@ Project website: https://phased-array-simulator.com
     </label>
 </div>
 </div>
-</div>
-<div class="array-config-section mt-4">
-<h3 class="font-medium mb-2" data-lang="antenna-array-config">Antenna array configuration</h3>
-<div class="array-config-controls grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3 mb-3">
-  <div class="slider-container">
-    <label for="array-x-count" data-lang="x-elements">X elements:</label>
-    <input class="w-full" id="array-x-count" max="9" min="3" step="1" type="range" value="5"/>
-    <span class="slider-value" id="array-x-count-value">5</span>
-  </div>
-  <div class="slider-container">
-    <label for="array-z-count" data-lang="z-elements">Z elements:</label>
-    <input class="w-full" id="array-z-count" max="9" min="3" step="1" type="range" value="5"/>
-    <span class="slider-value" id="array-z-count-value">5</span>
-  </div>
-  <div class="slider-container spacing-slider">
-    <label for="element-spacing" data-lang="spacing">Spacing:</label>
-    <input class="w-full" id="element-spacing" max="1.00" min="0.25" step="0.05" type="range" value="0.50"/>
-    <span class="slider-value" id="element-spacing-value">0.50λ</span>
-  </div>
-  <div class="flex items-center gap-2">
-    <span class="text-sm font-medium" data-lang="taper">Taper:</span>
-    <select class="border rounded px-2 py-1 text-sm flex-grow" id="amplitude-taper">
-      <option value="uniform" selected data-lang="uniform">Uniform</option>
-      <option value="chebyshev" data-lang="dolph-chebyshev">Dolph-Chebyshev</option>
-    </select>
-  </div>
-  <div class="slider-container md:col-span-2" id="chebyshev-sidelobe-slider">
-    <label for="chebyshev-sidelobe" data-lang="chebyshev-sll">Chebyshev SLL:</label>
-    <input class="w-full" id="chebyshev-sidelobe" max="50" min="15" step="1" type="range" value="25"/>
-    <span class="slider-value" id="chebyshev-sidelobe-value">25 dB</span>
-  </div>
-<div class="taper-note text-xs text-gray-700 mt-2 mb-3 p-2 rounded bg-slate-50 border border-slate-200 md:col-span-2 xl:col-span-4" data-lang="taper-note">Chebyshev taper changes amplitudes, not phases. For a 2D array this demo uses separable weights: <span class="font-mono">w(x,z)=w_x(x)·w_z(z)</span>. More elements make the main lobe narrower; tapering mainly controls sidelobes.</div>
-</div>
-<div class="antenna-grid" id="antenna-grid"></div>
-<details class="custom-array-panel mt-3 p-3 rounded bg-slate-50 border border-slate-200">
-  <summary class="cursor-pointer font-medium text-sm">Advanced custom antenna coordinates</summary>
-  <div class="mt-3 text-sm space-y-2">
-    <label class="checkbox-wrapper" style="background:transparent;border:0;padding:0;">
-      <input id="custom-array-enabled" type="checkbox" />
-      <span>Use custom element positions</span>
-    </label>
-    <p class="text-xs text-gray-600">Enter one antenna per line as <code>[x, y, z]</code>. In the UI, <code>x</code> and <code>y</code> are the array-surface coordinates and <code>z</code> is height. The simulator maps this automatically to its internal 3D axes.</p>
-    <textarea id="custom-array-coordinates" class="border rounded p-2" spellcheck="false">[-1, -1, 0]
-[ 0, -1, 0]
-[ 1, -1, 0]
-[-1,  0, 0]
-[ 0,  0, 0]
-[ 1,  0, 0]
-[-1,  1, 0]
-[ 0,  1, 0]
-[ 1,  1, 0]</textarea>
-    <div class="flex flex-wrap gap-2 items-center">
-      <button class="btn" id="apply-custom-array" type="button">Apply custom coordinates</button>
-      <span class="text-xs text-gray-600" id="custom-array-status">Regular grid active</span>
-    </div>
-  </div>
-</details>
 </div>
 <div class="mt-4 flex flex-wrap justify-between items-center">
 <div class="flex items-center mr-4 mb-2">
@@ -504,12 +451,74 @@ Project website: https://phased-array-simulator.com
 <div class="slider-container mt-4" id="subpatch-density-slider">
     <label data-lang="subpatch-density" for="subpatch-density">Subpatch-Dichte:</label>
     <input class="w-full" id="subpatch-density" max="10" min="1" step="1" type="range" value="3"/>
-    <span class="slider-value" id="subpatch-density-value">3x3</span>
+    <input class="angle-number-input" id="subpatch-density-input" max="10" min="1" step="1" type="text" inputmode="numeric" value="3" aria-label="Subpatch density per antenna side"/><span class="angle-unit">×</span>
+    <span class="slider-value angle-hidden-value" id="subpatch-density-value">3x3</span>
 </div>
 
 <div id="approximation-note" class="text-sm text-gray-600 mt-2 p-2 bg-yellow-50 rounded">
     <span data-lang="approximation-note-text"></span>
 </div>
+</div>
+<div class="array-config-section mt-4">
+<h3 class="font-medium mb-2" data-lang="antenna-array-config">Antenna array configuration</h3>
+<div class="array-config-controls mb-3">
+  <div class="array-size-row">
+    <div class="slider-container">
+      <label for="array-x-count" data-lang="x-elements">X elements:</label>
+      <input class="w-full" id="array-x-count" max="9" min="3" step="1" type="range" value="5"/>
+      <span class="slider-value" id="array-x-count-value">5</span>
+    </div>
+    <div class="slider-container">
+      <label for="array-z-count" data-lang="z-elements">Z elements:</label>
+      <input class="w-full" id="array-z-count" max="9" min="3" step="1" type="range" value="5"/>
+      <span class="slider-value" id="array-z-count-value">5</span>
+    </div>
+  </div>
+  <div class="array-spacing-taper-row">
+    <div class="slider-container spacing-slider">
+      <label for="element-spacing" data-lang="spacing">Spacing:</label>
+      <input class="w-full" id="element-spacing" max="1.00" min="0.25" step="0.05" type="range" value="0.50"/>
+      <span class="slider-value" id="element-spacing-value">0.50λ</span>
+    </div>
+    <div class="taper-select-control">
+      <span class="text-sm font-medium" data-lang="taper">Taper:</span>
+      <select class="border rounded px-2 py-1 text-sm" id="amplitude-taper">
+        <option value="uniform" selected data-lang="uniform">Uniform</option>
+        <option value="chebyshev" data-lang="dolph-chebyshev">Dolph-Chebyshev</option>
+      </select>
+    </div>
+    <div class="slider-container" id="chebyshev-sidelobe-slider">
+      <label for="chebyshev-sidelobe" data-lang="chebyshev-sll">Chebyshev SLL:</label>
+      <input class="w-full" id="chebyshev-sidelobe" max="50" min="15" step="1" type="range" value="25"/>
+      <span class="slider-value" id="chebyshev-sidelobe-value">25 dB</span>
+    </div>
+  </div>
+  <div class="taper-note text-xs text-gray-700 mt-2 mb-3 p-2 rounded bg-slate-50 border border-slate-200" data-lang="taper-note">Chebyshev taper changes amplitudes, not phases. For a 2D array this demo uses separable weights: <span class="font-mono">w(x,z)=w_x(x)·w_z(z)</span>. More elements make the main lobe narrower; tapering mainly controls sidelobes.</div>
+</div>
+<div class="antenna-grid" id="antenna-grid"></div>
+<details class="custom-array-panel mt-3 p-3 rounded bg-slate-50 border border-slate-200">
+  <summary class="cursor-pointer font-medium text-sm">Advanced custom antenna coordinates</summary>
+  <div class="mt-3 text-sm space-y-2">
+    <label class="checkbox-wrapper" style="background:transparent;border:0;padding:0;">
+      <input id="custom-array-enabled" type="checkbox" />
+      <span>Use custom element positions</span>
+    </label>
+    <p class="text-xs text-gray-600">Enter one antenna per line as <code>[x, y, z]</code>. In the UI, <code>x</code> and <code>y</code> are the array-surface coordinates and <code>z</code> is height. The simulator maps this automatically to its internal 3D axes.</p>
+    <textarea id="custom-array-coordinates" class="border rounded p-2" spellcheck="false">[-1, -1, 0]
+[ 0, -1, 0]
+[ 1, -1, 0]
+[-1,  0, 0]
+[ 0,  0, 0]
+[ 1,  0, 0]
+[-1,  1, 0]
+[ 0,  1, 0]
+[ 1,  1, 0]</textarea>
+    <div class="flex flex-wrap gap-2 items-center">
+      <button class="btn" id="apply-custom-array" type="button">Apply custom coordinates</button>
+      <span class="text-xs text-gray-600" id="custom-array-status">Regular grid active</span>
+    </div>
+  </div>
+</details>
 </div>
 <div class="mt-4">
 <h3 class="font-medium mb-2 text-base" data-lang="observation-info">Beobachtungspunkt-Info:</h3>
@@ -761,9 +770,9 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
 </div>
 
 
-<script src="js/app.js?v=2026-05-02-desktop-vscode-dragbar-cachebust-v2"></script>
+<script src="js/app.js?v=2026-05-04-distance-left-layout-v1"></script>
 
-<script src="js/cache-version.js?v=2026-05-02-desktop-vscode-dragbar-cachebust-v2"></script>
+<script src="js/cache-version.js?v=2026-05-04-distance-left-layout-v1"></script>
 
 
 
@@ -866,7 +875,7 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
   image-rendering: auto;
 }
 </style>
-<script src="js/render-quality-overrides.js?v=2026-05-02-desktop-vscode-dragbar-cachebust-v2"></script>
+<script src="js/render-quality-overrides.js?v=2026-05-04-distance-left-layout-v1"></script>
 
 <footer style="
   text-align:center;
