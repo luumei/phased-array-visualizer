@@ -3,7 +3,6 @@
 Interactive 3D visualization tool for understanding phased antenna arrays and beamforming.
 
 🌐 Live Tool: https://phased-array-simulator.com  
-📘 Example Calculation Video: https://www.youtube.com/watch?v=kK-Z_O9Yjw0&t=456s  
 
 ---
 
@@ -50,13 +49,6 @@ Adjust array parameters and steering direction to observe real-time changes in t
 - Radiation patterns  
 - Element spacing (λ/2, center-to-center)  
 - Phase steering  
-
----
-
-## About
-
-Maintained by Lukas Meienberger  
-https://phased-array-simulator.com  
 
 ---
 
