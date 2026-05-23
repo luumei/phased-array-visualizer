@@ -461,7 +461,28 @@ Project website: https://phased-array-simulator.com
 </div>
 <div class="array-config-section mt-4">
 <h3 class="font-medium mb-2" data-lang="antenna-array-config">Antenna array configuration</h3>
-<div class="array-config-controls mb-3">
+<input id="custom-array-enabled" type="checkbox" style="display:none" aria-hidden="true" />
+<div class="custom-array-panel mt-3 p-3 rounded bg-slate-50 border border-slate-200" id="custom-coordinate-panel">
+  <div class="custom-array-head geometry-editor-head">
+    <div>
+      <h4 class="font-semibold text-sm">Antenna position vectors</h4>
+      <p class="text-xs text-gray-600 mt-1">Choose a geometry preset or edit the coordinates directly. Presets only generate vectors in this editor.</p>
+    </div>
+    <div class="array-source-compact">
+      <label class="text-xs font-semibold text-gray-600" for="array-source">Geometry preset</label>
+      <select class="border rounded px-2 py-1 text-sm" id="array-source" aria-label="Geometry preset">
+        <option value="rectangular" selected>Rectangular grid</option>
+        <option value="hexagonal">Hexagonal grid</option>
+        <option value="circular">Circular array</option>
+        <option value="spiral">Spiral array</option>
+        <option value="parabolic">Parabolic surface</option>
+        <option value="sparse">Sparse random</option>
+        <option value="custom">Custom / manual</option>
+      </select>
+      <span class="array-mode-pill mt-1" id="array-mode-pill">Rectangular grid active</span>
+    </div>
+  </div>
+<div class="array-config-controls mb-3 mt-3" id="regular-array-controls">
   <div class="array-size-row">
     <div class="slider-container">
       <label for="array-x-count" data-lang="x-elements">X elements:</label>
@@ -495,30 +516,18 @@ Project website: https://phased-array-simulator.com
   </div>
   <div class="taper-note text-xs text-gray-700 mt-2 mb-3 p-2 rounded bg-slate-50 border border-slate-200" data-lang="taper-note">Chebyshev taper changes amplitudes, not phases. For a 2D array this demo uses separable weights: <span class="font-mono">w(x,z)=w_x(x)·w_z(z)</span>. More elements make the main lobe narrower; tapering mainly controls sidelobes.</div>
 </div>
-<div class="antenna-grid" id="antenna-grid"></div>
-<details class="custom-array-panel mt-3 p-3 rounded bg-slate-50 border border-slate-200">
-  <summary class="cursor-pointer font-medium text-sm">Advanced custom antenna coordinates</summary>
-  <div class="mt-3 text-sm space-y-2">
-    <label class="checkbox-wrapper" style="background:transparent;border:0;padding:0;">
-      <input id="custom-array-enabled" type="checkbox" />
-      <span>Use custom element positions</span>
-    </label>
-    <p class="text-xs text-gray-600">Enter one antenna per line as <code>[x, y, z]</code>. In the UI, <code>x</code> and <code>y</code> are the array-surface coordinates and <code>z</code> is height. The simulator maps this automatically to its internal 3D axes.</p>
-    <textarea id="custom-array-coordinates" class="border rounded p-2" spellcheck="false">[-1, -1, 0]
-[ 0, -1, 0]
-[ 1, -1, 0]
-[-1,  0, 0]
-[ 0,  0, 0]
-[ 1,  0, 0]
-[-1,  1, 0]
-[ 0,  1, 0]
-[ 1,  1, 0]</textarea>
-    <div class="flex flex-wrap gap-2 items-center">
-      <button class="btn" id="apply-custom-array" type="button">Apply custom coordinates</button>
-      <span class="text-xs text-gray-600" id="custom-array-status">Regular grid active</span>
-    </div>
+<div class="antenna-grid" id="antenna-grid" style="display:none"></div>
+  <p class="text-xs text-gray-600 mt-2">Write positions as <code>[x, y, z]</code>. Multiple vectors can sit on one line.</p>
+  <textarea id="custom-array-coordinates" class="coordinate-editor border rounded p-2 mt-3" spellcheck="false">[-1, -1, 0]   [0, -1, 0]   [1, -1, 0]
+[-1,  0, 0]   [0,  0, 0]   [1,  0, 0]
+[-1,  1, 0]   [0,  1, 0]   [1,  1, 0]</textarea>
+  <div class="flex flex-wrap gap-2 items-center mt-3">
+    <button class="btn" id="apply-custom-array" type="button">Use vector coordinates</button>
+    <button class="btn secondary-btn" id="load-regular-array" type="button">Regenerate selected preset</button>
+    <span class="text-xs text-gray-600" id="custom-array-status">Coordinate editor active</span>
   </div>
-</details>
+  <div class="coordinate-chip-preview mt-3" id="coordinate-chip-preview" aria-label="Coordinate preview"></div>
+</div>
 </div>
 <div class="mt-4">
 <h3 class="font-medium mb-2 text-base" data-lang="observation-info">Beobachtungspunkt-Info:</h3>

@@ -1385,22 +1385,204 @@
     function parseCustomArrayCoordinates() {
       const text = document.getElementById('custom-array-coordinates')?.value || '';
       const rows = [];
+      const numberPattern = /[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?/g;
+
+      const pushVector = (nums) => {
+        if (!nums || nums.length < 3) return;
+        const [ux, uy, uz] = nums;
+        rows.push({
+          user: { x: ux, y: uy, z: uz },
+          position: new THREE.Vector3(ux, uz, uy),
+          amp: Number.isFinite(nums[3]) ? nums[3] : 1,
+          phaseDeg: Number.isFinite(nums[4]) ? nums[4] : 0,
+          enabledByDefault: nums.length >= 6 ? nums[5] !== 0 : true
+        });
+      };
+
       text.split(/\n+/).forEach((line) => {
         const clean = line.replace(/#.*/, '').trim();
         if (!clean) return;
-        const nums = clean.match(/[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?/g)?.map(Number) || [];
-        if (nums.length >= 3) {
-          const [ux, uy, uz] = nums;
-          rows.push({
-            user: { x: ux, y: uy, z: uz },
-            position: new THREE.Vector3(ux, uz, uy),
-            amp: Number.isFinite(nums[3]) ? nums[3] : 1,
-            phaseDeg: Number.isFinite(nums[4]) ? nums[4] : 0,
-            enabledByDefault: nums.length >= 6 ? nums[5] !== 0 : true
+
+        // Preferred compact format: [x,y,z] [x,y,z] [x,y,z]
+        const bracketGroups = [...clean.matchAll(/\[([^\]]+)\]/g)];
+        if (bracketGroups.length) {
+          bracketGroups.forEach(match => {
+            const nums = (match[1].match(numberPattern) || []).map(Number);
+            pushVector(nums);
           });
+          return;
+        }
+
+        // Fallback: plain numbers. Chunks of 3 are positions; optional 4/5/6 values are amp/phase/enabled.
+        const nums = (clean.match(numberPattern) || []).map(Number);
+        if (nums.length >= 3) {
+          for (let i = 0; i + 2 < nums.length; i += 3) pushVector(nums.slice(i, i + 3));
         }
       });
       return rows;
+    }
+
+    function formatCoordValue(v) {
+      const n = Number(v);
+      if (!Number.isFinite(n)) return '0';
+      return Math.abs(n) < 1e-12 ? '0' : Number(n.toFixed(4)).toString();
+    }
+
+    function formatCoordinateTextFromRows(rows, perLine = 3) {
+      const chunks = rows.map(row => `[${formatCoordValue(row.user.x)}, ${formatCoordValue(row.user.y)}, ${formatCoordValue(row.user.z)}]`);
+      const lines = [];
+      for (let i = 0; i < chunks.length; i += perLine) lines.push(chunks.slice(i, i + perLine).join('   '));
+      return lines.join('\n');
+    }
+
+    function getPresetArrayRows(source = 'rectangular') {
+      const cfg = getArrayConfig({ raw: true });
+      const nx = Math.max(1, cfg.nx || 5);
+      const nz = Math.max(1, cfg.nz || 5);
+      const spacing = cfg.spacing || 0.5;
+      const rows = [];
+      const push = (x, y, z = 0) => rows.push({ user: { x, y, z } });
+      const count = Math.max(1, nx * nz);
+      const halfX = (nx - 1) / 2;
+      const halfZ = (nz - 1) / 2;
+
+      if (source === 'hexagonal') {
+        const dy = spacing * Math.sqrt(3) / 2;
+        for (let iz = 0; iz < nz; iz++) {
+          const y = (iz - halfZ) * dy;
+          const rowOffset = (iz % 2 ? 0.5 : 0) * spacing;
+          for (let ix = 0; ix < nx; ix++) {
+            const x = (ix - halfX) * spacing + rowOffset;
+            push(x, y, 0);
+          }
+        }
+        return rows;
+      }
+
+      if (source === 'circular') {
+        push(0, 0, 0);
+        const rings = Math.max(1, Math.ceil(Math.sqrt(count) / 2));
+        for (let ring = 1; rows.length < count && ring <= rings + 2; ring++) {
+          const radius = ring * spacing;
+          const points = Math.max(6, Math.round(2 * Math.PI * ring));
+          for (let i = 0; i < points && rows.length < count; i++) {
+            const a = 2 * Math.PI * i / points;
+            push(radius * Math.cos(a), radius * Math.sin(a), 0);
+          }
+        }
+        return rows;
+      }
+
+      if (source === 'spiral') {
+        const golden = Math.PI * (3 - Math.sqrt(5));
+        const maxR = spacing * Math.sqrt(count) / 2;
+        for (let i = 0; i < count; i++) {
+          const t = count === 1 ? 0 : i / (count - 1);
+          const r = maxR * Math.sqrt(t);
+          const a = i * golden;
+          push(r * Math.cos(a), r * Math.sin(a), 0);
+        }
+        return rows;
+      }
+
+      if (source === 'parabolic') {
+        const aperture = Math.max(nx, nz) * spacing;
+        const curvature = aperture > 0 ? 0.18 / aperture : 0.04;
+        for (let iz = 0; iz < nz; iz++) {
+          for (let ix = 0; ix < nx; ix++) {
+            const x = (ix - halfX) * spacing;
+            const y = (iz - halfZ) * spacing;
+            const z = curvature * (x * x + y * y);
+            push(x, y, z);
+          }
+        }
+        return rows;
+      }
+
+      if (source === 'sparse') {
+        const target = Math.max(3, Math.round(count * 0.62));
+        const extentX = Math.max(spacing, halfX * spacing);
+        const extentY = Math.max(spacing, halfZ * spacing);
+        const hash01 = (i, salt) => {
+          const v = Math.sin(i * 12.9898 + salt * 78.233) * 43758.5453;
+          return v - Math.floor(v);
+        };
+        for (let i = 0; i < target; i++) {
+          const x = (hash01(i, 1) * 2 - 1) * extentX;
+          const y = (hash01(i, 2) * 2 - 1) * extentY;
+          push(x, y, 0);
+        }
+        return rows;
+      }
+
+      for (let iz = 0; iz < nz; iz++) {
+        for (let ix = 0; ix < nx; ix++) {
+          const ux = (ix - halfX) * spacing;
+          const uy = (iz - halfZ) * spacing;
+          push(ux, uy, 0);
+        }
+      }
+      return rows;
+    }
+
+    function getRegularArrayRows() {
+      return getPresetArrayRows('rectangular');
+    }
+
+    function loadPresetIntoEditor(source = document.getElementById('array-source')?.value || 'rectangular', message) {
+      if (source === 'custom') return;
+      const customText = document.getElementById('custom-array-coordinates');
+      if (!customText) return;
+      customText.value = formatCoordinateTextFromRows(getPresetArrayRows(source), Math.max(1, Math.min(5, getArrayConfig({ raw: true }).nx || 3)));
+      refreshCoordinateChipPreview();
+      updateCustomArrayStatus(message || `${source.replace(/-/g, ' ')} preset loaded into vector editor.`);
+    }
+
+    function refreshCoordinateChipPreview() {
+      const preview = document.getElementById('coordinate-chip-preview');
+      if (!preview) return;
+      const rows = parseCustomArrayCoordinates();
+      preview.innerHTML = '';
+      rows.slice(0, 80).forEach((row, idx) => {
+        const chip = document.createElement('span');
+        chip.className = 'coordinate-chip';
+        chip.textContent = `[${formatCoordValue(row.user.x)}, ${formatCoordValue(row.user.y)}, ${formatCoordValue(row.user.z)}]`;
+        chip.title = `Element ${idx + 1}`;
+        preview.appendChild(chip);
+      });
+      if (rows.length > 80) {
+        const more = document.createElement('span');
+        more.className = 'coordinate-chip coordinate-chip-more';
+        more.textContent = `+${rows.length - 80} more`;
+        preview.appendChild(more);
+      }
+    }
+
+    function updateArraySourceUI() {
+      const source = document.getElementById('array-source')?.value || 'rectangular';
+      const enabled = document.getElementById('custom-array-enabled');
+      if (enabled) enabled.checked = true;
+      const regularControls = document.getElementById('regular-array-controls');
+      if (regularControls) regularControls.style.display = source === 'custom' ? 'none' : '';
+      const grid = document.getElementById('antenna-grid');
+      if (grid) {
+        grid.classList.add('custom-coordinate-active');
+        grid.style.display = 'none';
+      }
+      const pill = document.getElementById('array-mode-pill');
+      if (pill) {
+        const labels = {
+          rectangular: 'Rectangular grid active',
+          hexagonal: 'Hexagonal grid active',
+          circular: 'Circular array active',
+          spiral: 'Spiral array active',
+          parabolic: 'Parabolic surface active',
+          sparse: 'Sparse random active',
+          custom: 'Custom coordinates active'
+        };
+        pill.textContent = labels[source] || 'Coordinate editor active';
+      }
+      refreshCoordinateChipPreview();
     }
 
     function updateCustomArrayStatus(message, isError=false) {
@@ -1410,9 +1592,11 @@
       el.style.color = isError ? '#dc2626' : '';
     }
 
-    function getArrayConfig() {
-      const customEnabled = !!document.getElementById('custom-array-enabled')?.checked;
+    function getArrayConfig(options = {}) {
+      const source = document.getElementById('array-source')?.value || 'rectangular';
+      const customEnabled = options.raw ? false : true;
       return {
+        source,
         nx: parseInt(document.getElementById('array-x-count')?.value || '5', 10),
         nz: parseInt(document.getElementById('array-z-count')?.value || '5', 10),
         spacing: parseFloat(document.getElementById('element-spacing')?.value || '0.5') * WAVELENGTH,
@@ -1441,12 +1625,11 @@
               custom: true
             });
           });
-          updateCustomArrayStatus(`Custom array active: ${rows.length} elements`);
+          updateCustomArrayStatus(`Coordinate array active: ${rows.length} elements`);
           return;
         }
-        updateCustomArrayStatus('No valid custom coordinates found. Using regular grid.', true);
-      } else {
-        updateCustomArrayStatus('Regular grid active');
+        updateCustomArrayStatus('No valid coordinates found. Regenerated rectangular preset.', true);
+        loadPresetIntoEditor('rectangular');
       }
       let index = 0;
       for (let iz = 0; iz < cfg.nz; iz++) {
@@ -1472,24 +1655,11 @@
 
     function renderAntennaCheckboxes() {
       updateAntennaPositions();
+      updateArraySourceUI();
       const grid = document.getElementById('antenna-grid');
       if (!grid) return;
       grid.innerHTML = '';
-      ANTENNA_POSITIONS.forEach(({ index, position, userCoords, enabledByDefault }) => {
-        const wrap = document.createElement('div');
-        wrap.className = 'checkbox-wrapper';
-        const input = document.createElement('input');
-        input.type = 'checkbox';
-        input.checked = enabledByDefault !== false;
-        input.id = `antenna-${index}`;
-        const label = document.createElement('label');
-        label.htmlFor = input.id;
-        const uc = userCoords || { x: position.x, y: position.z, z: position.y };
-        label.textContent = `(${uc.x.toFixed(2)}, ${uc.y.toFixed(2)}, ${uc.z.toFixed(2)})`;
-        wrap.appendChild(input);
-        wrap.appendChild(label);
-        grid.appendChild(wrap);
-      });
+      grid.style.display = 'none';
     }
 
     function acoshSafe(x) { return Math.log(x + Math.sqrt(Math.max(0, x * x - 1))); }
@@ -3359,6 +3529,8 @@
                 }
                 
                 if (['array-x-count', 'array-z-count', 'element-spacing'].includes(id)) {
+                    const source = document.getElementById('array-source')?.value || 'rectangular';
+                    if (source !== 'custom') loadPresetIntoEditor(source);
                     renderAntennaCheckboxes();
                     createAntennas();
                     attachAntennaCheckboxListeners();
@@ -3395,22 +3567,42 @@
 
         const applyCustomBtn = document.getElementById('apply-custom-array');
         if (applyCustomBtn) applyCustomBtn.addEventListener('click', () => {
+            const source = document.getElementById('array-source');
+            if (source) source.value = 'custom';
             const enabled = document.getElementById('custom-array-enabled');
             if (enabled) enabled.checked = true;
+            updateArraySourceUI();
             renderAntennaCheckboxes();
             createAntennas();
             attachAntennaCheckboxListeners();
             updateAllVisuals();
         });
+
+        const loadRegularBtn = document.getElementById('load-regular-array');
+        if (loadRegularBtn) loadRegularBtn.addEventListener('click', () => {
+            const source = document.getElementById('array-source')?.value || 'rectangular';
+            loadPresetIntoEditor(source === 'custom' ? 'rectangular' : source, 'Selected preset regenerated in the vector editor.');
+            renderAntennaCheckboxes();
+            createAntennas();
+            attachAntennaCheckboxListeners();
+            updateAllVisuals();
+        });
+
         const customText = document.getElementById('custom-array-coordinates');
         if (customText) customText.addEventListener('input', () => {
-            if (document.getElementById('custom-array-enabled')?.checked) {
-                renderAntennaCheckboxes();
-                createAntennas();
-                attachAntennaCheckboxListeners();
-                updateAllVisuals();
-            }
+            const source = document.getElementById('array-source');
+            if (source) source.value = 'custom';
+            refreshCoordinateChipPreview();
+            renderAntennaCheckboxes();
+            createAntennas();
+            attachAntennaCheckboxListeners();
+            updateAllVisuals();
         });
+
+        loadPresetIntoEditor(document.getElementById('array-source')?.value || 'rectangular', 'Rectangular grid loaded into vector editor.');
+        renderAntennaCheckboxes();
+        createAntennas();
+        attachAntennaCheckboxListeners();
 
         const slicePanelWaves = document.getElementById('slice-panel-waves');
         if (slicePanelWaves) slicePanelWaves.addEventListener('change', () => {
@@ -3471,10 +3663,20 @@
         });
         
         // Selects
-        ['calculation-method', 'pattern-type', 'radiation-model', 'pattern-display', 'field-quantity', 'display-scale', 'amplitude-taper', 'field-slice-mode', 'field-slice-style', 'field-slice-view', 'cutaway-mode', 'azimuth-cut-elevation'].forEach(id => {
+        ['array-source', 'calculation-method', 'pattern-type', 'radiation-model', 'pattern-display', 'field-quantity', 'display-scale', 'amplitude-taper', 'field-slice-mode', 'field-slice-style', 'field-slice-view', 'cutaway-mode', 'azimuth-cut-elevation'].forEach(id => {
             const selectEl = document.getElementById(id);
             if (!selectEl) return;
             selectEl.addEventListener('change', () => {
+                if (id === 'array-source') {
+                    const source = document.getElementById('array-source')?.value || 'rectangular';
+                    if (source !== 'custom') loadPresetIntoEditor(source);
+                    updateArraySourceUI();
+                    renderAntennaCheckboxes();
+                    createAntennas();
+                    attachAntennaCheckboxListeners();
+                    updateAllVisuals();
+                    return;
+                }
                 if (id === 'pattern-type') createAntennas();
                 if (id === 'calculation-method') updateSubpatchDensityAvailability();
                 updateAllVisuals();
