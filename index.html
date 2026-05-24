@@ -26,16 +26,16 @@ Project website: https://phased-array-simulator.com
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="js/mathjax-config.js?v=2026-05-24-v41-motion-cuts-quality"></script>
-<script async="True" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js?v=2026-05-24-v41-motion-cuts-quality"></script>
+<script src="js/mathjax-config.js?v=2026-05-24-v58-mobile-overflow-sticky"></script>
+<script async="True" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js?v=2026-05-24-v58-mobile-overflow-sticky"></script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <!-- Cache/version control: forces browsers and crawlers to revalidate after updates. -->
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<meta name="app-version" content="2026-05-24-v41-motion-cuts-quality">
-<meta name="last-modified" content="2026-05-02">
+<meta name="app-version" content="2026-05-24-v58-mobile-overflow-sticky">
+<meta name="last-modified" content="2026-05-24">
 
 <title>Phased Array & Radar DOA Simulator</title>
 <meta name="description" content="Free interactive phased array and radar DOA simulator for 3D beamforming, direction finding, antenna array visualization, noisy receive samples, steering angle, element spacing, radiation patterns, array factor and dB display.">
@@ -76,18 +76,18 @@ Project website: https://phased-array-simulator.com
   "license": "https://opensource.org/licenses/MIT",
   "description": "Free interactive 3D phased array and radar DOA simulator for beamforming, direction finding, antenna array visualization, steering angle, element spacing, radiation patterns, array factor and dB display.",
   "isAccessibleForFree": true,
-  "dateModified": "2026-05-02",
+  "dateModified": "2026-05-24",
   "keywords": "phased array simulator, radar DOA simulator, direction of arrival, antenna array simulator, beamforming, antenna visualizer, RF engineering"
 }
 </script>
 <meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0b0b0f" media="(prefers-color-scheme: dark)">
-<script src="https://cdn.tailwindcss.com?v=2026-05-24-v41-motion-cuts-quality"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js?v=2026-05-24-v41-motion-cuts-quality"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js?v=2026-05-24-v41-motion-cuts-quality"></script>
-<link rel="stylesheet" href="css/style.css?v=2026-05-24-v41-motion-cuts-quality">
+<script src="https://cdn.tailwindcss.com?v=2026-05-24-v58-mobile-overflow-sticky"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js?v=2026-05-24-v58-mobile-overflow-sticky"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js?v=2026-05-24-v58-mobile-overflow-sticky"></script>
+<link rel="stylesheet" href="css/style.css?v=2026-05-24-v58-mobile-overflow-sticky">
 
-<script src="js/version-marker.js?v=2026-05-24-v41-motion-cuts-quality"></script>
+<script src="js/version-marker.js?v=2026-05-24-v58-mobile-overflow-sticky"></script>
 </head>
 <body>
 <div class="container mx-auto max-w-7xl">
@@ -1097,14 +1097,14 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
 </div>
 
 
-<script src="js/app.js?v=2026-05-24-radar-v55-language-completion"></script>
+<script src="js/app.js?v=2026-05-24-v58-mobile-overflow-sticky"></script>
 
-<script src="js/cache-version.js?v=2026-05-24-radar-v55-language-completion"></script>
+<script src="js/cache-version.js?v=2026-05-24-v58-mobile-overflow-sticky"></script>
 
 
 
-<style id="v5-mobile-tablet-fixes">
-/* v5 fixes: 2D collapse remains recoverable, touch portrait scroll works, and height resize is available everywhere. */
+<style id="v58-mobile-overflow-sticky">
+/* v58-mobile-overflow-sticky fixes: 2D collapse remains recoverable, touch portrait scroll works, and height resize is available everywhere. */
 .visual-workspace.slice-2d-collapsed {
   min-height: 210px !important;
 }
@@ -1202,7 +1202,232 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
   image-rendering: auto;
 }
 </style>
-<script src="js/render-quality-overrides.js?v=2026-05-24-v41-motion-cuts-quality"></script>
+
+
+<style id="v58-mobile-overflow-sticky">
+/* v58-mobile-overflow-sticky mobile edge fixes: prevent any panel, slider, table, formula or canvas from escaping the viewport. */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden !important;
+}
+body {
+  width: 100%;
+}
+.container.mx-auto,
+.container.max-w-7xl {
+  width: 100% !important;
+  max-width: 100% !important;
+  padding-left: clamp(10px, 3vw, 20px) !important;
+  padding-right: clamp(10px, 3vw, 20px) !important;
+  overflow-x: clip;
+}
+.grid-container,
+.canvas-section,
+.controls-and-info,
+.controls,
+.explanations,
+.seo-hero,
+.seo-content,
+.workspace-details,
+.workspace-details-inner,
+.canvas-container,
+.slice-dashboard,
+.slice-card {
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+img, svg, canvas, video, iframe {
+  max-width: 100%;
+}
+select, input, textarea, button {
+  max-width: 100%;
+}
+#visualization-settings-title {
+  scroll-margin-top: 72px;
+}
+@media (max-width: 900px) {
+  body {
+    overscroll-behavior-x: none;
+  }
+  .header-section {
+    align-items: stretch !important;
+    text-align: center;
+    gap: 0.6rem;
+  }
+  .header-tools,
+  .theme-selector,
+  .language-selector {
+    width: 100%;
+    min-width: 0;
+    justify-content: center;
+  }
+  .theme-selector select,
+  .language-selector select {
+    min-width: 0;
+    width: auto;
+  }
+  .seo-actions,
+  .seo-keywords,
+  .mouse-help,
+  .canvas-toolbar,
+  .workspace-toolbar-inline,
+  .slice-dashboard-toolbar,
+  .doa-option-row {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+  .seo-actions {
+    grid-template-columns: 1fr;
+  }
+  .seo-pill,
+  .btn,
+  .slice-mini-btn,
+  .plot-popout-btn {
+    white-space: normal !important;
+    text-align: center;
+  }
+  .controls,
+  .seo-hero,
+  .seo-content,
+  .canvas-controls-details,
+  .workspace-details,
+  .source-card,
+  .receive-doa-panel {
+    overflow-x: clip !important;
+  }
+  .visual-select-row,
+  .visual-select-block,
+  .array-size-row,
+  .array-spacing-taper-row,
+  .doa-controls-grid,
+  .doa-results-grid,
+  .doa-formula-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .slider-container,
+  .array-spacing-taper-row .spacing-slider.slider-container,
+  .array-spacing-taper-row #chebyshev-sidelobe-slider,
+  .spacing-slider.slider-container {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    gap: 0.35rem 0.5rem !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+  .slider-container label,
+  .spacing-slider.slider-container label,
+  .array-spacing-taper-row .spacing-slider label,
+  .array-spacing-taper-row #chebyshev-sidelobe-slider label {
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow-wrap: anywhere;
+  }
+  .slider-container input[type="range"],
+  .spacing-slider.slider-container input[type="range"],
+  .array-spacing-taper-row .spacing-slider input[type="range"],
+  .array-spacing-taper-row #chebyshev-sidelobe-slider input[type="range"] {
+    grid-column: 1 / -1 !important;
+    order: 3 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+  .slider-value,
+  .angle-number-input,
+  input[type="number"] {
+    min-width: 0 !important;
+  }
+  .overflow-x-auto,
+  table,
+  .mjx-container,
+  mjx-container,
+  pre,
+  code {
+    max-width: 100% !important;
+  }
+  table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .MathJax,
+  mjx-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  pre, code {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+}
+@media (max-width: 640px) {
+  .container.mx-auto,
+  .container.max-w-7xl {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+  .canvas-section {
+    margin-inline: 0 !important;
+    width: 100% !important;
+    left: auto !important;
+    right: auto !important;
+  }
+  .workspace-details-inner {
+    padding-left: 0.28rem !important;
+    padding-right: 0.28rem !important;
+  }
+  .visual-workspace {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .visual-workspace .canvas-container {
+    width: 100% !important;
+  }
+  .slice-dashboard-grid,
+  .slice-radar-grid {
+    grid-template-columns: 1fr !important;
+    width: 100% !important;
+    overflow-x: hidden !important;
+  }
+  .slice-card:nth-child(n+3) {
+    display: block !important;
+  }
+  .slice-dashboard-head {
+    gap: 0.35rem !important;
+  }
+  .slice-dashboard-toolbar {
+    justify-content: flex-start !important;
+  }
+  .slice-cut-control,
+  .slice-mini-toggle,
+  .slice-mini-btn {
+    max-width: 100%;
+  }
+  .controls {
+    padding-left: 0.7rem !important;
+    padding-right: 0.7rem !important;
+  }
+  .flex.justify-between.items-center,
+  .receive-doa-head,
+  .custom-array-head {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+  .source-card,
+  .seo-content-card,
+  .doa-result-card,
+  .doa-map-card,
+  .doa-formula-grid > div {
+    overflow-wrap: anywhere;
+  }
+  #visualization-settings-title {
+    font-size: 1.05rem !important;
+    line-height: 1.2 !important;
+  }
+}
+</style>
+
+<script src="js/render-quality-overrides.js?v=2026-05-24-v58-mobile-overflow-sticky"></script>
 
 <footer style="
   text-align:center;

@@ -1,1 +1,1 @@
-window.APP_CACHE_VERSION = '2026-05-24-radar-v55-language-completion';
+window.APP_VERSION = 'v62-tablet-stack-narrow-fit';

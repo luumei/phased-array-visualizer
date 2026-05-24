@@ -4640,3 +4640,903 @@ body.plot-popout-mode .radar-slice-card canvas {
     grid-template-columns: 1fr !important;
   }
 }
+
+
+/* v6 mobile edge fixes: prevent horizontal overflow on phones/tablets. */
+html, body { max-width: 100%; overflow-x: hidden !important; }
+.container.mx-auto, .container.max-w-7xl { width: 100% !important; max-width: 100% !important; padding-left: clamp(10px, 3vw, 20px) !important; padding-right: clamp(10px, 3vw, 20px) !important; overflow-x: clip; }
+.grid-container, .canvas-section, .controls-and-info, .controls, .explanations, .seo-hero, .seo-content, .workspace-details, .workspace-details-inner, .canvas-container, .slice-dashboard, .slice-card { min-width: 0 !important; max-width: 100% !important; }
+img, svg, canvas, video, iframe, select, input, textarea, button { max-width: 100%; }
+#visualization-settings-title { scroll-margin-top: 72px; }
+@media (max-width: 900px) {
+  .canvas-section { margin-inline: 0 !important; width: 100% !important; }
+  .visual-select-row, .visual-select-block, .array-size-row, .array-spacing-taper-row, .doa-controls-grid, .doa-results-grid, .doa-formula-grid { grid-template-columns: 1fr !important; }
+  .slider-container, .array-spacing-taper-row .spacing-slider.slider-container, .array-spacing-taper-row #chebyshev-sidelobe-slider, .spacing-slider.slider-container { display: grid !important; grid-template-columns: minmax(0, 1fr) auto !important; gap: .35rem .5rem !important; width: 100% !important; }
+  .slider-container label, .spacing-slider.slider-container label { width: auto !important; min-width: 0 !important; overflow-wrap: anywhere; }
+  .slider-container input[type="range"], .spacing-slider.slider-container input[type="range"], .array-spacing-taper-row .spacing-slider input[type="range"], .array-spacing-taper-row #chebyshev-sidelobe-slider input[type="range"] { grid-column: 1 / -1 !important; order: 3 !important; width: 100% !important; min-width: 0 !important; }
+  table { display: block; max-width: 100% !important; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .MathJax, mjx-container, .mjx-container, pre, code { max-width: 100% !important; overflow-x: auto; }
+  pre, code { white-space: pre-wrap; overflow-wrap: anywhere; }
+}
+@media (max-width: 640px) {
+  .container.mx-auto, .container.max-w-7xl { padding-left: 10px !important; padding-right: 10px !important; }
+  .workspace-details-inner { padding-left: .28rem !important; padding-right: .28rem !important; }
+  .visual-workspace, .visual-workspace .canvas-container { width: 100% !important; max-width: 100% !important; }
+  .slice-dashboard-grid, .slice-radar-grid { grid-template-columns: 1fr !important; width: 100% !important; overflow-x: hidden !important; }
+  .slice-card:nth-child(n+3) { display: block !important; }
+  .controls { padding-left: .7rem !important; padding-right: .7rem !important; }
+}
+
+
+/* v58: mobile narrow-window edge repair.
+   Keeps the sticky preview behavior, but prevents controls/plots from becoming
+   wider than a very narrow phone/browser viewport. */
+@media (max-width: 900px) {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html,
+  body {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  .container,
+  .container.mx-auto,
+  .container.max-w-7xl {
+    width: 100% !important;
+    max-width: 100vw !important;
+    min-width: 0 !important;
+    padding-left: clamp(8px, 2.4vw, 14px) !important;
+    padding-right: clamp(8px, 2.4vw, 14px) !important;
+    overflow-x: hidden !important;
+  }
+
+  .grid-container,
+  .canvas-section,
+  .workspace-details,
+  .workspace-details-inner,
+  .visual-workspace,
+  .canvas-container,
+  .slice-dashboard,
+  .slice-card,
+  .controls-and-info,
+  .controls,
+  .receive-doa-panel,
+  .doa-math-note,
+  .radar-scene-card,
+  .system-frequency-card,
+  .explanations {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Keep sticky exactly in the mobile/tablet concept; do not turn it into a normal block. */
+  .canvas-section {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 90 !important;
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    overflow-x: hidden !important;
+  }
+
+  .workspace-details,
+  .workspace-details-inner,
+  .visual-workspace,
+  .slice-dashboard,
+  .controls,
+  .receive-doa-panel,
+  .radar-scene-card,
+  .system-frequency-card {
+    overflow-x: hidden !important;
+  }
+
+  .controls {
+    width: 100% !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 0.72rem !important;
+    padding-left: clamp(0.58rem, 2.5vw, 0.9rem) !important;
+    padding-right: clamp(0.58rem, 2.5vw, 0.9rem) !important;
+  }
+
+  .controls > .flex.flex-wrap.-mx-2,
+  .controls > .flex.flex-wrap.-mx-2 .w-full.px-2.mb-4,
+  .visual-select-row,
+  .array-size-row,
+  .array-spacing-taper-row,
+  .doa-controls-grid,
+  .doa-control-pair,
+  .doa-noise-lut-pair,
+  .radar-scene-grid,
+  .system-frequency-grid,
+  .doa-formula-grid,
+  .radar-detail-plot-grid,
+  .slice-radar-panel .radar-detail-plot-grid,
+  .slice-dashboard-grid,
+  .slice-radar-grid {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .slider-container,
+  .doa-slider-card,
+  .distance-slider-container,
+  .radar-field,
+  .doa-control-pair,
+  .doa-map-card,
+  .radar-rd-card,
+  .slice-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .slider-container label,
+  .doa-slider-card label,
+  .radar-field label,
+  .system-frequency-card label {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  .doa-slider-card {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 0.38rem !important;
+    overflow: hidden !important;
+  }
+
+  .doa-slider-line,
+  .distance-slider-row,
+  .array-size-row .slider-container,
+  .array-spacing-taper-row #chebyshev-sidelobe-slider,
+  .array-spacing-taper-row .spacing-slider,
+  .array-spacing-taper-row .taper-select-control {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(3.9rem, 4.7rem) auto !important;
+    gap: 0.45rem !important;
+    align-items: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .doa-slider-line input[type="range"],
+  .distance-slider-row input[type="range"],
+  .array-size-row .slider-container input[type="range"],
+  .array-spacing-taper-row input[type="range"] {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .doa-value-input,
+  .angle-number-input,
+  .compact-number-input,
+  input[type="number"] {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 4.8rem !important;
+  }
+
+  .doa-unit,
+  .slider-unit {
+    min-width: 0 !important;
+    white-space: nowrap !important;
+  }
+
+  .doa-option-row {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 0.45rem !important;
+    align-items: stretch !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  .doa-option-row label,
+  .doa-option-row select,
+  .doa-option-row input,
+  .doa-option-row button,
+  select,
+  input,
+  textarea,
+  button {
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .doa-option-row select,
+  .doa-option-row button {
+    width: 100% !important;
+  }
+
+  .doa-freeze-label {
+    display: inline-flex !important;
+    width: auto !important;
+    justify-self: start !important;
+    align-items: center !important;
+    gap: 0.35rem !important;
+  }
+
+  .doa-freeze-label input[type="checkbox"] {
+    width: auto !important;
+    min-width: auto !important;
+  }
+
+  .slice-dashboard-head,
+  .slice-dashboard-toolbar {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .slice-dashboard-toolbar {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: flex-start !important;
+    overflow-x: hidden !important;
+  }
+
+  .slice-cut-control,
+  .slice-mini-toggle,
+  .slice-mini-btn {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    white-space: normal !important;
+    flex: 0 1 auto !important;
+  }
+
+  .slice-card svg,
+  .slice-radar-panel canvas,
+  canvas,
+  svg,
+  img,
+  video,
+  iframe {
+    display: block !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  table,
+  .phase-shift-table-wrap,
+  .MathJax,
+  mjx-container,
+  pre,
+  code {
+    max-width: 100% !important;
+    overflow-x: auto !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .container,
+  .container.mx-auto,
+  .container.max-w-7xl {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+
+  .workspace-details-inner {
+    padding-left: 0.28rem !important;
+    padding-right: 0.28rem !important;
+  }
+
+  .doa-slider-line,
+  .distance-slider-row,
+  .array-size-row .slider-container,
+  .array-spacing-taper-row #chebyshev-sidelobe-slider,
+  .array-spacing-taper-row .spacing-slider,
+  .array-spacing-taper-row .taper-select-control {
+    grid-template-columns: minmax(0, 1fr) minmax(3.55rem, 4.2rem) auto !important;
+    gap: 0.35rem !important;
+  }
+
+  .controls {
+    padding-left: 0.58rem !important;
+    padding-right: 0.58rem !important;
+  }
+}
+
+/* v60: ultra-narrow controls without hiding content.
+   Sticky preview stays unchanged. At phone-width/narrow browser sizes, rows no
+   longer try to keep label + slider + input + unit on one line. The important
+   change versus v59: do NOT apply broad overflow:hidden/display:grid rules to
+   every control container, because that can clip whole sections. */
+@media (max-width: 560px) {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html,
+  body {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  .container,
+  .container.mx-auto,
+  .container.max-w-7xl {
+    width: 100% !important;
+    max-width: 100vw !important;
+    min-width: 0 !important;
+    padding-left: 6px !important;
+    padding-right: 6px !important;
+  }
+
+  .controls,
+  .workspace-details-inner,
+  .receive-doa-panel,
+  .radar-scene-card,
+  .system-frequency-card,
+  .doa-slider-card,
+  .radar-field,
+  .slice-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .controls {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+  }
+
+  .doa-controls-grid,
+  .doa-control-pair,
+  .doa-noise-lut-pair,
+  .radar-scene-grid,
+  .system-frequency-grid,
+  .array-size-row,
+  .array-spacing-taper-row,
+  .visual-select-row,
+  .visual-select-block,
+  .doa-formula-grid,
+  .radar-detail-plot-grid,
+  .slice-dashboard-grid,
+  .slice-radar-grid {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 0.55rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  /* Only real slider lines get the two-line layout. */
+  .doa-slider-card {
+    display: block !important;
+    padding: 0.55rem !important;
+    overflow: visible !important;
+  }
+
+  .doa-slider-card > label,
+  .slider-container > label,
+  .radar-field label,
+  .system-frequency-card label {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin-bottom: 0.35rem !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  .doa-slider-line,
+  .distance-slider-row,
+  .coupling-slider-line,
+  .array-size-row .slider-container,
+  .array-spacing-taper-row .spacing-slider,
+  .array-spacing-taper-row #chebyshev-sidelobe-slider {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    gap: 0.35rem 0.45rem !important;
+    align-items: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    overflow: visible !important;
+  }
+
+  .doa-slider-line > input[type="range"],
+  .distance-slider-row > input[type="range"],
+  .coupling-slider-line > input[type="range"],
+  .array-size-row .slider-container > input[type="range"],
+  .array-spacing-taper-row .spacing-slider > input[type="range"],
+  .array-spacing-taper-row #chebyshev-sidelobe-slider > input[type="range"] {
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .doa-value-input,
+  .angle-number-input,
+  .compact-number-input,
+  .doa-slider-line > input[type="number"],
+  .distance-slider-row > input[type="number"],
+  .array-size-row .slider-container > input[type="number"],
+  .array-spacing-taper-row .spacing-slider > input[type="number"],
+  .array-spacing-taper-row #chebyshev-sidelobe-slider > input[type="number"] {
+    grid-column: 1 !important;
+    justify-self: start !important;
+    width: 4.2rem !important;
+    max-width: min(4.2rem, 100%) !important;
+    min-width: 0 !important;
+  }
+
+  .doa-unit,
+  .angle-unit,
+  .slider-unit {
+    grid-column: 2 !important;
+    justify-self: start !important;
+    white-space: nowrap !important;
+    min-width: 0 !important;
+  }
+
+  .doa-option-row,
+  .taper-select-control,
+  .radar-field {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 0.42rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    overflow: visible !important;
+  }
+
+  .doa-option-row select,
+  .doa-option-row input:not([type="checkbox"]),
+  .doa-option-row button,
+  .taper-select-control select,
+  .radar-field input,
+  .radar-field select,
+  .system-frequency-card input,
+  .system-frequency-card select,
+  select,
+  textarea,
+  button {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .doa-freeze-label {
+    display: inline-flex !important;
+    width: auto !important;
+    max-width: 100% !important;
+    justify-self: start !important;
+    align-items: center !important;
+    gap: 0.35rem !important;
+    white-space: normal !important;
+  }
+
+  .doa-freeze-label input[type="checkbox"] {
+    width: auto !important;
+    max-width: none !important;
+    min-width: auto !important;
+    flex: 0 0 auto !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .container,
+  .container.mx-auto,
+  .container.max-w-7xl {
+    padding-left: 4px !important;
+    padding-right: 4px !important;
+  }
+
+  .controls,
+  .workspace-details-inner {
+    padding-left: 0.35rem !important;
+    padding-right: 0.35rem !important;
+  }
+
+  .doa-slider-card,
+  .radar-scene-card,
+  .system-frequency-card,
+  .slice-card {
+    padding-left: 0.45rem !important;
+    padding-right: 0.45rem !important;
+  }
+
+  .doa-value-input,
+  .angle-number-input,
+  .compact-number-input {
+    width: 3.9rem !important;
+    max-width: 3.9rem !important;
+  }
+}
+
+/* v61: narrow portrait layout.
+   Keep sticky preview as before, but make controls use the available horizontal
+   space better: label + value stay on one compact top row, slider gets a full
+   row below. This avoids the too-wide slider/value/unit line on narrow screens. */
+@media (max-width: 560px) {
+  .doa-slider-card,
+  .distance-slider-container,
+  .array-size-row .slider-container,
+  .array-spacing-taper-row .spacing-slider,
+  .array-spacing-taper-row #chebyshev-sidelobe-slider,
+  .coupling-card .coupling-slider-line {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .doa-slider-card {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(3.35rem, 3.9rem) auto !important;
+    grid-template-rows: auto auto !important;
+    column-gap: 0.38rem !important;
+    row-gap: 0.34rem !important;
+    align-items: center !important;
+    padding: 0.52rem 0.58rem !important;
+  }
+
+  .doa-slider-card > label {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    margin: 0 !important;
+    align-self: center !important;
+    font-size: 0.78rem !important;
+    line-height: 1.15 !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  .doa-slider-card > .doa-slider-line {
+    display: contents !important;
+  }
+
+  .doa-slider-card > .doa-slider-line > input[type="range"] {
+    grid-column: 1 / -1 !important;
+    grid-row: 2 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+  }
+
+  .doa-slider-card > .doa-slider-line > input[type="number"],
+  .doa-slider-card .doa-value-input {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    justify-self: end !important;
+    width: 3.65rem !important;
+    max-width: 3.65rem !important;
+    min-width: 0 !important;
+    padding-left: 0.32rem !important;
+    padding-right: 0.32rem !important;
+    font-size: 0.78rem !important;
+  }
+
+  .doa-slider-card > .doa-slider-line > .doa-unit,
+  .doa-slider-card .doa-unit {
+    grid-column: 3 !important;
+    grid-row: 1 !important;
+    justify-self: start !important;
+    min-width: 1.05rem !important;
+    font-size: 0.72rem !important;
+    white-space: nowrap !important;
+  }
+
+  /* Generic compact slider rows used elsewhere: full-width slider first, small
+     value/unit below, never wider than the card. */
+  .distance-slider-row,
+  .coupling-slider-line,
+  .array-size-row .slider-container,
+  .array-spacing-taper-row .spacing-slider,
+  .array-spacing-taper-row #chebyshev-sidelobe-slider {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(3.35rem, 3.9rem) auto !important;
+    column-gap: 0.38rem !important;
+    row-gap: 0.32rem !important;
+    align-items: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .distance-slider-row > label,
+  .coupling-slider-line > label,
+  .array-size-row .slider-container > label,
+  .array-spacing-taper-row .spacing-slider > label,
+  .array-spacing-taper-row #chebyshev-sidelobe-slider > label {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    margin: 0 !important;
+    min-width: 0 !important;
+    width: auto !important;
+    font-size: 0.78rem !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  .distance-slider-row > input[type="range"],
+  .coupling-slider-line > input[type="range"],
+  .array-size-row .slider-container > input[type="range"],
+  .array-spacing-taper-row .spacing-slider > input[type="range"],
+  .array-spacing-taper-row #chebyshev-sidelobe-slider > input[type="range"] {
+    grid-column: 1 / -1 !important;
+    grid-row: 2 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .distance-slider-row > input[type="number"],
+  .coupling-slider-line > input[type="number"],
+  .array-size-row .slider-container > input[type="number"],
+  .array-spacing-taper-row .spacing-slider > input[type="number"],
+  .array-spacing-taper-row #chebyshev-sidelobe-slider > input[type="number"],
+  .angle-number-input,
+  .compact-number-input {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    justify-self: end !important;
+    width: 3.65rem !important;
+    max-width: 3.65rem !important;
+    min-width: 0 !important;
+    font-size: 0.78rem !important;
+  }
+
+  .distance-slider-row .slider-unit,
+  .coupling-slider-line .slider-unit,
+  .array-size-row .slider-container .slider-unit,
+  .array-spacing-taper-row .spacing-slider .slider-unit,
+  .array-spacing-taper-row #chebyshev-sidelobe-slider .slider-unit,
+  .angle-unit {
+    grid-column: 3 !important;
+    grid-row: 1 !important;
+    justify-self: start !important;
+    min-width: 1.05rem !important;
+    font-size: 0.72rem !important;
+    white-space: nowrap !important;
+  }
+
+  .doa-option-row {
+    grid-template-columns: auto minmax(0, 1fr) !important;
+    align-items: center !important;
+    column-gap: 0.45rem !important;
+    row-gap: 0.42rem !important;
+  }
+
+  .doa-option-row label[for="doa-propagation-model"],
+  .doa-option-row label[for="doa-seed"] {
+    grid-column: 1 !important;
+    margin: 0 !important;
+    white-space: nowrap !important;
+  }
+
+  #doa-propagation-model,
+  #doa-seed {
+    grid-column: 2 !important;
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+
+  .doa-freeze-label,
+  #doa-new-noise {
+    grid-column: 1 / -1 !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .doa-slider-card,
+  .distance-slider-row,
+  .coupling-slider-line,
+  .array-size-row .slider-container,
+  .array-spacing-taper-row .spacing-slider,
+  .array-spacing-taper-row #chebyshev-sidelobe-slider {
+    grid-template-columns: minmax(0, 1fr) minmax(3rem, 3.35rem) auto !important;
+  }
+
+  .doa-slider-card > .doa-slider-line > input[type="number"],
+  .doa-slider-card .doa-value-input,
+  .distance-slider-row > input[type="number"],
+  .coupling-slider-line > input[type="number"],
+  .array-size-row .slider-container > input[type="number"],
+  .array-spacing-taper-row .spacing-slider > input[type="number"],
+  .array-spacing-taper-row #chebyshev-sidelobe-slider > input[type="number"],
+  .angle-number-input,
+  .compact-number-input {
+    width: 3.25rem !important;
+    max-width: 3.25rem !important;
+  }
+
+  .doa-option-row {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  .doa-option-row label[for="doa-propagation-model"],
+  .doa-option-row label[for="doa-seed"],
+  #doa-propagation-model,
+  #doa-seed,
+  .doa-freeze-label,
+  #doa-new-noise {
+    grid-column: 1 !important;
+  }
+}
+
+/* v62: tablet stack + narrow-control containment.
+   Tablet: keep the visualization/sticky preview behavior, but do not place the
+   radar/receive settings beside the visualization controls. Everything in the
+   settings column becomes one vertical flow before the desktop split returns. */
+@media (max-width: 1099px) {
+  .controls-and-info.controls-panel-grid,
+  .controls-panel-grid,
+  .controls {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .controls > * {
+    grid-column: 1 / -1 !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .receive-doa-panel,
+  .radar-scene-card,
+  .system-frequency-card,
+  .visual-select-block {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+}
+
+/* Narrow portrait: make every normal slider fit inside the card without
+   clipping. The top row uses label + compact value/unit; the range gets its
+   own full-width row. */
+@media (max-width: 560px) {
+  .controls .slider-container:not(.distance-slider-container):not(.spacing-slider):not(#chebyshev-sidelobe-slider),
+  .controls .coupling-slider-container {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(3.25rem, 3.8rem) auto !important;
+    grid-template-rows: auto auto !important;
+    column-gap: 0.38rem !important;
+    row-gap: 0.32rem !important;
+    align-items: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    overflow: visible !important;
+  }
+
+  .controls .slider-container:not(.distance-slider-container):not(.spacing-slider):not(#chebyshev-sidelobe-slider) > label,
+  .controls .coupling-slider-container > label {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+    font-size: 0.78rem !important;
+    line-height: 1.15 !important;
+  }
+
+  .controls .slider-container:not(.distance-slider-container):not(.spacing-slider):not(#chebyshev-sidelobe-slider) > input[type="range"],
+  .controls .coupling-slider-container > input[type="range"] {
+    grid-column: 1 / -1 !important;
+    grid-row: 2 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .controls .slider-container:not(.distance-slider-container):not(.spacing-slider):not(#chebyshev-sidelobe-slider) > input[type="text"],
+  .controls .slider-container:not(.distance-slider-container):not(.spacing-slider):not(#chebyshev-sidelobe-slider) > input[type="number"],
+  .controls .coupling-slider-container > input[type="text"],
+  .controls .coupling-slider-container > input[type="number"] {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    justify-self: end !important;
+    width: 3.55rem !important;
+    max-width: 3.55rem !important;
+    min-width: 0 !important;
+    padding-left: 0.3rem !important;
+    padding-right: 0.3rem !important;
+    font-size: 0.78rem !important;
+  }
+
+  .controls .slider-container:not(.distance-slider-container):not(.spacing-slider):not(#chebyshev-sidelobe-slider) > .angle-unit,
+  .controls .slider-container:not(.distance-slider-container):not(.spacing-slider):not(#chebyshev-sidelobe-slider) > .slider-unit,
+  .controls .coupling-slider-container > .angle-unit,
+  .controls .coupling-slider-container > .slider-unit {
+    grid-column: 3 !important;
+    grid-row: 1 !important;
+    justify-self: start !important;
+    min-width: 0 !important;
+    white-space: nowrap !important;
+    font-size: 0.72rem !important;
+  }
+
+  .controls .slider-container .slider-value.angle-hidden-value,
+  .controls .slider-container .slider-value:not(:empty) {
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .visual-select-row,
+  .visual-select-block,
+  .radar-scene-grid,
+  .system-frequency-grid,
+  .doa-controls-grid,
+  .doa-control-pair,
+  .doa-noise-lut-pair {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .radar-field,
+  .visual-select-control,
+  .doa-option-row,
+  .doa-slider-card {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+}
+
+/* Extreme narrow browser: still show every control, but stack the value below
+   the label instead of letting it push out of the viewport. */
+@media (max-width: 340px) {
+  .controls .slider-container:not(.distance-slider-container):not(.spacing-slider):not(#chebyshev-sidelobe-slider),
+  .doa-slider-card,
+  .distance-slider-row,
+  .coupling-slider-line,
+  .array-size-row .slider-container,
+  .array-spacing-taper-row .spacing-slider,
+  .array-spacing-taper-row #chebyshev-sidelobe-slider {
+    grid-template-columns: minmax(0, 1fr) auto !important;
+  }
+
+  .controls .slider-container:not(.distance-slider-container):not(.spacing-slider):not(#chebyshev-sidelobe-slider) > label,
+  .doa-slider-card > label,
+  .distance-slider-row > label,
+  .coupling-slider-line > label,
+  .array-size-row .slider-container > label,
+  .array-spacing-taper-row .spacing-slider > label,
+  .array-spacing-taper-row #chebyshev-sidelobe-slider > label {
+    grid-column: 1 / -1 !important;
+    grid-row: auto !important;
+  }
+
+  .controls .slider-container:not(.distance-slider-container):not(.spacing-slider):not(#chebyshev-sidelobe-slider) > input[type="text"],
+  .controls .slider-container:not(.distance-slider-container):not(.spacing-slider):not(#chebyshev-sidelobe-slider) > input[type="number"],
+  .doa-slider-card .doa-value-input,
+  .angle-number-input,
+  .compact-number-input {
+    grid-column: 1 !important;
+    grid-row: auto !important;
+    justify-self: start !important;
+    width: 3.2rem !important;
+    max-width: 3.2rem !important;
+  }
+
+  .controls .slider-container:not(.distance-slider-container):not(.spacing-slider):not(#chebyshev-sidelobe-slider) > input[type="range"],
+  .doa-slider-card input[type="range"],
+  .distance-slider-row input[type="range"] {
+    grid-column: 1 / -1 !important;
+    grid-row: auto !important;
+  }
+}

@@ -1,1 +1,1 @@
-assets_radar_ui_v55_radar_language_completion
+v62-tablet-stack-narrow-fit
