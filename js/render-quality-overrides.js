@@ -4,6 +4,17 @@
     const coarse = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
     const phone = window.innerWidth <= 640 || (coarse && Math.min(window.innerWidth, window.innerHeight) <= 520);
     const tablet = !phone && (window.innerWidth <= 1024 || coarse);
+
+    // Radar motion must behave like a continuous drag preview: never skip frames,
+    // but reduce only render cost (DPR + far-field/hemisphere mesh density).
+    // The 3D target/range sphere/path keep moving every animation frame, so motion stays smooth.
+    const radarMoving = (typeof isRadarMotionActive === 'function' && isRadarMotionActive());
+    if (radarMoving) {
+      if (phone) return { phi: 12, theta: 6, dpr: 0.75, polarStep: 12, topStep: 28, frameSkip: 1, motion: true };
+      if (tablet) return { phi: 18, theta: 9, dpr: 0.90, polarStep: 8, topStep: 20, frameSkip: 1, motion: true };
+      return { phi: 24, theta: 12, dpr: Math.min(window.devicePixelRatio || 1, 1.0), polarStep: 5, topStep: 14, frameSkip: 1, motion: true };
+    }
+
     if (window.isProgressiveInteracting || (typeof isProgressiveInteracting !== 'undefined' && isProgressiveInteracting)) {
       if (phone) return { phi: 20, theta: 10, dpr: 0.9, polarStep: 8, topStep: 20, frameSkip: 3 };
       if (tablet) return { phi: 30, theta: 15, dpr: 1.05, polarStep: 5, topStep: 14, frameSkip: 2 };

@@ -10,9 +10,15 @@
           .report-card { border: 1px solid #d1d5db; border-radius: 12px; padding: 0.65rem; break-inside: avoid; background: #fff; }
           .report-3d img { width: 100%; height: 420px; object-fit: contain; display: block; background: #f9fafb; border-radius: 10px; border: 1px solid #e5e7eb; }
           .report-plots { display: grid; grid-template-columns: 1fr 1fr; gap: 0.45rem; }
-          .report-plot { margin: 0; border: 1px solid #e5e7eb; border-radius: 10px; padding: 0.4rem; min-height: 210px; }
+          .report-plot { margin: 0; border: 1px solid #e5e7eb; border-radius: 10px; padding: 0.4rem; min-height: 190px; background:#fff; }
+          .report-radar-plots .report-plot { min-height: 155px; }
           .report-plot figcaption { font-weight: 700; font-size: 9px; margin-bottom: 0.12rem; line-height: 1.1; }
           .report-plot svg { width: 100%; height: 158px; display: block; }
+          .report-plot img { width: 100%; height: 158px; object-fit: contain; display:block; background:#f8fafc; border-radius:8px; }
+          .report-radar-plots .report-plot img { height: 122px; }
+          .report-radar-plots { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.42rem; align-items: stretch; }
+                    .report-subtitle { margin: 0.35rem 0 0.35rem; font-size: 12px; color:#111827; border-bottom:1px solid #e5e7eb; padding-bottom:0.18rem; }
+          .report-subtitle-spaced { margin-top: 0.65rem; }
           .report-plot .slice-vector-label { font-size: 2.45px !important; }
           .report-plot .slice-axis-label { font-size: 2.15px !important; }
           .report-plot .slice-ring-label { font-size: 2px !important; }
@@ -24,5 +30,6 @@
           .report-muted { color: #6b7280; font-size: 9px; }
           .report-pre { white-space: pre-wrap; font-size: 9px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 0.5rem; max-height: 220px; overflow: hidden; }
           .report-section-full { margin-top: 0.65rem; }
-          @media print { .no-print { display: none; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+          @media print { .no-print { display: none; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .report-radar-plots { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+          @media screen and (max-width: 900px) { .report-radar-plots { grid-template-columns: 1fr 1fr; } }
         

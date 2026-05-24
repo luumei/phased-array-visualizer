@@ -2200,3 +2200,2443 @@ body.plot-popout-mode #print-report {
   .array-source-compact select { width: 100%; min-width: 0; }
   .array-mode-pill { align-self: flex-start; }
 }
+
+.receive-doa-panel {
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+.receive-doa-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+.doa-controls-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+.doa-option-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+.doa-freeze-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.doa-seed-input {
+  width: 6rem;
+}
+.doa-results-grid {
+  display: grid;
+  grid-template-columns: minmax(130px, 0.8fr) minmax(130px, 0.8fr) minmax(260px, 2fr);
+  gap: 0.75rem;
+  align-items: stretch;
+}
+.doa-result-card,
+.doa-map-card {
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid #c7d2fe;
+  border-radius: 0.65rem;
+  padding: 0.65rem;
+}
+.doa-big-value {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #1e1b4b;
+  margin: 0.15rem 0;
+}
+#doa-correlation-map {
+  display: block;
+  width: 100%;
+  height: 120px;
+  border-radius: 0.45rem;
+  background: #0f172a;
+}
+@media (max-width: 900px) {
+  .doa-controls-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .doa-results-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .receive-doa-head { flex-direction: column; }
+  .doa-controls-grid { grid-template-columns: 1fr; }
+}
+
+/* Radar / Receive DOA refinement: max two sliders next to each other, value inputs beside sliders */
+.receive-doa-panel {
+  background: linear-gradient(180deg, rgba(238, 242, 255, 0.98), rgba(245, 247, 255, 0.98));
+}
+.doa-math-note {
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid #c7d2fe;
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+}
+.doa-math-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #312e81;
+  margin-bottom: 0.45rem;
+}
+.doa-formula-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+.doa-formula-grid > div {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.55rem;
+  padding: 0.5rem;
+}
+.doa-formula-grid code {
+  display: block;
+  white-space: normal;
+  word-break: break-word;
+  font-size: 0.78rem;
+  color: #0f172a;
+}
+.math-label {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.15rem;
+}
+.doa-controls-grid {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 0.75rem;
+}
+.doa-control-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+.doa-slider-card {
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid #c7d2fe;
+  border-radius: 0.65rem;
+  padding: 0.65rem;
+  margin-bottom: 0 !important;
+}
+.doa-slider-card label {
+  width: auto !important;
+  min-width: 0 !important;
+  margin-bottom: 0.35rem;
+  font-weight: 600;
+  color: #1e1b4b;
+}
+.doa-slider-line {
+  display: grid;
+  grid-template-columns: minmax(170px, 1fr) 4.7rem auto;
+  gap: 0.45rem;
+  align-items: center;
+}
+.doa-slider-line input[type="range"] {
+  min-width: 0;
+}
+.doa-value-input {
+  width: 4.7rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.45rem;
+  padding: 0.25rem 0.35rem;
+  font-size: 0.82rem;
+  background: white;
+}
+.doa-unit {
+  font-size: 0.78rem;
+  color: #475569;
+  min-width: 1.4rem;
+}
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+.doa-results-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+.doa-wide-card {
+  grid-column: 1 / -1;
+}
+#doa-correlation-map,
+#doa-sample-map,
+#doa-az-cut {
+  display: block;
+  width: 100%;
+  border-radius: 0.45rem;
+  background: #0f172a;
+}
+#doa-correlation-map { height: 170px; }
+#doa-sample-map,
+#doa-az-cut { height: 150px; }
+@media (max-width: 900px) {
+  .doa-control-pair,
+  .doa-formula-grid,
+  .doa-results-grid { grid-template-columns: 1fr !important; }
+  .doa-slider-line { grid-template-columns: minmax(120px, 1fr) 4.7rem auto; }
+}
+
+
+/* Mutual coupling card: checkbox enables a disabled-by-default slider */
+.coupling-card {
+  border: 1px solid #cbd5e1;
+  border-radius: 0.85rem;
+  padding: 0.75rem;
+  background: #f8fafc;
+}
+.coupling-enable-row {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  cursor: pointer;
+  font-weight: 700;
+  color: #0f172a;
+}
+.coupling-enable-row input[type="checkbox"] {
+  width: 1.05rem;
+  height: 1.05rem;
+  accent-color: #4f46e5;
+}
+.coupling-enable-text::after {
+  content: ":";
+}
+.coupling-state-pill {
+  font-size: 0.68rem;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-radius: 999px;
+  padding: 0.28rem 0.45rem;
+  background: #e2e8f0;
+  color: #475569;
+}
+.coupling-card.coupling-enabled {
+  border-color: #a5b4fc;
+  background: #eef2ff;
+}
+.coupling-card.coupling-enabled .coupling-state-pill {
+  background: #4f46e5;
+  color: white;
+}
+.coupling-slider-container {
+  width: 100%;
+  margin-top: 0.65rem !important;
+  margin-bottom: 0 !important;
+}
+.coupling-slider-container label {
+  width: auto !important;
+  min-width: 0 !important;
+  margin-bottom: 0.3rem;
+  color: #334155;
+}
+.coupling-slider-line {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) auto;
+  gap: 0.75rem;
+  align-items: center;
+}
+#coupling-strength:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+}
+.coupling-help {
+  margin-top: 0.35rem;
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+/* Expanded SEO cards and detailed radar math foundation */
+.seo-card-grid-expanded {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+.seo-content-card h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.radar-math-foundation-card {
+  border: 1px solid #c7d2fe;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+}
+.radar-step-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.7rem;
+}
+.radar-step-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 0.85rem;
+  padding: 0.85rem;
+  background: rgba(255, 255, 255, 0.9);
+  display: grid;
+  grid-template-columns: minmax(170px, 0.8fr) minmax(260px, 1.4fr) minmax(280px, 1fr);
+  align-items: center;
+  gap: 0.8rem;
+}
+.radar-step-card h3 {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 760;
+  color: #1e1b4b;
+}
+.radar-step-card p {
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: #475569;
+}
+.mini-math {
+  margin: 0 !important;
+  overflow-x: auto;
+}
+.mini-math .MathJax,
+.mini-math mjx-container {
+  font-size: 92% !important;
+}
+@media (max-width: 900px) {
+  .radar-step-card {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+    gap: 0.45rem;
+  }
+}
+@media (max-width: 640px) {
+  .coupling-slider-line { grid-template-columns: 1fr; gap: 0.35rem; }
+  .radar-step-grid { grid-template-columns: 1fr; }
+}
+
+/* v2026-05-23 dark-mode completion for newly added radar/coupling/SEO cards */
+html[data-theme="dark"] .bg-white,
+html[data-theme="dark"] .seo-content,
+html[data-theme="dark"] .seo-content-card,
+html[data-theme="dark"] .radar-math-foundation-card,
+html[data-theme="dark"] .receive-doa-panel,
+html[data-theme="dark"] .coupling-card,
+html[data-theme="dark"] .doa-result-card,
+html[data-theme="dark"] .doa-map-card,
+html[data-theme="dark"] .doa-math-note,
+html[data-theme="dark"] .radar-step-card {
+  background: linear-gradient(180deg, rgba(36,36,38,0.92), rgba(28,28,30,0.86)) !important;
+  border-color: rgba(255,255,255,0.14) !important;
+  color: var(--lt-text) !important;
+  box-shadow: var(--lt-shadow-soft) !important;
+}
+
+html[data-theme="dark"] .bg-gray-100,
+html[data-theme="dark"] .math-box,
+html[data-theme="dark"] .mini-math,
+html[data-theme="dark"] .doa-formula-grid > div {
+  background: rgba(15, 23, 42, 0.72) !important;
+  border-color: rgba(255,255,255,0.12) !important;
+  color: var(--lt-text) !important;
+}
+
+html[data-theme="dark"] h1,
+html[data-theme="dark"] h2,
+html[data-theme="dark"] h3,
+html[data-theme="dark"] label,
+html[data-theme="dark"] .font-semibold,
+html[data-theme="dark"] .font-medium,
+html[data-theme="dark"] .radar-step-card h3,
+html[data-theme="dark"] .doa-math-title,
+html[data-theme="dark"] .doa-big-value,
+html[data-theme="dark"] .coupling-enable-row,
+html[data-theme="dark"] .seo-content h2,
+html[data-theme="dark"] .seo-content h3 {
+  color: var(--lt-text) !important;
+}
+
+html[data-theme="dark"] p,
+html[data-theme="dark"] li,
+html[data-theme="dark"] .text-sm,
+html[data-theme="dark"] .radar-step-card p,
+html[data-theme="dark"] .math-label,
+html[data-theme="dark"] .coupling-help,
+html[data-theme="dark"] .doa-unit,
+html[data-theme="dark"] .seo-content p,
+html[data-theme="dark"] .seo-content li {
+  color: var(--lt-muted) !important;
+}
+
+html[data-theme="dark"] input,
+html[data-theme="dark"] select,
+html[data-theme="dark"] textarea,
+html[data-theme="dark"] .doa-value-input {
+  background-color: rgba(15, 23, 42, 0.86) !important;
+  border-color: rgba(255,255,255,0.16) !important;
+  color: var(--lt-text) !important;
+}
+
+html[data-theme="dark"] input::placeholder,
+html[data-theme="dark"] textarea::placeholder {
+  color: rgba(245,245,247,0.52) !important;
+}
+
+html[data-theme="dark"] .coupling-state-pill {
+  background: rgba(148, 163, 184, 0.22) !important;
+  color: var(--lt-muted) !important;
+}
+
+html[data-theme="dark"] .coupling-card.coupling-enabled {
+  background: linear-gradient(180deg, rgba(49,46,129,0.62), rgba(30,27,75,0.62)) !important;
+  border-color: rgba(129,140,248,0.58) !important;
+}
+
+html[data-theme="dark"] .coupling-card.coupling-enabled .coupling-state-pill {
+  background: #818cf8 !important;
+  color: #050507 !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) .bg-white,
+  html:not([data-theme="light"]) .seo-content,
+  html:not([data-theme="light"]) .seo-content-card,
+  html:not([data-theme="light"]) .radar-math-foundation-card,
+  html:not([data-theme="light"]) .receive-doa-panel,
+  html:not([data-theme="light"]) .coupling-card,
+  html:not([data-theme="light"]) .doa-result-card,
+  html:not([data-theme="light"]) .doa-map-card,
+  html:not([data-theme="light"]) .doa-math-note,
+  html:not([data-theme="light"]) .radar-step-card {
+    background: linear-gradient(180deg, rgba(36,36,38,0.92), rgba(28,28,30,0.86)) !important;
+    border-color: rgba(255,255,255,0.14) !important;
+    color: var(--lt-text) !important;
+    box-shadow: var(--lt-shadow-soft) !important;
+  }
+  html:not([data-theme="light"]) .bg-gray-100,
+  html:not([data-theme="light"]) .math-box,
+  html:not([data-theme="light"]) .mini-math,
+  html:not([data-theme="light"]) .doa-formula-grid > div {
+    background: rgba(15, 23, 42, 0.72) !important;
+    border-color: rgba(255,255,255,0.12) !important;
+    color: var(--lt-text) !important;
+  }
+  html:not([data-theme="light"]) h1,
+  html:not([data-theme="light"]) h2,
+  html:not([data-theme="light"]) h3,
+  html:not([data-theme="light"]) label,
+  html:not([data-theme="light"]) .font-semibold,
+  html:not([data-theme="light"]) .font-medium,
+  html:not([data-theme="light"]) .radar-step-card h3,
+  html:not([data-theme="light"]) .doa-math-title,
+  html:not([data-theme="light"]) .doa-big-value,
+  html:not([data-theme="light"]) .coupling-enable-row,
+  html:not([data-theme="light"]) .seo-content h2,
+  html:not([data-theme="light"]) .seo-content h3 {
+    color: var(--lt-text) !important;
+  }
+  html:not([data-theme="light"]) p,
+  html:not([data-theme="light"]) li,
+  html:not([data-theme="light"]) .text-sm,
+  html:not([data-theme="light"]) .radar-step-card p,
+  html:not([data-theme="light"]) .math-label,
+  html:not([data-theme="light"]) .coupling-help,
+  html:not([data-theme="light"]) .doa-unit,
+  html:not([data-theme="light"]) .seo-content p,
+  html:not([data-theme="light"]) .seo-content li {
+    color: var(--lt-muted) !important;
+  }
+  html:not([data-theme="light"]) input,
+  html:not([data-theme="light"]) select,
+  html:not([data-theme="light"]) textarea,
+  html:not([data-theme="light"]) .doa-value-input {
+    background-color: rgba(15, 23, 42, 0.86) !important;
+    border-color: rgba(255,255,255,0.16) !important;
+    color: var(--lt-text) !important;
+  }
+  html:not([data-theme="light"]) .coupling-state-pill {
+    background: rgba(148, 163, 184, 0.22) !important;
+    color: var(--lt-muted) !important;
+  }
+  html:not([data-theme="light"]) .coupling-card.coupling-enabled .coupling-state-pill {
+    background: #818cf8 !important;
+    color: #050507 !important;
+  }
+}
+
+
+/* v2026-05-23 compact-title + dark-mode completion for vector coordinate and radar controls */
+h1[data-lang="title"] {
+  max-width: 100%;
+  letter-spacing: -0.015em;
+}
+#seo-title { line-height: 1.2; }
+
+html[data-theme="dark"] .custom-array-panel,
+html[data-theme="dark"] #custom-coordinate-panel,
+html[data-theme="dark"] .coordinate-chip-preview,
+html[data-theme="dark"] .doa-slider-card,
+html[data-theme="dark"] .custom-array-summary,
+html[data-theme="dark"] .taper-note {
+  background: linear-gradient(180deg, rgba(36,36,38,0.92), rgba(28,28,30,0.86)) !important;
+  border-color: rgba(255,255,255,0.14) !important;
+  color: var(--lt-text) !important;
+  box-shadow: var(--lt-shadow-soft) !important;
+}
+html[data-theme="dark"] .geometry-editor-head {
+  border-bottom-color: rgba(255,255,255,0.14) !important;
+}
+html[data-theme="dark"] .coordinate-chip {
+  background: rgba(15,23,42,0.78) !important;
+  border-color: rgba(255,255,255,0.14) !important;
+  color: #e5e7eb !important;
+}
+html[data-theme="dark"] .coordinate-chip-more,
+html[data-theme="dark"] .array-mode-pill {
+  background: rgba(56,189,248,0.18) !important;
+  border-color: rgba(125,211,252,0.32) !important;
+  color: #bae6fd !important;
+}
+html[data-theme="dark"] .text-xs,
+html[data-theme="dark"] .text-gray-600,
+html[data-theme="dark"] .text-gray-700,
+html[data-theme="dark"] #custom-array-status,
+html[data-theme="dark"] .slider-value {
+  color: var(--lt-muted) !important;
+}
+html[data-theme="dark"] .secondary-btn {
+  background: rgba(51,65,85,0.95) !important;
+  border: 1px solid rgba(255,255,255,0.14) !important;
+  color: var(--lt-text) !important;
+}
+html[data-theme="dark"] .secondary-btn:hover {
+  background: rgba(71,85,105,0.98) !important;
+}
+html[data-theme="dark"] .btn:not(.secondary-btn) {
+  border: 1px solid rgba(147,197,253,0.36) !important;
+}
+html[data-theme="dark"] code,
+html[data-theme="dark"] .doa-formula-grid code,
+html[data-theme="dark"] .coordinate-editor {
+  color: #e5e7eb !important;
+}
+html[data-theme="dark"] input[type=range]::-webkit-slider-runnable-track {
+  background: rgba(148,163,184,0.38) !important;
+}
+html[data-theme="dark"] input[type=range]::-moz-range-track {
+  background: rgba(148,163,184,0.38) !important;
+}
+html[data-theme="dark"] #doa-correlation-map,
+html[data-theme="dark"] #doa-sample-map,
+html[data-theme="dark"] #doa-az-cut {
+  border: 1px solid rgba(255,255,255,0.12) !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) .custom-array-panel,
+  html:not([data-theme="light"]) #custom-coordinate-panel,
+  html:not([data-theme="light"]) .coordinate-chip-preview,
+  html:not([data-theme="light"]) .doa-slider-card,
+  html:not([data-theme="light"]) .custom-array-summary,
+  html:not([data-theme="light"]) .taper-note {
+    background: linear-gradient(180deg, rgba(36,36,38,0.92), rgba(28,28,30,0.86)) !important;
+    border-color: rgba(255,255,255,0.14) !important;
+    color: var(--lt-text) !important;
+    box-shadow: var(--lt-shadow-soft) !important;
+  }
+  html:not([data-theme="light"]) .geometry-editor-head { border-bottom-color: rgba(255,255,255,0.14) !important; }
+  html:not([data-theme="light"]) .coordinate-chip {
+    background: rgba(15,23,42,0.78) !important;
+    border-color: rgba(255,255,255,0.14) !important;
+    color: #e5e7eb !important;
+  }
+  html:not([data-theme="light"]) .coordinate-chip-more,
+  html:not([data-theme="light"]) .array-mode-pill {
+    background: rgba(56,189,248,0.18) !important;
+    border-color: rgba(125,211,252,0.32) !important;
+    color: #bae6fd !important;
+  }
+  html:not([data-theme="light"]) .text-xs,
+  html:not([data-theme="light"]) .text-gray-600,
+  html:not([data-theme="light"]) .text-gray-700,
+  html:not([data-theme="light"]) #custom-array-status,
+  html:not([data-theme="light"]) .slider-value { color: var(--lt-muted) !important; }
+  html:not([data-theme="light"]) .secondary-btn {
+    background: rgba(51,65,85,0.95) !important;
+    border: 1px solid rgba(255,255,255,0.14) !important;
+    color: var(--lt-text) !important;
+  }
+  html:not([data-theme="light"]) code,
+  html:not([data-theme="light"]) .doa-formula-grid code,
+  html:not([data-theme="light"]) .coordinate-editor { color: #e5e7eb !important; }
+}
+
+/* FMCW radar target scene controls */
+.radar-scene-card {
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid #c7d2fe;
+  border-radius: 0.85rem;
+  padding: 0.85rem;
+}
+.radar-scene-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+.radar-scene-head h4 {
+  margin: 0;
+  color: #1e1b4b;
+  font-size: 0.95rem;
+  font-weight: 760;
+}
+.radar-scene-head p {
+  margin: 0.2rem 0 0;
+  font-size: 0.78rem;
+  color: #475569;
+  line-height: 1.45;
+}
+.radar-scene-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+.radar-field {
+  display: grid;
+  gap: 0.25rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #475569;
+}
+.radar-field input,
+.radar-field select {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.45rem;
+  background: #fff;
+  color: #0f172a;
+  padding: 0.35rem 0.45rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+.radar-results-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(120px, 0.75fr)) minmax(260px, 1.8fr);
+  gap: 0.75rem;
+  align-items: stretch;
+}
+.radar-fft-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+.radar-checkbox-field {
+  align-content: end;
+}
+.radar-checkbox-field input[type="checkbox"] {
+  width: 1.1rem;
+  height: 1.1rem;
+  accent-color: #4f46e5;
+}
+.radar-hint {
+  margin-top: 0.65rem;
+  padding: 0.45rem 0.6rem;
+  border-radius: 0.55rem;
+  background: rgba(251, 191, 36, 0.10);
+  border: 1px solid rgba(251, 191, 36, 0.28);
+  color: #92400e;
+  font-size: 0.74rem;
+  line-height: 1.35;
+}
+.radar-rd-card canvas,
+#radar-rd-map,
+#radar-range-fft,
+#radar-doppler-fft {
+  display: block;
+  width: 100%;
+  height: 160px;
+  border-radius: 0.45rem;
+  background: #0f172a;
+}
+@media (max-width: 980px) {
+  .radar-scene-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .radar-results-grid { grid-template-columns: 1fr; }
+  .radar-fft-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .radar-scene-head { flex-direction: column; }
+  .radar-scene-grid { grid-template-columns: 1fr; }
+}
+html[data-theme="dark"] .radar-scene-card,
+html:not([data-theme="light"]) .radar-scene-card {
+  background: rgba(15, 23, 42, 0.78);
+  border-color: rgba(129, 140, 248, 0.45);
+}
+html[data-theme="dark"] .radar-scene-head h4,
+html:not([data-theme="light"]) .radar-scene-head h4 { color: #e0e7ff; }
+html[data-theme="dark"] .radar-scene-head p,
+html:not([data-theme="light"]) .radar-scene-head p,
+html[data-theme="dark"] .radar-field,
+html:not([data-theme="light"]) .radar-field { color: #cbd5e1; }
+html[data-theme="dark"] .radar-hint,
+html:not([data-theme="light"]) .radar-hint {
+  background: rgba(251, 191, 36, 0.08);
+  border-color: rgba(251, 191, 36, 0.24);
+  color: #fde68a;
+}
+html[data-theme="dark"] .radar-field input,
+html[data-theme="dark"] .radar-field select,
+html:not([data-theme="light"]) .radar-field input,
+html:not([data-theme="light"]) .radar-field select {
+  background: #0f172a;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+
+
+/* v9 stable: keep v3 layout, only small usability fixes */
+.antenna-type-in-array { min-width: 160px; }
+#observation-info > .w-full { padding-left: 0; padding-right: 0; margin-bottom: 1rem; }
+#observation-info h3[data-lang="observation-point"] { margin-top: 0; }
+#receive-doa-panel .radar-scene-card { clear: both; }
+#receive-doa-panel .doa-controls-grid { margin-bottom: .75rem; }
+#radar-scene-card .radar-field select, #radar-scene-card .radar-field input { max-width: 100%; }
+
+/* v10 clean control layout: keep the v3 look but make controls readable */
+.compact-number-input {
+  width: 4.7rem !important;
+  min-width: 4.7rem;
+  text-align: right;
+}
+.angle-hidden-value { display: none !important; }
+
+/* Antenna editor header: text first, controls in a clean two-column grid */
+.geometry-editor-head {
+  display: grid !important;
+  grid-template-columns: minmax(260px, 1.25fr) minmax(190px, 0.75fr) minmax(220px, 0.9fr);
+  gap: 0.85rem !important;
+  align-items: end !important;
+}
+.geometry-editor-head > div:first-child {
+  min-width: 0;
+}
+.array-source-compact {
+  align-items: stretch !important;
+  min-width: 0 !important;
+  gap: 0.28rem !important;
+}
+.array-source-compact label {
+  line-height: 1.15;
+}
+.array-source-compact select {
+  width: 100% !important;
+  min-width: 0 !important;
+}
+.array-mode-pill {
+  width: max-content;
+  max-width: 100%;
+  white-space: normal;
+  line-height: 1.15;
+}
+
+/* Every array slider has a direct number field. Spacing should be compact; Chebyshev gets more room. */
+.array-size-row .slider-container,
+.array-spacing-taper-row .slider-container {
+  display: grid !important;
+  grid-template-columns: max-content minmax(70px, 1fr) auto auto !important;
+  gap: 0.45rem !important;
+  align-items: center !important;
+}
+.array-size-row .slider-container label,
+.array-spacing-taper-row .slider-container label {
+  width: auto !important;
+  margin-right: 0 !important;
+}
+.array-spacing-taper-row {
+  grid-template-columns: minmax(170px, 0.72fr) minmax(170px, 0.72fr) minmax(300px, 1.35fr) !important;
+}
+.array-spacing-taper-row .spacing-slider input[type="range"] {
+  max-width: 140px;
+}
+.array-spacing-taper-row #chebyshev-sidelobe-slider input[type="range"] {
+  min-width: 180px;
+}
+.array-spacing-taper-row .taper-select-control {
+  grid-template-columns: max-content minmax(110px, 1fr) !important;
+}
+
+/* Noise and LUT belong together; target az/el stays together above them. */
+.doa-noise-lut-pair {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+.doa-slider-line {
+  grid-template-columns: minmax(150px, 1fr) 4.7rem auto !important;
+}
+
+/* Coupling card: value next to slider, help text below instead of cramped on the side. */
+.coupling-card {
+  max-width: 100%;
+}
+.coupling-slider-line {
+  grid-template-columns: minmax(150px, 1fr) 4.7rem auto auto !important;
+  gap: 0.45rem !important;
+}
+.coupling-help {
+  display: block;
+  max-width: 34rem;
+  line-height: 1.35;
+}
+
+@media (max-width: 980px) {
+  .geometry-editor-head,
+  .array-spacing-taper-row,
+  .doa-noise-lut-pair {
+    grid-template-columns: 1fr !important;
+  }
+  .array-spacing-taper-row .spacing-slider input[type="range"],
+  .array-spacing-taper-row #chebyshev-sidelobe-slider input[type="range"] {
+    max-width: none;
+    min-width: 0;
+  }
+}
+
+/* v12: consistent two-column control grids without changing the v3 visual structure */
+:root {
+  --control-label-min: 8.5rem;
+}
+
+/* General: all slider rows use the same proportions: label | slider | number | unit */
+.slider-container {
+  min-width: 0;
+}
+.slider-container:not(.distance-slider-container):not(.coupling-slider-container):not(.doa-slider-card) {
+  display: grid !important;
+  grid-template-columns: minmax(var(--control-label-min), max-content) minmax(130px, 1fr) 4.7rem auto !important;
+  gap: 0.5rem !important;
+  align-items: center !important;
+}
+.slider-container:not(.distance-slider-container):not(.coupling-slider-container):not(.doa-slider-card) > label {
+  width: auto !important;
+  margin: 0 !important;
+  white-space: normal;
+}
+.slider-container:not(.distance-slider-container):not(.coupling-slider-container):not(.doa-slider-card) input[type="range"] {
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+/* Steering block: azimuth and elevation read as one pair. */
+.controls > .flex.flex-wrap.-mx-2 .w-full.px-2.mb-4 > .slider-container:not(.distance-slider-container) {
+  max-width: none;
+}
+.controls > .flex.flex-wrap.-mx-2 .w-full.px-2.mb-4 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+.controls > .flex.flex-wrap.-mx-2 .w-full.px-2.mb-4 > h3,
+.controls > .flex.flex-wrap.-mx-2 .w-full.px-2.mb-4 > .flex,
+.controls > .flex.flex-wrap.-mx-2 .w-full.px-2.mb-4 > .distance-slider-container {
+  grid-column: 1 / -1;
+}
+.distance-slider-row {
+  display: grid !important;
+  grid-template-columns: minmax(var(--control-label-min), max-content) minmax(130px, 1fr) 4.7rem auto !important;
+  gap: 0.5rem !important;
+  align-items: center !important;
+}
+.distance-slider-row label { width: auto !important; margin: 0 !important; }
+.distance-slider-row input[type="range"] { width: 100% !important; min-width: 0 !important; }
+
+/* DOA/target controls: always two controls per row on desktop, equal slider sizes. */
+.doa-control-pair,
+.doa-noise-lut-pair {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 0.75rem !important;
+}
+.doa-slider-line {
+  display: grid !important;
+  grid-template-columns: minmax(130px, 1fr) 4.7rem auto !important;
+  gap: 0.5rem !important;
+  align-items: center !important;
+}
+.doa-slider-line input[type="range"] { width: 100% !important; min-width: 0 !important; }
+
+/* Radar scene grid: stable 2-column form, not 5 tiny columns. */
+.radar-scene-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 0.75rem !important;
+}
+.radar-field {
+  min-width: 0;
+}
+.radar-field input,
+.radar-field select {
+  min-height: 2.25rem;
+}
+.radar-checkbox-field {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 2.25rem;
+}
+.radar-checkbox-field input[type="checkbox"] {
+  justify-self: end;
+}
+
+/* Motion settings: visible but inactive until a motion mode is chosen. */
+.radar-motion-field {
+  opacity: 0.45;
+  filter: grayscale(0.25);
+  position: relative;
+}
+.radar-motion-field input:disabled {
+  cursor: not-allowed;
+}
+#radar-scene-card.motion-disabled .radar-motion-field:first-of-type::after {
+  content: "Choose a motion mode to enable these fields.";
+  display: block;
+  font-size: 0.7rem;
+  color: #64748b;
+  margin-top: 0.25rem;
+  font-weight: 500;
+}
+#radar-scene-card.motion-enabled .radar-motion-field {
+  opacity: 1;
+  filter: none;
+}
+html[data-theme="dark"] #radar-scene-card.motion-disabled .radar-motion-field:first-of-type::after,
+html:not([data-theme="light"]) #radar-scene-card.motion-disabled .radar-motion-field:first-of-type::after {
+  color: var(--lt-muted) !important;
+}
+
+/* Antenna header: title full width, then dropdowns in a clean two-column grid. */
+.geometry-editor-head {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  align-items: end !important;
+}
+.geometry-editor-head > div:first-child {
+  grid-column: 1 / -1;
+}
+.array-source-compact {
+  align-items: stretch !important;
+}
+.array-source-compact label {
+  min-height: 1rem;
+}
+.array-source-compact select {
+  min-height: 2.25rem;
+}
+.array-mode-pill {
+  margin-top: 0.25rem;
+}
+
+/* Antenna array controls: two columns, consistent slider widths. */
+.array-size-row,
+.array-spacing-taper-row {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 0.75rem !important;
+  align-items: center !important;
+}
+.array-spacing-taper-row #chebyshev-sidelobe-slider {
+  grid-column: 1 / -1;
+}
+.array-size-row .slider-container,
+.array-spacing-taper-row .slider-container {
+  grid-template-columns: minmax(var(--control-label-min), max-content) minmax(130px, 1fr) 4.7rem auto !important;
+}
+.array-spacing-taper-row .spacing-slider input[type="range"],
+.array-spacing-taper-row #chebyshev-sidelobe-slider input[type="range"] {
+  max-width: none !important;
+  min-width: 0 !important;
+}
+.array-spacing-taper-row .taper-select-control {
+  display: grid !important;
+  grid-template-columns: minmax(var(--control-label-min), max-content) minmax(0, 1fr) !important;
+  gap: 0.5rem !important;
+  align-items: center !important;
+}
+.array-spacing-taper-row .taper-select-control select {
+  min-height: 2.25rem;
+}
+
+/* Observation point: azimuth/elevation side-by-side with matching control geometry. */
+.observation-slider-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+.observation-slider-grid .slider-container {
+  grid-template-columns: minmax(var(--control-label-min), max-content) minmax(120px, 1fr) 4.7rem auto !important;
+}
+
+/* Keep mathematical foundation equations readable; d_cand is a candidate direction. */
+.mini-math mjx-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+}
+
+@media (max-width: 980px) {
+  .controls > .flex.flex-wrap.-mx-2 .w-full.px-2.mb-4,
+  .doa-control-pair,
+  .doa-noise-lut-pair,
+  .radar-scene-grid,
+  .geometry-editor-head,
+  .array-size-row,
+  .array-spacing-taper-row,
+  .observation-slider-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .array-spacing-taper-row #chebyshev-sidelobe-slider {
+    grid-column: auto;
+  }
+}
+@media (max-width: 640px) {
+  .slider-container:not(.distance-slider-container):not(.coupling-slider-container):not(.doa-slider-card),
+  .distance-slider-row,
+  .array-size-row .slider-container,
+  .array-spacing-taper-row .slider-container,
+  .observation-slider-grid .slider-container {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* v13 / v14: proper equal control grid, no uneven slider widths */
+:root { --pas-control-label: 9.25rem; --pas-number-width: 4.8rem; }
+
+/* Antenna vector editor: title/description on top, two clean dropdown cards below */
+.geometry-editor-head {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 0.75rem !important;
+  align-items: stretch !important;
+}
+.geometry-editor-head > div:first-child {
+  grid-column: 1 / -1 !important;
+  max-width: 68rem;
+}
+.array-field-card {
+  display: grid !important;
+  grid-template-rows: auto auto;
+  gap: 0.35rem !important;
+  padding: 0.62rem 0.7rem;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  border-radius: 0.7rem;
+  background: rgba(255,255,255,0.58);
+}
+.field-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  min-height: 1.25rem;
+}
+.field-label-row label { margin: 0 !important; }
+.geometry-editor-head .array-source-compact select {
+  min-height: 2.25rem;
+  width: 100% !important;
+}
+.geometry-editor-head .array-mode-pill {
+  margin: 0 !important;
+  flex: 0 1 auto;
+  white-space: nowrap;
+  max-width: 55%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Array controls: every item sits in the same two-column grid and every slider has the same length. */
+.array-config-controls { gap: 0.75rem !important; }
+.array-size-row,
+.array-spacing-taper-row {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 0.75rem !important;
+  align-items: stretch !important;
+}
+.array-size-row .slider-container,
+.array-spacing-taper-row .slider-container,
+.array-spacing-taper-row .taper-select-control {
+  display: grid !important;
+  grid-template-columns: minmax(var(--pas-control-label), 0.95fr) minmax(160px, 1.55fr) var(--pas-number-width) auto !important;
+  gap: 0.5rem !important;
+  align-items: center !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0.6rem 0.65rem;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  border-radius: 0.7rem;
+  background: rgba(255,255,255,0.48);
+}
+.array-size-row .slider-container label,
+.array-spacing-taper-row .slider-container label,
+.array-spacing-taper-row .taper-select-control > span {
+  width: auto !important;
+  margin: 0 !important;
+  white-space: normal;
+  line-height: 1.15;
+}
+.array-size-row .slider-container input[type="range"],
+.array-spacing-taper-row .slider-container input[type="range"],
+.array-spacing-taper-row .spacing-slider input[type="range"],
+.array-spacing-taper-row #chebyshev-sidelobe-slider input[type="range"] {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+}
+.array-size-row .compact-number-input,
+.array-spacing-taper-row .compact-number-input {
+  width: var(--pas-number-width) !important;
+  min-width: var(--pas-number-width) !important;
+}
+.array-spacing-taper-row #chebyshev-sidelobe-slider { grid-column: auto !important; }
+.array-spacing-taper-row .taper-select-control {
+  grid-template-columns: minmax(var(--pas-control-label), 0.95fr) minmax(160px, 1.55fr) var(--pas-number-width) auto !important;
+}
+.array-spacing-taper-row .taper-select-control select {
+  grid-column: 2 / 5;
+  width: 100% !important;
+  min-height: 2.25rem;
+}
+.taper-note {
+  margin-top: 0 !important;
+  line-height: 1.45;
+}
+
+/* DOA and observation controls: always neat two-column grid, same slider proportions. */
+.doa-control-pair,
+.doa-noise-lut-pair,
+.observation-slider-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 0.75rem !important;
+}
+.doa-slider-line,
+.observation-slider-grid .slider-container {
+  grid-template-columns: minmax(160px, 1fr) var(--pas-number-width) auto !important;
+  gap: 0.5rem !important;
+}
+.doa-slider-line input[type="range"],
+.observation-slider-grid .slider-container input[type="range"] {
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+/* FMCW target fields: four equal columns on desktop, two on medium, one on mobile. */
+.radar-scene-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 0.75rem !important;
+  align-items: stretch !important;
+}
+.radar-field {
+  display: grid !important;
+  grid-template-rows: auto auto;
+  gap: 0.32rem !important;
+  min-width: 0 !important;
+  padding: 0.6rem 0.65rem;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  border-radius: 0.7rem;
+  background: rgba(255,255,255,0.46);
+}
+.radar-field > span:first-child {
+  min-height: 2.05em;
+  line-height: 1.15;
+  display: flex;
+  align-items: flex-end;
+}
+.radar-field input,
+.radar-field select {
+  min-height: 2.25rem !important;
+  width: 100% !important;
+}
+.radar-checkbox-field {
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  grid-template-rows: auto !important;
+  align-items: center !important;
+}
+.radar-checkbox-field > span:first-child { min-height: 0; align-items: center; }
+.radar-motion-field { transition: opacity .15s ease, filter .15s ease; }
+#radar-scene-card.motion-disabled .radar-motion-field input { pointer-events: none; }
+
+/* Dark theme versions of the new cards */
+html[data-theme="dark"] .array-field-card,
+html[data-theme="dark"] .array-size-row .slider-container,
+html[data-theme="dark"] .array-spacing-taper-row .slider-container,
+html[data-theme="dark"] .array-spacing-taper-row .taper-select-control,
+html[data-theme="dark"] .radar-field,
+html:not([data-theme="light"]) .array-field-card,
+html:not([data-theme="light"]) .array-size-row .slider-container,
+html:not([data-theme="light"]) .array-spacing-taper-row .slider-container,
+html:not([data-theme="light"]) .array-spacing-taper-row .taper-select-control,
+html:not([data-theme="light"]) .radar-field {
+  background: rgba(15, 23, 42, 0.36) !important;
+  border-color: rgba(148, 163, 184, 0.28) !important;
+}
+
+@media (max-width: 1180px) {
+  .radar-scene-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+}
+@media (max-width: 980px) {
+  .geometry-editor-head,
+  .array-size-row,
+  .array-spacing-taper-row,
+  .doa-control-pair,
+  .doa-noise-lut-pair,
+  .observation-slider-grid { grid-template-columns: 1fr !important; }
+  .geometry-editor-head > div:first-child { grid-column: auto !important; }
+}
+@media (max-width: 700px) {
+  .radar-scene-grid { grid-template-columns: 1fr !important; }
+  .array-size-row .slider-container,
+  .array-spacing-taper-row .slider-container,
+  .array-spacing-taper-row .taper-select-control {
+    grid-template-columns: 1fr !important;
+  }
+  .array-spacing-taper-row .taper-select-control select { grid-column: auto; }
+  .geometry-editor-head .array-mode-pill { max-width: 100%; white-space: normal; }
+}
+
+/* v14: real card/grid control layout without changing the v3 page structure */
+:root { --control-card-bg: rgba(15, 23, 42, 0.035); --control-card-border: rgba(148, 163, 184, 0.28); }
+
+/* Visualization dropdowns: one clean grid instead of staggered rows. */
+.visual-select-block {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 0.75rem !important;
+  align-items: stretch !important;
+}
+.visual-select-row { display: contents !important; }
+.visual-select-control,
+.array-field-card,
+.radar-field,
+.doa-slider-card,
+.array-config-controls .slider-container,
+.array-spacing-taper-row .taper-select-control {
+  background: var(--control-card-bg);
+  border: 1px solid var(--control-card-border);
+  border-radius: 0.75rem;
+  padding: 0.65rem 0.75rem;
+}
+.visual-select-control label,
+.array-field-card label,
+.radar-field span:first-child,
+.doa-slider-card label,
+.array-config-controls .slider-container label,
+.array-spacing-taper-row .taper-select-control span:first-child {
+  font-size: 0.78rem !important;
+  font-weight: 700 !important;
+  color: var(--lt-muted, #64748b) !important;
+  margin-bottom: 0.25rem !important;
+}
+.visual-select-control select,
+.array-field-card select,
+.radar-field input,
+.radar-field select,
+.array-spacing-taper-row .taper-select-control select {
+  width: 100% !important;
+}
+
+/* Steering card: 2-column grid for az/el, full-width distance and note. */
+.controls > .flex.flex-wrap.-mx-2 .w-full.px-2.mb-4 {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 0.75rem !important;
+  padding: 0 !important;
+}
+.controls > .flex.flex-wrap.-mx-2 .w-full.px-2.mb-4 > h3,
+.controls > .flex.flex-wrap.-mx-2 .w-full.px-2.mb-4 > .flex,
+.controls > .flex.flex-wrap.-mx-2 .w-full.px-2.mb-4 > .distance-slider-container {
+  grid-column: 1 / -1 !important;
+}
+.controls > .flex.flex-wrap.-mx-2 .w-full.px-2.mb-4 > .slider-container:not(.distance-slider-container),
+.distance-slider-container {
+  background: var(--control-card-bg);
+  border: 1px solid var(--control-card-border);
+  border-radius: 0.75rem;
+  padding: 0.65rem 0.75rem;
+  margin: 0 !important;
+}
+.controls > .flex.flex-wrap.-mx-2 .w-full.px-2.mb-4 > .slider-container:not(.distance-slider-container),
+.distance-slider-row {
+  display: grid !important;
+  grid-template-columns: minmax(7rem, max-content) minmax(120px, 1fr) 4.7rem auto !important;
+  gap: 0.5rem !important;
+  align-items: center !important;
+}
+.controls > .flex.flex-wrap.-mx-2 .w-full.px-2.mb-4 > .slider-container:not(.distance-slider-container) label,
+.distance-slider-row label {
+  width: auto !important;
+  margin: 0 !important;
+}
+
+/* Visualization toggles, coupling and field model in a proper grid. */
+.controls > .mt-4.flex.flex-wrap.justify-between.items-center {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 0.75rem !important;
+  align-items: stretch !important;
+  margin-top: 0.75rem !important;
+}
+.controls > .mt-4.flex.flex-wrap.justify-between.items-center > .flex.items-center,
+.controls > .mt-4.flex.flex-wrap.justify-between.items-center > .flex.items-center.mb-2 {
+  margin: 0 !important;
+  background: var(--control-card-bg);
+  border: 1px solid var(--control-card-border);
+  border-radius: 0.75rem;
+  padding: 0.65rem 0.75rem;
+  justify-content: space-between !important;
+  min-height: 3rem;
+}
+.controls > .mt-4.flex.flex-wrap.justify-between.items-center > .coupling-card {
+  grid-column: span 2 !important;
+  margin: 0 !important;
+}
+.controls > .mt-4.flex.flex-wrap.justify-between.items-center > .flex.items-center.mb-2:last-child,
+.controls > .mt-4.flex.flex-wrap.justify-between.items-center > div:has(#calculation-method) {
+  grid-column: span 2 !important;
+}
+.controls > .mt-4.flex.flex-wrap.justify-between.items-center select#calculation-method {
+  width: 100% !important;
+  min-height: 2.25rem;
+}
+#subpatch-density-slider {
+  background: var(--control-card-bg);
+  border: 1px solid var(--control-card-border);
+  border-radius: 0.75rem;
+  padding: 0.65rem 0.75rem;
+  margin-top: 0.75rem !important;
+  max-width: none !important;
+}
+#subpatch-density-slider input[type="range"] { width: 100% !important; }
+
+/* Antenna preset/header: text full width, then equal dropdown cards. */
+.geometry-editor-head {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 0.75rem !important;
+  align-items: stretch !important;
+}
+.geometry-editor-head > div:first-child {
+  grid-column: 1 / -1 !important;
+  margin-bottom: 0 !important;
+}
+.array-field-card { min-width: 0 !important; }
+.array-field-card .field-label-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 0.5rem !important;
+  margin-bottom: 0.25rem !important;
+}
+.array-mode-pill { white-space: nowrap; margin: 0 !important; }
+
+/* Antenna controls: equal cards, but spacing range itself intentionally compact. */
+.array-config-controls { display: grid !important; gap: 0.75rem !important; }
+.array-size-row,
+.array-spacing-taper-row {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 0.75rem !important;
+  align-items: stretch !important;
+}
+.array-config-controls .slider-container,
+.array-spacing-taper-row .taper-select-control {
+  display: grid !important;
+  grid-template-columns: minmax(7rem, max-content) minmax(0, 1fr) 4.7rem auto !important;
+  gap: 0.5rem !important;
+  align-items: center !important;
+  margin: 0 !important;
+}
+.array-spacing-taper-row .taper-select-control {
+  grid-template-columns: minmax(7rem, max-content) minmax(0, 1fr) !important;
+}
+.array-config-controls .slider-container input[type="range"] {
+  width: 100% !important;
+  min-width: 0 !important;
+}
+.array-spacing-taper-row .spacing-slider input[type="range"] {
+  width: 8rem !important;
+  max-width: 8rem !important;
+  justify-self: start !important;
+}
+.array-spacing-taper-row #chebyshev-sidelobe-slider input[type="range"] {
+  width: 100% !important;
+  max-width: none !important;
+}
+.array-spacing-taper-row #chebyshev-sidelobe-slider {
+  grid-column: auto !important;
+}
+
+/* Radar form: keep the compact 4-column desktop grid requested earlier. */
+.radar-scene-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 0.75rem !important;
+}
+.radar-checkbox-field {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  align-items: center !important;
+}
+
+/* Observation point: az/el as equal grid cards. */
+.observation-slider-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 0.75rem !important;
+}
+.observation-slider-grid .slider-container {
+  background: var(--control-card-bg);
+  border: 1px solid var(--control-card-border);
+  border-radius: 0.75rem;
+  padding: 0.65rem 0.75rem;
+  margin: 0 !important;
+}
+
+html[data-theme="dark"] .visual-select-control,
+html[data-theme="dark"] .array-field-card,
+html[data-theme="dark"] .radar-field,
+html[data-theme="dark"] .doa-slider-card,
+html[data-theme="dark"] .array-config-controls .slider-container,
+html[data-theme="dark"] .array-spacing-taper-row .taper-select-control,
+html[data-theme="dark"] .controls > .flex.flex-wrap.-mx-2 .w-full.px-2.mb-4 > .slider-container:not(.distance-slider-container),
+html[data-theme="dark"] .distance-slider-container,
+html[data-theme="dark"] .controls > .mt-4.flex.flex-wrap.justify-between.items-center > .flex.items-center,
+html[data-theme="dark"] #subpatch-density-slider,
+html[data-theme="dark"] .observation-slider-grid .slider-container,
+html:not([data-theme="light"]) .visual-select-control,
+html:not([data-theme="light"]) .array-field-card,
+html:not([data-theme="light"]) .radar-field,
+html:not([data-theme="light"]) .doa-slider-card,
+html:not([data-theme="light"]) .array-config-controls .slider-container,
+html:not([data-theme="light"]) .array-spacing-taper-row .taper-select-control,
+html:not([data-theme="light"]) .controls > .flex.flex-wrap.-mx-2 .w-full.px-2.mb-4 > .slider-container:not(.distance-slider-container),
+html:not([data-theme="light"]) .distance-slider-container,
+html:not([data-theme="light"]) .controls > .mt-4.flex.flex-wrap.justify-between.items-center > .flex.items-center,
+html:not([data-theme="light"]) #subpatch-density-slider,
+html:not([data-theme="light"]) .observation-slider-grid .slider-container {
+  background: rgba(15, 23, 42, 0.35) !important;
+  border-color: rgba(148, 163, 184, 0.28) !important;
+}
+
+@media (max-width: 1180px) {
+  .visual-select-block,
+  .controls > .mt-4.flex.flex-wrap.justify-between.items-center,
+  .radar-scene-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+}
+@media (max-width: 760px) {
+  .visual-select-block,
+  .controls > .flex.flex-wrap.-mx-2 .w-full.px-2.mb-4,
+  .controls > .mt-4.flex.flex-wrap.justify-between.items-center,
+  .geometry-editor-head,
+  .array-size-row,
+  .array-spacing-taper-row,
+  .radar-scene-grid,
+  .observation-slider-grid { grid-template-columns: 1fr !important; }
+  .controls > .mt-4.flex.flex-wrap.justify-between.items-center > .coupling-card,
+  .controls > .mt-4.flex.flex-wrap.justify-between.items-center > div:has(#calculation-method) { grid-column: auto !important; }
+  .array-spacing-taper-row .spacing-slider input[type="range"] { width: 100% !important; max-width: none !important; }
+}
+
+
+/* v15: final clean grid polish requested by user */
+/* Better names for toggles are handled via data-lang. Keep all toggle cards compact and equal. */
+.controls > .mt-4.flex.flex-wrap.justify-between.items-center {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+}
+.controls > .mt-4.flex.flex-wrap.justify-between.items-center > .coupling-card {
+  grid-column: 1 / -1 !important;
+}
+.coupling-card {
+  display: grid !important;
+  grid-template-columns: minmax(10rem, 0.35fr) minmax(0, 1fr) !important;
+  gap: 0.65rem 0.9rem !important;
+  align-items: center !important;
+}
+.coupling-enable-row {
+  margin: 0 !important;
+  align-self: start !important;
+  padding-top: 0.35rem;
+}
+.coupling-slider-container {
+  display: grid !important;
+  grid-template-columns: minmax(8rem, max-content) minmax(10rem, 1fr) 4.7rem auto !important;
+  gap: 0.5rem !important;
+  align-items: center !important;
+  margin: 0 !important;
+}
+.coupling-slider-container > label {
+  margin: 0 !important;
+  min-width: 0 !important;
+  white-space: normal;
+}
+.coupling-slider-line {
+  display: contents !important;
+}
+.coupling-help {
+  grid-column: 1 / -1 !important;
+  margin: 0.1rem 0 0 !important;
+  max-width: none !important;
+  line-height: 1.35 !important;
+}
+
+/* Field model and subpatch should look like normal grid cards, not squeezed beside coupling text. */
+.controls > .mt-4.flex.flex-wrap.justify-between.items-center > div:has(#calculation-method) {
+  grid-column: span 2 !important;
+}
+#subpatch-density-slider {
+  display: grid !important;
+  grid-template-columns: minmax(9rem, max-content) minmax(12rem, 1fr) 4.7rem auto !important;
+  gap: 0.5rem !important;
+  align-items: center !important;
+}
+#subpatch-density-slider label { margin: 0 !important; }
+
+/* Antenna vector header: less vertical space, still readable. */
+.geometry-editor-head {
+  grid-template-columns: minmax(240px, 1.2fr) minmax(170px, 0.7fr) minmax(220px, 0.9fr) !important;
+  align-items: stretch !important;
+}
+.geometry-editor-head > div:first-child {
+  grid-column: auto !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.array-field-card { padding: 0.55rem 0.65rem !important; }
+.geometry-editor-head .array-mode-pill {
+  max-width: 100% !important;
+  white-space: nowrap !important;
+}
+
+/* Antenna control cards: spacing slider intentionally shorter; other sliders keep the same full card geometry. */
+.array-size-row,
+.array-spacing-taper-row {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+.array-spacing-taper-row .spacing-slider {
+  grid-template-columns: minmax(7rem, max-content) 8rem 4.7rem auto !important;
+}
+.array-spacing-taper-row .spacing-slider input[type="range"] {
+  width: 8rem !important;
+  max-width: 8rem !important;
+  justify-self: start !important;
+}
+.array-spacing-taper-row #chebyshev-sidelobe-slider input[type="range"],
+.array-size-row .slider-container input[type="range"] {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+/* Compact phase table instead of a long bullet list. */
+.phase-shift-table-wrap {
+  overflow-x: auto;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  border-radius: 0.75rem;
+  background: rgba(15, 23, 42, 0.025);
+}
+.phase-shift-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+}
+.phase-shift-table th,
+.phase-shift-table td {
+  padding: 0.38rem 0.5rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+  text-align: right;
+  white-space: nowrap;
+}
+.phase-shift-table th:first-child,
+.phase-shift-table td:first-child { text-align: left; }
+.phase-shift-table th {
+  font-weight: 700;
+  color: var(--lt-muted, #64748b);
+  background: rgba(148, 163, 184, 0.10);
+}
+.phase-shift-table tr:last-child td { border-bottom: none; }
+html[data-theme="dark"] .phase-shift-table-wrap,
+html:not([data-theme="light"]) .phase-shift-table-wrap {
+  background: rgba(15, 23, 42, 0.35) !important;
+  border-color: rgba(148, 163, 184, 0.28) !important;
+}
+
+@media (max-width: 1180px) {
+  .geometry-editor-head { grid-template-columns: 1fr 1fr !important; }
+  .geometry-editor-head > div:first-child { grid-column: 1 / -1 !important; }
+  .coupling-card { grid-template-columns: 1fr !important; }
+  .coupling-slider-container { grid-template-columns: 1fr !important; }
+  .coupling-slider-line { display: grid !important; grid-template-columns: minmax(10rem, 1fr) 4.7rem auto !important; }
+}
+@media (max-width: 760px) {
+  .geometry-editor-head,
+  .controls > .mt-4.flex.flex-wrap.justify-between.items-center,
+  .array-size-row,
+  .array-spacing-taper-row { grid-template-columns: 1fr !important; }
+  .array-spacing-taper-row .spacing-slider,
+  #subpatch-density-slider { grid-template-columns: 1fr !important; }
+  .array-spacing-taper-row .spacing-slider input[type="range"] { width: 100% !important; max-width: none !important; }
+}
+
+
+/* v16 polish: keep control cards full-width and stop coupling/help text from being squeezed. */
+.controls > .mt-4.flex.flex-wrap.justify-between.items-center {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 0.75rem !important;
+  align-items: stretch !important;
+  justify-content: stretch !important;
+}
+.controls > .mt-4.flex.flex-wrap.justify-between.items-center > .flex.items-center:not(.field-model-card) {
+  margin: 0 !important;
+  width: 100% !important;
+  justify-content: space-between !important;
+  min-width: 0 !important;
+  border: 1px solid rgba(148, 163, 184, 0.45);
+  border-radius: 0.75rem;
+  padding: 0.55rem 0.65rem;
+  background: rgba(15, 23, 42, 0.03);
+}
+.coupling-card {
+  grid-column: 1 / -1 !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+}
+.coupling-slider-line {
+  grid-template-columns: minmax(180px, 1fr) 4.7rem auto auto !important;
+  align-items: center !important;
+}
+.coupling-help {
+  display: block !important;
+  width: 100% !important;
+  max-width: 70ch !important;
+  margin-top: 0.55rem !important;
+  line-height: 1.45 !important;
+  white-space: normal !important;
+}
+.field-model-card {
+  grid-column: 1 / -1 !important;
+  display: grid !important;
+  grid-template-columns: minmax(var(--control-label-min), max-content) minmax(220px, 1fr) !important;
+  gap: 0.55rem !important;
+  align-items: center !important;
+  margin: 0 !important;
+  width: 100% !important;
+  border: 1px solid rgba(148, 163, 184, 0.45);
+  border-radius: 0.85rem;
+  padding: 0.65rem 0.75rem;
+  background: rgba(15, 23, 42, 0.03);
+}
+.field-model-card select {
+  width: 100% !important;
+  min-height: 2.25rem;
+}
+.field-model-note {
+  grid-column: 1 / -1 !important;
+  margin-top: 0.15rem !important;
+  line-height: 1.45 !important;
+}
+
+/* Distance slider: same visual width as steering azimuth/elevation controls. */
+.controls > .flex.flex-wrap.-mx-2 .w-full.px-2.mb-4 > .distance-slider-container {
+  grid-column: auto !important;
+  width: 100% !important;
+  margin-top: 0 !important;
+}
+.distance-slider-container {
+  border: 1px solid rgba(148, 163, 184, 0.45);
+  border-radius: 0.85rem;
+  padding: 0.65rem 0.75rem;
+  background: rgba(15, 23, 42, 0.03);
+}
+.distance-slider-row {
+  grid-template-columns: minmax(var(--control-label-min), max-content) minmax(130px, 1fr) 4.7rem auto !important;
+}
+.distance-huygens-note,
+.distance-slider-container [data-lang="steering-target-link-note"] {
+  grid-column: 1 / -1;
+  line-height: 1.45;
+}
+
+/* Subpatch density sits as a normal full-width control below the field model block. */
+#subpatch-density-slider {
+  width: 100% !important;
+}
+
+html[data-theme="dark"] .controls > .mt-4.flex.flex-wrap.justify-between.items-center > .flex.items-center:not(.field-model-card),
+html[data-theme="dark"] .field-model-card,
+html[data-theme="dark"] .distance-slider-container,
+html:not([data-theme="light"]) .controls > .mt-4.flex.flex-wrap.justify-between.items-center > .flex.items-center:not(.field-model-card),
+html:not([data-theme="light"]) .field-model-card,
+html:not([data-theme="light"]) .distance-slider-container {
+  background: rgba(255,255,255,0.035) !important;
+  border-color: var(--lt-border) !important;
+}
+
+@media (max-width: 980px) {
+  .controls > .mt-4.flex.flex-wrap.justify-between.items-center,
+  .field-model-card {
+    grid-template-columns: 1fr !important;
+  }
+  .coupling-slider-line {
+    grid-template-columns: minmax(0, 1fr) 4.7rem auto !important;
+  }
+}
+
+
+/* v17: final control polish requested by user
+   - Distance slider uses the same internal proportions as azimuth/elevation.
+   - Spacing slider is intentionally shorter, with the numeric input directly beside it.
+   - Phase table is compact and vertically scrollable like the coordinate editor.
+   - Preset regenerate button removed in HTML; these rules keep remaining buttons aligned.
+*/
+:root {
+  --pas-v17-label: 9.25rem;
+  --pas-v17-number: 4.8rem;
+  --pas-v17-unit: 1.6rem;
+}
+
+/* Make the steering block a strict two-column grid: az/el/distance all occupy equal cells. */
+.controls > .flex.flex-wrap.-mx-2 .w-full.px-2.mb-4 {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 0.75rem !important;
+  align-items: stretch !important;
+}
+.controls > .flex.flex-wrap.-mx-2 .w-full.px-2.mb-4 > h3,
+.controls > .flex.flex-wrap.-mx-2 .w-full.px-2.mb-4 > .flex.items-center {
+  grid-column: 1 / -1 !important;
+}
+.controls > .flex.flex-wrap.-mx-2 .w-full.px-2.mb-4 > .slider-container:not(.distance-slider-container),
+.controls > .flex.flex-wrap.-mx-2 .w-full.px-2.mb-4 > .distance-slider-container {
+  width: 100% !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  display: grid !important;
+  grid-template-columns: minmax(var(--pas-v17-label), 0.9fr) minmax(0, 1.45fr) var(--pas-v17-number) var(--pas-v17-unit) !important;
+  gap: 0.5rem !important;
+  align-items: center !important;
+}
+.controls > .flex.flex-wrap.-mx-2 .w-full.px-2.mb-4 > .slider-container:not(.distance-slider-container) > label,
+.distance-slider-row > label {
+  width: auto !important;
+  margin: 0 !important;
+  white-space: normal !important;
+  line-height: 1.15 !important;
+}
+.controls > .flex.flex-wrap.-mx-2 .w-full.px-2.mb-4 > .slider-container:not(.distance-slider-container) input[type="range"],
+.distance-slider-row input[type="range"] {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+}
+.distance-slider-container {
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+}
+.distance-slider-row {
+  display: contents !important;
+}
+.distance-huygens-note,
+.distance-slider-container [data-lang="steering-target-link-note"] {
+  grid-column: 1 / -1 !important;
+  margin: 0.35rem 0 0 !important;
+}
+
+/* Array section: regular, readable grid. Surface sliders and Chebyshev are full length;
+   spacing is shorter but still has number + unit directly beside the slider. */
+.array-size-row,
+.array-spacing-taper-row {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 0.75rem !important;
+  align-items: stretch !important;
+}
+.array-size-row .slider-container,
+.array-spacing-taper-row .slider-container,
+.array-spacing-taper-row .taper-select-control {
+  min-width: 0 !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0.6rem 0.65rem !important;
+  border: 1px solid rgba(148, 163, 184, 0.28) !important;
+  border-radius: 0.7rem !important;
+  background: rgba(255,255,255,0.48) !important;
+}
+.array-size-row .slider-container,
+.array-spacing-taper-row #chebyshev-sidelobe-slider {
+  display: grid !important;
+  grid-template-columns: minmax(var(--pas-v17-label), 0.95fr) minmax(0, 1.55fr) var(--pas-v17-number) auto !important;
+  gap: 0.5rem !important;
+  align-items: center !important;
+}
+.array-spacing-taper-row .spacing-slider {
+  display: grid !important;
+  grid-template-columns: minmax(var(--pas-v17-label), 0.95fr) 8.5rem var(--pas-v17-number) auto !important;
+  gap: 0.5rem !important;
+  align-items: center !important;
+}
+.array-size-row .slider-container label,
+.array-spacing-taper-row .slider-container label,
+.array-spacing-taper-row .taper-select-control > span {
+  width: auto !important;
+  margin: 0 !important;
+  white-space: normal !important;
+  line-height: 1.15 !important;
+}
+.array-size-row .slider-container input[type="range"],
+.array-spacing-taper-row #chebyshev-sidelobe-slider input[type="range"] {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+}
+.array-spacing-taper-row .spacing-slider input[type="range"] {
+  width: 8.5rem !important;
+  min-width: 8.5rem !important;
+  max-width: 8.5rem !important;
+  justify-self: start !important;
+}
+.array-size-row .compact-number-input,
+.array-spacing-taper-row .compact-number-input {
+  width: var(--pas-v17-number) !important;
+  min-width: var(--pas-v17-number) !important;
+  justify-self: stretch !important;
+}
+.array-spacing-taper-row .taper-select-control {
+  display: grid !important;
+  grid-template-columns: minmax(var(--pas-v17-label), 0.95fr) minmax(0, 1.55fr) var(--pas-v17-number) auto !important;
+  gap: 0.5rem !important;
+  align-items: center !important;
+}
+.array-spacing-taper-row .taper-select-control select {
+  grid-column: 2 / 5 !important;
+  width: 100% !important;
+  min-height: 2.25rem !important;
+}
+
+/* Action row after coordinate editor: only the useful apply button remains. */
+#custom-coordinate-panel .flex.flex-wrap.gap-2.items-center.mt-3 {
+  justify-content: flex-start !important;
+}
+
+/* Compact, scrollable phase table. */
+.phase-shift-table-wrap {
+  max-height: 13.5rem !important;
+  overflow: auto !important;
+  border-radius: 0.7rem !important;
+}
+.phase-shift-table {
+  font-size: 0.72rem !important;
+  min-width: 34rem !important;
+}
+.phase-shift-table th,
+.phase-shift-table td {
+  padding: 0.24rem 0.38rem !important;
+  line-height: 1.15 !important;
+}
+.phase-shift-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+html[data-theme="dark"] .array-size-row .slider-container,
+html[data-theme="dark"] .array-spacing-taper-row .slider-container,
+html[data-theme="dark"] .array-spacing-taper-row .taper-select-control,
+html:not([data-theme="light"]) .array-size-row .slider-container,
+html:not([data-theme="light"]) .array-spacing-taper-row .slider-container,
+html:not([data-theme="light"]) .array-spacing-taper-row .taper-select-control {
+  background: rgba(15, 23, 42, 0.36) !important;
+  border-color: rgba(148, 163, 184, 0.28) !important;
+}
+
+@media (max-width: 980px) {
+  .controls > .flex.flex-wrap.-mx-2 .w-full.px-2.mb-4,
+  .array-size-row,
+  .array-spacing-taper-row {
+    grid-template-columns: 1fr !important;
+  }
+}
+@media (max-width: 700px) {
+  .controls > .flex.flex-wrap.-mx-2 .w-full.px-2.mb-4 > .slider-container:not(.distance-slider-container),
+  .controls > .flex.flex-wrap.-mx-2 .w-full.px-2.mb-4 > .distance-slider-container,
+  .array-size-row .slider-container,
+  .array-spacing-taper-row .slider-container,
+  .array-spacing-taper-row .spacing-slider,
+  .array-spacing-taper-row #chebyshev-sidelobe-slider,
+  .array-spacing-taper-row .taper-select-control {
+    grid-template-columns: 1fr !important;
+  }
+  .distance-slider-row { display: grid !important; grid-template-columns: 1fr !important; }
+  .array-spacing-taper-row .spacing-slider input[type="range"] {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+  }
+  .array-spacing-taper-row .taper-select-control select { grid-column: auto !important; }
+}
+
+/* v18: second-monitor workflow + radar FFT plots in the live preview */
+.slice-radar-panel {
+  margin-top: .85rem;
+  padding-top: .85rem;
+  border-top: 1px solid rgba(148,163,184,.22);
+}
+.slice-radar-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: .75rem;
+  margin-bottom: .55rem;
+}
+.slice-radar-head strong { color: #f8fafc; font-size: .86rem; }
+.slice-radar-head span { color: #9ca3af; font-size: .72rem; }
+.slice-radar-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .65rem;
+}
+.radar-slice-card canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 108px;
+  border-radius: 10px;
+  background: #0f172a;
+}
+@media (max-width: 1500px) {
+  .slice-radar-grid { grid-template-columns: 1fr; }
+}
+@media (min-width: 1501px) and (max-width: 1900px) {
+  .slice-radar-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.restore-main-preview-btn {
+  position: fixed;
+  z-index: 1000;
+  left: 14px;
+  bottom: 14px;
+  padding: .78rem 1rem;
+  border: 1px solid rgba(148,163,184,.35);
+  border-radius: 999px;
+  background: rgba(37,99,235,.96);
+  color: #fff;
+  font-weight: 800;
+  box-shadow: 0 18px 34px rgba(15,23,42,.35);
+}
+body:not(.plot-popout-mode).main-preview-hidden .canvas-section {
+  display: none !important;
+}
+@media (min-width: 1100px) {
+  body:not(.plot-popout-mode).main-preview-hidden .grid-container {
+    display: block !important;
+  }
+  body:not(.plot-popout-mode).main-preview-hidden .controls-and-info,
+  body:not(.plot-popout-mode).main-preview-hidden .explanations {
+    max-width: 1180px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+
+body.plot-popout-mode .slice-radar-panel {
+  display: block !important;
+}
+body.plot-popout-mode .slice-radar-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+body.plot-popout-mode .radar-slice-card canvas {
+  min-height: 130px;
+}
+@media (max-width: 1100px) {
+  body.plot-popout-mode .slice-radar-grid { grid-template-columns: 1fr; }
+}
+
+/* v19: spacing/motion/geometry-size polish */
+/* Fix spacing control: one compact row, no unit dropping under the field. */
+.array-spacing-taper-row .spacing-slider {
+  grid-template-columns: 5.2rem minmax(5.5rem, 8.5rem) 4.4rem 1.2rem !important;
+  column-gap: 0.45rem !important;
+  align-items: center !important;
+}
+.array-spacing-taper-row .spacing-slider label {
+  white-space: nowrap !important;
+  min-width: 0 !important;
+}
+.array-spacing-taper-row .spacing-slider input[type="range"] {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 8.5rem !important;
+}
+.array-spacing-taper-row .spacing-slider .compact-number-input {
+  width: 4.4rem !important;
+  min-width: 4.4rem !important;
+}
+.array-spacing-taper-row .spacing-slider .angle-unit {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  margin: 0 !important;
+  white-space: nowrap !important;
+}
+
+/* Make disabled motion fields visibly inactive, but keep the selected-mode fields readable. */
+.radar-motion-field.motion-field-disabled {
+  opacity: 0.38 !important;
+  filter: grayscale(0.35) !important;
+}
+.radar-motion-field.motion-field-disabled input {
+  cursor: not-allowed !important;
+}
+#radar-scene-card.motion-enabled .radar-motion-field:not(.motion-field-disabled) {
+  opacity: 1 !important;
+  filter: none !important;
+}
+#radar-scene-card.motion-enabled .radar-motion-field.motion-field-disabled::after {
+  content: "not used in this motion mode";
+  display: block;
+  font-size: 0.68rem;
+  color: #64748b;
+  margin-top: 0.2rem;
+}
+html[data-theme="dark"] #radar-scene-card.motion-enabled .radar-motion-field.motion-field-disabled::after,
+html:not([data-theme="light"]) #radar-scene-card.motion-enabled .radar-motion-field.motion-field-disabled::after {
+  color: var(--lt-muted) !important;
+}
+
+@media (max-width: 700px) {
+  .array-spacing-taper-row .spacing-slider {
+    grid-template-columns: 1fr !important;
+  }
+  .array-spacing-taper-row .spacing-slider input[type="range"],
+  .array-spacing-taper-row .spacing-slider .compact-number-input {
+    width: 100% !important;
+    max-width: none !important;
+  }
+}
+
+/* v20: one global antenna/radar frequency block and tighter spacing control. */
+.system-frequency-card {
+  grid-column: 1 / -1;
+  padding: 0.85rem 0.95rem;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  border-radius: 0.9rem;
+  background: rgba(15, 23, 42, 0.035);
+}
+.system-frequency-head h3 {
+  margin: 0 0 0.2rem;
+  font-size: 0.98rem;
+  font-weight: 700;
+}
+.system-frequency-head p {
+  margin: 0 0 0.75rem;
+  font-size: 0.78rem;
+  color: var(--muted-text, #64748b);
+  line-height: 1.35;
+}
+.system-frequency-grid {
+  display: grid;
+  grid-template-columns: minmax(170px, 1fr) minmax(170px, 1fr) minmax(115px, 0.65fr) minmax(115px, 0.65fr);
+  gap: 0.75rem;
+  align-items: stretch;
+}
+.system-frequency-readout {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 3.85rem;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  border-radius: 0.7rem;
+  background: rgba(15, 23, 42, 0.06);
+}
+.system-frequency-readout span {
+  font-size: 0.72rem;
+  color: var(--muted-text, #64748b);
+}
+.system-frequency-readout strong {
+  font-size: 0.95rem;
+  line-height: 1.15;
+}
+@media (max-width: 900px) {
+  .system-frequency-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) {
+  .system-frequency-grid { grid-template-columns: 1fr; }
+}
+
+/* v20: Spacing uses the same clean label | slider | number | unit layout, but compact. */
+.array-spacing-taper-row .spacing-slider.slider-container {
+  grid-template-columns: max-content minmax(95px, 130px) 4.1rem auto !important;
+}
+.array-spacing-taper-row .spacing-slider .angle-unit {
+  display: inline-flex !important;
+  align-items: center;
+  white-space: nowrap;
+  margin-left: 0 !important;
+}
+.array-spacing-taper-row .spacing-slider input[type="range"] {
+  width: 100% !important;
+  max-width: 130px !important;
+}
+.array-spacing-taper-row .spacing-slider .compact-number-input {
+  width: 4.1rem !important;
+  min-width: 4.1rem !important;
+}
+
+/* v21: radar frequency belongs to radar settings; RCS auto estimate card. */
+#radar-scene-card .system-frequency-card.radar-frequency-in-scene {
+  margin-top: 0.85rem !important;
+  margin-bottom: 0.85rem !important;
+  width: 100%;
+}
+#radar-scene-card .system-frequency-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.radar-readout-field {
+  justify-content: center;
+}
+.radar-readout-field strong {
+  font-size: 1rem;
+  color: var(--text-color, #e5e7eb);
+  line-height: 1.2;
+}
+.radar-readout-field small {
+  color: var(--muted-text, #94a3b8);
+  line-height: 1.25;
+  font-size: 0.72rem;
+}
+.radar-field input:disabled,
+.radar-field select:disabled {
+  opacity: 0.62;
+  cursor: not-allowed;
+}
+@media (max-width: 1100px) {
+  #radar-scene-card .system-frequency-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  #radar-scene-card .system-frequency-grid { grid-template-columns: 1fr; }
+}
+
+/* v22: final polish for compact Spacing and Subpatch Density rows.
+   Both use one single horizontal row: label | slider | number | unit. */
+.array-spacing-taper-row .spacing-slider.slider-container {
+  display: grid !important;
+  grid-template-columns: minmax(7.2rem, max-content) minmax(88px, 118px) 4.7rem auto !important;
+  column-gap: 0.5rem !important;
+  row-gap: 0 !important;
+  align-items: center !important;
+  justify-content: start !important;
+  width: 100% !important;
+  min-width: 0 !important;
+}
+.array-spacing-taper-row .spacing-slider.slider-container > label {
+  grid-column: 1 !important;
+  width: auto !important;
+  margin: 0 !important;
+  white-space: nowrap !important;
+}
+.array-spacing-taper-row .spacing-slider.slider-container > input[type="range"] {
+  grid-column: 2 !important;
+  width: 100% !important;
+  min-width: 88px !important;
+  max-width: 118px !important;
+  margin: 0 !important;
+}
+.array-spacing-taper-row .spacing-slider.slider-container > .compact-number-input,
+.array-spacing-taper-row .spacing-slider.slider-container > #element-spacing-input {
+  grid-column: 3 !important;
+  width: 4.7rem !important;
+  min-width: 4.7rem !important;
+  margin: 0 !important;
+  justify-self: stretch !important;
+}
+.array-spacing-taper-row .spacing-slider.slider-container > .angle-unit {
+  grid-column: 4 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  width: auto !important;
+  margin: 0 !important;
+  white-space: nowrap !important;
+  line-height: 1 !important;
+}
+
+#subpatch-density-slider.slider-container {
+  display: grid !important;
+  grid-template-columns: minmax(9.5rem, max-content) minmax(130px, 1fr) 4.7rem auto !important;
+  column-gap: 0.5rem !important;
+  row-gap: 0 !important;
+  align-items: center !important;
+  width: 100% !important;
+  max-width: 32rem !important;
+  margin-top: 0.75rem !important;
+  margin-bottom: 0 !important;
+}
+#subpatch-density-slider.slider-container > label {
+  grid-column: 1 !important;
+  width: auto !important;
+  margin: 0 !important;
+  white-space: nowrap !important;
+}
+#subpatch-density-slider.slider-container > input[type="range"] {
+  grid-column: 2 !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+}
+#subpatch-density-slider.slider-container > #subpatch-density-input {
+  grid-column: 3 !important;
+  width: 4.7rem !important;
+  min-width: 4.7rem !important;
+  margin: 0 !important;
+  justify-self: stretch !important;
+}
+#subpatch-density-slider.slider-container > .angle-unit {
+  grid-column: 4 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  width: auto !important;
+  margin: 0 !important;
+  white-space: nowrap !important;
+  line-height: 1 !important;
+}
+#subpatch-density-slider .angle-hidden-value,
+.array-spacing-taper-row .spacing-slider .angle-hidden-value {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+}
+
+@media (max-width: 700px) {
+  .array-spacing-taper-row .spacing-slider.slider-container,
+  #subpatch-density-slider.slider-container {
+    grid-template-columns: minmax(7rem, max-content) minmax(80px, 1fr) 4.7rem auto !important;
+    max-width: none !important;
+  }
+}
+
+/* v23: compact radar result cards, two cards per row, plots below */
+.radar-results-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 0.75rem !important;
+  align-items: stretch !important;
+}
+.radar-results-wide {
+  grid-column: 1 / -1 !important;
+}
+.radar-combined-card {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 0.65rem !important;
+  align-items: stretch !important;
+  min-width: 0 !important;
+}
+.radar-card-section {
+  min-width: 0 !important;
+}
+.radar-card-divider {
+  display: none !important;
+}
+.radar-combined-card .text-xs {
+  overflow-wrap: anywhere;
+}
+@media (max-width: 760px) {
+  .radar-results-grid { grid-template-columns: 1fr !important; }
+  .radar-combined-card { grid-template-columns: 1fr !important; }
+  .radar-card-divider {
+    display: block !important;
+    height: 1px;
+    background: rgba(148, 163, 184, 0.22);
+  }
+}
+
+/* v24: metric cards first, plots only below */
+.radar-metric-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 0.75rem !important;
+  align-items: stretch !important;
+}
+.radar-metric-card {
+  min-width: 0 !important;
+  overflow: hidden !important;
+}
+.radar-metric-card .doa-big-value {
+  line-height: 1.08 !important;
+}
+.radar-metric-card .text-xs {
+  overflow-wrap: anywhere !important;
+}
+.radar-plot-stack {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 0.75rem !important;
+}
+.radar-plot-stack .radar-fft-grid {
+  margin-top: 0 !important;
+}
+.radar-results-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+@media (max-width: 760px) {
+  .radar-metric-grid { grid-template-columns: 1fr !important; }
+}
+
+
+/* v42: radar/DOA plots are stacked one per line and elevation gets its own cut plot. */
+.radar-plot-stack .radar-fft-grid {
+  grid-template-columns: 1fr !important;
+}
+.radar-plot-stack canvas,
+#doa-az-cut,
+#doa-el-cut {
+  display: block;
+  width: 100% !important;
+}
+#doa-el-cut {
+  height: 150px;
+  border-radius: 0.45rem;
+  background: #0f172a;
+}
+
+
+/* v43: compact radar FFT layout + reduced memory pressure */
+.slice-radar-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: .42rem !important;
+}
+.slice-radar-panel { margin-top: .55rem !important; padding-top: .55rem !important; }
+.radar-slice-card { padding: .42rem !important; }
+.radar-slice-card .slice-card-head { gap: .25rem; font-size: .72rem; }
+.radar-slice-card canvas { min-height: 86px !important; height: 92px !important; }
+.radar-plot-stack { display: grid; gap: .55rem; }
+.radar-fft-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: .55rem !important;
+}
+.radar-rd-card canvas,
+#radar-rd-map,
+#radar-range-fft,
+#radar-doppler-fft {
+  height: 128px !important;
+}
+#doa-sample-map,
+#doa-az-cut,
+#doa-el-cut { height: 125px !important; }
+@media (max-width: 760px) {
+  .slice-radar-grid { grid-template-columns: 1fr !important; }
+  .radar-fft-grid { grid-template-columns: 1fr !important; }
+}
+body.plot-popout-mode .slice-radar-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+
+/* v45: requested radar plot placement.
+   - Detail radar/DOA plots in the controls area: always two columns when space allows.
+   - Compact Radar FFT views next to the 3D workspace: one plot per row. */
+.radar-detail-plot-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: .55rem !important;
+  align-items: stretch !important;
+}
+.radar-detail-plot-grid .doa-wide-card,
+.radar-detail-plot-grid .radar-results-wide {
+  grid-column: auto !important;
+}
+.radar-detail-plot-grid canvas {
+  display: block !important;
+  width: 100% !important;
+}
+.slice-radar-grid,
+body.plot-popout-mode .slice-radar-grid {
+  grid-template-columns: 1fr !important;
+  gap: .42rem !important;
+}
+.slice-radar-panel .radar-slice-card canvas,
+body.plot-popout-mode .radar-slice-card canvas {
+  min-height: 86px !important;
+  height: 92px !important;
+}
+@media (max-width: 760px) {
+  .radar-detail-plot-grid { grid-template-columns: 1fr !important; }
+}
+
+
+/* v45: put all radar/DOA plots into the left visualization panel only.
+   Controls on the right stay controls-only. Canvas backing stores are resized in JS,
+   so CSS no longer stretches plot text or curves. */
+#visual-workspace { scroll-margin-top: 1rem; }
+.slice-radar-panel .slice-radar-grid { display: none !important; }
+.slice-radar-panel .radar-plot-stack {
+  margin-top: .5rem !important;
+  display: block !important;
+}
+.slice-radar-panel .radar-detail-plot-grid {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: .55rem !important;
+}
+.slice-radar-panel .doa-map-card,
+.slice-radar-panel .radar-rd-card {
+  min-width: 0 !important;
+  overflow: hidden !important;
+  padding: .48rem !important;
+}
+.slice-radar-panel .doa-map-card canvas,
+.slice-radar-panel .radar-rd-card canvas,
+.slice-radar-panel #radar-rd-map,
+.slice-radar-panel #radar-range-fft,
+.slice-radar-panel #radar-doppler-fft,
+.slice-radar-panel #doa-correlation-map,
+.slice-radar-panel #doa-sample-map,
+.slice-radar-panel #doa-az-cut,
+.slice-radar-panel #doa-el-cut {
+  display: block !important;
+  width: 100% !important;
+  height: 150px !important;
+  max-width: 100% !important;
+  border-radius: .45rem;
+  background: #0f172a;
+  image-rendering: auto;
+}
+.slice-radar-panel #radar-rd-map,
+.slice-radar-panel #doa-correlation-map { height: 175px !important; }
+.slice-radar-panel .text-xs { line-height: 1.25 !important; }
+@media (min-width: 1120px) {
+  .slice-radar-panel .radar-detail-plot-grid.wide-left-plots {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+
+/* v49 stable rollback from v45: no JS scroll/theme rewrites. */
+#visualization-settings-title { scroll-margin-top: 16px; }
+@media (min-width: 760px) {
+  .slice-radar-panel .radar-detail-plot-grid,
+  .slice-radar-panel .radar-detail-plot-grid.wide-left-plots {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+@media (max-width: 759px) {
+  .slice-radar-panel .radar-detail-plot-grid,
+  .slice-radar-panel .radar-detail-plot-grid.wide-left-plots {
+    grid-template-columns: 1fr !important;
+  }
+}

@@ -1,1 +1,1 @@
-2026-05-04-1156-layout-cleanup
+window.APP_VERSION_MARKER = 'assets_radar_ui_v55_radar_language_completion';

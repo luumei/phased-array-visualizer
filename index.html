@@ -26,39 +26,39 @@ Project website: https://phased-array-simulator.com
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="js/mathjax-config.js?v=2026-05-04-distance-left-layout-v1"></script>
-<script async="True" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js?v=2026-05-04-distance-left-layout-v1"></script>
+<script src="js/mathjax-config.js?v=2026-05-24-v41-motion-cuts-quality"></script>
+<script async="True" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js?v=2026-05-24-v41-motion-cuts-quality"></script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <!-- Cache/version control: forces browsers and crawlers to revalidate after updates. -->
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<meta name="app-version" content="2026-05-04-distance-left-layout-v1">
+<meta name="app-version" content="2026-05-24-v41-motion-cuts-quality">
 <meta name="last-modified" content="2026-05-02">
 
-<title>Phased Array Simulator – 3D Beamforming Tool</title>
-<meta name="description" content="Free interactive phased array simulator for 3D beamforming, antenna array visualization, steering angle, element spacing, radiation patterns, array factor and dB display.">
-<meta name="keywords" content="phased array simulator, 3D beamforming tool, antenna array simulator, antenna array visualizer, radiation pattern simulator, array factor, beam steering, RF engineering, Fraunhofer far field, dB antenna pattern">
+<title>Phased Array & Radar DOA Simulator</title>
+<meta name="description" content="Free interactive phased array and radar DOA simulator for 3D beamforming, direction finding, antenna array visualization, noisy receive samples, steering angle, element spacing, radiation patterns, array factor and dB display.">
+<meta name="keywords" content="phased array simulator, radar DOA simulator, direction of arrival simulator, 3D beamforming tool, antenna array simulator, antenna array visualizer, radiation pattern simulator, array factor, beam steering, RF engineering, Fraunhofer far field, dB antenna pattern">
 <meta name="author" content="phased-array-simulator.com">
 <meta name="copyright" content="Copyright (c) 2026 phased-array-simulator.com">
 <meta name="license" content="MIT">
-<meta name="application-name" content="Phased Array Simulator">
+<meta name="application-name" content="Phased Array & Radar DOA Simulator">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://phased-array-simulator.com/">
-<meta property="og:title" content="Phased Array Simulator – 3D Beamforming Tool">
+<meta property="og:title" content="Phased Array & Radar DOA Simulator">
 <meta property="og:description" content="Interactive 3D phased array simulator for antenna array beamforming, steering, radiation patterns, array factor and dB visualization.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://phased-array-simulator.com/">
 <meta property="og:site_name" content="phased-array-simulator.com">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Phased Array Simulator – 3D Beamforming Tool">
-<meta name="twitter:description" content="Free browser tool for 3D phased array beamforming and antenna array radiation pattern visualization.">
+<meta name="twitter:title" content="Phased Array & Radar DOA Simulator">
+<meta name="twitter:description" content="Free browser tool for 3D phased array beamforming, radar DOA testing, direction finding and antenna array radiation pattern visualization.">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  "name": "Phased Array Simulator – 3D Beamforming Tool",
+  "name": "Phased Array & Radar DOA Simulator",
   "applicationCategory": "EngineeringApplication",
   "operatingSystem": "Web browser",
   "url": "https://phased-array-simulator.com/",
@@ -74,26 +74,26 @@ Project website: https://phased-array-simulator.com
     "url": "https://phased-array-simulator.com/"
   },
   "license": "https://opensource.org/licenses/MIT",
-  "description": "Free interactive 3D phased array simulator for beamforming, antenna array visualization, steering angle, element spacing, radiation patterns, array factor and dB display.",
+  "description": "Free interactive 3D phased array and radar DOA simulator for beamforming, direction finding, antenna array visualization, steering angle, element spacing, radiation patterns, array factor and dB display.",
   "isAccessibleForFree": true,
   "dateModified": "2026-05-02",
-  "keywords": "phased array simulator, antenna array simulator, beamforming, antenna visualizer, RF engineering"
+  "keywords": "phased array simulator, radar DOA simulator, direction of arrival, antenna array simulator, beamforming, antenna visualizer, RF engineering"
 }
 </script>
 <meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0b0b0f" media="(prefers-color-scheme: dark)">
-<script src="https://cdn.tailwindcss.com?v=2026-05-04-distance-left-layout-v1"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js?v=2026-05-04-distance-left-layout-v1"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js?v=2026-05-04-distance-left-layout-v1"></script>
-<link rel="stylesheet" href="css/style.css?v=2026-05-04-distance-left-layout-v1">
+<script src="https://cdn.tailwindcss.com?v=2026-05-24-v41-motion-cuts-quality"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js?v=2026-05-24-v41-motion-cuts-quality"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js?v=2026-05-24-v41-motion-cuts-quality"></script>
+<link rel="stylesheet" href="css/style.css?v=2026-05-24-v41-motion-cuts-quality">
 
-<script src="js/version-marker.js?v=2026-05-04-distance-left-layout-v1"></script>
+<script src="js/version-marker.js?v=2026-05-24-v41-motion-cuts-quality"></script>
 </head>
 <body>
 <div class="container mx-auto max-w-7xl">
 <!-- Header Section -->
 <div class="header-section flex flex-col md:flex-row items-center md:justify-between mb-4">
-  <h1 class="text-xl sm:text-2xl font-bold text-gray-800 mb-2 md:mb-0" data-lang="title">Free 3D Phased Array Simulator</h1>
+  <h1 class="text-lg sm:text-xl font-bold text-gray-800 mb-2 md:mb-0 leading-tight" data-lang="title">Phased Array & Radar DOA Simulator</h1>
   <div class="header-tools">
     <div class="theme-selector">
       <span data-lang="theme-label">Appearance:</span>
@@ -117,15 +117,15 @@ Project website: https://phased-array-simulator.com
 </div>
 
 <section class="seo-hero" aria-labelledby="seo-title">
-  <h2 id="seo-title" data-lang="seo-title">Free 3D Phased Array Simulator for Beamforming & Antenna Array Visualization</h2>
+  <h2 id="seo-title" data-lang="seo-title">3D Beamforming, Radar DOA & Antenna Tool</h2>
   <p data-lang="seo-desc-1">
-    Explore phased array beam steering directly in the browser. This interactive RF engineering tool visualizes antenna array geometry, element spacing, steering direction, 3D radiation lobes, simplified mutual coupling and prescribed-current Huygens-style/Fraunhofer behavior.
+    Explore phased array beam steering and simple radar/receive DOA estimation directly in the browser. This interactive RF engineering tool visualizes antenna array geometry, element spacing, steering direction, 3D radiation lobes, simplified mutual coupling and prescribed-current Huygens-style/Fraunhofer behavior.
   </p>
   <p data-lang="seo-desc-2">
     The simulator is designed for learning and experimentation: instead of relying only on fixed 2D antenna pattern pictures, it uses vector-based field calculations to show how antenna elements combine in 3D space.
   </p>
 <div class="seo-actions">
-    <a class="seo-pill primary" href="#canvas-container" data-lang="seo-start">Start the simulator</a>
+    <a class="seo-pill primary" href="#visualization-settings-title" data-lang="seo-start">Start the simulator</a>
     <a class="seo-pill" href="https://github.com/luumei/phased-array-visualizer" target="_blank" rel="noopener noreferrer" data-lang="seo-github">View source code on GitHub</a>
   </div>
   <div class="seo-keywords" aria-label="Main topics">
@@ -134,6 +134,7 @@ Project website: https://phased-array-simulator.com
     <span data-lang="keyword-beamforming-tool">beamforming tool</span>
     <span data-lang="keyword-3d-radiation-pattern">3D radiation pattern</span>
     <span data-lang="keyword-rf-engineering">RF engineering</span>
+    <span>radar DOA estimation</span>
   </div>
   <div class="source-card" data-lang="source-card">
     Source code: inspect, fork or improve the project on
@@ -149,8 +150,11 @@ Project website: https://phased-array-simulator.com
   <p data-lang="seo-learning-p2">
     This browser-based antenna array simulator is useful for students, RF engineers and makers who want to understand beamforming without starting with a full electromagnetic solver. The visualization connects the array factor, Fraunhofer far-field approximation and simplified prescribed-current Huygens-style field model in one place.
   </p>
+  <p data-lang="seo-learning-p3">
+    The same antenna position vectors can also be used for receive and radar direction-of-arrival experiments. The simulator can generate noisy complex antenna samples, compare them with many possible reference responses, and show the estimated target direction as a DOA correlation map.
+  </p>
 
-  <div class="seo-content-grid">
+  <div class="seo-content-grid seo-card-grid-expanded">
     <div class="seo-content-card">
       <h3 data-lang="seo-beamforming-title">Beamforming and steering</h3>
       <p data-lang="seo-beamforming-p">
@@ -158,9 +162,27 @@ Project website: https://phased-array-simulator.com
       </p>
     </div>
     <div class="seo-content-card">
+      <h3 data-lang="seo-geometry-title">Vector array geometry</h3>
+      <p data-lang="seo-geometry-p">
+        The array is defined by real antenna position vectors r_n = [x_n, y_n, z_n]. You can use rectangular, circular, spiral, parabolic or manual coordinate layouts instead of only a fixed checkbox grid.
+      </p>
+    </div>
+    <div class="seo-content-card">
+      <h3 data-lang="seo-radar-title">Radar and receive DOA</h3>
+      <p data-lang="seo-radar-p">
+        The radar/receive mode creates noisy complex antenna samples, builds reference responses for many possible target directions and estimates the direction with the highest matched-filter correlation.
+      </p>
+    </div>
+    <div class="seo-content-card">
       <h3 data-lang="seo-spacing-title">Element spacing and grating lobes</h3>
       <p data-lang="seo-spacing-p">
         Element spacing strongly affects the array pattern. Around half-wavelength spacing is commonly used because it helps avoid strong grating lobes, while very small spacing increases mutual coupling and changes the real element currents.
+      </p>
+    </div>
+    <div class="seo-content-card">
+      <h3 data-lang="seo-mutual-title">Simplified mutual coupling</h3>
+      <p data-lang="seo-mutual-p">
+        An optional coupling estimate modifies the complex element currents with a rough nearest-neighbour matrix. It is useful for intuition, but it is not a replacement for FEM, MoM, FDTD or measured S-parameters.
       </p>
     </div>
     <div class="seo-content-card">
@@ -178,6 +200,7 @@ Project website: https://phased-array-simulator.com
     <li data-lang="seo-use-li-3">Switch between linear and normalized dB display.</li>
     <li data-lang="seo-use-li-4">Explore array factor behavior, sidelobes, nulls and tapering.</li>
     <li data-lang="seo-use-li-5">Compare Fraunhofer far-field behavior with a simplified finite-distance Huygens-style model.</li>
+    <li data-lang="seo-use-li-6">Test noisy receive / radar DOA estimation with a matched-filter correlation map.</li>
   </ul>
 </section>
 
@@ -215,23 +238,23 @@ Project website: https://phased-array-simulator.com
   </div>
 </details>
 <details class="workspace-details" id="workspace-details" open>
-  <summary>Sticky 2D + 3D preview (tap to collapse)</summary>
+  <summary data-lang="workspace-summary">Sticky 2D + 3D preview (tap to collapse)</summary>
   <div class="workspace-details-inner">
     <div class="workspace-toolbar-inline">
-      <button class="slice-mini-btn plot-popout-btn workspace-popout-main" id="workspace-popout" type="button" title="Open the complete live 2D + 3D visualization in a separate browser window">Open in new window</button>
-      <button class="slice-mini-btn" id="toggle-workspace-compact" type="button" title="Make the 2D/3D workspace shorter or restore it">2D/3D small</button>
+      <button class="slice-mini-btn plot-popout-btn workspace-popout-main" id="workspace-popout" type="button" title="Open the complete live 2D + 3D visualization in a separate browser window" data-lang="workspace-open-new-window">Open in new window</button>
+      <button class="slice-mini-btn" id="toggle-workspace-compact" type="button" title="Make the 2D/3D workspace shorter or restore it" data-lang="workspace-small">2D/3D small</button>
     </div>
 <div class="visual-workspace" id="visual-workspace">
   <aside class="slice-dashboard" id="slice-dashboard" data-plot-theme="light" aria-label="2D radiation pattern and visual projection dashboard">
     <div class="slice-dashboard-head">
       <div>
-        <strong>2D radiation views</strong>
-        <span>angular patterns plus a visual top projection</span>
+        <strong data-lang="slice-2d-title">2D radiation views</strong>
+        <span data-lang="slice-2d-subtitle">angular patterns plus a visual top projection</span>
       </div>
       <div class="slice-dashboard-toolbar">
-        <label class="slice-cut-control">Azimuth cut elevation
+        <label class="slice-cut-control"><span data-lang="slice-az-cut-elevation-label">Azimuth cut elevation</span>
           <select id="azimuth-cut-elevation" class="border rounded px-1 py-0 text-xs">
-            <option value="steering">steering</option>
+            <option value="steering" data-lang="slice-option-steering">steering</option>
             <option value="0" selected>0°</option>
             <option value="15">15°</option>
             <option value="30">30°</option>
@@ -241,40 +264,51 @@ Project website: https://phased-array-simulator.com
             <option value="90">90°</option>
           </select>
         </label>
-        <label class="slice-mini-toggle">plot <select id="slice-plot-theme" class="border rounded px-1 py-0 text-xs"><option value="auto" selected>auto</option><option value="light">white</option><option value="dark">black</option></select></label>
-        <button class="slice-mini-btn" id="toggle-2d-panel" type="button" title="Collapse or show the 2D plots">Hide 2D</button>
-        <button class="slice-mini-btn print-report-btn" id="print-report" type="button">Print report</button>
-        <button class="slice-mini-btn" id="slice-dashboard-fullscreen" type="button">Fullscreen</button>
-        <button class="slice-mini-btn" id="workspace-fullscreen" type="button">Big view</button>
+        <label class="slice-mini-toggle"><span data-lang="slice-plot-label">plot</span> <select id="slice-plot-theme" class="border rounded px-1 py-0 text-xs"><option value="auto" selected data-lang="slice-theme-auto">auto</option><option value="light" data-lang="slice-theme-white">white</option><option value="dark" data-lang="slice-theme-black">black</option></select></label>
+        <button class="slice-mini-btn" id="toggle-2d-panel" type="button" title="Collapse or show the 2D plots" data-lang="slice-hide-2d">Hide 2D</button>
+        <button class="slice-mini-btn print-report-btn" id="print-report" type="button" data-lang="print-report-btn">Print report</button>
+        <button class="slice-mini-btn" id="slice-dashboard-fullscreen" type="button" data-lang="slice-fullscreen">Fullscreen</button>
+        <button class="slice-mini-btn" id="workspace-fullscreen" type="button" data-lang="workspace-big-view">Big view</button>
       </div>
     </div>
     <div class="slice-dashboard-grid">
       <article class="slice-card" data-slice-card="azimuth" title="Azimuth pattern: horizontal angular cut around the antenna">
-        <div class="slice-card-head"><strong>Azimuth pattern</strong><span id="slice-panel-azimuth-range">—</span></div>
-        <label class="slice-marker-choice"><input id="slice-marker-azimuth" type="checkbox"> show azimuth cut surface in 3D</label>
+        <div class="slice-card-head"><strong data-lang="slice-azimuth-pattern">Azimuth pattern</strong><span id="slice-panel-azimuth-range">—</span></div>
+        <label class="slice-marker-choice"><input id="slice-marker-azimuth" type="checkbox"> <span data-lang="slice-show-az-cut-3d">show azimuth cut surface in 3D</span></label>
         <svg id="slice-panel-canvas-azimuth" viewBox="0 0 120 120" role="img" aria-label="Azimuth radiation pattern"></svg>
-        <div class="slice-card-foot"><span>front</span><span>azimuth cut</span><span>side</span></div>
+        <div class="slice-card-foot"><span data-lang="slice-foot-front">front</span><span data-lang="slice-foot-az-cut">azimuth cut</span><span data-lang="slice-foot-side">side</span></div>
       </article>
       <article class="slice-card" data-slice-card="elevation" title="Elevation pattern: vertical angular cut through the current steering azimuth">
-        <div class="slice-card-head"><strong>Elevation pattern</strong><span id="slice-panel-elevation-range">—</span></div>
-        <label class="slice-marker-choice"><input id="slice-marker-elevation" type="checkbox"> show vertical circular cut in 3D</label>
+        <div class="slice-card-head"><strong data-lang="slice-elevation-pattern">Elevation pattern</strong><span id="slice-panel-elevation-range">—</span></div>
+        <label class="slice-marker-choice"><input id="slice-marker-elevation" type="checkbox"> <span data-lang="slice-show-el-cut-3d">show vertical circular cut in 3D</span></label>
         <svg id="slice-panel-canvas-elevation" viewBox="0 0 120 120" role="img" aria-label="Elevation radiation pattern"></svg>
-        <div class="slice-card-foot"><span>front</span><span>elevation cut</span><span>up</span></div>
+        <div class="slice-card-foot"><span data-lang="slice-foot-front">front</span><span data-lang="slice-foot-el-cut">elevation cut</span><span data-lang="slice-foot-up">up</span></div>
       </article>
       <article class="slice-card" data-slice-card="beam" title="Beam-plane pattern: angular cut through the current main steering direction">
-        <div class="slice-card-head"><strong>Beam-plane pattern</strong><span id="slice-panel-beam-range">—</span></div>
-        <label class="slice-marker-choice"><input id="slice-marker-beam" type="checkbox"> show beam circular cut in 3D</label>
+        <div class="slice-card-head"><strong data-lang="slice-beam-pattern">Beam-plane pattern</strong><span id="slice-panel-beam-range">—</span></div>
+        <label class="slice-marker-choice"><input id="slice-marker-beam" type="checkbox"> <span data-lang="slice-show-beam-cut-3d">show beam circular cut in 3D</span></label>
         <svg id="slice-panel-canvas-beam" viewBox="0 0 120 120" role="img" aria-label="Beam-plane radiation pattern"></svg>
-        <div class="slice-card-foot"><span>beam</span><span>steering cut</span><span>orthogonal</span></div>
+        <div class="slice-card-foot"><span data-lang="slice-foot-beam">beam</span><span data-lang="slice-foot-steering-cut">steering cut</span><span data-lang="slice-foot-orthogonal">orthogonal</span></div>
       </article>
       <article class="slice-card" data-slice-card="top" title="Top projection: visual footprint of the 3D pattern on the horizontal view">
-        <div class="slice-card-head"><strong>Top projection</strong><span id="slice-panel-top-range">—</span></div>
-        <label class="slice-marker-choice"><input id="slice-marker-top" type="checkbox"> show top projection screen in 3D</label>
+        <div class="slice-card-head"><strong data-lang="slice-top-projection">Top projection</strong><span id="slice-panel-top-range">—</span></div>
+        <label class="slice-marker-choice"><input id="slice-marker-top" type="checkbox"> <span data-lang="slice-show-top-proj-3d">show top projection screen in 3D</span></label>
         <svg id="slice-panel-canvas-top" viewBox="0 0 120 120" role="img" aria-label="Top projection of radiation pattern"></svg>
-        <div class="slice-card-foot"><span>left/right</span><span>top footprint</span><span>front/back</span></div>
+        <div class="slice-card-foot"><span data-lang="slice-foot-left-right">left/right</span><span data-lang="slice-foot-top-footprint">top footprint</span><span data-lang="slice-foot-front-back">front/back</span></div>
       </article>
     </div>
-    <div class="slice-note">Angular patterns use the same direction-based field formula as the 3D view. The azimuth plot is a horizontal angular cut at the selected elevation; when elevation is 0°, it is the standard top-direction pattern. The elevation plot is a vertical angular cut at the steering azimuth. The beam-plane plot cuts through the steered beam direction, so it always includes the main beam. The top projection is only a visual footprint from above, not a physical radiation cut.</div>
+    <section class="slice-radar-panel" id="slice-radar-panel" aria-label="Radar range and Doppler plots">
+      <div class="slice-radar-head">
+        <strong data-lang="slice-radar-title">Radar FFT views</strong>
+        <span data-lang="slice-radar-subtitle">same FMCW target as the controls</span>
+      </div>
+      <div class="slice-radar-grid">
+        <article class="slice-card radar-slice-card"><div class="slice-card-head"><strong data-lang="range-doppler-map-title">Range-Doppler map</strong><span id="slice-radar-rd-label" data-lang="live-label">live</span></div><canvas id="slice-radar-rd-map" width="220" height="130"></canvas></article>
+        <article class="slice-card radar-slice-card"><div class="slice-card-head"><strong data-lang="range-fft-title">Range FFT</strong><span id="slice-radar-range-label" data-lang="live-label">live</span></div><canvas id="slice-radar-range-fft" width="220" height="130"></canvas></article>
+        <article class="slice-card radar-slice-card"><div class="slice-card-head"><strong data-lang="doppler-fft-title">Doppler FFT</strong><span id="slice-radar-doppler-label" data-lang="live-label">live</span></div><canvas id="slice-radar-doppler-fft" width="220" height="130"></canvas></article>
+      </div>
+    </section>
+    <div class="slice-note" data-lang="slice-note-text">Angular patterns use the same direction-based field formula as the 3D view. The azimuth plot is a horizontal angular cut at the selected elevation; when elevation is 0°, it is the standard top-direction pattern. The elevation plot is a vertical angular cut at the steering azimuth. The beam-plane plot cuts through the steered beam direction, so it always includes the main beam. The top projection is only a visual footprint from above, not a physical radiation cut.</div>
   </aside>
   <div class="workspace-resizer" id="workspace-resizer" aria-label="Resize 2D and 3D panels" title="Drag to resize 2D and 3D panels"></div>
   <div class="canvas-container" id="canvas-container">
@@ -290,17 +324,10 @@ Project website: https://phased-array-simulator.com
 <div class="controls-and-info controls-panel-grid">
 <div class="controls mb-6">
 <div class="flex justify-between items-center mb-4">
-<h2 class="text-lg sm:text-xl font-semibold" data-lang="visualization-settings">Visualisierungseinstellungen</h2>
+<h2 id="visualization-settings-title" class="text-lg sm:text-xl font-semibold" data-lang="visualization-settings">Visualisierungseinstellungen</h2>
 </div>
 <div class="visual-select-block grid gap-3 mb-4 col-span-full">
   <div class="visual-select-row grid grid-cols-1 md:grid-cols-2 gap-3">
-    <div class="visual-select-control flex flex-col gap-1 min-w-0">
-      <label class="text-sm font-medium" data-lang="antenna-type" for="pattern-type">Antennentyp:</label>
-      <select class="border rounded px-2 py-1 text-sm pattern-type-selector w-full" id="pattern-type">
-        <option data-lang="isotropic" value="isotropic">Isotrop</option>
-        <option data-lang="patch" value="patch" selected>Patch (Direktional)</option>
-      </select>
-    </div>
     <div class="visual-select-control flex flex-col gap-1 min-w-0">
       <label class="text-sm font-medium" for="radiation-model">Radiation model:</label>
       <select class="border rounded px-2 py-1 text-sm w-full" id="radiation-model" aria-label="Radiation model">
@@ -335,6 +362,8 @@ Project website: https://phased-array-simulator.com
   </div>
 </div>
 
+<!-- Antenna/radar frequency moved into the FMCW radar settings card. -->
+
 <!-- Old in-3D slice/cutaway controls removed: 2D radiation views are shown in the separate dashboard. -->
 <div class="flex flex-wrap -mx-2">
 <div class="w-full px-2 mb-4">
@@ -361,53 +390,27 @@ Project website: https://phased-array-simulator.com
 <div class="slider-container distance-slider-container">
   <div class="distance-slider-row">
     <label data-lang="distance" for="observation-distance">Entfernung R / λ:</label>
-    <input class="w-full" id="observation-distance" max="100" min="0.25" step="0.25" type="range" value="20"/>
-    <input class="angle-number-input" id="observation-distance-input" max="100" min="0.25" step="0.25" type="text" inputmode="decimal" value="20" aria-label="Observation distance in wavelengths"/><span class="angle-unit">λ</span>
-    <span class="slider-value angle-hidden-value" id="observation-distance-value">20λ</span>
+    <input class="w-full" id="observation-distance" max="500" min="0.25" step="0.25" type="range" value="100"/>
+    <input class="angle-number-input" id="observation-distance-input" max="500" min="0.25" step="0.25" type="text" inputmode="decimal" value="100" aria-label="Observation distance in wavelengths"/><span class="angle-unit">λ</span>
+    <span class="slider-value angle-hidden-value" id="observation-distance-value">100λ</span>
   </div>
-  <p class="distance-huygens-note taper-note text-xs text-gray-700 mt-2 mb-3 p-2 rounded bg-slate-50 border border-slate-200" data-lang="distance-huygens-note">Fraunhofer: distanzunabhängig · Huygens: kleine R/λ zeigen Nah-/Fresnel-Effekte.</p>
+  <p class="distance-huygens-note taper-note text-xs text-gray-700 mt-2 mb-2 p-2 rounded bg-slate-50 border border-slate-200" data-lang="distance-huygens-note">Fraunhofer: distanzunabhängig · Huygens: kleine R/λ zeigen Nah-/Fresnel-Effekte.</p>
+  <p class="text-xs text-gray-600 mt-1" data-lang="steering-target-link-note">Radar target follows this steering direction and Distance R / λ by default.</p>
 </div>
 </div>
-<div class="w-full px-2 mb-4">
-<h3 class="font-medium mb-2" data-lang="observation-point">Beobachtungspunkt</h3>
-<div class="slider-container">
-<label data-lang="azimuth" for="observation-azimuth">Azimut (φ):</label>
-<input class="w-full" id="observation-azimuth" max="360" min="0" step="0.1" type="range" value="10"/>
-<input class="angle-number-input" id="observation-azimuth-input" max="360" min="0" step="0.1" type="text" inputmode="decimal" value="10" aria-label="Observation azimuth degrees"/><span class="angle-unit">°</span>
-<span class="slider-value angle-hidden-value" id="observation-azimuth-value">10°</span>
-</div>
-<div class="slider-container">
-<label data-lang="elevation" for="observation-elevation">Elevation (θ):</label>
-<input class="w-full" id="observation-elevation" max="90" min="0" step="0.1" type="range" value="75"/>
-<input class="angle-number-input" id="observation-elevation-input" max="90" min="0" step="0.1" type="text" inputmode="decimal" value="75" aria-label="Observation elevation degrees"/><span class="angle-unit">°</span>
-<span class="slider-value angle-hidden-value" id="observation-elevation-value">75°</span>
-</div>
-<div class="observation-toggle-row">
-    <span class="mr-2 text-sm" data-lang="sync-observation">Beobachtung = Steuerung:</span>
-    <label class="toggle-switch">
-        <input id="sync-observation-toggle" type="checkbox" checked/>
-        <span class="toggle-slider"></span>
-    </label>
-</div>
-<div class="observation-toggle-row">
-    <span class="mr-2 text-sm" data-lang="show-observation-point">Beobachtungspunkt anzeigen:</span>
-    <label class="toggle-switch">
-        <input id="show-observation-point-toggle" type="checkbox" checked/>
-        <span class="toggle-slider"></span>
-    </label>
-</div>
-</div>
+
+
 </div>
 <div class="mt-4 flex flex-wrap justify-between items-center">
 <div class="flex items-center mr-4 mb-2">
-<span class="mr-2" data-lang="waves">Wellen:</span>
+<span class="mr-2" data-lang="waves">Phase fronts:</span>
 <label class="toggle-switch">
 <input checked id="show-waves" type="checkbox"/>
 <span class="toggle-slider"></span>
 </label>
 </div>
 <div class="flex items-center mr-4 mb-2">
-<span class="mr-2" data-lang="vectors">Vektoren:</span>
+<span class="mr-2" data-lang="vectors">rₙ / R−rₙ vectors:</span>
 <label class="toggle-switch">
 <input checked id="show-vectors" type="checkbox"/>
 <span class="toggle-slider"></span>
@@ -427,24 +430,31 @@ Project website: https://phased-array-simulator.com
         <span class="toggle-slider"></span>
     </label>
 </div>
-<div class="flex items-center mr-4 mb-2">
-    <span class="mr-2" data-lang="mutual-coupling">Mutual coupling:</span>
-    <label class="toggle-switch">
+<div class="coupling-card mt-2 mb-3" id="mutual-coupling-card">
+    <label class="coupling-enable-row" for="mutual-coupling-toggle">
         <input id="mutual-coupling-toggle" type="checkbox"/>
-        <span class="toggle-slider"></span>
+        <span class="coupling-enable-text" data-lang="mutual-coupling">Mutual coupling</span>
+        <span class="coupling-state-pill" id="coupling-state-pill">off</span>
     </label>
+    <div class="slider-container coupling-slider-container" id="coupling-strength-slider">
+        <label data-lang="coupling-strength" for="coupling-strength">Coupling estimate:</label>
+        <div class="coupling-slider-line">
+            <input class="w-full" id="coupling-strength" max="-6" min="-30" step="1" type="range" value="-7" disabled/>
+            <input class="angle-number-input compact-number-input" id="coupling-strength-input" max="-6" min="-30" step="1" type="text" inputmode="numeric" value="-7" aria-label="Coupling estimate in dB" disabled/><span class="angle-unit">dB</span>
+            <span class="slider-value" id="coupling-strength-value">≈0.45</span>
+        </div>
+        <p class="coupling-help" data-lang="coupling-help">Disabled by default. Enable the checkbox to apply the rough element-current coupling estimate.</p>
+    </div>
 </div>
-<div class="slider-container w-full md:w-1/2 mt-2" id="coupling-strength-slider">
-    <label data-lang="coupling-strength" for="coupling-strength">Coupling estimate:</label>
-    <input class="w-full" id="coupling-strength" max="-6" min="-30" step="1" type="range" value="-20"/>
-    <span class="slider-value" id="coupling-strength-value">-20 dB</span>
-</div>
-<div class="flex items-center mb-2">
+<div class="field-model-card flex items-center mb-2">
     <span class="mr-2 text-sm" data-lang="calculation-method-label">Berechnungsmethode:</span>
     <select class="border rounded px-2 py-1" id="calculation-method">
         <option value="true" data-lang="approximation-method" selected>Fraunhofer far field</option>
         <option value="false" data-lang="exact-method">Prescribed-current Huygens model</option>
     </select>
+    <div id="approximation-note" class="text-sm text-gray-600 mt-2 p-2 bg-yellow-50 rounded field-model-note">
+        <span data-lang="approximation-note-text"></span>
+    </div>
 </div>
 
 </div>
@@ -455,31 +465,238 @@ Project website: https://phased-array-simulator.com
     <span class="slider-value angle-hidden-value" id="subpatch-density-value">3x3</span>
 </div>
 
-<div id="approximation-note" class="text-sm text-gray-600 mt-2 p-2 bg-yellow-50 rounded">
-    <span data-lang="approximation-note-text"></span>
 </div>
+<div class="receive-doa-panel mt-4 p-3 rounded bg-indigo-50 border border-indigo-200" id="receive-doa-panel">
+  <div class="receive-doa-head">
+    <div>
+      <h3 class="font-semibold text-sm" data-lang="doa-panel-title">Radar target, steering and receiver test</h3>
+      <p class="text-xs text-gray-600 mt-1" data-lang="doa-panel-desc">Steering, target direction, radar scene and receive/DOA test are linked here. Unlock target direction or range only when you want a separate test.</p>
+    </div>
+    <span class="array-mode-pill" data-lang="doa-panel-pill">Radar / receive test</span>
+  </div>
+
+  <div class="doa-math-note mt-3">
+    <div class="doa-math-title" data-lang="doa-math-title-short">What the simulator does</div>
+    <div class="doa-formula-grid">
+      <div><span class="math-label" data-lang="doa-label-signature">Receive signature</span><code>gₙ(d)=E(d)·exp(j·α·k·rₙ·d)</code></div>
+      <div><span class="math-label" data-lang="doa-label-noisy">Noisy samples</span><code>y=g(d_true)·s+n</code></div>
+      <div><span class="math-label" data-lang="doa-label-search">Direction search</span><code>P(d₀)=|g(d₀)ᴴy|²</code></div>
+      <div><span class="math-label" data-lang="doa-label-phase">Phase factor</span><code>α=1 one-way, α=2 radar round-trip</code></div>
+    </div>
+  </div>
+
+  <div class="doa-controls-grid mt-3">
+    <div class="doa-control-pair">
+      <div class="slider-container doa-slider-card">
+        <label for="doa-target-azimuth" data-lang="doa-target-azimuth-label">Target azimuth:</label>
+        <div class="doa-slider-line">
+          <input class="w-full" id="doa-target-azimuth" max="360" min="0" step="1" type="range" value="30" />
+          <input class="doa-value-input" id="doa-target-azimuth-input" max="360" min="0" step="1" type="number" value="30" />
+          <span class="doa-unit">°</span>
+        </div>
+        <span class="slider-value sr-only" id="doa-target-azimuth-value">30°</span>
+      </div>
+      <div class="slider-container doa-slider-card">
+        <label for="doa-target-elevation" data-lang="doa-target-elevation-label">Target elevation:</label>
+        <div class="doa-slider-line">
+          <input class="w-full" id="doa-target-elevation" max="90" min="0" step="1" type="range" value="10" />
+          <input class="doa-value-input" id="doa-target-elevation-input" max="90" min="0" step="1" type="number" value="10" />
+          <span class="doa-unit">°</span>
+        </div>
+        <span class="slider-value sr-only" id="doa-target-elevation-value">10°</span>
+      </div>
+    </div>
+    <div class="doa-control-pair doa-noise-lut-pair">
+      <div class="slider-container doa-slider-card">
+        <label for="doa-snr" data-lang="doa-snr-label">Noise / SNR:</label>
+        <div class="doa-slider-line">
+          <input class="w-full" id="doa-snr" max="40" min="-10" step="1" type="range" value="20" />
+          <input class="doa-value-input" id="doa-snr-input" max="40" min="-10" step="1" type="number" value="20" />
+          <span class="doa-unit">dB</span>
+        </div>
+        <span class="slider-value sr-only" id="doa-snr-value">20 dB</span>
+      </div>
+      <div class="slider-container doa-slider-card">
+        <label for="doa-resolution" data-lang="doa-resolution-label">LUT search step:</label>
+        <div class="doa-slider-line">
+          <input class="w-full" id="doa-resolution" max="15" min="1" step="1" type="range" value="5" />
+          <input class="doa-value-input" id="doa-resolution-input" max="15" min="1" step="1" type="number" value="5" />
+          <span class="doa-unit">°</span>
+        </div>
+        <span class="slider-value sr-only" id="doa-resolution-value">5°</span>
+      </div>
+    </div>
+  </div>
+  <p class="text-xs text-gray-600 mt-2" data-lang="doa-steering-target-hint">Default: the radar target follows the steering azimuth, elevation and distance. Unlock it only for an independent receive/DOA test.</p>
+  <div class="doa-option-row mt-3">
+    <label class="text-sm font-medium" for="doa-propagation-model" data-lang="doa-propagation-label">Propagation:</label>
+    <select class="border rounded px-2 py-1 text-sm" id="doa-propagation-model">
+      <option value="oneway" selected data-lang="doa-prop-oneway">One-way receive phase k·r·d</option>
+      <option value="roundtrip" data-lang="doa-prop-roundtrip">Radar round-trip phase 2k·r·d</option>
+    </select>
+    <label class="doa-freeze-label text-sm"><input id="doa-freeze-noise" type="checkbox" checked /> <span data-lang="doa-freeze-noise">Freeze noise</span></label>
+    <label class="text-sm" for="doa-seed" data-lang="doa-seed-label">Seed:</label>
+    <input class="border rounded px-2 py-1 text-sm doa-seed-input" id="doa-seed" type="number" value="1234" />
+    <button class="btn secondary-btn" id="doa-new-noise" type="button" data-lang="doa-new-noise">New noise</button>
+  </div>
+
+  <div class="radar-scene-card mt-3" id="radar-scene-card">
+    <div class="radar-scene-head">
+      <div>
+        <h4 data-lang="radar-scene-title">FMCW radar scene target</h4>
+        <p data-lang="radar-scene-desc">Define a simple reflecting object. The shape is visual; the radar calculation uses a point target with configurable RCS.</p>
+      </div>
+      <span class="array-mode-pill" data-lang="radar-scene-pill">range + Doppler</span>
+    </div>
+<div class="system-frequency-card mt-3 mb-3 radar-frequency-in-scene" id="system-frequency-card">
+  <div class="system-frequency-head">
+    <div>
+      <h3 data-lang="system-frequency-title">Antenna / radar frequency</h3>
+      <p data-lang="system-frequency-note">This sets the physical wavelength λ = c / f_c. Array distances stay in λ; meter and mm values are derived from this frequency.</p>
+    </div>
+  </div>
+  <div class="system-frequency-grid">
+    <label class="radar-field"><span data-lang="radar-frequency-preset-label">Frequency preset</span><select id="radar-frequency-preset"><option value="2.4">2.4 GHz demo / Wi‑Fi</option><option value="10">10 GHz generic antenna</option><option value="24">24 GHz radar</option><option value="77" selected>77 GHz automotive radar</option><option value="custom">Custom</option></select></label>
+    <label class="radar-field"><span data-lang="radar-fc-label">Antenna / radar f_c [GHz]</span><input id="radar-carrier-ghz" type="number" min="0.1" max="120" step="0.1" value="77" /></label>
+    <div class="system-frequency-readout"><span>λ</span><strong id="system-wavelength-readout">--</strong></div>
+    <div class="system-frequency-readout"><span>100λ</span><strong id="system-distance-readout">--</strong></div>
+  </div>
 </div>
+
+    <div class="radar-scene-grid mt-3">
+      <label class="radar-field"><span data-lang="radar-target-name-label">Target name</span><input id="radar-target-name" type="text" value="Target 1" /></label>
+      <label class="radar-field"><span data-lang="radar-target-geometry-label">Geometry</span><select id="radar-target-geometry"><option value="sphere" data-lang="radar-geom-sphere">Sphere</option><option value="box" data-lang="radar-geom-box">Box</option><option value="plate" data-lang="radar-geom-plate">Flat rectangle / plate</option><option value="cylinder" data-lang="radar-geom-cylinder">Cylinder</option></select></label>
+      <label class="radar-field"><span data-lang="radar-target-size-unit-label">Object size unit</span><select id="radar-size-unit"><option value="lambda" selected>λ</option><option value="meter">m</option><option value="mm">mm</option></select></label>
+      <label class="radar-field"><span id="radar-size-input-label" data-lang="radar-target-size-label">Object size [λ]</span><input id="radar-target-size-lambda" type="number" min="0.001" max="50000" step="0.05" value="1.5" /></label>
+      <label class="radar-field"><span data-lang="radar-range-unit-label">Range unit</span><select id="radar-range-unit"><option value="lambda" selected>λ</option><option value="meter">m</option></select></label>
+      <label class="radar-field"><span id="radar-range-input-label" data-lang="radar-range-label">Range R [λ]</span><input id="radar-target-range-lambda" type="number" min="0.001" max="50000" step="0.25" value="100" /></label>
+      <label class="radar-field"><span data-lang="radar-rcs-mode-label">RCS model</span><select id="radar-rcs-mode"><option value="auto" selected data-lang="radar-rcs-auto">Auto from geometry + size</option><option value="manual" data-lang="radar-rcs-manual">Manual RCS</option></select></label>
+      <label class="radar-field"><span data-lang="radar-rcs-label">RCS / reflectivity [m²]</span><input id="radar-target-rcs" type="number" min="0.000001" max="100000" step="0.001" value="0.000027" /></label>
+      <div class="radar-field radar-readout-field"><span data-lang="radar-rcs-est-label">Estimated RCS</span><strong id="radar-rcs-estimate">--</strong><small data-lang="radar-rcs-est-note">Rough teaching estimate, not full-wave scattering.</small></div>
+      <label class="radar-field"><span data-lang="radar-bandwidth-label">Bandwidth B [MHz]</span><input id="radar-bandwidth-mhz" type="number" min="10" max="4000" step="10" value="4000" /></label>
+      <label class="radar-field"><span data-lang="radar-chirp-time-label">Chirp time T [µs]</span><input id="radar-chirp-us" type="number" min="5" max="500" step="1" value="60" /></label>
+      <label class="radar-field"><span data-lang="radar-samples-label">Samples / chirp Nq</span><input id="radar-samples" type="number" min="32" max="2048" step="32" value="256" /></label>
+      <label class="radar-field"><span data-lang="radar-chirps-label">Chirps Np</span><input id="radar-chirps" type="number" min="8" max="256" step="8" value="64" /></label>
+      <div class="radar-field radar-readout-field radar-chirp-readout-field"><span data-lang="radar-chirp-readout-label">Chirp frequencies</span><strong id="radar-chirp-readout">--</strong><small id="radar-chirp-detail">--</small></div>
+      <label class="radar-field radar-checkbox-field"><span data-lang="radar-lock-steering-label">Target = steering direction</span><input id="radar-lock-to-steering" type="checkbox" checked /></label>
+      <label class="radar-field radar-checkbox-field"><span data-lang="radar-lock-distance-label">Target range = Distance R / λ</span><input id="radar-lock-to-distance" type="checkbox" /></label>
+      <label class="radar-field radar-checkbox-field"><span data-lang="radar-show-target-label">Show target object in 3D</span><input id="radar-show-target" type="checkbox" checked /></label>
+      <label class="radar-field radar-checkbox-field"><span data-lang="radar-tx-gain-label">Include TX steering gain</span><input id="radar-use-tx-gain" type="checkbox" checked /></label>
+      <label class="radar-field"><span data-lang="radar-motion-mode-label">Target motion</span><select id="radar-motion-mode"><option value="stationary" data-lang="radar-motion-stationary">Stationary</option><option value="linear" data-lang="radar-motion-linear">Line: start → end → start</option><option value="az-circle" data-lang="radar-motion-az-circle">Circle in azimuth</option><option value="el-sweep" data-lang="radar-motion-el-sweep">Elevation sweep</option><option value="range-sweep" data-lang="radar-motion-range-sweep">Range sweep</option><option value="curve" data-lang="radar-motion-curve">Curved path: R + az + el</option></select></label>
+      <label class="radar-field radar-motion-field manual-velocity-field"><span data-lang="radar-velocity-label">Manual radial velocity v [m/s]</span><input id="radar-target-velocity" type="number" min="-80" max="80" step="0.5" value="0" /></label>
+      <label class="radar-field radar-motion-field"><span data-lang="radar-motion-period-label">Motion period [s]</span><input id="radar-motion-period" type="number" min="1" max="60" step="0.5" value="8" /></label>
+      <label class="radar-field radar-motion-field"><span data-lang="radar-motion-start-range-label">Start R [λ]</span><input id="radar-motion-start-range" type="number" min="0.25" max="50000" step="0.25" value="100" /></label>
+      <label class="radar-field radar-motion-field"><span data-lang="radar-motion-start-az-label">Start az [°]</span><input id="radar-motion-start-az" type="number" min="0" max="360" step="1" value="30" /></label>
+      <label class="radar-field radar-motion-field"><span data-lang="radar-motion-start-el-label">Start el [°]</span><input id="radar-motion-start-el" type="number" min="0" max="90" step="1" value="60" /></label>
+      <label class="radar-field radar-motion-field"><span data-lang="radar-motion-end-range-label">End R [λ]</span><input id="radar-motion-end-range" type="number" min="0.25" max="50000" step="0.25" value="100" /></label>
+      <label class="radar-field radar-motion-field"><span data-lang="radar-motion-end-az-label">End az [°]</span><input id="radar-motion-end-az" type="number" min="0" max="360" step="1" value="130" /></label>
+      <label class="radar-field radar-motion-field"><span data-lang="radar-motion-end-el-label">End el [°]</span><input id="radar-motion-end-el" type="number" min="0" max="90" step="1" value="80" /></label>
+    </div>
+    <div class="radar-hint" id="radar-alias-warning">--</div>
+    <div class="radar-metric-grid mt-3">
+      <div class="doa-result-card radar-metric-card">
+        <div class="text-xs text-gray-600" data-lang="radar-est-range-result">Estimated range</div>
+        <div class="doa-big-value" id="radar-est-range">--</div>
+        <div class="text-xs text-gray-600" id="radar-range-lambda">--</div>
+      </div>
+      <div class="doa-result-card radar-metric-card">
+        <div class="text-xs text-gray-600" data-lang="radar-range-result">Range FFT estimate</div>
+        <div class="doa-big-value" id="radar-range-bin">--</div>
+        <div class="text-xs text-gray-600" id="radar-range-detail">--</div>
+      </div>
+      <div class="doa-result-card radar-metric-card">
+        <div class="text-xs text-gray-600" data-lang="radar-est-velocity-result">Estimated radial speed</div>
+        <div class="doa-big-value" id="radar-est-velocity">--</div>
+        <div class="text-xs text-gray-600" id="radar-velocity-limits">--</div>
+      </div>
+      <div class="doa-result-card radar-metric-card">
+        <div class="text-xs text-gray-600" data-lang="radar-speed-result">Estimated speed magnitude</div>
+        <div class="doa-big-value" id="radar-speed-total">--</div>
+        <div class="text-xs text-gray-600" id="radar-speed-detail">--</div>
+      </div>
+      <div class="doa-result-card radar-metric-card">
+        <div class="text-xs text-gray-600" data-lang="radar-doppler-result">Doppler FFT estimate</div>
+        <div class="doa-big-value" id="radar-doppler-bin">--</div>
+        <div class="text-xs text-gray-600" id="radar-doppler-detail">--</div>
+      </div>
+      <div class="doa-result-card radar-metric-card">
+        <div class="text-xs text-gray-600" data-lang="doa-estimated-direction">Estimated direction</div>
+        <div class="doa-big-value" id="doa-estimate">--</div>
+        <div class="text-xs text-gray-600" id="doa-error">Angular error: --</div>
+      </div>
+      <div class="doa-result-card radar-metric-card">
+        <div class="text-xs text-gray-600" data-lang="doa-correlation-quality">Correlation quality</div>
+        <div class="doa-big-value" id="doa-peak">--</div>
+        <div class="text-xs text-gray-600" id="doa-peak-ratio">Peak/second: --</div>
+      </div>
+    </div>
+
+    <div class="radar-plot-stack mt-3">
+      <div class="radar-fft-grid radar-detail-plot-grid">
+        <div class="doa-map-card radar-rd-card">
+          <div class="text-xs text-gray-600 mb-1" data-lang="radar-rd-caption">Range-Doppler map from the expected FFT bins. Bright spot = target.</div>
+          <canvas id="radar-rd-map" width="520" height="160" aria-label="Simplified range Doppler map"></canvas>
+        </div>
+        <div class="doa-map-card radar-rd-card">
+          <div class="text-xs text-gray-600 mb-1" data-lang="radar-range-fft-caption">Range FFT magnitude over fast-time samples</div>
+          <canvas id="radar-range-fft" width="520" height="140" aria-label="Range FFT magnitude"></canvas>
+        </div>
+        <div class="doa-map-card radar-rd-card">
+          <div class="text-xs text-gray-600 mb-1" data-lang="radar-doppler-fft-caption">Doppler FFT magnitude over chirps at the selected range bin</div>
+          <canvas id="radar-doppler-fft" width="520" height="140" aria-label="Doppler FFT magnitude"></canvas>
+        </div>
+        <div class="doa-map-card doa-wide-card">
+          <div class="text-xs text-gray-600 mb-1" data-lang="doa-map-caption">DOA correlation map: azimuth × elevation. Bright peak = estimated direction.</div>
+          <canvas id="doa-correlation-map" width="520" height="170" aria-label="DOA correlation map"></canvas>
+        </div>
+        <div class="doa-map-card">
+          <div class="text-xs text-gray-600 mb-1" data-lang="doa-samples-caption">Received antenna samples: phase and amplitude after noise</div>
+          <canvas id="doa-sample-map" width="360" height="150" aria-label="Noisy antenna sample phase and amplitude"></canvas>
+        </div>
+        <div class="doa-map-card">
+          <div class="text-xs text-gray-600 mb-1" data-lang="doa-az-cut-caption">Azimuth correlation cut at estimated elevation</div>
+          <canvas id="doa-az-cut" width="520" height="150" aria-label="Azimuth correlation cut"></canvas>
+        </div>
+        <div class="doa-map-card">
+          <div class="text-xs text-gray-600 mb-1" data-lang="doa-el-cut-caption">Elevation correlation cut at estimated azimuth</div>
+          <canvas id="doa-el-cut" width="520" height="150" aria-label="Elevation correlation cut"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="array-config-section mt-4">
 <h3 class="font-medium mb-2" data-lang="antenna-array-config">Antenna array configuration</h3>
 <input id="custom-array-enabled" type="checkbox" style="display:none" aria-hidden="true" />
 <div class="custom-array-panel mt-3 p-3 rounded bg-slate-50 border border-slate-200" id="custom-coordinate-panel">
   <div class="custom-array-head geometry-editor-head">
     <div>
-      <h4 class="font-semibold text-sm">Antenna position vectors</h4>
-      <p class="text-xs text-gray-600 mt-1">Choose a geometry preset or edit the coordinates directly. Presets only generate vectors in this editor.</p>
+      <h4 class="font-semibold text-sm" data-lang="array-vectors-title">Antenna position vectors</h4>
+      <p class="text-xs text-gray-600 mt-1" data-lang="array-vectors-desc">Choose a geometry preset or edit the coordinates directly. Presets only generate vectors in this editor.</p>
     </div>
-    <div class="array-source-compact">
-      <label class="text-xs font-semibold text-gray-600" for="array-source">Geometry preset</label>
-      <select class="border rounded px-2 py-1 text-sm" id="array-source" aria-label="Geometry preset">
-        <option value="rectangular" selected>Rectangular grid</option>
-        <option value="hexagonal">Hexagonal grid</option>
-        <option value="circular">Circular array</option>
-        <option value="spiral">Spiral array</option>
-        <option value="parabolic">Parabolic surface</option>
-        <option value="sparse">Sparse random</option>
-        <option value="custom">Custom / manual</option>
+
+    <div class="array-source-compact antenna-type-in-array array-field-card">
+      <div class="field-label-row"><label class="text-xs font-semibold text-gray-600" data-lang="antenna-type" for="pattern-type">Antenna Type</label></div>
+      <select class="border rounded px-2 py-1 text-sm pattern-type-selector" id="pattern-type">
+        <option data-lang="isotropic" value="isotropic">Isotropic</option>
+        <option data-lang="patch" value="patch" selected>Patch rectangle (directional)</option>
       </select>
-      <span class="array-mode-pill mt-1" id="array-mode-pill">Rectangular grid active</span>
+    </div>
+    <div class="array-source-compact geometry-preset-control array-field-card">
+      <div class="field-label-row">
+        <label class="text-xs font-semibold text-gray-600" for="array-source" data-lang="geometry-preset">Geometry preset</label>
+        <span class="array-mode-pill" id="array-mode-pill" data-lang="preset-rectangular-active">Rectangular grid active</span>
+      </div>
+      <select class="border rounded px-2 py-1 text-sm" id="array-source" aria-label="Geometry preset">
+        <option value="rectangular" selected data-lang="preset-rectangular">Rectangular grid</option>
+        <option value="hexagonal" data-lang="preset-hexagonal">Hexagonal grid</option>
+        <option value="circular" data-lang="preset-circular">Circular array</option>
+        <option value="spiral" data-lang="preset-spiral">Spiral array</option>
+        <option value="parabolic" data-lang="preset-parabolic">Parabolic surface</option>
+        <option value="sparse" data-lang="preset-sparse">Sparse random</option>
+        <option value="custom" data-lang="preset-custom">Custom / manual</option>
+      </select>
     </div>
   </div>
 <div class="array-config-controls mb-3 mt-3" id="regular-array-controls">
@@ -487,19 +704,22 @@ Project website: https://phased-array-simulator.com
     <div class="slider-container">
       <label for="array-x-count" data-lang="x-elements">X elements:</label>
       <input class="w-full" id="array-x-count" max="9" min="3" step="1" type="range" value="5"/>
-      <span class="slider-value" id="array-x-count-value">5</span>
+      <input class="angle-number-input compact-number-input" id="array-x-count-input" max="9" min="3" step="1" type="text" inputmode="numeric" value="5" aria-label="X elements"/>
+      <span class="slider-value angle-hidden-value" id="array-x-count-value">5</span>
     </div>
     <div class="slider-container">
       <label for="array-z-count" data-lang="z-elements">Z elements:</label>
       <input class="w-full" id="array-z-count" max="9" min="3" step="1" type="range" value="5"/>
-      <span class="slider-value" id="array-z-count-value">5</span>
+      <input class="angle-number-input compact-number-input" id="array-z-count-input" max="9" min="3" step="1" type="text" inputmode="numeric" value="5" aria-label="Z elements"/>
+      <span class="slider-value angle-hidden-value" id="array-z-count-value">5</span>
     </div>
   </div>
   <div class="array-spacing-taper-row">
     <div class="slider-container spacing-slider">
       <label for="element-spacing" data-lang="spacing">Spacing:</label>
       <input class="w-full" id="element-spacing" max="1.00" min="0.25" step="0.05" type="range" value="0.50"/>
-      <span class="slider-value" id="element-spacing-value">0.50λ</span>
+      <input class="angle-number-input compact-number-input" id="element-spacing-input" max="1.00" min="0.25" step="0.05" type="text" inputmode="decimal" value="0.50" aria-label="Element spacing in wavelengths"/><span class="angle-unit">λ</span>
+      <span class="slider-value angle-hidden-value" id="element-spacing-value">0.50λ</span>
     </div>
     <div class="taper-select-control">
       <span class="text-sm font-medium" data-lang="taper">Taper:</span>
@@ -511,34 +731,65 @@ Project website: https://phased-array-simulator.com
     <div class="slider-container" id="chebyshev-sidelobe-slider">
       <label for="chebyshev-sidelobe" data-lang="chebyshev-sll">Chebyshev SLL:</label>
       <input class="w-full" id="chebyshev-sidelobe" max="50" min="15" step="1" type="range" value="25"/>
-      <span class="slider-value" id="chebyshev-sidelobe-value">25 dB</span>
+      <input class="angle-number-input compact-number-input" id="chebyshev-sidelobe-input" max="50" min="15" step="1" type="text" inputmode="numeric" value="25" aria-label="Chebyshev sidelobe level in dB"/><span class="angle-unit">dB</span>
+      <span class="slider-value angle-hidden-value" id="chebyshev-sidelobe-value">25 dB</span>
     </div>
   </div>
   <div class="taper-note text-xs text-gray-700 mt-2 mb-3 p-2 rounded bg-slate-50 border border-slate-200" data-lang="taper-note">Chebyshev taper changes amplitudes, not phases. For a 2D array this demo uses separable weights: <span class="font-mono">w(x,z)=w_x(x)·w_z(z)</span>. More elements make the main lobe narrower; tapering mainly controls sidelobes.</div>
 </div>
 <div class="antenna-grid" id="antenna-grid" style="display:none"></div>
-  <p class="text-xs text-gray-600 mt-2">Write positions as <code>[x, y, z]</code>. Multiple vectors can sit on one line.</p>
+  <p class="text-xs text-gray-600 mt-2" data-lang="coordinate-editor-help">Write positions as <code>[x, y, z]</code>. Multiple vectors can sit on one line.</p>
   <textarea id="custom-array-coordinates" class="coordinate-editor border rounded p-2 mt-3" spellcheck="false">[-1, -1, 0]   [0, -1, 0]   [1, -1, 0]
 [-1,  0, 0]   [0,  0, 0]   [1,  0, 0]
 [-1,  1, 0]   [0,  1, 0]   [1,  1, 0]</textarea>
   <div class="flex flex-wrap gap-2 items-center mt-3">
-    <button class="btn" id="apply-custom-array" type="button">Use vector coordinates</button>
-    <button class="btn secondary-btn" id="load-regular-array" type="button">Regenerate selected preset</button>
-    <span class="text-xs text-gray-600" id="custom-array-status">Coordinate editor active</span>
+    <button class="btn" id="apply-custom-array" type="button" data-lang="use-vector-coordinates">Use vector coordinates</button>
+    <span class="text-xs text-gray-600" id="custom-array-status" data-lang="coordinate-editor-active">Coordinate editor active</span>
   </div>
   <div class="coordinate-chip-preview mt-3" id="coordinate-chip-preview" aria-label="Coordinate preview"></div>
 </div>
 </div>
+
 <div class="mt-4">
 <h3 class="font-medium mb-2 text-base" data-lang="observation-info">Beobachtungspunkt-Info:</h3>
 <div class="bg-blue-50 p-3 rounded" id="observation-info">
+<div class="w-full px-2 mb-4 observation-point-controls">
+<h3 class="font-medium mb-2" data-lang="observation-point">Beobachtungspunkt</h3>
+<div class="observation-slider-grid">
+<div class="slider-container">
+<label data-lang="azimuth" for="observation-azimuth">Azimut (φ):</label>
+<input class="w-full" id="observation-azimuth" max="360" min="0" step="0.1" type="range" value="10"/>
+<input class="angle-number-input" id="observation-azimuth-input" max="360" min="0" step="0.1" type="text" inputmode="decimal" value="10" aria-label="Observation azimuth degrees"/><span class="angle-unit">°</span>
+<span class="slider-value angle-hidden-value" id="observation-azimuth-value">10°</span>
+</div>
+<div class="slider-container">
+<label data-lang="elevation" for="observation-elevation">Elevation (θ):</label>
+<input class="w-full" id="observation-elevation" max="90" min="0" step="0.1" type="range" value="75"/>
+<input class="angle-number-input" id="observation-elevation-input" max="90" min="0" step="0.1" type="text" inputmode="decimal" value="75" aria-label="Observation elevation degrees"/><span class="angle-unit">°</span>
+<span class="slider-value angle-hidden-value" id="observation-elevation-value">75°</span>
+</div>
+</div>
+<div class="observation-toggle-row">
+    <span class="mr-2 text-sm" data-lang="sync-observation">Beobachtung = Steuerung:</span>
+    <label class="toggle-switch">
+        <input id="sync-observation-toggle" type="checkbox" checked/>
+        <span class="toggle-slider"></span>
+    </label>
+</div>
+<div class="observation-toggle-row">
+    <span class="mr-2 text-sm" data-lang="show-observation-point">Beobachtungspunkt anzeigen:</span>
+    <label class="toggle-switch">
+        <input id="show-observation-point-toggle" type="checkbox" checked/>
+        <span class="toggle-slider"></span>
+    </label>
+</div>
+</div>
 <p class="text-sm"><span data-lang="direction">Richtung:</span> <span id="obs-direction">θ=75°, φ=10°</span></p>
 <p class="text-sm"><span data-lang="displayed-field-value">Displayed field value:</span> <span id="array-factor-value">1.0</span></p>
 <p class="text-sm"><span data-lang="exact-field-real-part">Re(A) Huygens model:</span> <span id="exact-field-real-part-value">0.0</span></p>
 <p class="text-sm" id="approx-field-info" style="display: none;"><span data-lang="approx-field-real-part">Re(A) Fraunhofer:</span> <span id="approx-field-real-part-value">0.0</span></p>
-<h4 class="font-medium mt-4 mb-2 text-base" data-lang="required-steering-phases">Erforderliche Phasenverschiebung zur Strahlsteuerung pro Antenne:</h4>
-<ul id="steering-phase-info" class="text-sm pl-5 list-disc">
-</ul>
+<h4 class="font-medium mt-4 mb-2 text-base" data-lang="required-steering-phases">Antenna feed phase shifts:</h4>
+<div id="steering-phase-info" class="phase-shift-table-wrap" aria-label="Antenna feed phase shifts"></div>
 </div>
 </div>
 </div>
@@ -736,6 +987,46 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
 </ul>
 </div>
 
+<div class="bg-white rounded-lg shadow p-4 mb-6 radar-math-foundation-card">
+<h2 class="text-lg sm:text-xl font-semibold mb-3" data-lang="radar-math-title">Radar / Receive DOA calculation</h2>
+<p class="mb-3 text-sm" data-lang="radar-math-intro">This section describes exactly what the radar/receive test does. The DSP does not know the true target direction. It generates noisy antenna samples for a chosen target and then tests many possible directions until the expected phase pattern matches the measurement best.</p>
+<div class="radar-step-grid">
+  <div class="radar-step-card"><h3 data-lang="radar-step-1-title">1. Antenna positions</h3><p data-lang="radar-step-1-p">Each antenna element has a known position vector.</p><div class="math-box mini-math">$$\vec r_n=[x_n,y_n,z_n]$$</div></div>
+  <div class="radar-step-card"><h3 data-lang="radar-step-2-title">2. Direction vector</h3><p data-lang="radar-step-2-p">A possible target direction is represented by a unit vector.</p><div class="math-box mini-math">$$\hat d=[d_x,d_y,d_z],\quad \|\hat d\|=1$$</div></div>
+  <div class="radar-step-card"><h3 data-lang="radar-step-3-title">3. Receive signature</h3><p data-lang="radar-step-3-p">For each test direction the simulator computes the complex reference response of every antenna.</p><div class="math-box mini-math">$$g_n(\hat d)=E_\text{element}(\hat d)\,e^{j\alpha k(\vec r_n\cdot\hat d)}$$</div></div>
+  <div class="radar-step-card"><h3 data-lang="radar-step-4-title">4. One-way vs. radar phase</h3><p data-lang="radar-step-4-p">One-way receive uses alpha = 1. Monostatic radar round-trip uses alpha = 2 because the wave travels to the target and back.</p><div class="math-box mini-math">$$k=\frac{2\pi}{\lambda},\quad \alpha=1\text{ or }2$$</div></div>
+  <div class="radar-step-card"><h3 data-lang="radar-step-5-title">5. Noisy measurement</h3><p data-lang="radar-step-5-p">The measured vector is the true array response multiplied by a complex echo amplitude plus complex receiver noise.</p><div class="math-box mini-math">$$\vec y=\vec g(\hat d_\text{true})s+\vec n$$</div></div>
+  <div class="radar-step-card"><h3 data-lang="radar-step-6-title">6. Noise model</h3><p data-lang="radar-step-6-p">Noise is added independently to the real and imaginary part of each antenna sample.</p><div class="math-box mini-math">$$n_n=\frac{\sigma}{\sqrt2}(a_n+j b_n),\quad a_n,b_n\sim\mathcal N(0,1)$$</div></div>
+  <div class="radar-step-card"><h3 data-lang="radar-step-7-title">7. SNR to noise amplitude</h3><p data-lang="radar-step-7-p">For unit signal amplitude the SNR slider controls the complex noise amplitude.</p><div class="math-box mini-math">$$\sigma=10^{-\mathrm{SNR}_{dB}/20}$$</div></div>
+  <div class="radar-step-card"><h3 data-lang="radar-step-8-title">8. LUT direction search</h3><p data-lang="radar-step-8-p">For every candidate direction the simulator correlates the measured vector with the stored reference response.</p><div class="math-box mini-math">$$z(\hat d_{cand})=\vec g(\hat d_{cand})^H\vec y=\sum_n g_n(\hat d_{cand})^*y_n$$</div></div>
+  <div class="radar-step-card"><h3 data-lang="radar-step-9-title">9. Power map</h3><p data-lang="radar-step-9-p">The DOA heatmap shows the squared magnitude of this matched-filter output.</p><div class="math-box mini-math">$$P(\hat d_{cand})=|z(\hat d_{cand})|^2$$</div></div>
+  <div class="radar-step-card"><h3 data-lang="radar-step-10-title">10. Estimated direction</h3><p data-lang="radar-step-10-p">The direction with the largest correlation peak is reported as the estimated target direction.</p><div class="math-box mini-math">$$\hat d_\text{est}=\arg\max_{\hat d_{cand}}P(\hat d_{cand})$$</div></div>
+</div>
+<p class="mt-3 text-sm" data-lang="radar-math-conclusion">Correct hypotheses align the antenna phases and add constructively. Wrong hypotheses leave residual phase errors, so the sum partly cancels. With low SNR the peak becomes wider or can jump to a wrong sidelobe.</p>
+</div>
+
+
+<div class="bg-white rounded-lg shadow p-4 mb-6 radar-math-foundation-card">
+<h2 class="text-lg sm:text-xl font-semibold mb-3" data-lang="fmcw-math-title">FMCW radar scene: range, velocity and object geometry</h2>
+<p class="mb-3 text-sm" data-lang="fmcw-math-intro">This section explains the new radar scene options step by step. The object geometry is intentionally simple: sphere, box, plate or cylinder. It is used for visualization and a reflectivity/RCS setting; the first radar model treats the object as one point reflector.</p>
+<div class="radar-step-grid">
+  <div class="radar-step-card"><h3 data-lang="fmcw-step-1-title">1. Choose a simple object</h3><p data-lang="fmcw-step-1-p">The user selects a simple visual geometry. This keeps the UI understandable and avoids pretending to do full EM ray tracing.</p><div class="math-box mini-math">$$\text{geometry}\in\{\text{sphere, box, plate, cylinder}\}$$</div></div>
+  <div class="radar-step-card"><h3 data-lang="fmcw-step-2-title">2. Convert range and angle to 3D position</h3><p data-lang="fmcw-step-2-p">The target is placed inside the 3D radar scene using the target range plus the azimuth/elevation from the DOA controls.</p><div class="math-box mini-math">$$\vec p=R[\cos e\cos a,\sin e,\cos e\sin a]$$</div></div>
+  <div class="radar-step-card"><h3 data-lang="fmcw-step-3-title">3. Use RCS as echo strength</h3><p data-lang="fmcw-step-3-p">The radar cross section or reflectivity controls how strong the returned echo is. For this simplified scene it is a scalar amplitude factor.</p><div class="math-box mini-math">$$A\propto\frac{\sqrt{\sigma_\text{RCS}}}{R^2}$$</div></div>
+  <div class="radar-step-card"><h3 data-lang="fmcw-step-4-title">4. Build one FMCW chirp</h3><p data-lang="fmcw-step-4-p">A chirp sweeps over bandwidth B during chirp time T. Its slope determines the beat frequency caused by range.</p><div class="math-box mini-math">$$S=\frac{B}{T}$$</div></div>
+  <div class="radar-step-card"><h3 data-lang="fmcw-step-5-title">5. Range creates beat frequency</h3><p data-lang="fmcw-step-5-p">A target at range R returns later. After mixing transmit and receive signals, the delay appears as a beat frequency.</p><div class="math-box mini-math">$$f_b=\frac{2SR}{c}$$</div></div>
+  <div class="radar-step-card"><h3 data-lang="fmcw-step-6-title">6. Fast-time samples become range bins</h3><p data-lang="fmcw-step-6-p">Samples inside one chirp are called fast-time samples. An FFT over those samples produces range bins.</p><div class="math-box mini-math">$$Y_R[n,k,p]=\mathrm{FFT}_q\{Y[n,q,p]\}$$</div></div>
+  <div class="radar-step-card"><h3 data-lang="fmcw-step-7-title">7. Velocity creates Doppler phase</h3><p data-lang="fmcw-step-7-p">From chirp to chirp, a moving target adds a phase progression. Its frequency is the Doppler frequency.</p><div class="math-box mini-math">$$f_D=\frac{2v}{\lambda}$$</div></div>
+  <div class="radar-step-card"><h3 data-lang="fmcw-step-8-title">8. Slow-time FFT becomes velocity bins</h3><p data-lang="fmcw-step-8-p">The chirp index is slow time. An FFT over chirps converts the Doppler phase progression into velocity bins.</p><div class="math-box mini-math">$$Y_{RD}[n,k,l]=\mathrm{FFT}_p\{Y_R[n,k,p]\}$$</div></div>
+  <div class="radar-step-card"><h3 data-lang="fmcw-step-9-title">9. The full radar data cube</h3><p data-lang="fmcw-step-9-p">A real radar scene therefore needs antenna index, fast-time sample index and chirp index.</p><div class="math-box mini-math">$$Y[n,q,p]$$</div></div>
+  <div class="radar-step-card"><h3 data-lang="fmcw-step-10-title">10. Add the antenna phase</h3><p data-lang="fmcw-step-10-p">At a selected range-Doppler bin, the remaining vector over antennas is used for the DOA angle estimate.</p><div class="math-box mini-math">$$Y[n,q,p]\mathrel{+}=A e^{j2\pi f_b q/f_s}e^{j2\pi f_D pT}g_n(\hat d)$$</div></div>
+  <div class="radar-step-card"><h3 data-lang="fmcw-step-11-title">11. Optional TX steering gain</h3><p data-lang="fmcw-step-11-p">If the transmit beam is steered, the target echo is stronger when the target direction equals the steering direction. In this first model the TX side changes amplitude, not the receive DOA phase.</p><div class="math-box mini-math">$$A_\text{eff}=A\,|w_\text{tx}^H a_\text{tx}(\hat d)|$$</div></div>
+  <div class="radar-step-card"><h3 data-lang="fmcw-step-12-title">12. Detect the peak</h3><p data-lang="fmcw-step-12-p">The range-Doppler map is formed by summing power over antennas. Peaks indicate possible targets.</p><div class="math-box mini-math">$$P[k,l]=\sum_n |Y_{RD}[n,k,l]|^2$$</div></div>
+  <div class="radar-step-card"><h3 data-lang="fmcw-step-13-title">13. Estimate angle at that peak</h3><p data-lang="fmcw-step-13-p">For the chosen peak, take the antenna vector and run the same matched-filter DOA search as above.</p><div class="math-box mini-math">$$\hat d=\arg\max_{\hat d_{cand}}|g(\hat d_{cand})^H y_{k,l}|^2$$</div></div>
+</div>
+<p class="mt-3 text-sm" data-lang="fmcw-math-conclusion">This is the correct first step for the website: simple visible objects, real radar concepts, no overcomplicated mesh reflection. Later the point target can be replaced by several scatterers for extended objects.</p>
+</div>
+
 <div class="bg-white rounded-lg shadow p-4">
 <h2 class="text-lg sm:text-xl font-semibold mb-4" data-lang="symbol-definitions"></h2>
 <details>
@@ -770,6 +1061,33 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
 <tr><td class="py-2 px-4 border-b text-sm">$J(\vec r')$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-J"></td></tr>
 <tr><td class="py-2 px-4 border-b text-sm">$\rho(\vec r')$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-rho"></td></tr>
 <tr><td class="py-2 px-4 border-b text-sm">$\hat u$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-uhat"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm font-semibold" colspan="2" data-lang="symbol-section-radar"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$c$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-c"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$f_c$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-fc"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$B$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-B"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$T$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-T"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$S=B/T$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-chirp-slope"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$R$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-range-radar"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$v$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-v"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$\sigma_{\mathrm{RCS}}$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-rcs"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$f_b$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-fb"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$f_D$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-fD"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$N_q$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-Nq"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$N_c$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-Nc"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$q$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-q-fast"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$p$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-p-slow"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$k_r$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-kr-bin"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$l$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-l-doppler"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$Y[n,q,p]$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-Ycube"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$Y_R[n,k_r,p]$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-YR"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$Y_{RD}[n,k_r,l]$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-YRD"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$\vec y$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-yvec"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$\vec g(\hat d)$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-gvec"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$z(\hat d_{cand})$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-zcorr"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$P(\hat d_{cand})$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-Pdoa"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$\hat d_{est}$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-dest"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$w_{tx}$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-wtx"></td></tr>
+<tr><td class="py-2 px-4 border-b text-sm">$a_{tx}(\hat d)$</td><td class="py-2 px-4 border-b text-sm" data-lang="def-atx"></td></tr>
 </tbody>
 </table>
 </details>
@@ -779,9 +1097,9 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
 </div>
 
 
-<script src="js/app.js?v=2026-05-04-distance-left-layout-v1"></script>
+<script src="js/app.js?v=2026-05-24-radar-v55-language-completion"></script>
 
-<script src="js/cache-version.js?v=2026-05-04-distance-left-layout-v1"></script>
+<script src="js/cache-version.js?v=2026-05-24-radar-v55-language-completion"></script>
 
 
 
@@ -884,7 +1202,7 @@ $$\text{This page uses } e^{i\omega t}\text{ and outgoing }G(R)\propto e^{ikR}/R
   image-rendering: auto;
 }
 </style>
-<script src="js/render-quality-overrides.js?v=2026-05-04-distance-left-layout-v1"></script>
+<script src="js/render-quality-overrides.js?v=2026-05-24-v41-motion-cuts-quality"></script>
 
 <footer style="
   text-align:center;

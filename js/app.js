@@ -29,13 +29,13 @@
     // Translation Data
     const translations = {
       de: {
-        "title": "Free 3D Phased Array Simulator",
+        "title": "Phased-Array- & Radar-DOA-Simulator – 3D-Beamforming-Tool",
         "view-size": "3D-Ansicht:",
         "fullscreen-3d": "3D Vollbild",
         "visualization-settings": "Visualisierungseinstellungen",
         "antenna-type": "Antennentyp:",
         "isotropic": "Isotrop",
-        "patch": "Patch (Direktional)",
+        "patch": "Patch rectangle (directional)",
         "steering-direction": "Steuerungsrichtung (Beam Steering)",
         "azimuth": "Azimut (φ):",
         "elevation": "Elevation (θ):",
@@ -45,8 +45,8 @@
         "show-observation-point": "Beobachtungspunkt anzeigen:",
         "show-steering-point": "Steuerungspunkt anzeigen:",
         "antenna-array-config": "Antennenarray-Konfiguration",
-        "waves": "Wellen:",
-        "vectors": "Vektoren:",
+        "waves": "Phasenfronten:",
+        "vectors": "rₙ / R−rₙ Vektoren:",
         "far-field-pattern": "Feldmuster:",
         "normalize-pattern": "Muster normalisieren:",
         "mutual-coupling": "Gegenseitige Kopplung:",
@@ -80,7 +80,7 @@
         "direction": "Richtung:",
         "exact-field-real-part": "Re(A) Subpatch:",
         "approx-field-real-part": "Re(A) Approximiert:",
-        "required-steering-phases": "Erforderliche Phasenverschiebung zur Strahlsteuerung pro Antenne:",
+        "required-steering-phases": "Antennen-Speisephasen:",
         "approximation-note-text": "Die Subpatch-Näherung verwendet echte Abstände und Phasen zu vielen kleinen Quellen. Sie ist deshalb näher am Nah-/Fresnelbereich als der Fraunhofer-Array-Faktor, aber nicht wirklich &quot;exakt&quot;: Für eine reale Patch-Antenne bräuchte man $J(\\vec r)$ aus FEM/MoM/Messung und eine Kopplungsmatrix zwischen Elementen. Faustregel: unter etwa $\\lambda/4$ Elementabstand ist Kopplung meist stark; ab etwa $\\lambda/2$ ist sie oft deutlich kleiner und der Array-Faktor brauchbarer.",
         "math-foundations-title": "Mathematische Grundlagen",
         "math-foundations-desc-helmholtz": "Die Berechnung des Feldes basiert auf grundlegenden Prinzipien der Wellenausbreitung, die durch die Helmholtz-Gleichung beschrieben werden.",
@@ -153,13 +153,13 @@
         "def-uhat": "Lokale Abstrahl-/Beobachtungsrichtung vom Quellpunkt zum Beobachtungspunkt; benutzt für Richtungsgewichtung."
       },
       en: {
-        "title": "Free 3D Phased Array Simulator",
+        "title": "Phased Array & Radar DOA Simulator",
         "view-size": "3D view size:",
         "fullscreen-3d": "Fullscreen 3D",
         "visualization-settings": "Visualization Settings",
         "antenna-type": "Antenna Type:",
         "isotropic": "Isotropic",
-        "patch": "Patch (Directional)",
+        "patch": "Patch rectangle (directional)",
         "steering-direction": "Steering Direction (Beam Steering)",
         "azimuth": "Azimuth (φ):",
         "elevation": "Elevation (θ):",
@@ -169,8 +169,8 @@
         "show-observation-point": "Show Observation Point:",
         "show-steering-point": "Show Steering Point:",
         "antenna-array-config": "Antenna array configuration",
-        "waves": "Waves:",
-        "vectors": "Vectors:",
+        "waves": "Phase fronts:",
+        "vectors": "rₙ / R−rₙ vectors:",
         "far-field-pattern": "Field Pattern:",
         "normalize-pattern": "Normalize Pattern:",
         "mutual-coupling": "Mutual coupling:",
@@ -182,7 +182,7 @@
         "hemisphere": "Color-Coded Hemisphere",
         "3d-shape": "Lobe Shape (3D Magnitude)",
         "subpatch-density": "Subpatch Density:",
-        "distance-huygens-note": "Fraunhofer: distance-independent. Huygens: small R/λ shows near/Fresnel effects.",
+        "distance-huygens-note": "Fraunhofer: distance-independent. Huygens: small R/λ shows near/Fresnel effects.", "steering-target-link-note": "Radar target follows this steering direction and Distance R / λ by default.",
         "total-field-magnitude": "Total Field Magnitude:",
         "array-factor": "Total Field / Array Response",
         "array-factor-desc": "The shown field is a scalar demonstration of antenna-element superposition. The subpatch mode evaluates a discretized radiation integral using prescribed equivalent source weights. The Fraunhofer mode uses the far-field array-factor approximation. This is not a full-wave FEM or MoM solver. However, the optional mutual-coupling switch adds a small MoM-inspired matrix model at element level: nearby elements modify the complex excitation currents before the radiation integral is evaluated. The coupling slider is calibrated like a rough nearest-neighbour $S_{21}$ magnitude in dB, not like a measured material parameter. In subpatch mode, each subpatch still receives a prescribed local current shape.",
@@ -204,7 +204,7 @@
         "direction": "Direction:",
         "exact-field-real-part": "Re(A) Huygens model:",
         "approx-field-real-part": "Re(A) Fraunhofer:",
-        "required-steering-phases": "Required Phase Shift for Beam Steering per Antenna:",
+        "required-steering-phases": "Antenna feed phase shifts:",
         "approximation-note-text": "The subpatch approximation uses real distances and phases to many small sources. It is therefore closer to the finite-distance observation region than the Fraunhofer array factor, but it is not truly &quot;exact&quot;: a real patch antenna would require $J(\\vec r)$ from FEM/MoM/measurement and a coupling matrix between elements. Rule of thumb: below about $\\lambda/4$ element spacing coupling is usually strong; around $\\lambda/2$ it is often much smaller and the array-factor model becomes more usable.",
         "math-foundations-title": "Mathematical Foundations",
         "math-foundations-desc-helmholtz": "The calculation of the field is based on fundamental principles of wave propagation, which are described by the Helmholtz equation.",
@@ -282,13 +282,13 @@
         "def-uhat": "Local radiation/observation direction from source point to observation point; used for directional weighting."
       },
        fr: {
-        "title": "Free 3D Phased Array Simulator",
+        "title": "Simulateur réseau phasé & radar DOA – outil de beamforming 3D",
         "view-size": "Taille 3D :",
         "fullscreen-3d": "Plein écran 3D",
         "visualization-settings": "Paramètres de Visualisation",
         "antenna-type": "Type d'Antenne:",
         "isotropic": "Isotrope",
-        "patch": "Patch (Directionnelle)",
+        "patch": "Patch rectangle (directional)",
         "steering-direction": "Direction de Pointage (Beam Steering)",
         "azimuth": "Azimut (φ):",
         "elevation": "Élévation (θ):",
@@ -393,7 +393,7 @@
         "def-uhat": "Local radiation/observation direction from source point to observation point; used for directional weighting."
       },
       es: {
-        "title": "Free 3D Phased Array Simulator",
+        "title": "Simulador phased array y radar DOA – herramienta de beamforming 3D",
         "view-size": "Tamaño 3D:",
         "fullscreen-3d": "Pantalla completa 3D",
         "visualization-settings": "Ajustes de Visualización",
@@ -504,7 +504,7 @@
         "def-uhat": "Local radiation/observation direction from source point to observation point; used for directional weighting."
       },
       zh: {
-        "title": "Free 3D Phased Array Simulator",
+        "title": "相控阵与雷达 DOA 模拟器 – 3D 波束成形工具",
         "view-size": "3D视图大小：",
         "fullscreen-3d": "3D全屏",
         "visualization-settings": "可视化设置",
@@ -615,7 +615,7 @@
         "def-uhat": "Local radiation/observation direction from source point to observation point; used for directional weighting."
       },
       ja: {
-        "title": "Free 3D Phased Array Simulator",
+        "title": "フェーズドアレイ＆レーダーDOAシミュレータ – 3Dビームフォーミングツール",
         "view-size": "3D表示サイズ:",
         "fullscreen-3d": "3D全画面",
         "visualization-settings": "可視化設定",
@@ -730,8 +730,8 @@
     // Extra translation coverage for static website/UI text.
     const translationPatches = {
       "en": {
-            "seo-title": "Free 3D Phased Array Simulator for Beamforming & Antenna Array Visualization",
-            "seo-desc-1": "Explore phased array beam steering directly in the browser. This interactive RF engineering tool visualizes antenna array geometry, element spacing, steering direction, 3D radiation lobes, simplified mutual coupling and prescribed-current Huygens-style/Fraunhofer behavior.",
+            "seo-title": "3D Beamforming, Radar DOA & Antenna Tool",
+            "seo-desc-1": "Explore phased array beam steering and simple radar/receive DOA estimation directly in the browser. This interactive RF engineering tool visualizes antenna array geometry, element spacing, steering direction, 3D radiation lobes, simplified mutual coupling and prescribed-current Huygens-style/Fraunhofer behavior.",
             "seo-desc-2": "The simulator is designed for learning and experimentation: instead of relying only on fixed 2D antenna pattern pictures, it uses vector-based field calculations to show how antenna elements combine in 3D space.",
             "seo-start": "Start the simulator",
             "seo-github": "View source code on GitHub",
@@ -770,7 +770,7 @@
       },
       "de": {
             "seo-title": "Kostenloser 3D Phased-Array-Simulator für Beamforming & Antennenarray-Visualisierung",
-            "seo-desc-1": "Erkunde Phased-Array-Beam-Steering direkt im Browser. Dieses interaktive RF-Engineering-Tool visualisiert Antennenarray-Geometrie, Elementabstand, Lenkrichtung, 3D-Strahlungskeulen, vereinfachte gegenseitige Kopplung und vorgeschriebene Huygens-/Fraunhofer-Feldmodelle.",
+            "seo-desc-1": "Erkunde Phased-Array-Beam-Steering und einfache Radar-/Receive-DOA-Schätzung direkt im Browser. Dieses interaktive RF-Engineering-Tool visualisiert Antennenarray-Geometrie, Elementabstand, Lenkrichtung, 3D-Strahlungskeulen, vereinfachte gegenseitige Kopplung und vorgeschriebene Huygens-/Fraunhofer-Feldmodelle.",
             "seo-desc-2": "Der Simulator ist für Lernen und Experimente gedacht: statt nur feste 2D-Antennendiagramme zu zeigen, nutzt er vektorbasierte Feldberechnungen, um darzustellen, wie Antennenelemente im 3D-Raum zusammenwirken.",
             "seo-start": "Simulator starten",
             "seo-github": "Quellcode auf GitHub ansehen",
@@ -970,11 +970,12 @@
 
     const seoRankingTranslationPatches = {
       "en": {
-            "title": "Phased Array Simulator – 3D Beamforming Tool",
-            "seo-title": "Phased Array Simulator – 3D Beamforming & Antenna Tool",
+            "title": "Phased Array & Radar DOA Simulator",
+            "seo-title": "3D Beamforming, Radar DOA & Antenna Tool",
             "seo-learning-title": "What is a phased array simulator?",
             "seo-learning-p1": "A phased array simulator is an interactive tool for visualizing how multiple antenna elements combine their electromagnetic fields. By changing phase shifts, steering angle, element spacing and amplitude taper, you can see how the main beam, sidelobes, nulls and radiation pattern change in 3D.",
             "seo-learning-p2": "This browser-based antenna array simulator is useful for students, RF engineers and makers who want to understand beamforming without starting with a full electromagnetic solver. The visualization connects the array factor, Fraunhofer far-field approximation and simplified prescribed-current Huygens-style field model in one place.",
+            "seo-learning-p3": "The same antenna position vectors can also be used for receive and radar direction-of-arrival experiments. The simulator can generate noisy complex antenna samples, compare them with many possible reference responses, and show the estimated target direction as a DOA correlation map.",
             "seo-beamforming-title": "Beamforming and steering",
             "seo-beamforming-p": "Beamforming works by applying a progressive phase shift to each antenna element. Mathematically this phase is based on the projection of the element position onto the steering direction. In the desired direction, the geometric phase differences cancel and the fields add constructively.",
             "seo-spacing-title": "Element spacing and grating lobes",
@@ -989,11 +990,12 @@
             "seo-use-li-5": "Compare Fraunhofer far-field behavior with a simplified finite-distance Huygens-style model."
       },
       "de": {
-            "title": "Phased Array Simulator – 3D Beamforming Tool",
-            "seo-title": "Phased Array Simulator – 3D Beamforming & Antennen-Tool",
+            "title": "Phased-Array- & Radar-DOA-Simulator – 3D-Beamforming-Tool",
+            "seo-title": "Phased-Array- & Radar-DOA-Simulator – 3D-Beamforming, Richtungsschätzung & Antennen-Tool",
             "seo-learning-title": "Was ist ein Phased-Array-Simulator?",
             "seo-learning-p1": "Ein Phased-Array-Simulator ist ein interaktives Tool, das zeigt, wie mehrere Antennenelemente ihre elektromagnetischen Felder überlagern. Durch Änderung von Phasenverschiebung, Lenkwinkel, Elementabstand und Amplituden-Taper sieht man direkt, wie Hauptkeule, Nebenkeulen, Nullstellen und 3D-Strahlungsdiagramm entstehen.",
             "seo-learning-p2": "Dieser browserbasierte Antennenarray-Simulator ist hilfreich für Studierende, RF-Ingenieure und Maker, die Beamforming verstehen möchten, ohne direkt mit einem vollständigen elektromagnetischen Solver zu starten. Die Visualisierung verbindet Array-Faktor, Fraunhofer-Fernfeldnäherung und ein vereinfachtes vorgeschriebenes Huygens-Stromquellenmodell.",
+            "seo-learning-p3": "Dieselben Antennenpositionsvektoren können auch für Receive- und Radar-DOA-Experimente genutzt werden. Der Simulator erzeugt verrauschte komplexe Antennensamples, vergleicht sie mit vielen möglichen Referenzantworten und zeigt die geschätzte Zielrichtung als DOA-Korrelationskarte.",
             "seo-beamforming-title": "Beamforming und Steering",
             "seo-beamforming-p": "Beamforming funktioniert durch eine progressive Phasenverschiebung an jedem Antennenelement. In der gewünschten Lenkrichtung addieren sich die Felder konstruktiv, in anderen Richtungen teilweise destruktiv. Dadurch entsteht ein gerichtetes 3D-Strahlungsdiagramm.",
             "seo-spacing-title": "Elementabstand und Grating Lobes",
@@ -1008,11 +1010,12 @@
             "seo-use-li-5": "Fraunhofer-Fernfeld mit einem vereinfachten Huygens-Modell bei endlicher Distanz vergleichen."
       },
       "fr": {
-            "title": "Simulateur Phased Array – Outil 3D Beamforming",
-            "seo-title": "Simulateur Phased Array – Beamforming 3D & outil d’antenne",
+            "title": "Simulateur réseau phasé & radar DOA – outil de beamforming 3D",
+            "seo-title": "Simulateur réseau phasé & radar DOA – beamforming 3D, estimation de direction & outil d’antenne",
             "seo-learning-title": "Qu’est-ce qu’un simulateur de réseau phasé ?",
             "seo-learning-p1": "Un simulateur de réseau phasé est un outil interactif qui visualise comment plusieurs éléments d’antenne combinent leurs champs électromagnétiques. En modifiant les déphasages, l’angle de pointage, l’espacement des éléments et la pondération d’amplitude, on observe en 3D le lobe principal, les lobes secondaires, les zéros et le diagramme de rayonnement.",
             "seo-learning-p2": "Ce simulateur d’antenne en ligne est utile pour les étudiants, ingénieurs RF et makers qui veulent comprendre le beamforming sans commencer par un solveur électromagnétique complet. Il relie le facteur de réseau, l’approximation de Fraunhofer et un modèle Huygens simplifié à courants prescrits.",
+            "seo-learning-p3": "Les mêmes vecteurs de position d’antenne peuvent aussi servir aux essais de réception, radar et estimation de direction d’arrivée. Le simulateur génère des échantillons complexes bruités, les compare à des réponses de référence possibles et affiche la direction estimée sous forme de carte de corrélation DOA.",
             "seo-beamforming-title": "Beamforming et pointage",
             "seo-beamforming-p": "Le beamforming applique un déphasage progressif à chaque élément d’antenne. Les champs s’additionnent constructivement dans la direction voulue et destructivement ailleurs, créant un diagramme de rayonnement 3D directionnel.",
             "seo-spacing-title": "Espacement des éléments et lobes de réseau",
@@ -1027,11 +1030,12 @@
             "seo-use-li-5": "Comparer le champ lointain de Fraunhofer avec un modèle Huygens simplifié à distance finie."
       },
       "es": {
-            "title": "Simulador Phased Array – Herramienta 3D Beamforming",
-            "seo-title": "Simulador Phased Array – Beamforming 3D y herramienta de antenas",
+            "title": "Simulador phased array y radar DOA – herramienta de beamforming 3D",
+            "seo-title": "Simulador phased array y radar DOA – beamforming 3D, estimación de dirección y herramienta de antenas",
             "seo-learning-title": "¿Qué es un simulador phased array?",
             "seo-learning-p1": "Un simulador phased array es una herramienta interactiva para visualizar cómo varios elementos de antena combinan sus campos electromagnéticos. Al cambiar fases, ángulo de apuntamiento, espaciado y taper de amplitud, se ve cómo cambian el lóbulo principal, los lóbulos laterales, los nulos y el patrón de radiación 3D.",
             "seo-learning-p2": "Este simulador de arrays de antenas en navegador ayuda a estudiantes, ingenieros RF y makers a entender el beamforming sin empezar con un solver electromagnético completo. Conecta el factor de array, la aproximación de Fraunhofer y un modelo Huygens simplificado de corrientes prescritas.",
+            "seo-learning-p3": "Los mismos vectores de posición de antena también se pueden usar para pruebas de recepción, radar y estimación DOA. El simulador genera muestras complejas con ruido, las compara con muchas respuestas de referencia posibles y muestra la dirección estimada como un mapa de correlación DOA.",
             "seo-beamforming-title": "Beamforming y apuntamiento",
             "seo-beamforming-p": "El beamforming aplica un desfase progresivo a cada elemento. Los campos se suman constructivamente en la dirección deseada y destructivamente en otras direcciones, creando un patrón de radiación 3D direccional.",
             "seo-spacing-title": "Espaciado y grating lobes",
@@ -1046,11 +1050,12 @@
             "seo-use-li-5": "Comparar Fraunhofer con un modelo Huygens simplificado a distancia finita."
       },
       "zh": {
-            "title": "相控阵模拟器 – 3D 波束成形工具",
-            "seo-title": "相控阵模拟器 – 3D 波束成形与天线工具",
+            "title": "相控阵与雷达 DOA 模拟器 – 3D 波束成形工具",
+            "seo-title": "相控阵与雷达 DOA 模拟器 – 3D 波束成形、方向估计与天线工具",
             "seo-learning-title": "什么是相控阵模拟器？",
             "seo-learning-p1": "相控阵模拟器是一种交互式工具，用于可视化多个天线阵元如何叠加电磁场。通过改变相移、指向角、阵元间距和幅度加权，可以在 3D 中看到主瓣、旁瓣、零点和辐射方向图的变化。",
             "seo-learning-p2": "这个基于浏览器的天线阵列模拟器适合学生、射频工程师和创客理解波束成形，而不必一开始就使用完整的电磁求解器。它把阵列因子、Fraunhofer 远场近似和简化的规定电流 Huygens 模型连接在一起。",
+            "seo-learning-p3": "同样的天线位置向量也可用于接收、雷达和 DOA 到达方向实验。模拟器可以生成带噪声的复数天线采样，与许多可能的参考响应进行比较，并以 DOA 相关图显示估计的目标方向。",
             "seo-beamforming-title": "波束成形与指向",
             "seo-beamforming-p": "波束成形通过给每个天线阵元施加递进相移实现。电磁场在目标方向相长叠加，在其他方向部分相消，从而形成定向的 3D 辐射方向图。",
             "seo-spacing-title": "阵元间距与栅瓣",
@@ -1065,11 +1070,12 @@
             "seo-use-li-5": "比较 Fraunhofer 远场与有限距离的简化 Huygens 模型。"
       },
       "ja": {
-            "title": "フェーズドアレイシミュレータ – 3Dビームフォーミングツール",
-            "seo-title": "フェーズドアレイシミュレータ – 3Dビームフォーミングとアンテナツール",
+            "title": "フェーズドアレイ＆レーダーDOAシミュレータ – 3Dビームフォーミングツール",
+            "seo-title": "フェーズドアレイ＆レーダーDOAシミュレータ – 3Dビームフォーミング・方向推定・アンテナツール",
             "seo-learning-title": "フェーズドアレイシミュレータとは？",
             "seo-learning-p1": "フェーズドアレイシミュレータは、複数のアンテナ素子が電磁界をどのように合成するかを可視化するインタラクティブツールです。位相シフト、ステアリング角、素子間隔、振幅テーパーを変更すると、主ローブ、サイドローブ、ヌル、3D放射パターンの変化を確認できます。",
             "seo-learning-p2": "このブラウザベースのアンテナアレイシミュレータは、完全な電磁界ソルバーから始めなくてもビームフォーミングを理解したい学生、RFエンジニア、メーカーに役立ちます。アレイファクター、Fraunhofer遠方界近似、簡略化された規定電流Huygensモデルを一つの表示でつなぎます。",
+            "seo-learning-p3": "同じアンテナ位置ベクトルを、受信、レーダー、DOA推定の実験にも使用できます。シミュレータはノイズを含む複素アンテナサンプルを生成し、多数の参照応答と比較して、推定されたターゲット方向をDOA相関マップとして表示します。",
             "seo-beamforming-title": "ビームフォーミングとステアリング",
             "seo-beamforming-p": "ビームフォーミングは各アンテナ素子に進行的な位相シフトを与えることで機能します。希望方向では電界が強め合い、他の方向では弱め合うため、指向性のある3D放射パターンが形成されます。",
             "seo-spacing-title": "素子間隔とグレーティングローブ",
@@ -1086,6 +1092,272 @@
 };
     Object.keys(seoRankingTranslationPatches).forEach(lang => {
       translations[lang] = Object.assign({}, translations[lang] || {}, seoRankingTranslationPatches[lang]);
+    });
+
+    const radarDoaMathTranslationPatches = {
+      en: {
+        "math-foundations-desc-doa": "For receive DOA and simple radar tests, the same position vectors are used in reverse: a hypothetical incoming direction creates a complex receive signature across the array. The simulator adds complex receiver noise to the measured samples and then tests many candidate directions with a matched-filter correlation. The direction with the largest correlation peak is the estimated direction of arrival.",
+        "math-foundations-doa-eq": "$$g_n(\hat d)=E_{element}(\hat d)e^{jk(\vec r_n\cdot\hat d)},\quad y=g(\hat d_{true})s+n,\quad P(\hat d_{cand})=|g(\hat d_{cand})^H y|^2$$"
+      },
+      de: {
+        "math-foundations-desc-doa": "Für Receive-DOA und einfache Radar-Tests werden dieselben Positionsvektoren umgekehrt genutzt: Eine angenommene Einfallsrichtung erzeugt eine komplexe Empfangssignatur über dem Array. Der Simulator addiert komplexes Empfängerrauschen zu den gemessenen Samples und testet dann viele Kandidatenrichtungen mit einer Matched-Filter-Korrelation. Die Richtung mit dem größten Korrelationspeak ist die geschätzte Ankunftsrichtung.",
+        "math-foundations-doa-eq": "$$g_n(\hat d)=E_{element}(\hat d)e^{jk(\vec r_n\cdot\hat d)},\quad y=g(\hat d_{true})s+n,\quad P(\hat d_{cand})=|g(\hat d_{cand})^H y|^2$$"
+      },
+      fr: {
+        "math-foundations-desc-doa": "Pour la réception DOA et les tests radar simples, les mêmes vecteurs de position sont utilisés en sens inverse : une direction d’arrivée hypothétique crée une signature complexe sur le réseau. Le simulateur ajoute un bruit complexe aux échantillons mesurés puis teste de nombreuses directions candidates par corrélation de filtre adapté.",
+        "math-foundations-doa-eq": "$$g_n(\hat d)=E_{element}(\hat d)e^{jk(\vec r_n\cdot\hat d)},\quad y=g(\hat d_{true})s+n,\quad P(\hat d_{cand})=|g(\hat d_{cand})^H y|^2$$"
+      },
+      es: {
+        "math-foundations-desc-doa": "Para DOA en recepción y pruebas radar simples, los mismos vectores de posición se usan al revés: una dirección de llegada hipotética crea una firma compleja en el array. El simulador añade ruido complejo a las muestras medidas y prueba muchas direcciones candidatas con una correlación de filtro adaptado.",
+        "math-foundations-doa-eq": "$$g_n(\hat d)=E_{element}(\hat d)e^{jk(\vec r_n\cdot\hat d)},\quad y=g(\hat d_{true})s+n,\quad P(\hat d_{cand})=|g(\hat d_{cand})^H y|^2$$"
+      },
+      zh: {
+        "math-foundations-desc-doa": "对于接收 DOA 和简单雷达测试，相同的位置向量会反向使用：假设的入射方向会在阵列上产生复数接收签名。模拟器给测量样本加入复数接收机噪声，然后用匹配滤波相关测试许多候选方向。相关峰最大的方向就是估计的到达方向。",
+        "math-foundations-doa-eq": "$$g_n(\hat d)=E_{element}(\hat d)e^{jk(\vec r_n\cdot\hat d)},\quad y=g(\hat d_{true})s+n,\quad P(\hat d_{cand})=|g(\hat d_{cand})^H y|^2$$"
+      },
+      ja: {
+        "math-foundations-desc-doa": "受信DOAや簡単なレーダーテストでは、同じ位置ベクトルを逆向きに使います。仮定した到来方向はアレイ全体に複素受信シグネチャを作ります。シミュレータは測定サンプルに複素受信ノイズを加え、多数の候補方向をマッチドフィルタ相関で評価します。",
+        "math-foundations-doa-eq": "$$g_n(\hat d)=E_{element}(\hat d)e^{jk(\vec r_n\cdot\hat d)},\quad y=g(\hat d_{true})s+n,\quad P(\hat d_{cand})=|g(\hat d_{cand})^H y|^2$$"
+      }
+    };
+    Object.keys(radarDoaMathTranslationPatches).forEach(lang => {
+      translations[lang] = Object.assign({}, translations[lang] || {}, radarDoaMathTranslationPatches[lang]);
+    });
+
+    const radarDetailedMathPatches = {
+      en: {
+        "coupling-help": "Off by default. Enable mutual coupling to apply the rough nearest-neighbour element-current coupling estimate.",
+        "seo-geometry-title": "Vector array geometry",
+        "seo-geometry-p": "The array is defined by real antenna position vectors r_n = [x_n, y_n, z_n]. You can use rectangular, circular, spiral, parabolic or manual coordinate layouts instead of only a fixed checkbox grid.",
+        "seo-radar-title": "Radar and receive DOA",
+        "seo-radar-p": "The radar/receive mode creates noisy complex antenna samples, builds reference responses for many possible target directions and estimates the direction with the highest matched-filter correlation.",
+        "seo-mutual-title": "Simplified mutual coupling",
+        "seo-mutual-p": "An optional coupling estimate modifies the complex element currents with a rough nearest-neighbour matrix. It is useful for intuition, but it is not a replacement for FEM, MoM, FDTD or measured S-parameters.",
+        "seo-use-li-6": "Test noisy receive / radar DOA estimation with a matched-filter correlation map.",
+        "radar-math-title": "Radar / Receive DOA calculation",
+        "radar-math-intro": "This section describes exactly what the radar/receive test does. The DSP does not know the true target direction. It generates noisy antenna samples for a chosen target and then tests many possible directions until the expected phase pattern matches the measurement best.",
+        "radar-step-1-title": "1. Antenna positions", "radar-step-1-p": "Each antenna element has a known position vector.",
+        "radar-step-2-title": "2. Direction vector", "radar-step-2-p": "A possible target direction is represented by a unit vector.",
+        "radar-step-3-title": "3. Receive signature", "radar-step-3-p": "For each test direction the simulator computes the complex reference response of every antenna.",
+        "radar-step-4-title": "4. One-way vs. radar phase", "radar-step-4-p": "One-way receive uses alpha = 1. Monostatic radar round-trip uses alpha = 2 because the wave travels to the target and back.",
+        "radar-step-5-title": "5. Noisy measurement", "radar-step-5-p": "The measured vector is the true array response multiplied by a complex echo amplitude plus complex receiver noise.",
+        "radar-step-6-title": "6. Noise model", "radar-step-6-p": "Noise is added independently to the real and imaginary part of each antenna sample.",
+        "radar-step-7-title": "7. SNR to noise amplitude", "radar-step-7-p": "For unit signal amplitude the SNR slider controls the complex noise amplitude.",
+        "radar-step-8-title": "8. LUT direction search", "radar-step-8-p": "For every candidate direction the simulator correlates the measured vector with the stored reference response.",
+        "radar-step-9-title": "9. Power map", "radar-step-9-p": "The DOA heatmap shows the squared magnitude of this matched-filter output.",
+        "radar-step-10-title": "10. Estimated direction", "radar-step-10-p": "The direction with the largest correlation peak is reported as the estimated target direction.",
+        "radar-math-conclusion": "Correct hypotheses align the antenna phases and add constructively. Wrong hypotheses leave residual phase errors, so the sum partly cancels. With low SNR the peak becomes wider or can jump to a wrong sidelobe."
+      },
+      de: {
+        "coupling-help": "Standardmäßig deaktiviert. Aktiviere das Häkchen, um die grobe Elementstrom-Kopplungsschätzung anzuwenden.",
+        "seo-geometry-title": "Vektorbasierte Array-Geometrie",
+        "seo-geometry-p": "Das Array wird durch echte Antennenpositionsvektoren r_n = [x_n, y_n, z_n] beschrieben. Statt nur ein festes Checkbox-Raster zu nutzen, kannst du rechteckige, kreisförmige, spiralförmige, parabolische oder manuelle Koordinaten verwenden.",
+        "seo-radar-title": "Radar und Receive-DOA",
+        "seo-radar-p": "Der Radar-/Receive-Modus erzeugt verrauschte komplexe Antennensamples, baut Referenzantworten für viele mögliche Zielrichtungen auf und schätzt die Richtung mit der höchsten Matched-Filter-Korrelation.",
+        "seo-mutual-title": "Vereinfachte gegenseitige Kopplung",
+        "seo-mutual-p": "Eine optionale Kopplungsschätzung verändert die komplexen Elementströme mit einer groben Nachbar-Matrix. Das ist nützlich für Intuition, ersetzt aber keine FEM-, MoM-, FDTD-Rechnung oder gemessene S-Parameter.",
+        "seo-use-li-6": "Verrauschte Receive-/Radar-DOA-Schätzung mit Matched-Filter-Korrelationskarte testen.",
+        "radar-math-title": "Radar-/Receive-DOA-Rechnung",
+        "radar-math-intro": "Dieser Abschnitt beschreibt genau, was der Radar-/Receive-Test macht. Der DSP kennt die echte Zielrichtung nicht. Er erzeugt verrauschte Antennensamples für ein gewähltes Ziel und testet dann viele mögliche Richtungen, bis das erwartete Phasenmuster am besten zur Messung passt.",
+        "radar-step-1-title": "1. Antennenpositionen", "radar-step-1-p": "Jedes Antennenelement besitzt einen bekannten Positionsvektor.",
+        "radar-step-2-title": "2. Richtungsvektor", "radar-step-2-p": "Eine mögliche Zielrichtung wird als Einheitsvektor dargestellt.",
+        "radar-step-3-title": "3. Empfangssignatur", "radar-step-3-p": "Für jede Testrichtung berechnet der Simulator die komplexe Referenzantwort jeder Antenne.",
+        "radar-step-4-title": "4. One-way vs. Radarphase", "radar-step-4-p": "One-way Receive nutzt alpha = 1. Monostatischer Radar-Round-Trip nutzt alpha = 2, weil die Welle zum Ziel und zurück läuft.",
+        "radar-step-5-title": "5. Verrauschte Messung", "radar-step-5-p": "Der Messvektor ist die echte Array-Antwort multipliziert mit einer komplexen Echo-Amplitude plus komplexem Empfängerrauschen.",
+        "radar-step-6-title": "6. Rauschmodell", "radar-step-6-p": "Rauschen wird unabhängig auf Real- und Imaginärteil jedes Antennensamples addiert.",
+        "radar-step-7-title": "7. SNR zu Rauschamplitude", "radar-step-7-p": "Bei Einheits-Signalamplitude steuert der SNR-Regler die komplexe Rauschamplitude.",
+        "radar-step-8-title": "8. LUT-Richtungssuche", "radar-step-8-p": "Für jede Kandidatenrichtung korreliert der Simulator den Messvektor mit der gespeicherten Referenzantwort.",
+        "radar-step-9-title": "9. Leistungskarte", "radar-step-9-p": "Die DOA-Heatmap zeigt den quadratischen Betrag dieses Matched-Filter-Ausgangs.",
+        "radar-step-10-title": "10. Geschätzte Richtung", "radar-step-10-p": "Die Richtung mit dem größten Korrelationspeak wird als geschätzte Zielrichtung ausgegeben.",
+        "radar-math-conclusion": "Richtige Hypothesen richten die Antennenphasen aus und addieren konstruktiv. Falsche Hypothesen lassen Restphasenfehler übrig, wodurch die Summe teilweise auslöscht. Bei niedrigem SNR wird der Peak breiter oder kann auf eine falsche Nebenkeule springen."
+      }
+    };
+    Object.keys(radarDetailedMathPatches).forEach(lang => {
+      translations[lang] = Object.assign({}, translations[lang] || {}, radarDetailedMathPatches[lang]);
+    });
+
+    const radarDarkModeI18nPatches = {
+      en: {
+        "coupling-state-on": "on",
+        "coupling-state-off": "off",
+        "coupling-help": "Off by default. Enable mutual coupling to apply the rough nearest-neighbour element-current coupling estimate.",
+        "radar-math-title": "Radar / Receive DOA calculation",
+        "radar-math-intro": "This section describes exactly what the radar/receive test does. The DSP does not know the true target direction. It generates noisy antenna samples for a chosen target and then tests many possible directions until the expected phase pattern matches the measurement best.",
+        "radar-step-1-title": "1. Antenna positions", "radar-step-1-p": "Each antenna element has a known position vector.",
+        "radar-step-2-title": "2. Direction vector", "radar-step-2-p": "A possible target direction is represented by a unit vector.",
+        "radar-step-3-title": "3. Receive signature", "radar-step-3-p": "For each test direction the simulator computes the complex reference response of every antenna.",
+        "radar-step-4-title": "4. One-way vs. radar phase", "radar-step-4-p": "One-way receive uses alpha = 1. Monostatic radar round-trip uses alpha = 2 because the wave travels to the target and back.",
+        "radar-step-5-title": "5. Noisy measurement", "radar-step-5-p": "The measured vector is the true array response multiplied by a complex echo amplitude plus complex receiver noise.",
+        "radar-step-6-title": "6. Noise model", "radar-step-6-p": "Noise is added independently to the real and imaginary part of each antenna sample.",
+        "radar-step-7-title": "7. SNR to noise amplitude", "radar-step-7-p": "For unit signal amplitude the SNR slider controls the complex noise amplitude.",
+        "radar-step-8-title": "8. LUT direction search", "radar-step-8-p": "For every candidate direction the simulator correlates the measured vector with the stored reference response.",
+        "radar-step-9-title": "9. Power map", "radar-step-9-p": "The DOA heatmap shows the squared magnitude of this matched-filter output.",
+        "radar-step-10-title": "10. Estimated direction", "radar-step-10-p": "The direction with the largest correlation peak is reported as the estimated target direction.",
+        "radar-math-conclusion": "Correct hypotheses align the antenna phases and add constructively. Wrong hypotheses leave residual phase errors, so the sum partly cancels. With low SNR the peak becomes wider or can jump to a wrong sidelobe."
+      },
+      de: {
+        "coupling-state-on": "ein",
+        "coupling-state-off": "aus",
+        "coupling-help": "Standardmäßig deaktiviert. Aktiviere das Häkchen, um die grobe Elementstrom-Kopplungsschätzung anzuwenden.",
+        "radar-math-title": "Radar-/Receive-DOA-Rechnung",
+        "radar-math-intro": "Dieser Abschnitt beschreibt genau, was der Radar-/Receive-Test macht. Der DSP kennt die echte Zielrichtung nicht. Er erzeugt verrauschte Antennensamples für ein gewähltes Ziel und testet dann viele mögliche Richtungen, bis das erwartete Phasenmuster am besten zur Messung passt.",
+        "radar-step-1-title": "1. Antennenpositionen", "radar-step-1-p": "Jedes Antennenelement besitzt einen bekannten Positionsvektor.",
+        "radar-step-2-title": "2. Richtungsvektor", "radar-step-2-p": "Eine mögliche Zielrichtung wird als Einheitsvektor dargestellt.",
+        "radar-step-3-title": "3. Empfangssignatur", "radar-step-3-p": "Für jede Testrichtung berechnet der Simulator die komplexe Referenzantwort jeder Antenne.",
+        "radar-step-4-title": "4. One-way vs. Radarphase", "radar-step-4-p": "One-way Receive nutzt alpha = 1. Monostatischer Radar-Round-Trip nutzt alpha = 2, weil die Welle zum Ziel und zurück läuft.",
+        "radar-step-5-title": "5. Verrauschte Messung", "radar-step-5-p": "Der Messvektor ist die echte Array-Antwort multipliziert mit einer komplexen Echo-Amplitude plus komplexem Empfängerrauschen.",
+        "radar-step-6-title": "6. Rauschmodell", "radar-step-6-p": "Rauschen wird unabhängig auf Real- und Imaginärteil jedes Antennensamples addiert.",
+        "radar-step-7-title": "7. SNR zu Rauschamplitude", "radar-step-7-p": "Bei Einheits-Signalamplitude steuert der SNR-Regler die komplexe Rauschamplitude.",
+        "radar-step-8-title": "8. LUT-Richtungssuche", "radar-step-8-p": "Für jede Kandidatenrichtung korreliert der Simulator den Messvektor mit der gespeicherten Referenzantwort.",
+        "radar-step-9-title": "9. Leistungskarte", "radar-step-9-p": "Die DOA-Heatmap zeigt den quadratischen Betrag dieses Matched-Filter-Ausgangs.",
+        "radar-step-10-title": "10. Geschätzte Richtung", "radar-step-10-p": "Die Richtung mit dem größten Korrelationspeak wird als geschätzte Zielrichtung ausgegeben.",
+        "radar-math-conclusion": "Richtige Hypothesen richten die Antennenphasen aus und addieren konstruktiv. Falsche Hypothesen lassen Restphasenfehler übrig, wodurch die Summe teilweise auslöscht. Bei niedrigem SNR wird der Peak breiter oder kann auf eine falsche Nebenkeule springen."
+      },
+      fr: {
+        "coupling-state-on": "activé",
+        "coupling-state-off": "désactivé",
+        "coupling-help": "Désactivé par défaut. Cochez la case pour appliquer l’estimation approximative du couplage entre courants d’éléments.",
+        "radar-math-title": "Calcul radar / réception DOA",
+        "radar-math-intro": "Cette section décrit exactement ce que fait le test radar/réception. Le DSP ne connaît pas la vraie direction de la cible. Il génère des échantillons d’antenne complexes bruités pour une cible choisie, puis teste de nombreuses directions possibles jusqu’à ce que le motif de phase attendu corresponde le mieux à la mesure.",
+        "radar-step-1-title": "1. Positions des antennes", "radar-step-1-p": "Chaque élément d’antenne possède un vecteur de position connu.",
+        "radar-step-2-title": "2. Vecteur de direction", "radar-step-2-p": "Une direction possible de cible est représentée par un vecteur unitaire.",
+        "radar-step-3-title": "3. Signature de réception", "radar-step-3-p": "Pour chaque direction testée, le simulateur calcule la réponse de référence complexe de chaque antenne.",
+        "radar-step-4-title": "4. Aller simple ou phase radar", "radar-step-4-p": "La réception aller simple utilise alpha = 1. Le radar monostatique aller-retour utilise alpha = 2, car l’onde va jusqu’à la cible puis revient.",
+        "radar-step-5-title": "5. Mesure bruitée", "radar-step-5-p": "Le vecteur mesuré est la vraie réponse du réseau multipliée par une amplitude d’écho complexe, plus le bruit complexe du récepteur.",
+        "radar-step-6-title": "6. Modèle de bruit", "radar-step-6-p": "Le bruit est ajouté indépendamment à la partie réelle et à la partie imaginaire de chaque échantillon d’antenne.",
+        "radar-step-7-title": "7. SNR vers amplitude de bruit", "radar-step-7-p": "Pour une amplitude de signal unitaire, le curseur SNR contrôle l’amplitude du bruit complexe.",
+        "radar-step-8-title": "8. Recherche de direction LUT", "radar-step-8-p": "Pour chaque direction candidate, le simulateur corrèle le vecteur mesuré avec la réponse de référence stockée.",
+        "radar-step-9-title": "9. Carte de puissance", "radar-step-9-p": "La carte DOA affiche le carré du module de cette sortie de filtre adapté.",
+        "radar-step-10-title": "10. Direction estimée", "radar-step-10-p": "La direction avec le plus grand pic de corrélation est reportée comme direction cible estimée.",
+        "radar-math-conclusion": "Les bonnes hypothèses alignent les phases des antennes et s’additionnent constructivement. Les mauvaises hypothèses gardent des erreurs de phase résiduelles, donc la somme s’annule partiellement. Avec un faible SNR, le pic s’élargit ou peut sauter vers un lobe secondaire."
+      },
+      es: {
+        "coupling-state-on": "activo",
+        "coupling-state-off": "inactivo",
+        "coupling-help": "Desactivado por defecto. Marca la casilla para aplicar la estimación aproximada del acoplamiento de corriente entre elementos.",
+        "radar-math-title": "Cálculo radar / recepción DOA",
+        "radar-math-intro": "Esta sección describe exactamente qué hace la prueba de radar/recepción. El DSP no conoce la dirección real del objetivo. Genera muestras complejas con ruido para un objetivo elegido y luego prueba muchas direcciones posibles hasta que el patrón de fase esperado coincide mejor con la medición.",
+        "radar-step-1-title": "1. Posiciones de antena", "radar-step-1-p": "Cada elemento de antena tiene un vector de posición conocido.",
+        "radar-step-2-title": "2. Vector de dirección", "radar-step-2-p": "Una posible dirección del objetivo se representa mediante un vector unitario.",
+        "radar-step-3-title": "3. Firma de recepción", "radar-step-3-p": "Para cada dirección de prueba, el simulador calcula la respuesta compleja de referencia de cada antena.",
+        "radar-step-4-title": "4. Ida simple frente a fase radar", "radar-step-4-p": "La recepción de ida simple usa alpha = 1. El radar monostático de ida y vuelta usa alpha = 2 porque la onda viaja hasta el objetivo y vuelve.",
+        "radar-step-5-title": "5. Medición con ruido", "radar-step-5-p": "El vector medido es la respuesta real del array multiplicada por una amplitud de eco compleja más ruido complejo del receptor.",
+        "radar-step-6-title": "6. Modelo de ruido", "radar-step-6-p": "El ruido se añade de forma independiente a la parte real e imaginaria de cada muestra de antena.",
+        "radar-step-7-title": "7. SNR a amplitud de ruido", "radar-step-7-p": "Para amplitud de señal unitaria, el control SNR ajusta la amplitud del ruido complejo.",
+        "radar-step-8-title": "8. Búsqueda de dirección LUT", "radar-step-8-p": "Para cada dirección candidata, el simulador correlaciona el vector medido con la respuesta de referencia almacenada.",
+        "radar-step-9-title": "9. Mapa de potencia", "radar-step-9-p": "El mapa DOA muestra el módulo al cuadrado de esta salida de filtro adaptado.",
+        "radar-step-10-title": "10. Dirección estimada", "radar-step-10-p": "La dirección con el mayor pico de correlación se reporta como dirección estimada del objetivo.",
+        "radar-math-conclusion": "Las hipótesis correctas alinean las fases de antena y suman constructivamente. Las hipótesis incorrectas dejan errores de fase residuales, por lo que la suma se cancela parcialmente. Con bajo SNR el pico se ensancha o puede saltar a un lóbulo secundario."
+      },
+      zh: {
+        "coupling-state-on": "开启",
+        "coupling-state-off": "关闭",
+        "coupling-help": "默认关闭。勾选后会应用粗略的阵元电流互耦估计。",
+        "radar-math-title": "雷达 / 接收 DOA 计算",
+        "radar-math-intro": "本节精确说明雷达/接收测试的计算流程。DSP 并不知道真实目标方向。它先为选定目标生成带噪声的复数天线采样，然后测试许多候选方向，直到预期相位模式与测量值最匹配。",
+        "radar-step-1-title": "1. 天线位置", "radar-step-1-p": "每个天线单元都有已知的位置向量。",
+        "radar-step-2-title": "2. 方向向量", "radar-step-2-p": "一个可能的目标方向用单位向量表示。",
+        "radar-step-3-title": "3. 接收签名", "radar-step-3-p": "对于每个测试方向，模拟器计算每个天线的复数参考响应。",
+        "radar-step-4-title": "4. 单程与雷达相位", "radar-step-4-p": "单程接收使用 alpha = 1。单基地雷达往返使用 alpha = 2，因为波传播到目标后还要返回。",
+        "radar-step-5-title": "5. 带噪测量", "radar-step-5-p": "测量向量等于真实阵列响应乘以复数回波幅度，再加上复数接收机噪声。",
+        "radar-step-6-title": "6. 噪声模型", "radar-step-6-p": "噪声独立加入每个天线采样的实部和虚部。",
+        "radar-step-7-title": "7. SNR 到噪声幅度", "radar-step-7-p": "当信号幅度为 1 时，SNR 滑块控制复数噪声幅度。",
+        "radar-step-8-title": "8. LUT 方向搜索", "radar-step-8-p": "对每个候选方向，模拟器将测量向量与存储的参考响应做相关。",
+        "radar-step-9-title": "9. 功率图", "radar-step-9-p": "DOA 热图显示该匹配滤波输出的模平方。",
+        "radar-step-10-title": "10. 估计方向", "radar-step-10-p": "相关峰值最大的方向会作为估计目标方向输出。",
+        "radar-math-conclusion": "正确假设会使天线相位对齐并相干相加。错误假设会留下残余相位误差，因此求和会部分抵消。低 SNR 时峰值会变宽，甚至跳到错误的旁瓣。"
+      },
+      ja: {
+        "coupling-state-on": "オン",
+        "coupling-state-off": "オフ",
+        "coupling-help": "初期状態では無効です。チェックすると、素子電流の概算相互結合を適用します。",
+        "radar-math-title": "レーダー / 受信 DOA 計算",
+        "radar-math-intro": "このセクションでは、レーダー/受信テストが何を行うかを正確に説明します。DSP は真の目標方向を知りません。選択した目標に対してノイズ付きの複素アンテナサンプルを生成し、多数の候補方向を試して、期待される位相パターンが測定値に最も合う方向を探します。",
+        "radar-step-1-title": "1. アンテナ位置", "radar-step-1-p": "各アンテナ素子には既知の位置ベクトルがあります。",
+        "radar-step-2-title": "2. 方向ベクトル", "radar-step-2-p": "候補となる目標方向は単位ベクトルで表されます。",
+        "radar-step-3-title": "3. 受信シグネチャ", "radar-step-3-p": "各テスト方向について、シミュレータは各アンテナの複素基準応答を計算します。",
+        "radar-step-4-title": "4. 片道とレーダー位相", "radar-step-4-p": "片道受信では alpha = 1 を使います。モノスタティック・レーダーの往復では、波が目標まで行って戻るため alpha = 2 を使います。",
+        "radar-step-5-title": "5. ノイズ付き測定", "radar-step-5-p": "測定ベクトルは、真の配列応答に複素エコー振幅を掛け、複素受信機ノイズを加えたものです。",
+        "radar-step-6-title": "6. ノイズモデル", "radar-step-6-p": "ノイズは各アンテナサンプルの実部と虚部に独立に追加されます。",
+        "radar-step-7-title": "7. SNR からノイズ振幅へ", "radar-step-7-p": "信号振幅を 1 とした場合、SNR スライダーが複素ノイズ振幅を制御します。",
+        "radar-step-8-title": "8. LUT 方向探索", "radar-step-8-p": "各候補方向について、シミュレータは測定ベクトルと保存された基準応答を相関します。",
+        "radar-step-9-title": "9. パワーマップ", "radar-step-9-p": "DOA ヒートマップは、この整合フィルタ出力の二乗振幅を表示します。",
+        "radar-step-10-title": "10. 推定方向", "radar-step-10-p": "最大の相関ピークを持つ方向が、推定目標方向として報告されます。",
+        "radar-math-conclusion": "正しい仮説ではアンテナ位相が揃い、建設的に加算されます。誤った仮説では残留位相誤差が残るため、和は部分的に打ち消されます。低 SNR ではピークが広がるか、誤ったサイドローブへ飛ぶことがあります。"
+      }
+    };
+    Object.keys(radarDarkModeI18nPatches).forEach(lang => {
+      translations[lang] = Object.assign({}, translations[lang] || {}, radarDarkModeI18nPatches[lang]);
+    });
+
+    const finalUiPolishTranslations = {
+      en: {
+        "title": "Phased Array & Radar DOA Simulator",
+        "seo-title": "3D Beamforming, Radar DOA & Antenna Tool",
+        "array-vectors-title": "Antenna position vectors",
+        "array-vectors-desc": "Choose a geometry preset or edit the coordinates directly. Presets only generate vectors in this editor.",
+        "geometry-preset": "Geometry preset",
+        "preset-rectangular": "Rectangular grid", "preset-hexagonal": "Hexagonal grid", "preset-circular": "Circular array", "preset-spiral": "Spiral array", "preset-parabolic": "Parabolic surface", "preset-sparse": "Sparse random", "preset-custom": "Custom / manual",
+        "preset-rectangular-active": "Rectangular grid active", "preset-hexagonal-active": "Hexagonal grid active", "preset-circular-active": "Circular array active", "preset-spiral-active": "Spiral array active", "preset-parabolic-active": "Parabolic surface active", "preset-sparse-active": "Sparse random active", "preset-custom-active": "Custom coordinates active",
+        "coordinate-editor-help": "Write positions as <code>[x, y, z]</code>. Multiple vectors can sit on one line.",
+        "use-vector-coordinates": "Use vector coordinates", "regenerate-preset": "Regenerate selected preset", "coordinate-editor-active": "Coordinate editor active", "coordinate-array-active": "Coordinate array active: {n} elements", "coordinate-error-regenerated": "No valid coordinates found. Regenerated rectangular preset.",
+        "doa-panel-title": "Receive / Radar DOA test with noise", "doa-panel-desc": "Test radar-style direction finding here: create noisy antenna samples, then estimate the arrival direction with LUT matched-filter correlation.", "doa-steering-target-hint": "Default: the radar target follows steering azimuth, elevation and distance. Unlock only for an independent receive/DOA test.", "doa-panel-pill": "Radar / receive test", "doa-math-title-short": "What the simulator does",
+        "doa-label-signature": "Receive signature", "doa-label-noisy": "Noisy samples", "doa-label-search": "Direction search", "doa-label-phase": "Phase factor",
+        "doa-target-azimuth-label": "Target azimuth:", "doa-target-elevation-label": "Target elevation:", "doa-snr-label": "Noise / SNR:", "doa-resolution-label": "LUT search step:", "doa-propagation-label": "Propagation:", "doa-prop-oneway": "One-way receive phase k·r·d", "doa-prop-roundtrip": "Radar round-trip phase 2k·r·d", "doa-freeze-noise": "Freeze noise", "doa-seed-label": "Seed:", "doa-new-noise": "New noise", "doa-estimated-direction": "Estimated direction", "doa-correlation-quality": "Correlation quality", "doa-map-caption": "DOA correlation map: azimuth × elevation. Bright peak = estimated direction."
+      },
+      de: {
+        "title": "Phased-Array- & Radar-DOA-Simulator", "seo-title": "3D-Beamforming, Radar-DOA & Antennen-Tool",
+        "array-vectors-title": "Antennenpositionsvektoren", "array-vectors-desc": "Wähle ein Geometrie-Preset oder bearbeite die Koordinaten direkt. Presets erzeugen nur Vektoren in diesem Editor.", "geometry-preset": "Geometrie-Preset",
+        "preset-rectangular": "Rechteckraster", "preset-hexagonal": "Hexagonalraster", "preset-circular": "Kreisarray", "preset-spiral": "Spiralarray", "preset-parabolic": "Parabolische Fläche", "preset-sparse": "Sparse random", "preset-custom": "Custom / manuell",
+        "preset-rectangular-active": "Rechteckraster aktiv", "preset-hexagonal-active": "Hexagonalraster aktiv", "preset-circular-active": "Kreisarray aktiv", "preset-spiral-active": "Spiralarray aktiv", "preset-parabolic-active": "Parabolische Fläche aktiv", "preset-sparse-active": "Sparse random aktiv", "preset-custom-active": "Custom-Koordinaten aktiv",
+        "coordinate-editor-help": "Positionen als <code>[x, y, z]</code> schreiben. Mehrere Vektoren können in einer Zeile stehen.", "use-vector-coordinates": "Vektorkoordinaten übernehmen", "regenerate-preset": "Gewähltes Preset neu erzeugen", "coordinate-editor-active": "Koordinateneditor aktiv", "coordinate-array-active": "Koordinatenarray aktiv: {n} Elemente", "coordinate-error-regenerated": "Keine gültigen Koordinaten gefunden. Rechteck-Preset wurde neu erzeugt.",
+        "doa-panel-title": "Receive-/Radar-DOA-Test mit Rauschen", "doa-panel-desc": "Teste radarartige Richtungsschätzung: verrauschte Antennensamples erzeugen und die Ankunftsrichtung per LUT-Matched-Filter-Korrelation schätzen.", "doa-steering-target-hint": "Default: the radar target follows steering azimuth, elevation and distance. Unlock only for an independent receive/DOA test.", "doa-panel-pill": "Radar-/Receive-Test", "doa-math-title-short": "Was der Simulator macht",
+        "doa-label-signature": "Empfangssignatur", "doa-label-noisy": "Verrauschte Samples", "doa-label-search": "Richtungssuche", "doa-label-phase": "Phasenfaktor",
+        "doa-target-azimuth-label": "Ziel-Azimut:", "doa-target-elevation-label": "Ziel-Elevation:", "doa-snr-label": "Rauschen / SNR:", "doa-resolution-label": "LUT-Suchschritt:", "doa-propagation-label": "Ausbreitung:", "doa-prop-oneway": "One-way-Empfangsphase k·r·d", "doa-prop-roundtrip": "Radar-Round-Trip-Phase 2k·r·d", "doa-freeze-noise": "Rauschen einfrieren", "doa-seed-label": "Seed:", "doa-new-noise": "Neues Rauschen", "doa-estimated-direction": "Geschätzte Richtung", "doa-correlation-quality": "Korrelationsqualität", "doa-map-caption": "DOA-Korrelationskarte: Azimut × Elevation. Heller Peak = geschätzte Richtung."
+      },
+      fr: {
+        "title": "Simulateur réseau phasé & radar DOA", "seo-title": "Beamforming 3D, radar DOA & outil d’antenne",
+        "array-vectors-title": "Vecteurs de position d’antenne", "array-vectors-desc": "Choisissez un préréglage de géométrie ou modifiez directement les coordonnées. Les préréglages ne font que générer des vecteurs dans cet éditeur.", "geometry-preset": "Préréglage de géométrie",
+        "preset-rectangular": "Grille rectangulaire", "preset-hexagonal": "Grille hexagonale", "preset-circular": "Réseau circulaire", "preset-spiral": "Réseau en spirale", "preset-parabolic": "Surface parabolique", "preset-sparse": "Aléatoire clairsemé", "preset-custom": "Personnalisé / manuel",
+        "preset-rectangular-active": "Grille rectangulaire active", "preset-hexagonal-active": "Grille hexagonale active", "preset-circular-active": "Réseau circulaire actif", "preset-spiral-active": "Réseau en spirale actif", "preset-parabolic-active": "Surface parabolique active", "preset-sparse-active": "Aléatoire clairsemé actif", "preset-custom-active": "Coordonnées personnalisées actives",
+        "coordinate-editor-help": "Écrivez les positions sous la forme <code>[x, y, z]</code>. Plusieurs vecteurs peuvent être sur une même ligne.", "use-vector-coordinates": "Utiliser les coordonnées vectorielles", "regenerate-preset": "Régénérer le préréglage sélectionné", "coordinate-editor-active": "Éditeur de coordonnées actif", "coordinate-array-active": "Réseau de coordonnées actif : {n} éléments", "coordinate-error-regenerated": "Aucune coordonnée valide trouvée. Préréglage rectangulaire régénéré.",
+        "doa-panel-title": "Test DOA réception / radar avec bruit", "doa-panel-desc": "Testez ici une estimation de direction de type radar : créez des échantillons d’antenne bruités puis estimez la direction d’arrivée par corrélation LUT à filtre adapté.", "doa-steering-target-hint": "Default: the radar target follows steering azimuth, elevation and distance. Unlock only for an independent receive/DOA test.", "doa-panel-pill": "Test radar / réception", "doa-math-title-short": "Ce que fait le simulateur",
+        "doa-label-signature": "Signature reçue", "doa-label-noisy": "Échantillons bruités", "doa-label-search": "Recherche de direction", "doa-label-phase": "Facteur de phase",
+        "doa-target-azimuth-label": "Azimut cible :", "doa-target-elevation-label": "Élévation cible :", "doa-snr-label": "Bruit / SNR :", "doa-resolution-label": "Pas de recherche LUT :", "doa-propagation-label": "Propagation :", "doa-prop-oneway": "Phase de réception aller simple k·r·d", "doa-prop-roundtrip": "Phase radar aller-retour 2k·r·d", "doa-freeze-noise": "Figer le bruit", "doa-seed-label": "Seed :", "doa-new-noise": "Nouveau bruit", "doa-estimated-direction": "Direction estimée", "doa-correlation-quality": "Qualité de corrélation", "doa-map-caption": "Carte de corrélation DOA : azimut × élévation. Pic clair = direction estimée."
+      },
+      es: {
+        "title": "Simulador phased array y radar DOA", "seo-title": "Beamforming 3D, radar DOA y herramienta de antenas",
+        "array-vectors-title": "Vectores de posición de antena", "array-vectors-desc": "Elige una geometría predefinida o edita directamente las coordenadas. Los presets solo generan vectores en este editor.", "geometry-preset": "Preset de geometría",
+        "preset-rectangular": "Malla rectangular", "preset-hexagonal": "Malla hexagonal", "preset-circular": "Array circular", "preset-spiral": "Array espiral", "preset-parabolic": "Superficie parabólica", "preset-sparse": "Aleatorio disperso", "preset-custom": "Personalizado / manual",
+        "preset-rectangular-active": "Malla rectangular activa", "preset-hexagonal-active": "Malla hexagonal activa", "preset-circular-active": "Array circular activo", "preset-spiral-active": "Array espiral activo", "preset-parabolic-active": "Superficie parabólica activa", "preset-sparse-active": "Aleatorio disperso activo", "preset-custom-active": "Coordenadas personalizadas activas",
+        "coordinate-editor-help": "Escribe posiciones como <code>[x, y, z]</code>. Varios vectores pueden estar en una misma línea.", "use-vector-coordinates": "Usar coordenadas vectoriales", "regenerate-preset": "Regenerar preset seleccionado", "coordinate-editor-active": "Editor de coordenadas activo", "coordinate-array-active": "Array de coordenadas activo: {n} elementos", "coordinate-error-regenerated": "No se encontraron coordenadas válidas. Preset rectangular regenerado.",
+        "doa-panel-title": "Prueba DOA recepción / radar con ruido", "doa-panel-desc": "Prueba aquí la estimación de dirección tipo radar: crea muestras de antena con ruido y estima la dirección de llegada con correlación LUT de filtro adaptado.", "doa-steering-target-hint": "Default: the radar target follows steering azimuth, elevation and distance. Unlock only for an independent receive/DOA test.", "doa-panel-pill": "Prueba radar / recepción", "doa-math-title-short": "Qué hace el simulador",
+        "doa-label-signature": "Firma de recepción", "doa-label-noisy": "Muestras con ruido", "doa-label-search": "Búsqueda de dirección", "doa-label-phase": "Factor de fase",
+        "doa-target-azimuth-label": "Azimut objetivo:", "doa-target-elevation-label": "Elevación objetivo:", "doa-snr-label": "Ruido / SNR:", "doa-resolution-label": "Paso de búsqueda LUT:", "doa-propagation-label": "Propagación:", "doa-prop-oneway": "Fase de recepción unidireccional k·r·d", "doa-prop-roundtrip": "Fase radar ida y vuelta 2k·r·d", "doa-freeze-noise": "Congelar ruido", "doa-seed-label": "Semilla:", "doa-new-noise": "Nuevo ruido", "doa-estimated-direction": "Dirección estimada", "doa-correlation-quality": "Calidad de correlación", "doa-map-caption": "Mapa de correlación DOA: azimut × elevación. Pico claro = dirección estimada."
+      },
+      zh: {
+        "title": "相控阵与雷达 DOA 模拟器", "seo-title": "3D 波束形成、雷达 DOA 与天线工具",
+        "array-vectors-title": "天线位置向量", "array-vectors-desc": "选择几何预设或直接编辑坐标。预设只是在此编辑器中生成向量。", "geometry-preset": "几何预设",
+        "preset-rectangular": "矩形阵列", "preset-hexagonal": "六边形阵列", "preset-circular": "圆形阵列", "preset-spiral": "螺旋阵列", "preset-parabolic": "抛物面", "preset-sparse": "稀疏随机", "preset-custom": "自定义 / 手动",
+        "preset-rectangular-active": "矩形阵列已启用", "preset-hexagonal-active": "六边形阵列已启用", "preset-circular-active": "圆形阵列已启用", "preset-spiral-active": "螺旋阵列已启用", "preset-parabolic-active": "抛物面已启用", "preset-sparse-active": "稀疏随机已启用", "preset-custom-active": "自定义坐标已启用",
+        "coordinate-editor-help": "按 <code>[x, y, z]</code> 输入位置。多个向量可以放在同一行。", "use-vector-coordinates": "使用向量坐标", "regenerate-preset": "重新生成所选预设", "coordinate-editor-active": "坐标编辑器已启用", "coordinate-array-active": "坐标阵列已启用：{n} 个元素", "coordinate-error-regenerated": "未找到有效坐标。已重新生成矩形预设。",
+        "doa-panel-title": "带噪声的接收 / 雷达 DOA 测试", "doa-panel-desc": "在这里测试雷达式测向：生成带噪声的天线样本，然后用 LUT 匹配滤波相关估计到达方向。", "doa-steering-target-hint": "Default: the radar target follows steering azimuth, elevation and distance. Unlock only for an independent receive/DOA test.", "doa-panel-pill": "雷达 / 接收测试", "doa-math-title-short": "模拟器执行内容",
+        "doa-label-signature": "接收签名", "doa-label-noisy": "带噪声样本", "doa-label-search": "方向搜索", "doa-label-phase": "相位因子",
+        "doa-target-azimuth-label": "目标方位角：", "doa-target-elevation-label": "目标仰角：", "doa-snr-label": "噪声 / SNR：", "doa-resolution-label": "LUT 搜索步长：", "doa-propagation-label": "传播：", "doa-prop-oneway": "单程接收相位 k·r·d", "doa-prop-roundtrip": "雷达往返相位 2k·r·d", "doa-freeze-noise": "冻结噪声", "doa-seed-label": "种子：", "doa-new-noise": "新噪声", "doa-estimated-direction": "估计方向", "doa-correlation-quality": "相关质量", "doa-map-caption": "DOA 相关图：方位角 × 仰角。亮峰 = 估计方向。"
+      },
+      ja: {
+        "title": "フェーズドアレイ & レーダーDOAシミュレータ", "seo-title": "3Dビームフォーミング、レーダーDOA、アンテナツール",
+        "array-vectors-title": "アンテナ位置ベクトル", "array-vectors-desc": "ジオメトリプリセットを選ぶか、座標を直接編集します。プリセットはこのエディタ内にベクトルを生成するだけです。", "geometry-preset": "ジオメトリプリセット",
+        "preset-rectangular": "矩形グリッド", "preset-hexagonal": "六角グリッド", "preset-circular": "円形アレイ", "preset-spiral": "スパイラルアレイ", "preset-parabolic": "放物面", "preset-sparse": "疎ランダム", "preset-custom": "カスタム / 手動",
+        "preset-rectangular-active": "矩形グリッド有効", "preset-hexagonal-active": "六角グリッド有効", "preset-circular-active": "円形アレイ有効", "preset-spiral-active": "スパイラルアレイ有効", "preset-parabolic-active": "放物面有効", "preset-sparse-active": "疎ランダム有効", "preset-custom-active": "カスタム座標有効",
+        "coordinate-editor-help": "位置を <code>[x, y, z]</code> として入力します。複数のベクトルを同じ行に置けます。", "use-vector-coordinates": "ベクトル座標を使用", "regenerate-preset": "選択プリセットを再生成", "coordinate-editor-active": "座標エディタ有効", "coordinate-array-active": "座標アレイ有効：{n} 要素", "coordinate-error-regenerated": "有効な座標が見つかりません。矩形プリセットを再生成しました。",
+        "doa-panel-title": "ノイズ付き受信 / レーダーDOAテスト", "doa-panel-desc": "ここでレーダー型の方向推定をテストできます。ノイズ付きアンテナサンプルを生成し、LUTマッチドフィルタ相関で到来方向を推定します。", "doa-steering-target-hint": "Default: the radar target follows steering azimuth, elevation and distance. Unlock only for an independent receive/DOA test.", "doa-panel-pill": "レーダー / 受信テスト", "doa-math-title-short": "シミュレータの処理",
+        "doa-label-signature": "受信シグネチャ", "doa-label-noisy": "ノイズ付きサンプル", "doa-label-search": "方向探索", "doa-label-phase": "位相係数",
+        "doa-target-azimuth-label": "ターゲット方位角：", "doa-target-elevation-label": "ターゲット仰角：", "doa-snr-label": "ノイズ / SNR：", "doa-resolution-label": "LUT探索ステップ：", "doa-propagation-label": "伝搬：", "doa-prop-oneway": "片道受信位相 k·r·d", "doa-prop-roundtrip": "レーダー往復位相 2k·r·d", "doa-freeze-noise": "ノイズ固定", "doa-seed-label": "シード：", "doa-new-noise": "新しいノイズ", "doa-estimated-direction": "推定方向", "doa-correlation-quality": "相関品質", "doa-map-caption": "DOA相関マップ：方位角 × 仰角。明るいピーク = 推定方向。"
+      }
+    };
+    Object.keys(finalUiPolishTranslations).forEach(lang => {
+      translations[lang] = Object.assign({}, translations[lang] || {}, finalUiPolishTranslations[lang]);
     });
 
 
@@ -1223,6 +1495,11 @@
       if (selector) selector.value = resolvedTheme;
       applyCanvasBackground();
       if (typeof applySlicePlotTheme === 'function') applySlicePlotTheme();
+      // Redraw canvas based radar/DOA plots immediately so light/dark mode also affects them.
+      setTimeout(() => {
+        try { if (typeof updateRadarScene === 'function') updateRadarScene(); } catch (e) {}
+        try { if (typeof updateDoaSimulation === 'function') updateDoaSimulation(); } catch (e) {}
+      }, 0);
       if (typeof onWindowResize === 'function') setTimeout(onWindowResize, 0);
     }
 
@@ -1292,6 +1569,802 @@
     }
 
     // Translation Logic
+
+
+    const fmcwRadarSceneI18nPatches = {
+      en: {
+        "radar-scene-title": "FMCW radar scene target",
+        "radar-scene-desc": "Define a simple reflecting object. The geometry is shown in 3D; the radar calculation uses a point target. RCS can be estimated from the simple shape/size or set manually.",
+        "radar-scene-pill": "range + Doppler",
+        "radar-direction-settings-title": "Steering, target direction and receiver settings",
+        "radar-direction-settings-desc": "By default the target uses the same azimuth, elevation and distance as the phased-array steering/distance controls. Turn the locks off for a separate receive/DOA test.",
+        "radar-plots-moved-note": "Range/Doppler results are shown below the DOA plots so the controls stay together.",
+        "radar-output-title": "Calculated range / velocity and FFT plots",
+        "radar-output-desc": "Range FFT changes with target range and chirp bandwidth. Doppler FFT changes with radial velocity and chirp time. Azimuth/elevation mainly affect the DOA/correlation plot, not the Range FFT.",
+        "observation-point-desc": "Optional: use this only when you want the field value at a separate observation point. Normal steering/radar target controls are above.",
+        "radar-target-name-label": "Target name",
+        "radar-target-geometry-label": "Geometry",
+        "radar-target-size-label": "Object size [λ]",
+        "radar-target-size-unit-label": "Object size unit",
+        "radar-frequency-preset-label": "Frequency preset",
+        "system-frequency-title": "Antenna / radar frequency",
+        "system-frequency-note": "This sets the physical wavelength λ = c / f_c. Array distances stay in λ; meter and mm values are derived from this frequency.",
+        "radar-geom-sphere": "Sphere",
+        "radar-geom-box": "Box",
+        "radar-geom-plate": "Flat rectangle / plate",
+        "radar-geom-cylinder": "Cylinder",
+        "radar-range-label": "Range R [λ]", "radar-range-unit-label": "Range unit",
+        "radar-velocity-label": "Manual radial velocity v [m/s]",
+        "radar-rcs-mode-label": "RCS model",
+        "radar-rcs-auto": "Auto from geometry + size",
+        "radar-rcs-manual": "Manual RCS",
+        "radar-rcs-label": "RCS / reflectivity [m²]",
+        "radar-rcs-est-label": "Estimated RCS",
+        "radar-rcs-est-note": "Rough teaching estimate, not full-wave scattering.",
+        "radar-fc-label": "Antenna / radar f_c [GHz]",
+        "radar-bandwidth-label": "Bandwidth B [MHz]",
+        "radar-chirp-time-label": "Chirp time T [µs]",
+        "radar-samples-label": "Samples / chirp Nq",
+        "radar-chirps-label": "Chirps Np",
+        "radar-chirp-readout-label": "Chirp frequencies",
+        "radar-lock-steering-label": "Target direction = steering direction",
+        "radar-tx-gain-label": "Include TX steering gain",
+        "radar-lock-distance-label": "Target range = Distance R / λ",
+        "radar-show-target-label": "Show target object in 3D",
+        "radar-motion-mode-label": "Target motion",
+        "radar-motion-stationary": "Stationary",
+        "radar-motion-linear": "Line: start → end → start",
+        "radar-motion-az-circle": "Circle in azimuth",
+        "radar-motion-el-sweep": "Elevation sweep",
+        "radar-motion-range-sweep": "Range sweep",
+        "radar-motion-curve": "Curved path: R + az + el",
+        "radar-speed-result": "Estimated speed magnitude",
+        "radar-motion-period-label": "Motion period [s]",
+        "radar-motion-start-range-label": "Start R [λ]",
+        "radar-motion-start-az-label": "Start az [°]",
+        "radar-motion-start-el-label": "Start el [°]",
+        "radar-motion-end-range-label": "End R [λ]",
+        "radar-motion-end-az-label": "End az [°]",
+        "radar-motion-end-el-label": "End el [°]",
+        "radar-est-range-result": "Estimated range",
+        "radar-est-velocity-result": "Estimated radial speed",
+        "radar-range-fft-caption": "Range FFT magnitude over fast-time samples",
+        "radar-doppler-fft-caption": "Doppler FFT magnitude over chirps at selected range bin",
+        "radar-range-result": "Range FFT estimate",
+        "radar-doppler-result": "Doppler FFT estimate",
+        "radar-rd-caption": "Simplified range-Doppler map. Bright spot = expected target bin.",
+        "fmcw-math-title": "FMCW radar scene: range, velocity and object geometry",
+        "fmcw-math-intro": "This section explains the new radar scene options step by step. The object geometry is intentionally simple: sphere, box, plate or cylinder. It is used for visualization and a reflectivity/RCS setting; the first radar model treats the object as one point reflector.",
+        "fmcw-step-1-title": "1. Choose a simple object", "fmcw-step-1-p": "The user selects a simple visual geometry. This keeps the UI understandable and avoids pretending to do full EM ray tracing.",
+        "fmcw-step-2-title": "2. Convert R/λ and angle to 3D position", "fmcw-step-2-p": "The target is placed inside the 3D radar scene using range in wavelengths. By default the target range follows the main Distance R/λ control by default; the same range can also be entered in meters and the target direction follows the steering direction.",
+        "fmcw-step-3-title": "3. Use RCS as echo strength", "fmcw-step-3-p": "The radar cross section or reflectivity controls how strong the returned echo is. In this version the returned echo is represented by range/Doppler plots and the moving point target, not by a fake pulsing wave.",
+        "fmcw-step-4-title": "4. Build one FMCW chirp", "fmcw-step-4-p": "A chirp sweeps over bandwidth B during chirp time T. Its slope determines the beat frequency caused by range.",
+        "fmcw-step-5-title": "5. Range creates beat frequency", "fmcw-step-5-p": "A target at range R returns later. After mixing transmit and receive signals, the delay appears as a beat frequency.",
+        "fmcw-step-6-title": "6. Fast-time samples become range bins", "fmcw-step-6-p": "Samples inside one chirp are called fast-time samples. An FFT over those samples produces range bins.",
+        "fmcw-step-7-title": "7. Velocity creates Doppler phase", "fmcw-step-7-p": "From chirp to chirp, a moving target adds a phase progression. Its frequency is the Doppler frequency.",
+        "fmcw-step-8-title": "8. Slow-time FFT becomes velocity bins", "fmcw-step-8-p": "The chirp index is slow time. An FFT over chirps converts the Doppler phase progression into velocity bins.",
+        "fmcw-step-9-title": "9. The full radar data cube", "fmcw-step-9-p": "A real radar scene therefore needs antenna index, fast-time sample index and chirp index.",
+        "fmcw-step-10-title": "10. Add the antenna phase", "fmcw-step-10-p": "At a selected range-Doppler bin, the remaining vector over antennas is used for the DOA angle estimate.",
+        "fmcw-step-11-title": "11. Optional TX steering gain", "fmcw-step-11-p": "If transmit steering is enabled, the target echo is stronger when the target is inside the transmit beam. This changes the echo amplitude; the receive DOA phase still comes from the target direction.",
+        "fmcw-step-12-title": "12. Detect the peak", "fmcw-step-12-p": "The range-Doppler map is formed by summing power over antennas. Peaks indicate possible targets.",
+        "fmcw-step-13-title": "13. Estimate angle at that peak", "fmcw-step-13-p": "For the chosen peak, take the antenna vector and run the same matched-filter DOA search as above.",
+        "fmcw-step-14-title": "14. Optional target motion", "fmcw-step-14-p": "The target can stay fixed or follow a simple path. When linked, the main steering direction and Distance R/λ follow the target so the 3D radiation pattern tracks it.",
+
+        "symbol-section-radar": "FMCW radar / DOA symbols",
+        "def-c": "Speed of light used for converting frequency to wavelength and radar delay.",
+        "def-fc": "Carrier frequency of the antenna/radar system; it defines the wavelength $\lambda=c/f_c$.",
+        "def-B": "FMCW chirp bandwidth. Larger bandwidth improves range resolution.",
+        "def-T": "Chirp duration / sweep time of one FMCW ramp.",
+        "def-chirp-slope": "FMCW chirp slope; it maps target delay/range into beat frequency.",
+        "def-range-radar": "Target range from the array/radar origin. In the UI it can be controlled in wavelengths or physical units.",
+        "def-v": "Radial target velocity. Positive/negative sign controls Doppler phase direction.",
+        "def-rcs": "Radar cross section or reflectivity setting used as a simplified echo-strength factor.",
+        "def-fb": "Beat frequency caused by target range after FMCW mixing: $f_b=2SR/c$.",
+        "def-fD": "Doppler frequency caused by radial velocity: $f_D=2v/\lambda$.",
+        "def-Nq": "Number of fast-time samples inside one chirp; used by the Range FFT.",
+        "def-Nc": "Number of chirps in the frame; used by the Doppler FFT. This is separate from $N_P$, the subpatch count.",
+        "def-q-fast": "Fast-time sample index within a chirp.",
+        "def-p-slow": "Slow-time chirp index across the chirp sequence.",
+        "def-kr-bin": "Range-bin index after the fast-time FFT. Written as $k_r$ here to avoid confusion with wave number $k$.",
+        "def-l-doppler": "Doppler-bin index after the slow-time FFT over chirps.",
+        "def-Ycube": "Complex radar data cube before FFT: antenna index $n$, fast-time sample $q$, chirp index $p$.",
+        "def-YR": "Range-FFT result over fast time, before Doppler processing.",
+        "def-YRD": "Range-Doppler result after Range FFT and Doppler FFT.",
+        "def-yvec": "Received complex antenna vector at the selected range/Doppler bin, including target phase and noise.",
+        "def-gvec": "Reference array/steering response for a candidate direction in the DOA lookup search.",
+        "def-zcorr": "Matched-filter correlation between the received antenna vector and a candidate direction response.",
+        "def-Pdoa": "DOA correlation power map; bright peaks indicate directions that match the measured antenna phases.",
+        "def-dest": "Estimated target direction: the candidate direction with the maximum DOA correlation power.",
+        "def-wtx": "Transmit beamforming weight vector used when TX steering gain is enabled.",
+        "def-atx": "Transmit-array response toward the target direction used for the optional TX gain factor.",
+        "fmcw-math-conclusion": "This is the correct first step for the website: simple visible objects, real radar concepts, no overcomplicated mesh reflection. Later the point target can be replaced by several scatterers for extended objects."
+      },
+      de: {
+        "radar-scene-title": "FMCW-Radarszene mit Zielobjekt",
+        "radar-scene-desc": "Definiere ein einfaches reflektierendes Objekt. Die Geometrie wird in 3D angezeigt; die Radarrechnung nutzt zuerst ein Punktziel. Die RCS kann grob aus Form/Größe geschätzt oder manuell gesetzt werden.",
+        "radar-scene-pill": "Range + Doppler",
+        "radar-direction-settings-title": "Steering, Zielrichtung und Receiver-Einstellungen",
+        "radar-direction-settings-desc": "Standardmässig nutzt das Target dieselbe Richtung und Distanz wie Steering/Distance. Schalte die Locks aus, wenn du einen separaten Receive-/DOA-Test willst.",
+        "radar-plots-moved-note": "Range/Doppler-Ergebnisse stehen unten bei den Plots, damit die Einstellungen oben zusammen bleiben.",
+        "radar-output-title": "Berechnete Distanz / Geschwindigkeit und FFT-Plots",
+        "radar-output-desc": "Die Range-FFT ändert sich mit Target-Distanz und Chirp-Bandbreite. Die Doppler-FFT ändert sich mit radialer Geschwindigkeit und Chirp-Zeit. Azimut/Elevation ändern vor allem DOA/Korrelation, nicht die Range-FFT.",
+        "observation-point-desc": "Optional: nur benutzen, wenn du den Feldwert an einem separaten Beobachtungspunkt sehen willst. Normales Steering/Radar-Target ist weiter oben.",
+        "radar-target-name-label": "Zielname",
+        "radar-target-geometry-label": "Geometrie",
+        "radar-target-size-label": "Objektgröße [λ]",
+        "radar-target-size-unit-label": "Einheit Objektgröße",
+        "radar-frequency-preset-label": "Frequenz-Preset",
+        "system-frequency-title": "Antennen- / Radarfrequenz",
+        "system-frequency-note": "Legt die physikalische Wellenlänge λ = c / f_c fest. Array-Abstände bleiben in λ; Meter- und Millimeterwerte werden daraus abgeleitet.",
+        "radar-geom-sphere": "Kugel",
+        "radar-geom-box": "Box / Quader",
+        "radar-geom-plate": "Flaches Rechteck / Platte",
+        "radar-geom-cylinder": "Zylinder",
+        "radar-range-label": "Abstand R [λ]", "radar-range-unit-label": "Abstands-Einheit",
+        "radar-velocity-label": "Manuelle radiale Geschwindigkeit v [m/s]",
+        "radar-rcs-mode-label": "RCS-Modell",
+        "radar-rcs-auto": "Auto aus Geometrie + Größe",
+        "radar-rcs-manual": "Manuelle RCS",
+        "radar-rcs-label": "RCS / Reflexionsstärke [m²]",
+        "radar-rcs-est-label": "Geschätzte RCS",
+        "radar-rcs-est-note": "Grobe Lehr-Näherung, keine Full-Wave-Streuung.",
+        "radar-fc-label": "Antennen- / Radarfrequenz f_c [GHz]",
+        "radar-bandwidth-label": "Bandbreite B [MHz]",
+        "radar-chirp-time-label": "Chirp-Zeit T [µs]",
+        "radar-samples-label": "Samples pro Chirp Nq",
+        "radar-chirps-label": "Chirps Np",
+        "radar-chirp-readout-label": "Chirp-Frequenzen",
+        "radar-lock-steering-label": "Zielrichtung = Steering-Richtung",
+        "radar-tx-gain-label": "TX-Steering-Gewinn einbeziehen",
+        "radar-lock-distance-label": "Zielabstand = Distance R / λ",
+        "radar-show-target-label": "Zielobjekt in 3D anzeigen",
+        "radar-motion-mode-label": "Zielbewegung",
+        "radar-motion-stationary": "Stillstehend",
+        "radar-motion-linear": "Linie: Start → Ende → Start",
+        "radar-motion-az-circle": "Kreis im Azimut",
+        "radar-motion-el-sweep": "Elevation-Sweep",
+        "radar-motion-range-sweep": "Abstands-Sweep",
+        "radar-motion-curve": "Kurvenbahn: R + Az + El",
+        "radar-speed-result": "Geschätzter Geschwindigkeitsbetrag",
+        "radar-motion-period-label": "Bewegungsperiode [s]",
+        "radar-motion-start-range-label": "Start R [λ]",
+        "radar-motion-start-az-label": "Start az [°]",
+        "radar-motion-start-el-label": "Start el [°]",
+        "radar-motion-end-range-label": "Ende R [λ]",
+        "radar-motion-end-az-label": "Ende az [°]",
+        "radar-motion-end-el-label": "Ende el [°]",
+        "radar-est-range-result": "Geschätzter Abstand",
+        "radar-est-velocity-result": "Geschätzte Radialgeschwindigkeit",
+        "radar-range-fft-caption": "Range-FFT über Fast-Time-Samples",
+        "radar-doppler-fft-caption": "Doppler-FFT über Chirps am Range-Bin",
+        "radar-range-result": "Range-FFT-Schätzung",
+        "radar-doppler-result": "Doppler-FFT-Schätzung",
+        "radar-rd-caption": "Vereinfachte Range-Doppler-Karte. Heller Punkt = erwarteter Ziel-Bin.",
+        "fmcw-math-title": "FMCW-Radarszene: Abstand, Geschwindigkeit und Objektgeometrie",
+        "fmcw-math-intro": "Dieser Abschnitt erklärt die neuen Radaroptionen Schritt für Schritt. Die Objektgeometrie bleibt bewusst einfach: Kugel, Box, Platte oder Zylinder. Sie dient der Visualisierung und der RCS/Reflexionsstärke; das erste Radarmodell behandelt das Objekt als einen Punktreflektor.",
+        "fmcw-step-1-title": "1. Einfaches Objekt wählen", "fmcw-step-1-p": "Der Nutzer wählt eine einfache sichtbare Geometrie. So bleibt die UI verständlich und es wird kein vollständiges EM-Raytracing vorgetäuscht.",
+        "fmcw-step-2-title": "2. R/λ und Winkel in 3D-Position umrechnen", "fmcw-step-2-p": "Das Ziel wird mit Abstand sowie Azimut/Elevation aus den DOA-Reglern in der 3D-Radarszene platziert.",
+        "fmcw-step-3-title": "3. RCS als Echo-Stärke nutzen", "fmcw-step-3-p": "Radar Cross Section bzw. Reflexionsstärke steuert, wie stark das zurückkommende Echo ist. In dieser vereinfachten Szene ist das ein skalarer Amplitudenfaktor; die Rückgabe sieht man über Range/Doppler-Plots und das bewegte Punktziel, nicht über eine Fake-Pulswelle.",
+        "fmcw-step-4-title": "4. Einen FMCW-Chirp aufbauen", "fmcw-step-4-p": "Ein Chirp sweeped über die Bandbreite B während der Chirp-Zeit T. Die Steigung bestimmt die Beat-Frequenz durch Abstand.",
+        "fmcw-step-5-title": "5. Abstand erzeugt Beat-Frequenz", "fmcw-step-5-p": "Ein Ziel bei Abstand R kommt verzögert zurück. Nach dem Mischen von Sende- und Empfangssignal erscheint diese Verzögerung als Beat-Frequenz.",
+        "fmcw-step-6-title": "6. Fast-Time-Samples werden Range-Bins", "fmcw-step-6-p": "Samples innerhalb eines Chirps heißen Fast-Time-Samples. Eine FFT über diese Samples erzeugt Range-Bins.",
+        "fmcw-step-7-title": "7. Geschwindigkeit erzeugt Doppler-Phase", "fmcw-step-7-p": "Von Chirp zu Chirp fügt ein bewegtes Ziel eine Phasenprogression hinzu. Ihre Frequenz ist die Doppler-Frequenz.",
+        "fmcw-step-8-title": "8. Slow-Time-FFT wird zu Geschwindigkeits-Bins", "fmcw-step-8-p": "Der Chirp-Index ist Slow-Time. Eine FFT über Chirps wandelt die Doppler-Phasenprogression in Geschwindigkeits-Bins um.",
+        "fmcw-step-9-title": "9. Der volle Radar-Datenwürfel", "fmcw-step-9-p": "Eine echte Radarszene braucht daher Antennenindex, Fast-Time-Sample-Index und Chirp-Index.",
+        "fmcw-step-10-title": "10. Antennenphase hinzufügen", "fmcw-step-10-p": "Am gewählten Range-Doppler-Bin bleibt der Vektor über die Antennen übrig. Dieser wird für die DOA-Winkelschätzung genutzt.",
+        "fmcw-step-11-title": "11. Optionaler TX-Steering-Gewinn", "fmcw-step-11-p": "Wenn Transmit-Steering aktiv ist, wird das Echo stärker, wenn das Ziel im Sendebeam liegt. Das ändert die Echo-Amplitude; die Receive-DOA-Phase kommt weiter von der Zielrichtung.",
+        "fmcw-step-12-title": "12. Peak detektieren", "fmcw-step-12-p": "Die Range-Doppler-Karte entsteht durch Summieren der Leistung über die Antennen. Peaks zeigen mögliche Ziele.",
+        "fmcw-step-13-title": "13. Winkel an diesem Peak schätzen", "fmcw-step-13-p": "Für den gewählten Peak nimmt man den Antennenvektor und nutzt dieselbe Matched-Filter-DOA-Suche wie oben.",
+        "fmcw-step-14-title": "14. Optionale Zielbewegung", "fmcw-step-14-p": "Das Ziel kann stillstehen oder einer einfachen Bahn folgen. Wenn gekoppelt, folgen Steering-Richtung und Distance R/λ dem Ziel, sodass das 3D-Richtdiagramm das Ziel verfolgt.",
+
+        "symbol-section-radar": "FMCW-Radar- / DOA-Symbole",
+        "def-c": "Lichtgeschwindigkeit für die Umrechnung von Frequenz zu Wellenlänge und für die Radar-Laufzeit.",
+        "def-fc": "Trägerfrequenz des Antennen-/Radarsystems; daraus folgt die Wellenlänge $\lambda=c/f_c$.",
+        "def-B": "FMCW-Chirp-Bandbreite. Größere Bandbreite verbessert die Entfernungsauflösung.",
+        "def-T": "Chirp-Dauer / Sweep-Zeit einer FMCW-Rampe.",
+        "def-chirp-slope": "FMCW-Chirp-Steigung; sie wandelt Ziel-Laufzeit bzw. Entfernung in Beat-Frequenz um.",
+        "def-range-radar": "Zielentfernung vom Array-/Radarursprung. In der UI kann sie in Wellenlängen oder physikalischen Einheiten eingestellt werden.",
+        "def-v": "Radiale Zielgeschwindigkeit. Das Vorzeichen bestimmt die Richtung der Doppler-Phasenänderung.",
+        "def-rcs": "Radar Cross Section bzw. Reflexionsstärke als vereinfachter Faktor für die Echo-Amplitude.",
+        "def-fb": "Beat-Frequenz durch Zielentfernung nach dem FMCW-Mischen: $f_b=2SR/c$.",
+        "def-fD": "Doppler-Frequenz durch radiale Geschwindigkeit: $f_D=2v/\lambda$.",
+        "def-Nq": "Anzahl der Fast-Time-Samples innerhalb eines Chirps; wird für die Range-FFT benutzt.",
+        "def-Nc": "Anzahl der Chirps im Frame; wird für die Doppler-FFT benutzt. Das ist getrennt von $N_P$, der Subpatch-Anzahl.",
+        "def-q-fast": "Fast-Time-Sample-Index innerhalb eines Chirps.",
+        "def-p-slow": "Slow-Time-Chirp-Index über die Chirp-Sequenz.",
+        "def-kr-bin": "Range-Bin-Index nach der Fast-Time-FFT. Hier als $k_r$ geschrieben, damit es nicht mit der Wellenzahl $k$ verwechselt wird.",
+        "def-l-doppler": "Doppler-Bin-Index nach der Slow-Time-FFT über die Chirps.",
+        "def-Ycube": "Komplexer Radar-Datenwürfel vor der FFT: Antennenindex $n$, Fast-Time-Sample $q$, Chirp-Index $p$.",
+        "def-YR": "Range-FFT-Ergebnis über Fast Time, noch vor der Doppler-Verarbeitung.",
+        "def-YRD": "Range-Doppler-Ergebnis nach Range-FFT und Doppler-FFT.",
+        "def-yvec": "Gemessener komplexer Antennenvektor am gewählten Range-/Doppler-Bin inklusive Zielphase und Rauschen.",
+        "def-gvec": "Referenz-Array-/Steering-Antwort für eine Kandidatenrichtung in der DOA-Lookup-Suche.",
+        "def-zcorr": "Matched-Filter-Korrelation zwischen gemessenem Antennenvektor und Kandidatenrichtung.",
+        "def-Pdoa": "DOA-Korrelationsleistungskarte; helle Peaks zeigen Richtungen, die zu den gemessenen Antennenphasen passen.",
+        "def-dest": "Geschätzte Zielrichtung: die Kandidatenrichtung mit maximaler DOA-Korrelationsleistung.",
+        "def-wtx": "Transmit-Beamforming-Gewichtsvektor, wenn TX-Steering-Gain aktiviert ist.",
+        "def-atx": "Transmit-Array-Antwort in Zielrichtung für den optionalen TX-Gain-Faktor.",
+        "fmcw-math-conclusion": "Das ist der richtige erste Schritt für die Website: einfache sichtbare Objekte, echte Radarkonzepte, kein überkompliziertes Mesh-Reflection-Modell. Später kann das Punktziel durch mehrere Scatterer für ausgedehnte Objekte ersetzt werden."
+      }
+    };
+    Object.keys(fmcwRadarSceneI18nPatches).forEach(lang => {
+      translations[lang] = Object.assign({}, translations[lang] || {}, fmcwRadarSceneI18nPatches[lang]);
+    });
+
+    // v54: translate UI strings that were still hard-coded in the 2D/Radar workspace and popout.
+    const languageCoveragePatches = {
+      en: {
+        "workspace-summary": "Sticky 2D + 3D preview (tap to collapse)",
+        "workspace-small": "2D/3D small",
+        "workspace-sticky-view": "Sticky view",
+        "slice-2d-title": "2D radiation views",
+        "slice-2d-subtitle": "angular patterns plus a visual top projection",
+        "slice-az-cut-elevation-label": "Azimuth cut elevation",
+        "slice-option-steering": "steering",
+        "slice-plot-label": "plot",
+        "slice-theme-auto": "auto",
+        "slice-theme-white": "white",
+        "slice-theme-black": "black",
+        "slice-hide-2d": "Hide 2D",
+        "slice-show-2d": "Show 2D",
+        "print-report-btn": "Print report",
+        "slice-fullscreen": "Fullscreen",
+        "workspace-big-view": "Big view",
+        "workspace-open-new-window": "Open in new window",
+        "workspace-open-new-window-title": "Open the complete live 2D + 3D visualization in a separate browser window for a second monitor",
+        "workspace-show-preview": "Show preview",
+        "workspace-controls-only": "Controls only",
+        "workspace-show-2d3d-preview": "Show 2D/3D preview",
+        "popout-title": "Live 2D + 3D + Radar FFT view",
+        "popout-subtitle": "Changes in the main tab are mirrored here — move this window to your second monitor.",
+        "slice-azimuth-pattern": "Azimuth pattern",
+        "slice-elevation-pattern": "Elevation pattern",
+        "slice-beam-pattern": "Beam-plane pattern",
+        "slice-top-projection": "Top projection",
+        "slice-show-az-cut-3d": "show azimuth cut surface in 3D",
+        "slice-show-el-cut-3d": "show vertical circular cut in 3D",
+        "slice-show-beam-cut-3d": "show beam circular cut in 3D",
+        "slice-show-top-proj-3d": "show top projection screen in 3D",
+        "slice-foot-front": "front",
+        "slice-foot-az-cut": "azimuth cut",
+        "slice-foot-side": "side",
+        "slice-foot-el-cut": "elevation cut",
+        "slice-foot-up": "up",
+        "slice-foot-beam": "beam",
+        "slice-foot-steering-cut": "steering cut",
+        "slice-foot-orthogonal": "orthogonal",
+        "slice-foot-left-right": "left/right",
+        "slice-foot-top-footprint": "top footprint",
+        "slice-foot-front-back": "front/back",
+        "slice-radar-title": "Radar FFT views",
+        "slice-radar-subtitle": "same FMCW target as the controls",
+        "range-doppler-map-title": "Range-Doppler map",
+        "range-fft-title": "Range FFT",
+        "doppler-fft-title": "Doppler FFT",
+        "live-label": "live",
+        "slice-note-text": "Angular patterns use the same direction-based field formula as the 3D view. The azimuth plot is a horizontal angular cut at the selected elevation; when elevation is 0°, it is the standard top-direction pattern. The elevation plot is a vertical angular cut at the steering azimuth. The beam-plane plot cuts through the steered beam direction, so it always includes the main beam. The top projection is only a visual footprint from above, not a physical radiation cut.",
+        "doa-samples-caption": "Received antenna samples: phase and amplitude after noise",
+        "doa-az-cut-caption": "Azimuth correlation cut at estimated elevation",
+        "doa-el-cut-caption": "Elevation correlation cut at estimated azimuth",
+        "plot-az-axis": "az 0° → 360°",
+        "plot-el90": "el 90°",
+        "plot-el0": "el 0°",
+        "plot-el-axis": "el 0° → 90°",
+        "plot-samples-legend": "color/needle = phase, size = amplitude",
+        "plot-cut-at-el": "cut at el {value}°",
+        "plot-cut-at-az": "cut at az {value}°",
+        "plot-estimated": "estimated",
+        "plot-true": "true",
+        "plot-range-bin-axis": "range bin →",
+        "plot-pos-v": "+v",
+        "plot-neg-v": "-v",
+        "slice-az-title-steering": "Azimuth pattern — horizontal cut at steering elevation = {value}°",
+        "slice-az-title-zero": "Azimuth pattern — horizontal cut at elevation = 0°",
+        "slice-az-title-elevation": "Azimuth pattern — horizontal cut at elevation = {value}°",
+        "slice-az-short-steering": "steering elevation {value}°",
+        "slice-az-short-elevation": "elevation {value}°",
+        "slice-el-title": "Elevation pattern — vertical cut at azimuth = {az}°",
+        "slice-beam-title": "Beam-plane pattern — cut through steering direction ({az}°, {el}°)",
+        "slice-top-title": "Top projection — visual footprint from above"
+      },
+      de: {
+        "workspace-summary": "Sticky 2D- + 3D-Vorschau (Tippen zum Einklappen)",
+        "workspace-small": "2D/3D klein",
+        "workspace-sticky-view": "Sticky-Ansicht",
+        "slice-2d-title": "2D-Strahlungsansichten",
+        "slice-2d-subtitle": "Winkelmuster plus visuelle Draufsichtprojektion",
+        "slice-az-cut-elevation-label": "Azimut-Cut-Elevation",
+        "slice-option-steering": "Steuerung",
+        "slice-plot-label": "Plot",
+        "slice-theme-auto": "auto",
+        "slice-theme-white": "weiß",
+        "slice-theme-black": "schwarz",
+        "slice-hide-2d": "2D ausblenden",
+        "slice-show-2d": "2D anzeigen",
+        "print-report-btn": "Report drucken",
+        "slice-fullscreen": "Vollbild",
+        "workspace-big-view": "Große Ansicht",
+        "workspace-open-new-window": "In neuem Fenster öffnen",
+        "workspace-open-new-window-title": "Die komplette Live-2D- + 3D-Visualisierung in einem separaten Browserfenster für einen zweiten Monitor öffnen",
+        "workspace-show-preview": "Vorschau anzeigen",
+        "workspace-controls-only": "Nur Einstellungen",
+        "workspace-show-2d3d-preview": "2D/3D-Vorschau anzeigen",
+        "popout-title": "Live-2D + 3D + Radar-FFT-Ansicht",
+        "popout-subtitle": "Änderungen im Hauptfenster werden hier gespiegelt — verschiebe dieses Fenster auf den zweiten Monitor.",
+        "slice-azimuth-pattern": "Azimutmuster",
+        "slice-elevation-pattern": "Elevationsmuster",
+        "slice-beam-pattern": "Beam-Ebenen-Muster",
+        "slice-top-projection": "Draufsichtprojektion",
+        "slice-show-az-cut-3d": "Azimut-Cut-Fläche in 3D anzeigen",
+        "slice-show-el-cut-3d": "vertikalen Kreis-Cut in 3D anzeigen",
+        "slice-show-beam-cut-3d": "Beam-Kreis-Cut in 3D anzeigen",
+        "slice-show-top-proj-3d": "Draufsicht-Projektionsfläche in 3D anzeigen",
+        "slice-foot-front": "vorn",
+        "slice-foot-az-cut": "Azimut-Cut",
+        "slice-foot-side": "Seite",
+        "slice-foot-el-cut": "Elevations-Cut",
+        "slice-foot-up": "oben",
+        "slice-foot-beam": "Beam",
+        "slice-foot-steering-cut": "Steuerungs-Cut",
+        "slice-foot-orthogonal": "orthogonal",
+        "slice-foot-left-right": "links/rechts",
+        "slice-foot-top-footprint": "Draufsicht-Footprint",
+        "slice-foot-front-back": "vorn/hinten",
+        "slice-radar-title": "Radar-FFT-Ansichten",
+        "slice-radar-subtitle": "gleiches FMCW-Ziel wie in den Einstellungen",
+        "range-doppler-map-title": "Range-Doppler-Karte",
+        "range-fft-title": "Range-FFT",
+        "doppler-fft-title": "Doppler-FFT",
+        "live-label": "live",
+        "slice-note-text": "Die Winkelmuster verwenden dieselbe richtungsbasierte Feldformel wie die 3D-Ansicht. Der Azimutplot ist ein horizontaler Winkel-Cut bei der gewählten Elevation; bei Elevation 0° ist es das normale Draufsichtmuster. Der Elevationsplot ist ein vertikaler Winkel-Cut beim Steuerungsazimut. Der Beam-Ebenen-Plot schneidet durch die gesteuerte Hauptkeule und enthält deshalb immer den Hauptstrahl. Die Draufsichtprojektion ist nur ein visueller Footprint von oben, kein physikalischer Strahlungsschnitt.",
+        "doa-samples-caption": "Empfangene Antennensamples: Phase und Amplitude nach Rauschen",
+        "doa-az-cut-caption": "Azimut-Korrelationsschnitt bei geschätzter Elevation",
+        "doa-el-cut-caption": "Elevations-Korrelationsschnitt bei geschätztem Azimut",
+        "plot-az-axis": "Az 0° → 360°",
+        "plot-el90": "El 90°",
+        "plot-el0": "El 0°",
+        "plot-el-axis": "El 0° → 90°",
+        "plot-samples-legend": "Farbe/Nadel = Phase, Größe = Amplitude",
+        "plot-cut-at-el": "Schnitt bei El {value}°",
+        "plot-cut-at-az": "Schnitt bei Az {value}°",
+        "plot-estimated": "geschätzt",
+        "plot-true": "wahr",
+        "plot-range-bin-axis": "Range-Bin →",
+        "plot-pos-v": "+v",
+        "plot-neg-v": "-v",
+        "slice-az-title-steering": "Azimutmuster — horizontaler Schnitt bei Steuerungs-Elevation = {value}°",
+        "slice-az-title-zero": "Azimutmuster — horizontaler Schnitt bei Elevation = 0°",
+        "slice-az-title-elevation": "Azimutmuster — horizontaler Schnitt bei Elevation = {value}°",
+        "slice-az-short-steering": "Steuerungs-Elevation {value}°",
+        "slice-az-short-elevation": "Elevation {value}°",
+        "slice-el-title": "Elevationsmuster — vertikaler Schnitt bei Azimut = {az}°",
+        "slice-beam-title": "Beam-Ebenen-Muster — Schnitt durch Steuerungsrichtung ({az}°, {el}°)",
+        "slice-top-title": "Draufsichtprojektion — visueller Footprint von oben"
+      }
+    };
+    Object.keys(languageCoveragePatches).forEach(lang => {
+      translations[lang] = Object.assign({}, translations[lang] || {}, languageCoveragePatches[lang]);
+    });
+
+    // v55: wider radar-language coverage. v54 still fell back to English for many
+    // radar/FMCW/plot strings in French, Spanish, Chinese and Japanese.
+    const radarLanguageCompletionPatches = {
+      fr: {
+        "radar-scene-title": "Scène radar FMCW avec cible",
+        "radar-scene-desc": "Définissez un objet réfléchissant simple. La géométrie est affichée en 3D ; le calcul radar utilise d'abord une cible ponctuelle. La SER/RCS peut être estimée approximativement à partir de la forme et de la taille, ou saisie manuellement.",
+        "radar-scene-pill": "portée + Doppler",
+        "radar-direction-settings-title": "Pointage, direction de cible et réglages du récepteur",
+        "radar-direction-settings-desc": "Par défaut, la cible utilise le même azimut, la même élévation et la même distance que les commandes de pointage/distance. Désactivez les verrous seulement pour un test réception/DOA séparé.",
+        "radar-plots-moved-note": "Les résultats portée/Doppler sont affichés en bas avec les graphiques afin que les réglages restent regroupés en haut.",
+        "radar-output-title": "Portée / vitesse calculées et graphiques FFT",
+        "radar-output-desc": "La FFT de portée varie avec la distance de la cible et la bande du chirp. La FFT Doppler varie avec la vitesse radiale et le temps de chirp. L'azimut/l'élévation influencent surtout le graphique DOA/corrélation, pas la FFT de portée.",
+        "observation-point-desc": "Optionnel : utilisez ceci seulement si vous voulez la valeur du champ en un point d'observation séparé. Les commandes normales de pointage/cible radar sont au-dessus.",
+        "radar-target-name-label": "Nom de la cible",
+        "radar-target-geometry-label": "Géométrie",
+        "radar-target-size-label": "Taille de l'objet [λ]",
+        "radar-target-size-unit-label": "Unité de taille",
+        "radar-frequency-preset-label": "Préréglage de fréquence",
+        "system-frequency-title": "Fréquence antenne / radar",
+        "system-frequency-note": "Définit la longueur d'onde physique λ = c / f_c. Les distances du réseau restent en λ ; les valeurs en m et mm sont dérivées de cette fréquence.",
+        "radar-geom-sphere": "Sphère",
+        "radar-geom-box": "Boîte / pavé",
+        "radar-geom-plate": "Rectangle plat / plaque",
+        "radar-geom-cylinder": "Cylindre",
+        "radar-range-label": "Portée R [λ]",
+        "radar-range-unit-label": "Unité de portée",
+        "radar-velocity-label": "Vitesse radiale manuelle v [m/s]",
+        "radar-rcs-mode-label": "Modèle SER/RCS",
+        "radar-rcs-auto": "Auto depuis géométrie + taille",
+        "radar-rcs-manual": "SER/RCS manuelle",
+        "radar-rcs-label": "SER/RCS / réflectivité [m²]",
+        "radar-rcs-est-label": "SER/RCS estimée",
+        "radar-rcs-est-note": "Estimation pédagogique grossière, pas une diffusion full-wave.",
+        "radar-fc-label": "Fréquence antenne / radar f_c [GHz]",
+        "radar-bandwidth-label": "Bande passante B [MHz]",
+        "radar-chirp-time-label": "Temps de chirp T [µs]",
+        "radar-samples-label": "Échantillons / chirp Nq",
+        "radar-chirps-label": "Chirps Np",
+        "radar-chirp-readout-label": "Fréquences du chirp",
+        "radar-lock-steering-label": "Direction cible = direction de pointage",
+        "radar-tx-gain-label": "Inclure le gain de pointage TX",
+        "radar-lock-distance-label": "Portée cible = Distance R / λ",
+        "radar-show-target-label": "Afficher la cible en 3D",
+        "radar-motion-mode-label": "Mouvement de la cible",
+        "radar-motion-stationary": "Stationnaire",
+        "radar-motion-linear": "Ligne : début → fin → début",
+        "radar-motion-az-circle": "Cercle en azimut",
+        "radar-motion-el-sweep": "Balayage en élévation",
+        "radar-motion-range-sweep": "Balayage en portée",
+        "radar-motion-curve": "Trajectoire courbe : R + az + él",
+        "radar-speed-result": "Module de vitesse estimé",
+        "radar-motion-period-label": "Période du mouvement [s]",
+        "radar-motion-start-range-label": "R début [λ]",
+        "radar-motion-start-az-label": "Az début [°]",
+        "radar-motion-start-el-label": "Él début [°]",
+        "radar-motion-end-range-label": "R fin [λ]",
+        "radar-motion-end-az-label": "Az fin [°]",
+        "radar-motion-end-el-label": "Él fin [°]",
+        "radar-est-range-result": "Portée estimée",
+        "radar-est-velocity-result": "Vitesse radiale estimée",
+        "radar-range-fft-caption": "Amplitude de la FFT de portée sur les échantillons fast-time",
+        "radar-doppler-fft-caption": "Amplitude de la FFT Doppler sur les chirps au bin de portée choisi",
+        "radar-range-result": "Estimation FFT de portée",
+        "radar-doppler-result": "Estimation FFT Doppler",
+        "radar-rd-caption": "Carte portée-Doppler simplifiée. Point clair = bin cible attendu.",
+        "fmcw-math-title": "Scène radar FMCW : portée, vitesse et géométrie de l'objet",
+        "fmcw-math-intro": "Cette section explique les options radar étape par étape. La géométrie reste volontairement simple : sphère, boîte, plaque ou cylindre. Elle sert à la visualisation et au réglage de réflectivité/SER ; le premier modèle radar traite l'objet comme un réflecteur ponctuel.",
+        "fmcw-step-1-title": "1. Choisir un objet simple", "fmcw-step-1-p": "L'utilisateur choisit une géométrie visuelle simple. L'interface reste compréhensible et ne prétend pas faire du lancer de rayons EM complet.",
+        "fmcw-step-2-title": "2. Convertir R/λ et les angles en position 3D", "fmcw-step-2-p": "La cible est placée dans la scène radar 3D avec la portée et les angles azimut/élévation. Par défaut, elle suit les commandes principales de pointage et de distance.",
+        "fmcw-step-3-title": "3. Utiliser la SER/RCS comme force d'écho", "fmcw-step-3-p": "La section efficace radar ou la réflectivité contrôle l'intensité de l'écho renvoyé. Ici, l'écho apparaît dans les graphiques portée/Doppler et par le point cible mobile.",
+        "fmcw-step-4-title": "4. Construire un chirp FMCW", "fmcw-step-4-p": "Un chirp balaie la bande B pendant le temps T. Sa pente détermine la fréquence de battement due à la portée.",
+        "fmcw-step-5-title": "5. La portée crée une fréquence de battement", "fmcw-step-5-p": "Une cible à la portée R revient avec un retard. Après mélange émission/réception, ce retard apparaît comme fréquence de battement.",
+        "fmcw-step-6-title": "6. Les échantillons fast-time deviennent des bins de portée", "fmcw-step-6-p": "Les échantillons dans un chirp sont les échantillons fast-time. Une FFT sur ces échantillons produit les bins de portée.",
+        "fmcw-step-7-title": "7. La vitesse crée une phase Doppler", "fmcw-step-7-p": "D'un chirp à l'autre, une cible mobile ajoute une progression de phase. Sa fréquence est la fréquence Doppler.",
+        "fmcw-step-8-title": "8. La FFT slow-time donne des bins de vitesse", "fmcw-step-8-p": "L'indice de chirp est le slow-time. Une FFT sur les chirps convertit la progression Doppler en bins de vitesse.",
+        "fmcw-step-9-title": "9. Le cube de données radar complet", "fmcw-step-9-p": "Une vraie scène radar nécessite donc un indice d'antenne, un indice d'échantillon fast-time et un indice de chirp.",
+        "fmcw-step-10-title": "10. Ajouter la phase d'antenne", "fmcw-step-10-p": "Au bin portée-Doppler choisi, il reste le vecteur sur les antennes. Il sert à l'estimation d'angle DOA.",
+        "fmcw-step-11-title": "11. Gain TX optionnel", "fmcw-step-11-p": "Si le pointage émission est actif, l'écho est plus fort lorsque la cible est dans le faisceau TX. Cela change l'amplitude ; la phase DOA reçue vient toujours de la direction cible.",
+        "fmcw-step-12-title": "12. Détecter le pic", "fmcw-step-12-p": "La carte portée-Doppler est formée en sommant la puissance sur les antennes. Les pics indiquent des cibles possibles.",
+        "fmcw-step-13-title": "13. Estimer l'angle à ce pic", "fmcw-step-13-p": "Pour le pic choisi, on prend le vecteur d'antenne et on lance la même recherche DOA par filtre adapté.",
+        "fmcw-step-14-title": "14. Mouvement cible optionnel", "fmcw-step-14-p": "La cible peut rester fixe ou suivre une trajectoire simple. Si elle est liée, la direction de pointage et Distance R/λ suivent la cible.",
+        "fmcw-math-conclusion": "C'est une première étape correcte pour le site : objets visibles simples, vrais concepts radar, pas de modèle de réflexion de maillage trop complexe.",
+        "slice-radar-title": "Vues FFT radar",
+        "slice-radar-subtitle": "même cible FMCW que les réglages",
+        "range-doppler-map-title": "Carte portée-Doppler",
+        "range-fft-title": "FFT de portée",
+        "doppler-fft-title": "FFT Doppler",
+        "live-label": "en direct",
+        "doa-samples-caption": "Échantillons d'antenne reçus : phase et amplitude après bruit",
+        "doa-az-cut-caption": "Coupe de corrélation azimut à l'élévation estimée",
+        "doa-el-cut-caption": "Coupe de corrélation élévation à l'azimut estimé",
+        "plot-cut-at-el": "coupe à él {value}°",
+        "plot-cut-at-az": "coupe à az {value}°",
+        "plot-estimated": "estimé",
+        "plot-true": "vrai",
+        "plot-range-bin-axis": "bin de portée →",
+        "plot-samples-legend": "couleur/aiguille = phase, taille = amplitude",
+        "popout-title": "Vue live 2D + 3D + FFT radar",
+        "workspace-open-new-window": "Ouvrir dans une nouvelle fenêtre",
+        "workspace-big-view": "Grande vue",
+        "print-report-btn": "Imprimer le rapport"
+      },
+      es: {
+        "radar-scene-title": "Escena de radar FMCW con objetivo",
+        "radar-scene-desc": "Define un objeto reflectante simple. La geometría se muestra en 3D; el cálculo radar usa primero un objetivo puntual. La RCS puede estimarse aproximadamente por forma/tamaño o definirse manualmente.",
+        "radar-scene-pill": "rango + Doppler",
+        "radar-direction-settings-title": "Apuntamiento, dirección del objetivo y ajustes del receptor",
+        "radar-direction-settings-desc": "Por defecto el objetivo usa el mismo azimut, elevación y distancia que los controles de apuntamiento/distancia. Desbloquéalos solo para una prueba de recepción/DOA separada.",
+        "radar-plots-moved-note": "Los resultados rango/Doppler se muestran abajo con las gráficas para que los controles queden juntos arriba.",
+        "radar-output-title": "Rango / velocidad calculados y gráficas FFT",
+        "radar-output-desc": "La FFT de rango cambia con la distancia del objetivo y el ancho de banda del chirp. La FFT Doppler cambia con la velocidad radial y el tiempo de chirp. Azimut/elevación afectan sobre todo a la gráfica DOA/correlación, no a la FFT de rango.",
+        "observation-point-desc": "Opcional: úsalo solo si quieres el valor de campo en un punto de observación separado. Los controles normales de apuntamiento/objetivo radar están arriba.",
+        "radar-target-name-label": "Nombre del objetivo",
+        "radar-target-geometry-label": "Geometría",
+        "radar-target-size-label": "Tamaño del objeto [λ]",
+        "radar-target-size-unit-label": "Unidad de tamaño",
+        "radar-frequency-preset-label": "Preajuste de frecuencia",
+        "system-frequency-title": "Frecuencia de antena / radar",
+        "system-frequency-note": "Define la longitud de onda física λ = c / f_c. Las distancias del array se mantienen en λ; los valores en m y mm se derivan de esta frecuencia.",
+        "radar-geom-sphere": "Esfera",
+        "radar-geom-box": "Caja / bloque",
+        "radar-geom-plate": "Rectángulo plano / placa",
+        "radar-geom-cylinder": "Cilindro",
+        "radar-range-label": "Rango R [λ]",
+        "radar-range-unit-label": "Unidad de rango",
+        "radar-velocity-label": "Velocidad radial manual v [m/s]",
+        "radar-rcs-mode-label": "Modelo RCS",
+        "radar-rcs-auto": "Auto por geometría + tamaño",
+        "radar-rcs-manual": "RCS manual",
+        "radar-rcs-label": "RCS / reflectividad [m²]",
+        "radar-rcs-est-label": "RCS estimada",
+        "radar-rcs-est-note": "Estimación didáctica aproximada, no dispersión full-wave.",
+        "radar-fc-label": "Frecuencia antena / radar f_c [GHz]",
+        "radar-bandwidth-label": "Ancho de banda B [MHz]",
+        "radar-chirp-time-label": "Tiempo de chirp T [µs]",
+        "radar-samples-label": "Muestras / chirp Nq",
+        "radar-chirps-label": "Chirps Np",
+        "radar-chirp-readout-label": "Frecuencias del chirp",
+        "radar-lock-steering-label": "Dirección del objetivo = dirección de apuntamiento",
+        "radar-tx-gain-label": "Incluir ganancia de apuntamiento TX",
+        "radar-lock-distance-label": "Rango del objetivo = Distance R / λ",
+        "radar-show-target-label": "Mostrar objetivo en 3D",
+        "radar-motion-mode-label": "Movimiento del objetivo",
+        "radar-motion-stationary": "Estacionario",
+        "radar-motion-linear": "Línea: inicio → fin → inicio",
+        "radar-motion-az-circle": "Círculo en azimut",
+        "radar-motion-el-sweep": "Barrido en elevación",
+        "radar-motion-range-sweep": "Barrido de rango",
+        "radar-motion-curve": "Trayectoria curva: R + az + el",
+        "radar-speed-result": "Magnitud de velocidad estimada",
+        "radar-motion-period-label": "Periodo de movimiento [s]",
+        "radar-motion-start-range-label": "R inicial [λ]",
+        "radar-motion-start-az-label": "Az inicial [°]",
+        "radar-motion-start-el-label": "El inicial [°]",
+        "radar-motion-end-range-label": "R final [λ]",
+        "radar-motion-end-az-label": "Az final [°]",
+        "radar-motion-end-el-label": "El final [°]",
+        "radar-est-range-result": "Rango estimado",
+        "radar-est-velocity-result": "Velocidad radial estimada",
+        "radar-range-fft-caption": "Magnitud de FFT de rango sobre muestras fast-time",
+        "radar-doppler-fft-caption": "Magnitud de FFT Doppler sobre chirps en el bin de rango seleccionado",
+        "radar-range-result": "Estimación FFT de rango",
+        "radar-doppler-result": "Estimación FFT Doppler",
+        "radar-rd-caption": "Mapa rango-Doppler simplificado. Punto brillante = bin de objetivo esperado.",
+        "fmcw-math-title": "Escena radar FMCW: rango, velocidad y geometría del objeto",
+        "fmcw-math-intro": "Esta sección explica paso a paso las opciones de radar. La geometría es intencionalmente simple: esfera, caja, placa o cilindro. Sirve para visualización y para el ajuste de RCS/reflectividad; el primer modelo trata el objeto como reflector puntual.",
+        "fmcw-step-1-title": "1. Elegir un objeto simple", "fmcw-step-1-p": "El usuario selecciona una geometría visual simple. Así la interfaz sigue siendo entendible y no aparenta hacer ray tracing EM completo.",
+        "fmcw-step-2-title": "2. Convertir R/λ y ángulos a posición 3D", "fmcw-step-2-p": "El objetivo se coloca en la escena 3D con rango y ángulos azimut/elevación. Por defecto sigue los controles principales de apuntamiento y distancia.",
+        "fmcw-step-3-title": "3. Usar RCS como fuerza de eco", "fmcw-step-3-p": "La sección eficaz radar o reflectividad controla la intensidad del eco. Aquí se representa mediante las gráficas rango/Doppler y el objetivo puntual móvil.",
+        "fmcw-step-4-title": "4. Construir un chirp FMCW", "fmcw-step-4-p": "Un chirp barre el ancho de banda B durante el tiempo T. Su pendiente determina la frecuencia de batido causada por el rango.",
+        "fmcw-step-5-title": "5. El rango crea frecuencia de batido", "fmcw-step-5-p": "Un objetivo a rango R vuelve con retardo. Tras mezclar transmisión y recepción, el retardo aparece como frecuencia de batido.",
+        "fmcw-step-6-title": "6. Las muestras fast-time se vuelven bins de rango", "fmcw-step-6-p": "Las muestras dentro de un chirp son fast-time. Una FFT sobre ellas produce bins de rango.",
+        "fmcw-step-7-title": "7. La velocidad crea fase Doppler", "fmcw-step-7-p": "De chirp a chirp, un objetivo móvil añade una progresión de fase. Su frecuencia es la frecuencia Doppler.",
+        "fmcw-step-8-title": "8. La FFT slow-time da bins de velocidad", "fmcw-step-8-p": "El índice de chirp es slow-time. Una FFT sobre chirps convierte la progresión Doppler en bins de velocidad.",
+        "fmcw-step-9-title": "9. El cubo de datos radar completo", "fmcw-step-9-p": "Una escena radar real necesita índice de antena, muestra fast-time e índice de chirp.",
+        "fmcw-step-10-title": "10. Añadir la fase de antena", "fmcw-step-10-p": "En el bin rango-Doppler elegido queda el vector sobre antenas. Se usa para estimar el ángulo DOA.",
+        "fmcw-step-11-title": "11. Ganancia TX opcional", "fmcw-step-11-p": "Si el apuntamiento de transmisión está activo, el eco es más fuerte cuando el objetivo está dentro del haz TX. Cambia la amplitud; la fase DOA recibida sigue viniendo de la dirección del objetivo.",
+        "fmcw-step-12-title": "12. Detectar el pico", "fmcw-step-12-p": "El mapa rango-Doppler se forma sumando potencia sobre las antenas. Los picos indican posibles objetivos.",
+        "fmcw-step-13-title": "13. Estimar el ángulo en ese pico", "fmcw-step-13-p": "Para el pico elegido, se toma el vector de antenas y se ejecuta la misma búsqueda DOA por filtro adaptado.",
+        "fmcw-step-14-title": "14. Movimiento opcional del objetivo", "fmcw-step-14-p": "El objetivo puede quedarse fijo o seguir una trayectoria simple. Si está enlazado, la dirección de apuntamiento y Distance R/λ siguen al objetivo.",
+        "fmcw-math-conclusion": "Este es el primer paso correcto para el sitio: objetos visibles simples, conceptos reales de radar, sin modelo de reflexión de malla demasiado complejo.",
+        "slice-radar-title": "Vistas FFT de radar",
+        "slice-radar-subtitle": "mismo objetivo FMCW que los controles",
+        "range-doppler-map-title": "Mapa rango-Doppler",
+        "range-fft-title": "FFT de rango",
+        "doppler-fft-title": "FFT Doppler",
+        "live-label": "en vivo",
+        "doa-samples-caption": "Muestras de antena recibidas: fase y amplitud después del ruido",
+        "doa-az-cut-caption": "Corte de correlación de azimut en la elevación estimada",
+        "doa-el-cut-caption": "Corte de correlación de elevación en el azimut estimado",
+        "plot-cut-at-el": "corte en el {value}°",
+        "plot-cut-at-az": "corte en az {value}°",
+        "plot-estimated": "estimado",
+        "plot-true": "real",
+        "plot-range-bin-axis": "bin de rango →",
+        "plot-samples-legend": "color/aguja = fase, tamaño = amplitud",
+        "popout-title": "Vista live 2D + 3D + FFT radar",
+        "workspace-open-new-window": "Abrir en nueva ventana",
+        "workspace-big-view": "Vista grande",
+        "print-report-btn": "Imprimir informe"
+      },
+      zh: {
+        "radar-scene-title": "FMCW 雷达目标场景",
+        "radar-scene-desc": "定义一个简单反射物体。几何形状在 3D 中显示；雷达计算首先使用点目标模型。RCS 可由形状/尺寸粗略估计，也可手动设置。",
+        "radar-scene-pill": "距离 + 多普勒",
+        "radar-direction-settings-title": "波束指向、目标方向和接收机设置",
+        "radar-direction-settings-desc": "默认情况下，目标使用与阵列指向/距离控件相同的方位角、仰角和距离。如需单独的接收/DOA 测试，可关闭锁定。",
+        "radar-plots-moved-note": "距离/多普勒结果显示在下方图表区域，使设置保持在上方。",
+        "radar-output-title": "计算的距离 / 速度和 FFT 图",
+        "radar-output-desc": "距离 FFT 随目标距离和 chirp 带宽变化。多普勒 FFT 随径向速度和 chirp 时间变化。方位角/仰角主要影响 DOA/相关图，而不是距离 FFT。",
+        "observation-point-desc": "可选：仅当需要单独观察点处的场值时使用。普通指向/雷达目标控件在上方。",
+        "radar-target-name-label": "目标名称",
+        "radar-target-geometry-label": "几何形状",
+        "radar-target-size-label": "物体尺寸 [λ]",
+        "radar-target-size-unit-label": "尺寸单位",
+        "radar-frequency-preset-label": "频率预设",
+        "system-frequency-title": "天线 / 雷达频率",
+        "system-frequency-note": "设置物理波长 λ = c / f_c。阵列距离仍以 λ 表示；米和毫米值由该频率换算。",
+        "radar-geom-sphere": "球体",
+        "radar-geom-box": "盒体 / 长方体",
+        "radar-geom-plate": "平面矩形 / 板",
+        "radar-geom-cylinder": "圆柱体",
+        "radar-range-label": "距离 R [λ]",
+        "radar-range-unit-label": "距离单位",
+        "radar-velocity-label": "手动径向速度 v [m/s]",
+        "radar-rcs-mode-label": "RCS 模型",
+        "radar-rcs-auto": "由几何 + 尺寸自动估计",
+        "radar-rcs-manual": "手动 RCS",
+        "radar-rcs-label": "RCS / 反射率 [m²]",
+        "radar-rcs-est-label": "估计 RCS",
+        "radar-rcs-est-note": "粗略教学估计，不是全波散射计算。",
+        "radar-fc-label": "天线 / 雷达 f_c [GHz]",
+        "radar-bandwidth-label": "带宽 B [MHz]",
+        "radar-chirp-time-label": "Chirp 时间 T [µs]",
+        "radar-samples-label": "每个 chirp 的采样数 Nq",
+        "radar-chirps-label": "Chirp 数 Np",
+        "radar-chirp-readout-label": "Chirp 频率",
+        "radar-lock-steering-label": "目标方向 = 指向方向",
+        "radar-tx-gain-label": "包含 TX 指向增益",
+        "radar-lock-distance-label": "目标距离 = Distance R / λ",
+        "radar-show-target-label": "在 3D 中显示目标",
+        "radar-motion-mode-label": "目标运动",
+        "radar-motion-stationary": "静止",
+        "radar-motion-linear": "直线：起点 → 终点 → 起点",
+        "radar-motion-az-circle": "方位角圆周运动",
+        "radar-motion-el-sweep": "仰角扫描",
+        "radar-motion-range-sweep": "距离扫描",
+        "radar-motion-curve": "曲线路径：R + 方位角 + 仰角",
+        "radar-speed-result": "估计速度幅值",
+        "radar-motion-period-label": "运动周期 [s]",
+        "radar-motion-start-range-label": "起始 R [λ]",
+        "radar-motion-start-az-label": "起始方位角 [°]",
+        "radar-motion-start-el-label": "起始仰角 [°]",
+        "radar-motion-end-range-label": "结束 R [λ]",
+        "radar-motion-end-az-label": "结束方位角 [°]",
+        "radar-motion-end-el-label": "结束仰角 [°]",
+        "radar-est-range-result": "估计距离",
+        "radar-est-velocity-result": "估计径向速度",
+        "radar-range-fft-caption": "快时间采样上的距离 FFT 幅度",
+        "radar-doppler-fft-caption": "选定距离 bin 上跨 chirp 的多普勒 FFT 幅度",
+        "radar-range-result": "距离 FFT 估计",
+        "radar-doppler-result": "多普勒 FFT 估计",
+        "radar-rd-caption": "简化距离-多普勒图。亮点 = 预期目标 bin。",
+        "fmcw-math-title": "FMCW 雷达场景：距离、速度和物体几何",
+        "fmcw-math-intro": "本节逐步解释新的雷达场景选项。物体几何故意保持简单：球体、盒体、板或圆柱体。它用于可视化和 RCS/反射率设置；第一个雷达模型把物体当作一个点反射体。",
+        "fmcw-step-1-title": "1. 选择简单物体", "fmcw-step-1-p": "用户选择简单的可视几何体。这样界面更易理解，也不会假装进行完整 EM 光线追踪。",
+        "fmcw-step-2-title": "2. 将 R/λ 和角度转换为 3D 位置", "fmcw-step-2-p": "目标根据距离、方位角和仰角放入 3D 雷达场景。默认跟随主指向和距离控件。",
+        "fmcw-step-3-title": "3. 用 RCS 表示回波强度", "fmcw-step-3-p": "雷达散射截面或反射率控制返回回波强度。本版本通过距离/多普勒图和运动点目标表示回波。",
+        "fmcw-step-4-title": "4. 构造一个 FMCW chirp", "fmcw-step-4-p": "Chirp 在时间 T 内扫过带宽 B。其斜率决定由距离产生的拍频。",
+        "fmcw-step-5-title": "5. 距离产生拍频", "fmcw-step-5-p": "距离为 R 的目标回波有延迟。发射和接收信号混频后，该延迟表现为拍频。",
+        "fmcw-step-6-title": "6. 快时间采样变成距离 bin", "fmcw-step-6-p": "一个 chirp 内的采样称为快时间采样。对这些采样做 FFT 会产生距离 bin。",
+        "fmcw-step-7-title": "7. 速度产生多普勒相位", "fmcw-step-7-p": "从一个 chirp 到下一个 chirp，运动目标会加入相位递进，其频率就是多普勒频率。",
+        "fmcw-step-8-title": "8. 慢时间 FFT 变成速度 bin", "fmcw-step-8-p": "Chirp 索引是慢时间。对 chirp 序列做 FFT 会把多普勒相位递进转换为速度 bin。",
+        "fmcw-step-9-title": "9. 完整雷达数据立方体", "fmcw-step-9-p": "真实雷达场景需要天线索引、快时间采样索引和 chirp 索引。",
+        "fmcw-step-10-title": "10. 加入天线相位", "fmcw-step-10-p": "在选定的距离-多普勒 bin 处，剩下的是跨天线的向量，用于 DOA 角度估计。",
+        "fmcw-step-11-title": "11. 可选 TX 指向增益", "fmcw-step-11-p": "若启用发射指向，当目标位于发射波束内时回波更强。这会改变回波幅度；接收 DOA 相位仍由目标方向决定。",
+        "fmcw-step-12-title": "12. 检测峰值", "fmcw-step-12-p": "距离-多普勒图通过对天线功率求和形成。峰值表示可能的目标。",
+        "fmcw-step-13-title": "13. 在该峰值处估计角度", "fmcw-step-13-p": "对选定峰值取天线向量，并运行相同的匹配滤波 DOA 搜索。",
+        "fmcw-step-14-title": "14. 可选目标运动", "fmcw-step-14-p": "目标可以保持静止或沿简单路径运动。若启用联动，主指向方向和 Distance R/λ 会跟随目标。",
+        "fmcw-math-conclusion": "这是网站正确的第一步：简单可见物体、真实雷达概念，而不是过度复杂的网格反射模型。",
+        "slice-radar-title": "雷达 FFT 视图",
+        "slice-radar-subtitle": "与设置中相同的 FMCW 目标",
+        "range-doppler-map-title": "距离-多普勒图",
+        "range-fft-title": "距离 FFT",
+        "doppler-fft-title": "多普勒 FFT",
+        "live-label": "实时",
+        "doa-samples-caption": "接收天线采样：加噪后的相位和幅度",
+        "doa-az-cut-caption": "在估计仰角处的方位角相关切片",
+        "doa-el-cut-caption": "在估计方位角处的仰角相关切片",
+        "plot-cut-at-el": "仰角 {value}° 切片",
+        "plot-cut-at-az": "方位角 {value}° 切片",
+        "plot-estimated": "估计",
+        "plot-true": "真实",
+        "plot-range-bin-axis": "距离 bin →",
+        "plot-samples-legend": "颜色/指针 = 相位，大小 = 幅度",
+        "popout-title": "实时 2D + 3D + 雷达 FFT 视图",
+        "workspace-open-new-window": "在新窗口打开",
+        "workspace-big-view": "大视图",
+        "print-report-btn": "打印报告"
+      },
+      ja: {
+        "radar-scene-title": "FMCWレーダーのターゲットシーン",
+        "radar-scene-desc": "単純な反射物体を定義します。形状は3Dで表示され、レーダー計算はまず点ターゲットとして扱います。RCSは形状/サイズから概算するか、手動で設定できます。",
+        "radar-scene-pill": "距離 + ドップラー",
+        "radar-direction-settings-title": "ステアリング、ターゲット方向、受信設定",
+        "radar-direction-settings-desc": "既定ではターゲットはフェーズドアレイのステアリング/距離設定と同じ方位角、仰角、距離を使います。別の受信/DOAテストを行う場合だけロックを解除してください。",
+        "radar-plots-moved-note": "距離/ドップラー結果は下のプロット領域に表示されるため、設定は上部にまとまります。",
+        "radar-output-title": "計算された距離 / 速度とFFTプロット",
+        "radar-output-desc": "距離FFTはターゲット距離とチャープ帯域幅で変わります。ドップラーFFTは径方向速度とチャープ時間で変わります。方位角/仰角は主にDOA/相関プロットに影響し、距離FFTにはほぼ影響しません。",
+        "observation-point-desc": "任意：別の観測点での場の値が必要な場合だけ使います。通常のステアリング/レーダーターゲット設定は上にあります。",
+        "radar-target-name-label": "ターゲット名",
+        "radar-target-geometry-label": "形状",
+        "radar-target-size-label": "物体サイズ [λ]",
+        "radar-target-size-unit-label": "サイズ単位",
+        "radar-frequency-preset-label": "周波数プリセット",
+        "system-frequency-title": "アンテナ / レーダー周波数",
+        "system-frequency-note": "物理波長 λ = c / f_c を設定します。配列間隔はλのままで、mやmmの値はこの周波数から換算されます。",
+        "radar-geom-sphere": "球",
+        "radar-geom-box": "箱 / 直方体",
+        "radar-geom-plate": "平面長方形 / プレート",
+        "radar-geom-cylinder": "円柱",
+        "radar-range-label": "距離 R [λ]",
+        "radar-range-unit-label": "距離単位",
+        "radar-velocity-label": "手動径方向速度 v [m/s]",
+        "radar-rcs-mode-label": "RCSモデル",
+        "radar-rcs-auto": "形状 + サイズから自動",
+        "radar-rcs-manual": "手動RCS",
+        "radar-rcs-label": "RCS / 反射率 [m²]",
+        "radar-rcs-est-label": "推定RCS",
+        "radar-rcs-est-note": "教育用の粗い推定であり、フルウェーブ散乱ではありません。",
+        "radar-fc-label": "アンテナ / レーダー f_c [GHz]",
+        "radar-bandwidth-label": "帯域幅 B [MHz]",
+        "radar-chirp-time-label": "チャープ時間 T [µs]",
+        "radar-samples-label": "サンプル / チャープ Nq",
+        "radar-chirps-label": "チャープ数 Np",
+        "radar-chirp-readout-label": "チャープ周波数",
+        "radar-lock-steering-label": "ターゲット方向 = ステアリング方向",
+        "radar-tx-gain-label": "TXステアリングゲインを含める",
+        "radar-lock-distance-label": "ターゲット距離 = Distance R / λ",
+        "radar-show-target-label": "ターゲットを3D表示",
+        "radar-motion-mode-label": "ターゲット運動",
+        "radar-motion-stationary": "静止",
+        "radar-motion-linear": "直線：開始 → 終了 → 開始",
+        "radar-motion-az-circle": "方位角方向の円運動",
+        "radar-motion-el-sweep": "仰角スイープ",
+        "radar-motion-range-sweep": "距離スイープ",
+        "radar-motion-curve": "曲線経路：R + 方位角 + 仰角",
+        "radar-speed-result": "推定速度の大きさ",
+        "radar-motion-period-label": "運動周期 [s]",
+        "radar-motion-start-range-label": "開始 R [λ]",
+        "radar-motion-start-az-label": "開始 az [°]",
+        "radar-motion-start-el-label": "開始 el [°]",
+        "radar-motion-end-range-label": "終了 R [λ]",
+        "radar-motion-end-az-label": "終了 az [°]",
+        "radar-motion-end-el-label": "終了 el [°]",
+        "radar-est-range-result": "推定距離",
+        "radar-est-velocity-result": "推定径方向速度",
+        "radar-range-fft-caption": "fast-timeサンプル上の距離FFT振幅",
+        "radar-doppler-fft-caption": "選択した距離binでのチャープ方向ドップラーFFT振幅",
+        "radar-range-result": "距離FFT推定",
+        "radar-doppler-result": "ドップラーFFT推定",
+        "radar-rd-caption": "簡略化した距離-ドップラーマップ。明るい点 = 期待されるターゲットbin。",
+        "fmcw-math-title": "FMCWレーダーシーン：距離、速度、物体形状",
+        "fmcw-math-intro": "このセクションでは新しいレーダーシーン設定を段階的に説明します。物体形状は意図的に単純な球、箱、プレート、円柱にしています。これは可視化とRCS/反射率設定に使い、最初のレーダーモデルでは点反射体として扱います。",
+        "fmcw-step-1-title": "1. 単純な物体を選ぶ", "fmcw-step-1-p": "ユーザーは単純な可視形状を選びます。UIを分かりやすく保ち、完全なEMレイトレーシングをしているように見せません。",
+        "fmcw-step-2-title": "2. R/λと角度を3D位置に変換", "fmcw-step-2-p": "ターゲットは距離、方位角、仰角を使って3Dレーダーシーン内に配置されます。既定では主ステアリングと距離設定に従います。",
+        "fmcw-step-3-title": "3. RCSをエコー強度として使う", "fmcw-step-3-p": "レーダー断面積または反射率が返ってくるエコーの強さを制御します。この版では距離/ドップラープロットと移動点ターゲットで表します。",
+        "fmcw-step-4-title": "4. 1つのFMCWチャープを作る", "fmcw-step-4-p": "チャープは時間Tの間に帯域Bを掃引します。その傾きが距離によるビート周波数を決めます。",
+        "fmcw-step-5-title": "5. 距離がビート周波数を作る", "fmcw-step-5-p": "距離Rのターゲットからの戻りは遅れます。送受信信号を混合すると、その遅れがビート周波数として現れます。",
+        "fmcw-step-6-title": "6. fast-timeサンプルが距離binになる", "fmcw-step-6-p": "1つのチャープ内のサンプルをfast-timeサンプルと呼びます。それらにFFTを行うと距離binが得られます。",
+        "fmcw-step-7-title": "7. 速度がドップラー位相を作る", "fmcw-step-7-p": "チャープごとに、移動ターゲットは位相進行を加えます。その周波数がドップラー周波数です。",
+        "fmcw-step-8-title": "8. slow-time FFTが速度binになる", "fmcw-step-8-p": "チャープ番号はslow-timeです。チャープ列にFFTを行うとドップラー位相進行が速度binに変換されます。",
+        "fmcw-step-9-title": "9. 完全なレーダーデータキューブ", "fmcw-step-9-p": "実際のレーダーシーンではアンテナ番号、fast-timeサンプル番号、チャープ番号が必要です。",
+        "fmcw-step-10-title": "10. アンテナ位相を加える", "fmcw-step-10-p": "選択した距離-ドップラーbinでは、アンテナ方向のベクトルが残ります。これをDOA角度推定に使います。",
+        "fmcw-step-11-title": "11. 任意のTXステアリングゲイン", "fmcw-step-11-p": "送信ステアリングが有効な場合、ターゲットが送信ビーム内にあるとエコーが強くなります。これは振幅を変えますが、受信DOA位相はターゲット方向から来ます。",
+        "fmcw-step-12-title": "12. ピークを検出", "fmcw-step-12-p": "距離-ドップラーマップはアンテナ全体の電力を合計して作ります。ピークは可能なターゲットを示します。",
+        "fmcw-step-13-title": "13. そのピークで角度を推定", "fmcw-step-13-p": "選んだピークについてアンテナベクトルを取り、同じマッチドフィルタDOA探索を行います。",
+        "fmcw-step-14-title": "14. 任意のターゲット運動", "fmcw-step-14-p": "ターゲットは固定または単純な経路を動けます。連動時は主ステアリング方向とDistance R/λがターゲットに追従します。",
+        "fmcw-math-conclusion": "これはサイトの正しい第一歩です。単純で見える物体、実際のレーダー概念、過度に複雑なメッシュ反射モデルなしです。",
+        "slice-radar-title": "レーダーFFTビュー",
+        "slice-radar-subtitle": "設定と同じFMCWターゲット",
+        "range-doppler-map-title": "距離-ドップラーマップ",
+        "range-fft-title": "距離FFT",
+        "doppler-fft-title": "ドップラーFFT",
+        "live-label": "ライブ",
+        "doa-samples-caption": "受信アンテナサンプル：ノイズ後の位相と振幅",
+        "doa-az-cut-caption": "推定仰角での方位角相関カット",
+        "doa-el-cut-caption": "推定方位角での仰角相関カット",
+        "plot-cut-at-el": "el {value}° のカット",
+        "plot-cut-at-az": "az {value}° のカット",
+        "plot-estimated": "推定",
+        "plot-true": "真値",
+        "plot-range-bin-axis": "距離bin →",
+        "plot-samples-legend": "色/針 = 位相、サイズ = 振幅",
+        "popout-title": "ライブ 2D + 3D + レーダーFFTビュー",
+        "workspace-open-new-window": "新しいウィンドウで開く",
+        "workspace-big-view": "大きい表示",
+        "print-report-btn": "レポート印刷"
+      }
+    };
+    Object.keys(radarLanguageCompletionPatches).forEach(lang => {
+      translations[lang] = Object.assign({}, translations[lang] || {}, radarLanguageCompletionPatches[lang]);
+    });
+
+    function applyRadarSelectOptionTranslations() {
+      const lang = document.getElementById('language-select')?.value || document.documentElement.lang || 'en';
+      const optionTexts = {
+        en: { '2.4': '2.4 GHz demo / Wi‑Fi', '10': '10 GHz generic antenna', '24': '24 GHz radar', '77': '77 GHz automotive radar', custom: 'Custom' },
+        de: { '2.4': '2.4 GHz Demo / Wi‑Fi', '10': '10 GHz generische Antenne', '24': '24 GHz Radar', '77': '77 GHz Automotive-Radar', custom: 'Benutzerdefiniert' },
+        fr: { '2.4': 'Démo 2,4 GHz / Wi‑Fi', '10': 'Antenne générique 10 GHz', '24': 'Radar 24 GHz', '77': 'Radar automobile 77 GHz', custom: 'Personnalisé' },
+        es: { '2.4': 'Demo 2,4 GHz / Wi‑Fi', '10': 'Antena genérica 10 GHz', '24': 'Radar 24 GHz', '77': 'Radar automotriz 77 GHz', custom: 'Personalizado' },
+        zh: { '2.4': '2.4 GHz 演示 / Wi‑Fi', '10': '10 GHz 通用天线', '24': '24 GHz 雷达', '77': '77 GHz 汽车雷达', custom: '自定义' },
+        ja: { '2.4': '2.4 GHzデモ / Wi‑Fi', '10': '10 GHz汎用アンテナ', '24': '24 GHzレーダー', '77': '77 GHz車載レーダー', custom: 'カスタム' }
+      };
+      const dict = optionTexts[lang] || optionTexts.en;
+      const preset = document.getElementById('radar-frequency-preset');
+      if (preset) Array.from(preset.options).forEach(opt => { if (dict[opt.value]) opt.textContent = dict[opt.value]; });
+    }
+
     function applyTranslations(lang) {
       const active = translations[lang] || translations.en;
       document.documentElement.lang = lang || 'en';
@@ -1304,15 +2377,54 @@
           console.warn('Missing translation key:', key);
         }
       });
-      document.title = active['seo-title'] || "Free 3D Phased Array Simulator – Beamforming & Antenna Array Visualizer";
+      document.title = active['seo-title'] || "Phased Array & Radar DOA Simulator";
+      try { applyRadarSelectOptionTranslations(); } catch (e) {}
+      updateCouplingControlState();
+      try {
+        const hidden = document.body.classList.contains('main-preview-hidden');
+        const btn = document.getElementById('hide-main-preview');
+        if (btn) btn.textContent = hidden ? getActiveTranslation('workspace-show-preview', 'Show preview') : getActiveTranslation('workspace-controls-only', 'Controls only');
+        const popBtn = document.getElementById('workspace-popout');
+        if (popBtn) {
+          popBtn.textContent = getActiveTranslation('workspace-open-new-window', 'Open in new window');
+          popBtn.title = getActiveTranslation('workspace-open-new-window-title', 'Open the complete live 2D + 3D visualization in a separate browser window for a second monitor');
+        }
+        if (typeof updateAllVisuals === 'function') requestAnimationFrame(() => updateAllVisuals());
+        if (typeof updateRadarScene === 'function') requestAnimationFrame(() => updateRadarScene());
+      } catch (e) {}
       if (typeof MathJax !== 'undefined' && MathJax.startup && MathJax.startup.promise) {
         MathJax.startup.promise.then(() => MathJax.typesetPromise());
       }
     }
 
+    function getActiveTranslation(key, fallback='') {
+      const lang = document.getElementById('language-select')?.value || document.documentElement.lang || 'en';
+      return (translations[lang] && translations[lang][key]) || (translations.en && translations.en[key]) || fallback;
+    }
+
+    function updateCouplingControlState() {
+      const enabled = !!document.getElementById('mutual-coupling-toggle')?.checked;
+      const slider = document.getElementById('coupling-strength');
+      const value = document.getElementById('coupling-strength-value');
+      const numberInput = document.getElementById('coupling-strength-input');
+      const pill = document.getElementById('coupling-state-pill');
+      const card = document.getElementById('mutual-coupling-card');
+      if (slider) slider.disabled = !enabled;
+      if (numberInput) numberInput.disabled = !enabled;
+      if (card) card.classList.toggle('coupling-enabled', enabled);
+      if (pill) pill.textContent = enabled ? getActiveTranslation('coupling-state-on', 'on') : getActiveTranslation('coupling-state-off', 'off');
+      if (value && slider) {
+        const db = Number(slider.value);
+        const lin = Math.pow(10, db / 20);
+        value.textContent = `≈${lin.toFixed(2)}`;
+      }
+      if (numberInput && slider && !isInputBeingEdited(numberInput)) numberInput.value = `${Number(slider.value).toFixed(0)}`;
+    }
+
     // Three.js Scene Setup
     let scene, camera, renderer, controls;
-    let antennaGroup, waveGroup, vectorGroup, patternMesh;
+    let antennaGroup, waveGroup, vectorGroup, radarSceneGroup, patternMesh;
+    let didInitialRadarViewFit = false;
     let fieldSliceMesh, fieldSliceTexture, fieldSliceCanvas, fieldSliceCtx, fieldSliceNeedsRedraw = true;
     let fieldSliceTime = 0;
     let slicePanelCache = {};
@@ -1328,6 +2440,48 @@
     const ACTIVE_COLOR = new THREE.Color(0x3b82f6);
     const INACTIVE_COLOR = new THREE.Color(0x6b7280);
 
+    // Small manual resource cleaner for Three.js scenes. JavaScript's garbage collector
+    // does not automatically free GPU buffers/textures when objects are removed from a group.
+    // Disposing them before clear() prevents RAM/VRAM growth during radar motion and repeated re-initialization.
+    let lastGpuTrimMs = 0;
+    function disposeThreeResource(resource) {
+      if (!resource) return;
+      if (Array.isArray(resource)) { resource.forEach(disposeThreeResource); return; }
+      if (typeof resource.dispose === 'function') resource.dispose();
+    }
+    function disposeObject3D(obj) {
+      if (!obj) return;
+      obj.traverse?.(child => {
+        disposeThreeResource(child.geometry);
+        const mat = child.material;
+        if (Array.isArray(mat)) mat.forEach(m => {
+          if (m) {
+            Object.keys(m).forEach(k => { if (m[k] && typeof m[k].dispose === 'function') m[k].dispose(); });
+            disposeThreeResource(m);
+          }
+        });
+        else if (mat) {
+          Object.keys(mat).forEach(k => { if (mat[k] && typeof mat[k].dispose === 'function') mat[k].dispose(); });
+          disposeThreeResource(mat);
+        }
+      });
+    }
+    function clearGroupAndDispose(group) {
+      if (!group) return;
+      while (group.children.length) {
+        const child = group.children.pop();
+        disposeObject3D(child);
+      }
+    }
+    function trimRendererMemory(force=false) {
+      const now = performance.now();
+      if (!force && now - lastGpuTrimMs < 2500) return;
+      lastGpuTrimMs = now;
+      try { renderer?.renderLists?.dispose?.(); } catch (e) {}
+      // window.gc only exists in browsers started with explicit GC flags; call guarded.
+      try { if (force && typeof window.gc === 'function') window.gc(); } catch (e) {}
+    }
+
     function isCoarsePointerDevice() {
       return !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
     }
@@ -1341,6 +2495,18 @@
     let progressiveIdleTimer = 0;
 
     function getRenderQuality() {
+      // During animated radar motion, keep the 3D view deliberately cheaper.
+      // The numbers/plots still update, but the expensive lobe mesh uses fewer vertices
+      // and the renderer uses a lower device pixel ratio for smoother motion.
+      if (typeof isRadarMotionActive === 'function' && isRadarMotionActive()) {
+        // Motion preview mode.
+        // Important: do NOT skip animation frames and do NOT simplify the radar range sphere/target.
+        // Only the expensive far-field/hemisphere radiation mesh is computed with fewer angular samples,
+        // like the preview quality used while dragging azimuth/elevation sliders.
+        if (isPhoneLayout()) return { phi: 12, theta: 6, dpr: 0.75, polarStep: 12, topStep: 28, frameSkip: 1, motion: true };
+        if (isTabletLayout()) return { phi: 18, theta: 9, dpr: 0.90, polarStep: 8, topStep: 20, frameSkip: 1, motion: true };
+        return { phi: 24, theta: 12, dpr: Math.min(window.devicePixelRatio || 1, 1.0), polarStep: 5, topStep: 14, frameSkip: 1, motion: true };
+      }
       // While dragging sliders, draw a deliberately cheaper preview.
       // After the user pauses/releases, one full-quality update is rendered automatically.
       if (isProgressiveInteracting) {
@@ -1572,15 +2738,15 @@
       const pill = document.getElementById('array-mode-pill');
       if (pill) {
         const labels = {
-          rectangular: 'Rectangular grid active',
-          hexagonal: 'Hexagonal grid active',
-          circular: 'Circular array active',
-          spiral: 'Spiral array active',
-          parabolic: 'Parabolic surface active',
-          sparse: 'Sparse random active',
-          custom: 'Custom coordinates active'
+          rectangular: getActiveTranslation('preset-rectangular-active', 'Rectangular grid active'),
+          hexagonal: getActiveTranslation('preset-hexagonal-active', 'Hexagonal grid active'),
+          circular: getActiveTranslation('preset-circular-active', 'Circular array active'),
+          spiral: getActiveTranslation('preset-spiral-active', 'Spiral array active'),
+          parabolic: getActiveTranslation('preset-parabolic-active', 'Parabolic surface active'),
+          sparse: getActiveTranslation('preset-sparse-active', 'Sparse random active'),
+          custom: getActiveTranslation('preset-custom-active', 'Custom coordinates active')
         };
-        pill.textContent = labels[source] || 'Coordinate editor active';
+        pill.textContent = labels[source] || getActiveTranslation('coordinate-editor-active', 'Coordinate editor active');
       }
       refreshCoordinateChipPreview();
     }
@@ -1625,10 +2791,10 @@
               custom: true
             });
           });
-          updateCustomArrayStatus(`Coordinate array active: ${rows.length} elements`);
+          updateCustomArrayStatus(getActiveTranslation('coordinate-array-active', 'Coordinate array active: {n} elements').replace('{n}', rows.length));
           return;
         }
-        updateCustomArrayStatus('No valid coordinates found. Regenerated rectangular preset.', true);
+        updateCustomArrayStatus(getActiveTranslation('coordinate-error-regenerated', 'No valid coordinates found. Regenerated rectangular preset.'), true);
         loadPresetIntoEditor('rectangular');
       }
       let index = 0;
@@ -1700,12 +2866,18 @@
 
     // Initialization function
     function init() {
+      moveRadarPlotsToLeftPanel();
+      if (typeof loadPresetIntoEditor === 'function') {
+        const initialSource = document.getElementById('array-source')?.value || 'rectangular';
+        loadPresetIntoEditor(initialSource === 'custom' ? 'custom' : initialSource);
+        updateArraySourceUI?.();
+      }
       // Scene and Camera
       scene = new THREE.Scene();
       scene.background = new THREE.Color(0xf0f9ff);
       const container = document.getElementById('canvas-container');
       if (!container) { console.error("Canvas container not found!"); return; }
-      camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 200);
+      camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 5000);
       camera.position.set(20, 15, 20);
       camera.lookAt(0, 0, 0);
 
@@ -1730,6 +2902,7 @@
       antennaGroup = new THREE.Group(); scene.add(antennaGroup);
       waveGroup = new THREE.Group(); scene.add(waveGroup);
       vectorGroup = new THREE.Group(); scene.add(vectorGroup);
+      radarSceneGroup = new THREE.Group(); scene.add(radarSceneGroup);
       renderAntennaCheckboxes();
       createAntennas();
       observationPoint = new THREE.Mesh(new THREE.SphereGeometry(0.15, 16, 16), new THREE.MeshPhongMaterial({ color: 0xef4444 })); scene.add(observationPoint);
@@ -2074,9 +3247,10 @@
     // Utility to get values from control UI elements
     function getEffectiveSubpatchDensity(useApprox) {
         const selected = parseInt(document.getElementById('subpatch-density')?.value || '1', 10);
-        // Huygens is expensive: while a slider is actively moving, use one source per patch
-        // as a responsive preview; the idle/full render below uses the selected density.
-        if (!useApprox && isProgressiveInteracting) return 1;
+        // Huygens is expensive: while a slider is actively moving or radar target motion is active,
+        // use one source per patch as a responsive preview. This is the same idea as dragging
+        // azimuth/elevation: smooth motion first, full detail when the scene is stationary again.
+        if (!useApprox && (isProgressiveInteracting || (typeof isRadarMotionActive === 'function' && isRadarMotionActive()))) return 1;
         return Math.max(1, selected);
     }
 
@@ -2111,6 +3285,1165 @@
         const distance = parseFloat(document.getElementById('observation-distance').value);
         return new THREE.Vector3(Math.cos(azimuth) * Math.cos(elevation), Math.sin(elevation), Math.sin(azimuth) * Math.cos(elevation)).normalize().multiplyScalar(distance);
     }
+
+    // --- Receive / Radar DOA matched-filter demo with complex noise ---
+    function getDirectionFromAzElDeg(azDeg, elDeg) {
+      const azimuth = (parseFloat(azDeg) || 0) * Math.PI / 180;
+      const elevation = (parseFloat(elDeg) || 0) * Math.PI / 180;
+      return new THREE.Vector3(
+        Math.cos(azimuth) * Math.cos(elevation),
+        Math.sin(elevation),
+        Math.sin(azimuth) * Math.cos(elevation)
+      ).normalize();
+    }
+
+    function directionToAzElDeg(dir) {
+      const d = dir.clone().normalize();
+      const az = (Math.atan2(d.z, d.x) * 180 / Math.PI + 360) % 360;
+      const el = Math.asin(Math.max(-1, Math.min(1, d.y))) * 180 / Math.PI;
+      return { az, el };
+    }
+
+    function mulberry32(seed) {
+      let t = seed >>> 0;
+      return function() {
+        t += 0x6D2B79F5;
+        let r = Math.imul(t ^ (t >>> 15), 1 | t);
+        r ^= r + Math.imul(r ^ (r >>> 7), 61 | r);
+        return ((r ^ (r >>> 14)) >>> 0) / 4294967296;
+      };
+    }
+
+    function randnFrom(rng) {
+      const u1 = Math.max(rng(), 1e-12);
+      const u2 = rng();
+      return Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+    }
+
+    function receiveSignature(activeAntennas, dir, patternType, propagationModel) {
+      const phaseMultiplier = propagationModel === 'roundtrip' ? 2 : 1;
+      const gain = patternType === 'patch' ? patchElementGain(dir) : 1;
+      return activeAntennas.map(a => {
+        const phase = phaseMultiplier * WAVENUMBER * a.position.dot(dir) + ((a.phaseDeg || 0) * Math.PI / 180);
+        return cScale(cExp(phase), gain * getArrayWeight(a));
+      });
+    }
+
+    function normalizedMatchedPower(reference, samples) {
+      let re = 0, im = 0;
+      let refEnergy = 0, sampleEnergy = 0;
+      for (let i = 0; i < reference.length; i++) {
+        const g = reference[i];
+        const y = samples[i];
+        // conj(g) * y
+        re += g.re * y.re + g.im * y.im;
+        im += g.re * y.im - g.im * y.re;
+        refEnergy += g.re * g.re + g.im * g.im;
+        sampleEnergy += y.re * y.re + y.im * y.im;
+      }
+      const p = re * re + im * im;
+      return p / Math.max(refEnergy * sampleEnergy, 1e-18);
+    }
+
+    function angularErrorDeg(a, b) {
+      const dot = Math.max(-1, Math.min(1, a.clone().normalize().dot(b.clone().normalize())));
+      return Math.acos(dot) * 180 / Math.PI;
+    }
+
+    function getDoaControls() {
+      return {
+        targetAz: parseFloat(document.getElementById('doa-target-azimuth')?.value || '30'),
+        targetEl: parseFloat(document.getElementById('doa-target-elevation')?.value || '10'),
+        snrDb: parseFloat(document.getElementById('doa-snr')?.value || '20'),
+        resolution: Math.max(1, parseFloat(document.getElementById('doa-resolution')?.value || '5')),
+        seed: parseInt(document.getElementById('doa-seed')?.value || '1234', 10) || 1234,
+        freezeNoise: !!document.getElementById('doa-freeze-noise')?.checked,
+        propagationModel: document.getElementById('doa-propagation-model')?.value || 'oneway'
+      };
+    }
+
+    function setDoaText(id, text) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = text;
+    }
+
+
+    function preparePlotCanvas(canvas, minCssW = 260, minCssH = 120) {
+      if (!canvas) return null;
+      const rect = canvas.getBoundingClientRect();
+      const attrW = Number(canvas.getAttribute('width')) || minCssW;
+      const attrH = Number(canvas.getAttribute('height')) || minCssH;
+      const cssW = Math.max(80, Math.round(rect.width || canvas.clientWidth || attrW));
+      const cssH = Math.max(60, Math.round(rect.height || canvas.clientHeight || attrH));
+      const dpr = Math.max(1, Math.min(2.5, window.devicePixelRatio || 1));
+      const targetW = Math.round(cssW * dpr);
+      const targetH = Math.round(cssH * dpr);
+      if (canvas.width !== targetW || canvas.height !== targetH) {
+        canvas.width = targetW;
+        canvas.height = targetH;
+      }
+      const ctx = canvas.getContext('2d');
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      return { ctx, W: cssW, H: cssH, dpr };
+    }
+
+
+    function getRadarPlotColors() {
+      const theme = (typeof getResolvedAppearanceTheme === 'function') ? getResolvedAppearanceTheme() : 'dark';
+      return theme === 'dark'
+        ? {
+            bg: '#0f172a', grid: 'rgba(255,255,255,0.18)', gridSoft: 'rgba(255,255,255,0.16)',
+            text: 'rgba(255,255,255,0.88)', textSoft: 'rgba(255,255,255,0.82)',
+            line: '#ffffff', estimated: '#fef08a', truth: '#86efac', ideal: '#38bdf8', cross: '#ffffff', sampleStroke: 'rgba(255,255,255,0.45)',
+            heatLow: [20, 30, 70], heatHigh: [255, 210, 95], heatMid: [255, 140, 40], fade: 'rgba(15,23,42,0)'
+          }
+        : {
+            bg: '#ffffff', grid: 'rgba(17,24,39,0.18)', gridSoft: 'rgba(17,24,39,0.13)',
+            text: 'rgba(17,24,39,0.92)', textSoft: 'rgba(55,65,81,0.90)',
+            line: '#111827', estimated: '#b45309', truth: '#15803d', ideal: '#2563eb', cross: '#111827', sampleStroke: 'rgba(17,24,39,0.42)',
+            heatLow: [235, 242, 255], heatHigh: [180, 83, 9], heatMid: [37, 99, 235], fade: 'rgba(255,255,255,0)'
+          };
+    }
+
+    function moveRadarPlotsToLeftPanel() {
+      const leftPanel = document.getElementById('slice-radar-panel');
+      const detailStack = document.querySelector('.radar-plot-stack');
+      if (!leftPanel || !detailStack || detailStack.dataset.movedToLeft === '1') return;
+      const compactGrid = leftPanel.querySelector('.slice-radar-grid');
+      if (compactGrid) compactGrid.remove();
+      detailStack.dataset.movedToLeft = '1';
+      detailStack.classList.add('radar-plots-left-only');
+      leftPanel.appendChild(detailStack);
+      requestAnimationFrame(() => {
+        try { updateDoaSimulation(); updateRadarScene(); } catch (e) {}
+      });
+    }
+
+    function drawDoaMap(scan, best) {
+      const canvas = document.getElementById('doa-correlation-map');
+      if (!canvas) return;
+      const surface = preparePlotCanvas(canvas, 520, 150);
+      if (!surface) return;
+      const { ctx, W, H } = surface;
+      const pc = getRadarPlotColors();
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = pc.bg;
+      ctx.fillRect(0, 0, W, H);
+      if (!scan.length) return;
+      const maxP = Math.max(...scan.map(p => p.power), 1e-12);
+      for (const p of scan) {
+        const x = Math.floor((p.az / 360) * W);
+        const y = Math.floor((1 - p.el / 90) * H);
+        const cellW = Math.max(1, Math.ceil((p.step / 360) * W) + 1);
+        const cellH = Math.max(1, Math.ceil((p.step / 90) * H) + 1);
+        const t = Math.pow(Math.max(0, p.power / maxP), 0.45);
+        const low = pc.heatLow, high = pc.heatHigh;
+        const r = Math.round(low[0] + (high[0] - low[0]) * t);
+        const g = Math.round(low[1] + (high[1] - low[1]) * t);
+        const b = Math.round(low[2] + (high[2] - low[2]) * t);
+        ctx.fillStyle = `rgb(${r},${g},${b})`;
+        ctx.fillRect(x, y, cellW, cellH);
+      }
+      if (best) {
+        const bx = (best.az / 360) * W;
+        const by = (1 - best.el / 90) * H;
+        ctx.strokeStyle = pc.line;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(bx - 6, by);
+        ctx.lineTo(bx + 6, by);
+        ctx.moveTo(bx, by - 6);
+        ctx.lineTo(bx, by + 6);
+        ctx.stroke();
+      }
+      ctx.fillStyle = pc.text;
+      ctx.font = '10px ui-sans-serif, system-ui, sans-serif';
+      ctx.fillText(getActiveTranslation('plot-az-axis', 'az 0° → 360°'), 6, H - 6);
+      ctx.fillText(getActiveTranslation('plot-el90', 'el 90°'), 6, 12);
+      ctx.fillText(getActiveTranslation('plot-el0', 'el 0°'), 6, H - 18);
+    }
+
+
+    function clearDoaCanvas(id) {
+      const canvas = document.getElementById(id);
+      if (!canvas) return;
+      const surface = preparePlotCanvas(canvas, 520, 150);
+      if (!surface) return;
+      const { ctx, W, H } = surface;
+      const pc = getRadarPlotColors();
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = pc.bg;
+      ctx.fillRect(0, 0, W, H);
+    }
+
+    function phaseToColor(phase) {
+      const t = (phase + Math.PI) / (2 * Math.PI);
+      const r = Math.round(80 + 150 * Math.max(0, Math.sin(Math.PI * t)));
+      const g = Math.round(120 + 100 * Math.max(0, Math.sin(Math.PI * (t + 0.33))));
+      const b = Math.round(130 + 110 * Math.max(0, Math.sin(Math.PI * (t + 0.66))));
+      return `rgb(${r},${g},${b})`;
+    }
+
+    function drawDoaSamples(samples) {
+      const canvas = document.getElementById('doa-sample-map');
+      if (!canvas) return;
+      const surface = preparePlotCanvas(canvas, 520, 150);
+      if (!surface) return;
+      const { ctx, W, H } = surface;
+      const pc = getRadarPlotColors();
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = pc.bg;
+      ctx.fillRect(0, 0, W, H);
+      if (!samples || !samples.length) return;
+      const maxAmp = Math.max(...samples.map(v => Math.hypot(v.re, v.im)), 1e-12);
+      const cols = Math.ceil(Math.sqrt(samples.length));
+      const rows = Math.ceil(samples.length / cols);
+      const cellW = W / cols;
+      const cellH = H / rows;
+      samples.forEach((v, i) => {
+        const col = i % cols;
+        const row = Math.floor(i / cols);
+        const cx = col * cellW + cellW / 2;
+        const cy = row * cellH + cellH / 2;
+        const amp = Math.hypot(v.re, v.im) / maxAmp;
+        const phase = Math.atan2(v.im, v.re);
+        const radius = Math.max(4, Math.min(cellW, cellH) * (0.16 + 0.25 * amp));
+        ctx.fillStyle = phaseToColor(phase);
+        ctx.beginPath();
+        ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = pc.sampleStroke;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(cx + Math.cos(phase) * radius * 1.25, cy + Math.sin(phase) * radius * 1.25);
+        ctx.stroke();
+      });
+      ctx.fillStyle = pc.textSoft;
+      ctx.font = '10px ui-sans-serif, system-ui, sans-serif';
+      ctx.fillText(getActiveTranslation('plot-samples-legend', 'color/needle = phase, size = amplitude'), 6, H - 7);
+    }
+
+    function drawDoaAzimuthCut(scan, best, trueAz) {
+      const canvas = document.getElementById('doa-az-cut');
+      if (!canvas) return;
+      const surface = preparePlotCanvas(canvas, 520, 150);
+      if (!surface) return;
+      const { ctx, W, H } = surface;
+      const pc = getRadarPlotColors();
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = pc.bg;
+      ctx.fillRect(0, 0, W, H);
+      if (!scan || !scan.length || !best) return;
+      const cut = scan.filter(p => Math.abs(p.el - best.el) < 1e-6).sort((a, b) => a.az - b.az);
+      if (cut.length < 2) return;
+      const maxP = Math.max(...cut.map(p => p.power), 1e-12);
+      ctx.strokeStyle = pc.grid;
+      ctx.lineWidth = 1;
+      for (let i = 1; i < 4; i++) {
+        const y = (H - 22) * i / 4 + 8;
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+      }
+      ctx.strokeStyle = pc.line;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      cut.forEach((p, i) => {
+        const x = (p.az / 360) * W;
+        const y = H - 18 - (p.power / maxP) * (H - 30);
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      });
+      ctx.stroke();
+      const bx = (best.az / 360) * W;
+      ctx.strokeStyle = pc.estimated;
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(bx, 6); ctx.lineTo(bx, H - 18); ctx.stroke();
+      if (Number.isFinite(trueAz)) {
+        const tx = (trueAz / 360) * W;
+        ctx.strokeStyle = pc.truth;
+        ctx.lineWidth = 2;
+        ctx.setLineDash([4, 3]);
+        ctx.beginPath(); ctx.moveTo(tx, 6); ctx.lineTo(tx, H - 18); ctx.stroke();
+        ctx.setLineDash([]);
+      }
+      ctx.fillStyle = pc.text;
+      ctx.font = '10px ui-sans-serif, system-ui, sans-serif';
+      ctx.fillText(getActiveTranslation('plot-cut-at-el', 'cut at el {value}°').replace('{value}', best.el.toFixed(0)), 6, 12);
+      ctx.fillText(getActiveTranslation('plot-az-axis', 'az 0° → 360°'), 6, H - 6);
+      ctx.fillStyle = pc.estimated; ctx.fillText(getActiveTranslation('plot-estimated', 'estimated'), W - 72, 12);
+      ctx.fillStyle = pc.truth; ctx.fillText(getActiveTranslation('plot-true', 'true'), W - 72, 25);
+    }
+
+    function drawDoaElevationCut(scan, best, trueEl) {
+      const canvas = document.getElementById('doa-el-cut');
+      if (!canvas) return;
+      const surface = preparePlotCanvas(canvas, 520, 150);
+      if (!surface) return;
+      const { ctx, W, H } = surface;
+      const pc = getRadarPlotColors();
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = pc.bg;
+      ctx.fillRect(0, 0, W, H);
+      if (!scan || !scan.length || !best) return;
+
+      // Use the exact azimuth column from the 2D LUT. This shows the real elevation evidence,
+      // not only the final text readout.
+      const cut = scan.filter(p => Math.abs(p.az - best.az) < 1e-6).sort((a, b) => a.el - b.el);
+      if (cut.length < 2) return;
+      const maxP = Math.max(...cut.map(p => p.power), 1e-12);
+
+      ctx.strokeStyle = pc.grid;
+      ctx.lineWidth = 1;
+      for (let i = 1; i < 4; i++) {
+        const y = (H - 22) * i / 4 + 8;
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+      }
+
+      ctx.strokeStyle = pc.line;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      cut.forEach((p, i) => {
+        const x = (p.el / 90) * W;
+        const y = H - 18 - (p.power / maxP) * (H - 30);
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      });
+      ctx.stroke();
+
+      const bx = (best.el / 90) * W;
+      ctx.strokeStyle = pc.estimated;
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(bx, 6); ctx.lineTo(bx, H - 18); ctx.stroke();
+
+      if (Number.isFinite(trueEl)) {
+        const tx = (trueEl / 90) * W;
+        ctx.strokeStyle = pc.truth;
+        ctx.lineWidth = 2;
+        ctx.setLineDash([4, 3]);
+        ctx.beginPath(); ctx.moveTo(tx, 6); ctx.lineTo(tx, H - 18); ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      ctx.fillStyle = pc.text;
+      ctx.font = '10px ui-sans-serif, system-ui, sans-serif';
+      ctx.fillText(getActiveTranslation('plot-cut-at-az', 'cut at az {value}°').replace('{value}', best.az.toFixed(0)), 6, 12);
+      ctx.fillText(getActiveTranslation('plot-el-axis', 'el 0° → 90°'), 6, H - 6);
+      ctx.fillStyle = pc.estimated; ctx.fillText(getActiveTranslation('plot-estimated', 'estimated'), W - 72, 12);
+      ctx.fillStyle = pc.truth; ctx.fillText(getActiveTranslation('plot-true', 'true'), W - 72, 25);
+    }
+
+    function updateDoaSimulation() {
+      const panel = document.getElementById('receive-doa-panel');
+      if (!panel || !antennaGroup) return;
+      const activeAntennas = antennaGroup.children.filter(a => a.userData.active).map(a => a.userData);
+      if (activeAntennas.length < 2) {
+        setDoaText('doa-estimate', 'Need ≥2 elements');
+        setDoaText('doa-error', 'Angular error: --');
+        setDoaText('doa-peak', '--');
+        setDoaText('doa-peak-ratio', 'Peak/second: --');
+        drawDoaMap([], null);
+        clearDoaCanvas('doa-sample-map');
+        clearDoaCanvas('doa-az-cut');
+        clearDoaCanvas('doa-el-cut');
+        return;
+      }
+
+      const cfg = getDoaControls();
+      const patternType = document.getElementById('pattern-type')?.value || 'isotropic';
+      const trueDir = getDirectionFromAzElDeg(cfg.targetAz, cfg.targetEl);
+      const trueSig = receiveSignature(activeAntennas, trueDir, patternType, cfg.propagationModel);
+      const rngSeed = cfg.freezeNoise ? cfg.seed : (cfg.seed + Math.floor(performance.now()));
+      const rng = mulberry32(rngSeed);
+      const signalRms = Math.sqrt(trueSig.reduce((acc, v) => acc + v.re * v.re + v.im * v.im, 0) / trueSig.length) || 1;
+      const noiseSigma = signalRms * Math.pow(10, -cfg.snrDb / 20);
+      const samples = trueSig.map(v => ({
+        re: v.re + randnFrom(rng) * noiseSigma / Math.SQRT2,
+        im: v.im + randnFrom(rng) * noiseSigma / Math.SQRT2
+      }));
+
+      const scan = [];
+      let best = null, second = null;
+      for (let el = 0; el <= 90 + 1e-6; el += cfg.resolution) {
+        for (let az = 0; az < 360 - 1e-6; az += cfg.resolution) {
+          const dir = getDirectionFromAzElDeg(az, el);
+          const ref = receiveSignature(activeAntennas, dir, patternType, cfg.propagationModel);
+          const power = normalizedMatchedPower(ref, samples);
+          const point = { az, el, power, dir, step: cfg.resolution };
+          scan.push(point);
+          if (!best || power > best.power) { second = best; best = point; }
+          else if (!second || power > second.power) { second = point; }
+        }
+      }
+
+      if (!best) return;
+      const err = angularErrorDeg(trueDir, best.dir);
+      const ratioDb = 10 * Math.log10(Math.max(best.power, 1e-18) / Math.max(second?.power || 1e-18, 1e-18));
+      setDoaText('doa-estimate', `az ${best.az.toFixed(0)}°, el ${best.el.toFixed(0)}°`);
+      setDoaText('doa-error', `True ${cfg.targetAz.toFixed(0)}°/${cfg.targetEl.toFixed(0)}°, error ${err.toFixed(1)}°`);
+      setDoaText('doa-peak', best.power.toFixed(3));
+      setDoaText('doa-peak-ratio', `Peak/second: ${ratioDb.toFixed(1)} dB`);
+      drawDoaMap(scan, best);
+      drawDoaSamples(samples);
+      drawDoaAzimuthCut(scan, best, cfg.targetAz);
+      drawDoaElevationCut(scan, best, cfg.targetEl);
+    }
+    function setLinkedNumberControl(id, value, suffix = '', formatter = null) {
+      const n = Number(value);
+      if (!Number.isFinite(n)) return;
+      const str = formatter ? formatter(n) : String(Math.round(n * 100) / 100);
+      const slider = document.getElementById(id);
+      const input = document.getElementById(`${id}-input`);
+      const valueEl = document.getElementById(`${id}-value`);
+      if (slider) {
+        const min = parseFloat(slider.min || '-Infinity');
+        const max = parseFloat(slider.max || 'Infinity');
+        slider.value = String(Math.max(min, Math.min(max, n)));
+      }
+      if (input && document.activeElement !== input) input.value = str;
+      if (valueEl) valueEl.textContent = `${str}${suffix}`;
+    }
+
+    function readRadarNumber(id, fallback) {
+      const value = parseFloat(document.getElementById(id)?.value || '');
+      return Number.isFinite(value) ? value : fallback;
+    }
+
+    function getRadarLambdaMeters(fcGHz) {
+      return 299792458 / Math.max(1, fcGHz * 1e9);
+    }
+
+    function getRadarRangeUnit() {
+      return document.getElementById('radar-range-unit')?.value || 'lambda';
+    }
+
+    function radarRangeInputToLambda(rawValue, fcGHz) {
+      const unit = getRadarRangeUnit();
+      const raw = Number.isFinite(rawValue) ? rawValue : (unit === 'meter' ? 1 : 100);
+      return unit === 'meter' ? raw / getRadarLambdaMeters(fcGHz) : raw;
+    }
+
+    function radarRangeLambdaToInput(rangeLambda, fcGHz) {
+      return getRadarRangeUnit() === 'meter' ? rangeLambda * getRadarLambdaMeters(fcGHz) : rangeLambda;
+    }
+
+    function formatRadarRangeInputValue(v) {
+      const unit = getRadarRangeUnit();
+      if (unit === 'meter') return v >= 10 ? v.toFixed(2) : v >= 1 ? v.toFixed(3) : v.toFixed(4);
+      return v >= 100 ? v.toFixed(1) : v.toFixed(2);
+    }
+
+
+    function getRadarSizeUnit() {
+      return document.getElementById('radar-size-unit')?.value || 'lambda';
+    }
+
+    function radarSizeInputToLambda(rawValue, fcGHz) {
+      const unit = getRadarSizeUnit();
+      const raw = Number.isFinite(rawValue) ? rawValue : (unit === 'lambda' ? 1.5 : unit === 'meter' ? 0.0058 : 5.8);
+      const lambdaM = getRadarLambdaMeters(fcGHz);
+      if (unit === 'meter') return raw / lambdaM;
+      if (unit === 'mm') return (raw / 1000) / lambdaM;
+      return raw;
+    }
+
+    function radarSizeLambdaToInput(sizeLambda, fcGHz) {
+      const unit = getRadarSizeUnit();
+      const lambdaM = getRadarLambdaMeters(fcGHz);
+      if (unit === 'meter') return sizeLambda * lambdaM;
+      if (unit === 'mm') return sizeLambda * lambdaM * 1000;
+      return sizeLambda;
+    }
+
+    function formatRadarSizeInputValue(v) {
+      const unit = getRadarSizeUnit();
+      if (unit === 'meter') return v >= 1 ? v.toFixed(3) : v >= 0.01 ? v.toFixed(4) : v.toFixed(5);
+      if (unit === 'mm') return v >= 100 ? v.toFixed(1) : v >= 10 ? v.toFixed(2) : v.toFixed(3);
+      return v >= 100 ? v.toFixed(1) : v >= 10 ? v.toFixed(2) : v.toFixed(3);
+    }
+
+    function updateRadarSizeUnitUI() {
+      const unit = getRadarSizeUnit();
+      const unitText = unit === 'meter' ? 'm' : unit === 'mm' ? 'mm' : 'λ';
+      const label = document.getElementById('radar-size-input-label');
+      if (label) label.textContent = `Object size [${unitText}]`;
+      const input = document.getElementById('radar-target-size-lambda');
+      if (input) {
+        input.step = unit === 'meter' ? '0.001' : unit === 'mm' ? '0.1' : '0.05';
+        input.min = unit === 'meter' ? '0.0001' : unit === 'mm' ? '0.1' : '0.01';
+        input.max = unit === 'meter' ? '100' : unit === 'mm' ? '100000' : '50000';
+      }
+    }
+
+    let lastRadarSizeUnit = 'lambda';
+    function handleRadarSizeUnitChange() {
+      const fcGHz = Math.max(0.1, readRadarNumber('radar-carrier-ghz', 77));
+      const nextUnit = getRadarSizeUnit();
+      const input = document.getElementById('radar-target-size-lambda');
+      if (input && nextUnit !== lastRadarSizeUnit) {
+        const raw = parseFloat(input.value || '');
+        if (Number.isFinite(raw)) {
+          const lambdaM = getRadarLambdaMeters(fcGHz);
+          let sizeLambda = raw;
+          if (lastRadarSizeUnit === 'meter') sizeLambda = raw / lambdaM;
+          else if (lastRadarSizeUnit === 'mm') sizeLambda = (raw / 1000) / lambdaM;
+          const nextRaw = nextUnit === 'meter' ? sizeLambda * lambdaM : nextUnit === 'mm' ? sizeLambda * lambdaM * 1000 : sizeLambda;
+          input.value = formatRadarSizeInputValue(nextRaw);
+        }
+      }
+      lastRadarSizeUnit = nextUnit;
+      updateRadarSizeUnitUI();
+      syncRadarRcsEstimate();
+    }
+
+    function updateRadarRangeUnitUI() {
+      const unit = getRadarRangeUnit();
+      const unitText = unit === 'meter' ? 'm' : 'λ';
+      const targetLabel = document.getElementById('radar-range-input-label');
+      if (targetLabel) targetLabel.textContent = `Range R [${unitText}]`;
+      const startLabel = document.querySelector('[data-lang="radar-motion-start-range-label"]');
+      const endLabel = document.querySelector('[data-lang="radar-motion-end-range-label"]');
+      if (startLabel) startLabel.textContent = `Start R [${unitText}]`;
+      if (endLabel) endLabel.textContent = `End R [${unitText}]`;
+      const apply = (id) => {
+        const input = document.getElementById(id);
+        if (!input) return;
+        input.step = unit === 'meter' ? '0.01' : '0.25';
+        input.min = unit === 'meter' ? '0.001' : '0.25';
+        input.max = unit === 'meter' ? '5000' : '50000';
+      };
+      apply('radar-target-range-lambda');
+      apply('radar-motion-start-range');
+      apply('radar-motion-end-range');
+    }
+
+function applyRadarFrequencyPreset() {
+      const preset = document.getElementById('radar-frequency-preset')?.value || 'custom';
+      const fc = document.getElementById('radar-carrier-ghz');
+      if (!fc || preset === 'custom') return;
+      fc.value = preset;
+    }
+
+    function syncRadarFrequencyPresetFromCarrier() {
+      const preset = document.getElementById('radar-frequency-preset');
+      const fc = document.getElementById('radar-carrier-ghz');
+      if (!preset || !fc) return;
+      const v = parseFloat(fc.value || '');
+      if (!Number.isFinite(v)) return;
+      const known = ['2.4', '10', '24', '77'];
+      const match = known.find(k => Math.abs(v - parseFloat(k)) < 0.05);
+      if (match) preset.value = match;
+      else preset.value = 'custom';
+    }
+
+    let lastRadarRangeUnit = 'lambda';
+    function handleRadarRangeUnitChange() {
+      const fcGHz = Math.max(0.1, readRadarNumber('radar-carrier-ghz', 77));
+      const nextUnit = getRadarRangeUnit();
+      const convertField = (id) => {
+        const input = document.getElementById(id);
+        if (!input) return;
+        const raw = parseFloat(input.value || '');
+        if (!Number.isFinite(raw) || nextUnit === lastRadarRangeUnit) return;
+        const lambdaM = getRadarLambdaMeters(fcGHz);
+        const rangeLambda = lastRadarRangeUnit === 'meter' ? raw / lambdaM : raw;
+        const nextRaw = nextUnit === 'meter' ? rangeLambda * lambdaM : rangeLambda;
+        input.value = formatRadarRangeInputValue(nextRaw);
+      };
+      convertField('radar-target-range-lambda');
+      convertField('radar-motion-start-range');
+      convertField('radar-motion-end-range');
+      lastRadarRangeUnit = nextUnit;
+      updateRadarRangeUnitUI();
+      updateRadarSizeUnitUI();
+    }
+
+    
+    function syncRadarTargetToLinkedControls() {
+      const motionMode = document.getElementById('radar-motion-mode')?.value || 'stationary';
+      const moving = motionMode !== 'stationary';
+      if (!moving && document.getElementById('radar-lock-to-steering')?.checked) {
+        const active = document.activeElement;
+        const targetInputsActive = active && ['doa-target-azimuth','doa-target-elevation','doa-target-azimuth-input','doa-target-elevation-input'].includes(active.id);
+        if (targetInputsActive) {
+          const azVal = parseFloat(document.getElementById('doa-target-azimuth')?.value || '0');
+          const elVal = parseFloat(document.getElementById('doa-target-elevation')?.value || '0');
+          setLinkedNumberControl('steering-azimuth', azVal, '°', v => String(Math.round(v)));
+          setLinkedNumberControl('steering-elevation', elVal, '°', v => String(Math.round(v)));
+          setLinkedNumberControl('observation-azimuth', azVal, '°', v => String(Math.round(v)));
+          setLinkedNumberControl('observation-elevation', elVal, '°', v => String(Math.round(v)));
+        } else {
+          const steerAz = document.getElementById('steering-azimuth')?.value;
+          const steerEl = document.getElementById('steering-elevation')?.value;
+          const az = document.getElementById('doa-target-azimuth');
+          const el = document.getElementById('doa-target-elevation');
+          const azInput = document.getElementById('doa-target-azimuth-input');
+          const elInput = document.getElementById('doa-target-elevation-input');
+          const azValue = document.getElementById('doa-target-azimuth-value');
+          const elValue = document.getElementById('doa-target-elevation-value');
+          if (az && steerAz != null) az.value = String(Math.round(Number(steerAz) || 0));
+          if (el && steerEl != null) el.value = String(Math.round(Number(steerEl) || 0));
+          if (azInput && az && document.activeElement !== azInput) azInput.value = az.value;
+          if (elInput && el && document.activeElement !== elInput) elInput.value = el.value;
+          if (azValue && az) azValue.textContent = `${az.value}°`;
+          if (elValue && el) elValue.textContent = `${el.value}°`;
+          setLinkedNumberControl('observation-azimuth', Number(steerAz) || 0, '°', v => String(Math.round(v)));
+          setLinkedNumberControl('observation-elevation', Number(steerEl) || 0, '°', v => String(Math.round(v)));
+        }
+      }
+      if (!moving && document.getElementById('radar-lock-to-distance')?.checked) {
+        const active = document.activeElement;
+        const radarRange = document.getElementById('radar-target-range-lambda');
+        const fcGHz = Math.max(0.1, readRadarNumber('radar-carrier-ghz', 77));
+        if (active && active.id === 'radar-target-range-lambda') {
+          const raw = parseFloat(radarRange?.value || '100');
+          const rangeVal = radarRangeInputToLambda(raw, fcGHz);
+          setLinkedNumberControl('observation-distance', rangeVal, 'λ', formatLambdaValue);
+        } else {
+          const obsDist = parseFloat(document.getElementById('observation-distance')?.value || '100');
+          if (radarRange && Number.isFinite(obsDist)) radarRange.value = formatRadarRangeInputValue(radarRangeLambdaToInput(obsDist, fcGHz));
+        }
+      }
+    }
+
+
+    function estimateRadarRcsFromGeometry(geometry, sizeLambda, fcGHz) {
+      const c0 = 299792458;
+      const lambdaM = c0 / Math.max(1, fcGHz * 1e9);
+      const sizeM = Math.max(0.001, sizeLambda) * lambdaM;
+      const radiusM = sizeM * 0.5;
+      let sigma = Math.PI * radiusM * radiusM; // sphere-like optical area fallback
+      if (geometry === 'box') {
+        sigma = 0.7 * sizeM * sizeM;
+      } else if (geometry === 'plate') {
+        const area = sizeM * sizeM;
+        sigma = Math.min(1e5, 4 * Math.PI * area * area / Math.max(lambdaM * lambdaM, 1e-12));
+      } else if (geometry === 'cylinder') {
+        sigma = 0.5 * Math.PI * radiusM * sizeM;
+      }
+      return Math.max(1e-8, sigma);
+    }
+
+    function syncRadarRcsEstimate() {
+      const geom = document.getElementById('radar-target-geometry')?.value || 'sphere';
+      const fcGHz = Math.max(0.1, readRadarNumber('radar-carrier-ghz', 77));
+      const sizeLambda = Math.max(0.01, radarSizeInputToLambda(readRadarNumber('radar-target-size-lambda', getRadarSizeUnit() === 'lambda' ? 1.5 : getRadarSizeUnit() === 'meter' ? 0.0058 : 5.8), fcGHz));
+      const sigma = estimateRadarRcsFromGeometry(geom, sizeLambda, fcGHz);
+      const out = document.getElementById('radar-rcs-estimate');
+      if (out) out.textContent = sigma >= 0.01 ? `${sigma.toFixed(3)} m²` : `${sigma.toExponential(2)} m²`;
+      const mode = document.getElementById('radar-rcs-mode')?.value || 'auto';
+      const input = document.getElementById('radar-target-rcs');
+      if (input) {
+        input.disabled = mode === 'auto';
+        input.closest('.radar-field')?.classList.toggle('motion-field-disabled', mode === 'auto');
+        if (mode === 'auto' && document.activeElement !== input) input.value = sigma >= 0.001 ? String(Number(sigma.toFixed(4))) : sigma.toExponential(3);
+      }
+      return sigma;
+    }
+
+    function getRadarSceneControls() {
+      return {
+        name: document.getElementById('radar-target-name')?.value || 'Target 1',
+        geometry: document.getElementById('radar-target-geometry')?.value || 'sphere',
+        sizeLambda: Math.max(0.01, radarSizeInputToLambda(readRadarNumber('radar-target-size-lambda', getRadarSizeUnit() === 'lambda' ? 1.5 : getRadarSizeUnit() === 'meter' ? 0.0058 : 5.8), Math.max(0.1, readRadarNumber('radar-carrier-ghz', 77)))),
+        rangeLambda: Math.max(0.01, radarRangeInputToLambda(readRadarNumber('radar-target-range-lambda', getRadarRangeUnit() === 'meter' ? 0.39 : 100), Math.max(0.1, readRadarNumber('radar-carrier-ghz', 77)))),
+        velocity: readRadarNumber('radar-target-velocity', 0),
+        rcsMode: document.getElementById('radar-rcs-mode')?.value || 'auto',
+        rcs: Math.max(1e-8, (document.getElementById('radar-rcs-mode')?.value || 'auto') === 'auto' ? syncRadarRcsEstimate() : readRadarNumber('radar-target-rcs', 10)),
+        fcGHz: Math.max(0.1, readRadarNumber('radar-carrier-ghz', 77)),
+        bandwidthMHz: Math.max(0.001, readRadarNumber('radar-bandwidth-mhz', 4000)),
+        chirpUs: Math.max(0.001, readRadarNumber('radar-chirp-us', 60)),
+        samples: Math.max(8, Math.round(readRadarNumber('radar-samples', 256))),
+        chirps: Math.max(4, Math.round(readRadarNumber('radar-chirps', 64))),
+        az: parseFloat(document.getElementById('doa-target-azimuth')?.value || '30'),
+        el: parseFloat(document.getElementById('doa-target-elevation')?.value || '10'),
+        lockToSteering: !!document.getElementById('radar-lock-to-steering')?.checked,
+        lockToDistance: !!document.getElementById('radar-lock-to-distance')?.checked,
+        showTarget3d: !!document.getElementById('radar-show-target')?.checked,
+        useTxGain: !!document.getElementById('radar-use-tx-gain')?.checked,
+        motionMode: document.getElementById('radar-motion-mode')?.value || 'stationary',
+        motionPeriod: Math.max(0.5, readRadarNumber('radar-motion-period', 8)),
+        startRangeLambda: Math.max(0.01, radarRangeInputToLambda(readRadarNumber('radar-motion-start-range', getRadarRangeUnit() === 'meter' ? 0.39 : 100), Math.max(0.1, readRadarNumber('radar-carrier-ghz', 77)))),
+        startAz: readRadarNumber('radar-motion-start-az', 30),
+        startEl: readRadarNumber('radar-motion-start-el', 60),
+        endRangeLambda: Math.max(0.01, radarRangeInputToLambda(readRadarNumber('radar-motion-end-range', getRadarRangeUnit() === 'meter' ? 0.39 : 100), Math.max(0.1, readRadarNumber('radar-carrier-ghz', 77)))),
+        endAz: readRadarNumber('radar-motion-end-az', 130),
+        endEl: readRadarNumber('radar-motion-end-el', 80)
+      };
+    }
+
+    function vectorFromRadarSpherical(rangeLambda, az, el) {
+      return getDirectionFromAzElDeg(az, el).multiplyScalar(rangeLambda);
+    }
+
+    function radarStateAtPhase(cfg, phase) {
+      const c0 = 299792458;
+      const lambdaM = c0 / Math.max(1, cfg.fcGHz * 1e9);
+      const mode = cfg.motionMode || 'stationary';
+      if (mode === 'stationary') return { rangeLambda: cfg.rangeLambda, az: cfg.az, el: cfg.el, velocity: cfg.velocity, speedTotal: Math.abs(cfg.velocity || 0), moving: false };
+
+      const wrapAz = a => ((a % 360) + 360) % 360;
+      const period = Math.max(0.5, cfg.motionPeriod);
+      let rangeLambda = cfg.rangeLambda, az = cfg.az, el = cfg.el, velocity = 0, speedTotal = 0;
+      if (mode === 'linear') {
+        const p0 = vectorFromRadarSpherical(cfg.startRangeLambda, cfg.startAz, cfg.startEl);
+        const p1 = vectorFromRadarSpherical(cfg.endRangeLambda, cfg.endAz, cfg.endEl);
+        const tri = phase < 0.5 ? phase * 2 : 2 - phase * 2;
+        const sign = phase < 0.5 ? 1 : -1;
+        const p = p0.clone().lerp(p1, tri);
+        const vLam = p1.clone().sub(p0).multiplyScalar(sign * 2 / period);
+        rangeLambda = Math.max(0.01, p.length());
+        const dir = p.clone().normalize();
+        velocity = vLam.dot(dir) * lambdaM;
+        speedTotal = vLam.length() * lambdaM;
+        const sph = directionToAzElDeg(dir);
+        az = sph.az; el = sph.el;
+      } else if (mode === 'az-circle') {
+        rangeLambda = cfg.startRangeLambda;
+        az = wrapAz(cfg.startAz + 360 * phase);
+        el = cfg.startEl;
+        velocity = 0;
+        speedTotal = Math.abs(rangeLambda * lambdaM * Math.cos(cfg.startEl * Math.PI / 180) * 2 * Math.PI / period);
+      } else if (mode === 'el-sweep') {
+        const tri = phase < 0.5 ? phase * 2 : 2 - phase * 2;
+        rangeLambda = cfg.startRangeLambda;
+        az = cfg.startAz;
+        el = cfg.startEl + (cfg.endEl - cfg.startEl) * tri;
+        velocity = 0;
+        speedTotal = Math.abs(rangeLambda * lambdaM * ((cfg.endEl - cfg.startEl) * Math.PI / 180) * 2 / period);
+      } else if (mode === 'range-sweep') {
+        const tri = phase < 0.5 ? phase * 2 : 2 - phase * 2;
+        const sign = phase < 0.5 ? 1 : -1;
+        rangeLambda = cfg.startRangeLambda + (cfg.endRangeLambda - cfg.startRangeLambda) * tri;
+        az = cfg.startAz;
+        el = cfg.startEl;
+        velocity = sign * (cfg.endRangeLambda - cfg.startRangeLambda) * 2 / period * lambdaM;
+        speedTotal = Math.abs(velocity);
+      } else if (mode === 'curve') {
+        const tri = 0.5 - 0.5 * Math.cos(2 * Math.PI * phase);
+        rangeLambda = cfg.startRangeLambda + (cfg.endRangeLambda - cfg.startRangeLambda) * tri;
+        az = wrapAz(cfg.startAz + (cfg.endAz - cfg.startAz) * tri);
+        el = cfg.startEl + (cfg.endEl - cfg.startEl) * tri;
+        const eps = 1e-3;
+        const pA = vectorFromRadarSpherical(rangeLambda, az, el);
+        const tri2 = 0.5 - 0.5 * Math.cos(2 * Math.PI * ((phase + eps) % 1));
+        const pB = vectorFromRadarSpherical(cfg.startRangeLambda + (cfg.endRangeLambda - cfg.startRangeLambda) * tri2, wrapAz(cfg.startAz + (cfg.endAz - cfg.startAz) * tri2), cfg.startEl + (cfg.endEl - cfg.startEl) * tri2);
+        const vLam = pB.sub(pA).divideScalar(eps * period);
+        const dir = vectorFromRadarSpherical(rangeLambda, az, el).normalize();
+        velocity = vLam.dot(dir) * lambdaM;
+        speedTotal = vLam.length() * lambdaM;
+      }
+      return { rangeLambda, az, el, velocity, speedTotal, moving: true };
+    }
+
+    function getAnimatedRadarTargetState(cfg) {
+      if ((cfg.motionMode || 'stationary') === 'stationary') return radarStateAtPhase(cfg, 0);
+      const period = Math.max(0.5, cfg.motionPeriod || 8);
+      const phase = ((performance.now() * 0.001) / period) % 1;
+      return radarStateAtPhase(cfg, phase);
+    }
+
+    function directionToAzElDeg(dir) {
+      const v = dir.clone().normalize();
+      const el = Math.asin(Math.max(-1, Math.min(1, v.y))) * 180 / Math.PI;
+      const az = ((Math.atan2(v.z, v.x) * 180 / Math.PI) + 360) % 360;
+      return { az, el };
+    }
+
+    function applyRadarStateToLinkedPatternControls(state, cfg) {
+      const az = ((state.az % 360) + 360) % 360;
+      const el = Math.max(0, Math.min(90, state.el));
+      const range = Math.max(0.25, Math.min(50000, state.rangeLambda));
+      const doaAz = document.getElementById('doa-target-azimuth');
+      const doaEl = document.getElementById('doa-target-elevation');
+      const doaAzInput = document.getElementById('doa-target-azimuth-input');
+      const doaElInput = document.getElementById('doa-target-elevation-input');
+      const doaAzValue = document.getElementById('doa-target-azimuth-value');
+      const doaElValue = document.getElementById('doa-target-elevation-value');
+      if (doaAz) doaAz.value = String(Math.round(az));
+      if (doaEl) doaEl.value = String(Math.round(el));
+      if (doaAzInput && document.activeElement !== doaAzInput) doaAzInput.value = String(Math.round(az));
+      if (doaElInput && document.activeElement !== doaElInput) doaElInput.value = String(Math.round(el));
+      if (doaAzValue) doaAzValue.textContent = `${Math.round(az)}°`;
+      if (doaElValue) doaElValue.textContent = `${Math.round(el)}°`;
+      if (cfg.lockToSteering) {
+        setLinkedNumberControl('steering-azimuth', az, '°', v => String(Math.round(v)));
+        setLinkedNumberControl('steering-elevation', el, '°', v => String(Math.round(v)));
+        setLinkedNumberControl('observation-azimuth', az, '°', v => String(Math.round(v)));
+        setLinkedNumberControl('observation-elevation', el, '°', v => String(Math.round(v)));
+      }
+      if (cfg.lockToDistance) {
+        const rInput = document.getElementById('radar-target-range-lambda');
+        if (rInput && cfg.motionMode === 'stationary' && document.activeElement !== rInput) {
+          const shown = radarRangeLambdaToInput(range, Math.max(0.1, cfg.fcGHz || readRadarNumber('radar-carrier-ghz', 77)));
+          rInput.value = formatRadarRangeInputValue(shown);
+        }
+        setLinkedNumberControl('observation-distance', range, 'λ', formatLambdaValue);
+      }
+    }
+
+    function computeRadarDerived(cfg) {
+      const c0 = 299792458;
+      const fc = cfg.fcGHz * 1e9;
+      const lambda = c0 / fc;
+      const rangeM = cfg.rangeLambda * lambda;
+      const B = cfg.bandwidthMHz * 1e6;
+      const T = cfg.chirpUs * 1e-6;
+      const slope = B / T;
+      const fs = cfg.samples / T;
+      const prf = 1 / T;
+      const fStartHz = fc - B / 2;
+      const fEndHz = fc + B / 2;
+      const beatHz = 2 * slope * rangeM / c0;
+      const rangeResolution = c0 / (2 * B);
+      const rangeResolutionLambda = rangeResolution / lambda;
+      const maxRange = cfg.samples * rangeResolution;
+      const maxRangeLambda = maxRange / lambda;
+      const rangeBinFloat = beatHz * T;
+      const rangeAliased = rangeBinFloat < 0 || rangeBinFloat > cfg.samples - 1;
+      const rangeBin = Math.max(0, Math.min(cfg.samples - 1, Math.round(rangeBinFloat)));
+      const estimatedRange = rangeBin * rangeResolution;
+      const estimatedRangeLambda = estimatedRange / lambda;
+      const dopplerHz = 2 * cfg.velocity / lambda;
+      const dopplerResolutionHz = prf / cfg.chirps;
+      const velocityResolution = lambda / (2 * cfg.chirps * T);
+      const maxVelocity = lambda / (4 * T);
+      let dopplerBinSignedFloat = dopplerHz / dopplerResolutionHz;
+      let dopplerBinSigned = Math.round(dopplerBinSignedFloat);
+      const half = Math.floor(cfg.chirps / 2);
+      const dopplerAliased = dopplerBinSignedFloat < -half || dopplerBinSignedFloat > half - 1;
+      dopplerBinSigned = Math.max(-half, Math.min(half - 1, dopplerBinSigned));
+      const dopplerBinDisplay = dopplerBinSigned + half;
+      const estimatedVelocity = dopplerBinSigned * velocityResolution;
+      return { c0, lambda, rangeM, B, T, slope, fs, prf, fStartHz, fEndHz, beatHz, rangeResolution, rangeResolutionLambda, maxRange, maxRangeLambda, rangeBinFloat, rangeAliased, rangeBin, estimatedRange, estimatedRangeLambda, dopplerHz, dopplerResolutionHz, velocityResolution, maxVelocity, dopplerBinSignedFloat, dopplerAliased, dopplerBinSigned, dopplerBinDisplay, estimatedVelocity };
+    }
+
+    function dirichletPower(cycles, bin, n) {
+      const x = cycles - bin;
+      const den = Math.sin(Math.PI * x / n);
+      if (Math.abs(den) < 1e-9) return 1;
+      const mag = Math.sin(Math.PI * x) / (n * den);
+      return mag * mag;
+    }
+
+    function drawRadarSpectrum(canvasId, bins, cycles, selectedBin, label, signed=false, amplitude=1) {
+      const ids = Array.isArray(canvasId) ? canvasId : [canvasId];
+      ids.forEach(id => {
+        const canvas = document.getElementById(id);
+        if (!canvas) return;
+        const surface = preparePlotCanvas(canvas, 520, 150);
+        if (!surface) return;
+        const { ctx, W, H } = surface;
+      const pc = getRadarPlotColors();
+        ctx.clearRect(0, 0, W, H);
+        ctx.fillStyle = pc.bg;
+        ctx.fillRect(0, 0, W, H);
+        ctx.strokeStyle = pc.gridSoft;
+        ctx.lineWidth = 1;
+        for (let i = 1; i < 5; i++) { const y = H * i / 5; ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+        const ampDb = 20 * Math.log10(Math.max(0.03, Math.min(1.5, amplitude || 1)));
+        const minDb = -60, maxDb = 0;
+        ctx.strokeStyle = pc.line;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        for (let i = 0; i < bins; i++) {
+          const k = signed ? i - Math.floor(bins / 2) : i;
+          const leakage = dirichletPower(cycles, k, bins);
+          const deterministicFloor = 1e-5 + 2e-5 * (0.5 + 0.5 * Math.sin(i * 12.9898 + cycles * 78.233));
+          const pwr = Math.max(1e-7, leakage * amplitude * amplitude + deterministicFloor);
+          const db = 10 * Math.log10(pwr) + ampDb * 0.15;
+          const x = bins <= 1 ? 0 : (i / (bins - 1)) * W;
+          const y = H - 20 - ((Math.max(minDb, Math.min(maxDb, db)) - minDb) / (maxDb - minDb)) * (H - 32);
+          if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+        const iSel = signed ? selectedBin + Math.floor(bins / 2) : selectedBin;
+        const xSel = (Math.max(0, Math.min(bins - 1, iSel)) / Math.max(1, bins - 1)) * W;
+        const iFloat = signed ? cycles + Math.floor(bins / 2) : cycles;
+        const xFloat = (Math.max(0, Math.min(bins - 1, iFloat)) / Math.max(1, bins - 1)) * W;
+        ctx.strokeStyle = '#fbbf24';
+        ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(xSel, 8); ctx.lineTo(xSel, H - 20); ctx.stroke();
+        ctx.strokeStyle = pc.ideal;
+        ctx.setLineDash([4, 3]);
+        ctx.beginPath(); ctx.moveTo(xFloat, 8); ctx.lineTo(xFloat, H - 20); ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = pc.text;
+        ctx.font = '10px ui-sans-serif, system-ui, sans-serif';
+        ctx.fillText(label, 8, 12);
+        const footer = signed ? 'Doppler FFT: yellow=nearest bin estimate, blue=ideal location' : 'Range FFT: yellow=nearest bin estimate, blue=ideal beat location';
+        ctx.fillText(footer, 8, H - 7);
+      });
+    }
+
+    function computeTxSteeringGain(activeAntennas, targetDir, patternType) {
+      if (!activeAntennas || activeAntennas.length < 1) return 1;
+      const steerDir = getSteeringDirection();
+      const aTarget = receiveSignature(activeAntennas, targetDir, patternType, 'oneway');
+      const aSteer = receiveSignature(activeAntennas, steerDir, patternType, 'oneway');
+      let re = 0, im = 0;
+      for (let i = 0; i < aTarget.length; i++) {
+        // normalized |a(steer)^H a(target)|, used as TX beam amplitude gain
+        re += aSteer[i].re * aTarget[i].re + aSteer[i].im * aTarget[i].im;
+        im += aSteer[i].re * aTarget[i].im - aSteer[i].im * aTarget[i].re;
+      }
+      return Math.sqrt(re * re + im * im) / Math.max(1, aTarget.length);
+    }
+
+    function makeUnusedEchoSphere(radius, color, opacity, center, speed) {
+      const mesh = new THREE.Mesh(
+        new THREE.SphereGeometry(radius, 48, 24),
+        new THREE.MeshBasicMaterial({ color, transparent: true, opacity, wireframe: true, depthWrite: false })
+      );
+      mesh.position.copy(center || new THREE.Vector3());
+      mesh.userData.echoWave = { baseRadius: radius, baseOpacity: opacity, speed };
+      return mesh;
+    }
+
+    function createRadarTargetMesh(geometry, size) {
+      const motionLow = typeof isRadarMotionActive === 'function' && isRadarMotionActive();
+      const material = new THREE.MeshPhongMaterial({ color: 0xf97316, emissive: 0x7c2d12, emissiveIntensity: 0.15, transparent: true, opacity: 0.88 });
+      if (geometry === 'box') return new THREE.Mesh(new THREE.BoxGeometry(size * 1.35, size * 0.75, size * 0.9), material);
+      if (geometry === 'plate') return new THREE.Mesh(new THREE.BoxGeometry(size * 1.8, size * 0.06, size * 1.0), material);
+      if (geometry === 'cylinder') return new THREE.Mesh(new THREE.CylinderGeometry(size * 0.45, size * 0.45, size * 1.25, motionLow ? 10 : 24), material);
+      return new THREE.Mesh(new THREE.SphereGeometry(size * 0.55, motionLow ? 12 : 28, motionLow ? 8 : 16), material);
+    }
+
+    function createReflectedPatternMesh(dirToRadar, strength) {
+      // Small 3D radiation-diagram style lobe at the object.
+      // It is a visual RCS/reflection pattern, not a pulsing time-domain wave.
+      const segAz = 56, segEl = 24;
+      const verts = [], idx = [];
+      const base = Math.max(0.45, Math.min(1.9, 0.65 + strength * 0.9));
+      const forward = dirToRadar.clone().normalize();
+      const q = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(1, 0, 0), forward);
+      for (let ie = 0; ie <= segEl; ie++) {
+        const theta = (ie / segEl) * Math.PI;
+        for (let ia = 0; ia <= segAz; ia++) {
+          const phi = (ia / segAz) * Math.PI * 2;
+          const local = new THREE.Vector3(
+            Math.cos(theta),
+            Math.sin(theta) * Math.cos(phi),
+            Math.sin(theta) * Math.sin(phi)
+          );
+          const front = Math.max(0, local.x);
+          const back = Math.max(0, -local.x);
+          const r = base * (0.18 + 0.95 * Math.pow(front, 3.0) + 0.22 * Math.pow(back, 1.5));
+          local.multiplyScalar(r).applyQuaternion(q);
+          verts.push(local.x, local.y, local.z);
+        }
+      }
+      for (let ie = 0; ie < segEl; ie++) {
+        for (let ia = 0; ia < segAz; ia++) {
+          const a = ie * (segAz + 1) + ia;
+          const b = a + 1;
+          const c = a + (segAz + 1);
+          const d = c + 1;
+          idx.push(a, c, b, b, c, d);
+        }
+      }
+      const geo = new THREE.BufferGeometry();
+      geo.setAttribute('position', new THREE.Float32BufferAttribute(verts, 3));
+      geo.setIndex(idx);
+      geo.computeVertexNormals();
+      const mat = new THREE.MeshPhongMaterial({
+        color: 0x22c55e, emissive: 0x064e3b, emissiveIntensity: 0.16,
+        transparent: true, opacity: 0.44, side: THREE.DoubleSide, depthWrite: false
+      });
+      return new THREE.Mesh(geo, mat);
+    }
+
+    function drawRadarRangeDopplerMap(cfg, derived, txGain=1) {
+      ['radar-rd-map', 'slice-radar-rd-map'].forEach(id => {
+        const canvas = document.getElementById(id);
+        if (!canvas) return;
+        const surface = preparePlotCanvas(canvas, 520, 150);
+        if (!surface) return;
+        const { ctx, W, H } = surface;
+      const pc = getRadarPlotColors();
+        ctx.clearRect(0, 0, W, H);
+        ctx.fillStyle = pc.bg;
+        ctx.fillRect(0, 0, W, H);
+        const x = (derived.rangeBin / Math.max(1, cfg.samples - 1)) * W;
+        const y = (1 - derived.dopplerBinDisplay / Math.max(1, cfg.chirps - 1)) * H;
+        const echo = Math.min(1, txGain * Math.sqrt(cfg.rcs) / Math.max(1, cfg.rangeLambda / 12));
+        const radius = Math.max(6, 10 + 22 * echo);
+        const gradient = ctx.createRadialGradient(x, y, 2, x, y, radius * 2.2);
+        gradient.addColorStop(0, 'rgba(255,255,255,0.98)');
+        gradient.addColorStop(0.25, 'rgba(251,191,36,0.95)');
+        gradient.addColorStop(0.75, 'rgba(249,115,22,0.35)');
+        gradient.addColorStop(1, pc.fade);
+        ctx.fillStyle = gradient;
+        ctx.beginPath(); ctx.arc(x, y, radius * 2.2, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = pc.grid;
+        ctx.lineWidth = 1;
+        for (let i = 1; i < 6; i++) {
+          const gx = W * i / 6; ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, H); ctx.stroke();
+          const gy = H * i / 6; ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(W, gy); ctx.stroke();
+        }
+        ctx.strokeStyle = pc.line;
+        ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(x - 7, y); ctx.lineTo(x + 7, y); ctx.moveTo(x, y - 7); ctx.lineTo(x, y + 7); ctx.stroke();
+        ctx.fillStyle = pc.text;
+        ctx.font = '10px ui-sans-serif, system-ui, sans-serif';
+        ctx.fillText(getActiveTranslation('plot-range-bin-axis', 'range bin →'), 8, H - 8);
+        ctx.fillText(getActiveTranslation('plot-pos-v', '+v'), 8, 12);
+        ctx.fillText(getActiveTranslation('plot-neg-v', '-v'), 8, H - 22);
+      });
+    }
+
+    function createRadarMotionPath(cfg) {
+      if ((cfg.motionMode || 'stationary') === 'stationary') return null;
+      const pts = [];
+      const samples = cfg.motionMode === 'linear' ? 2 : ((typeof isRadarMotionActive === 'function' && isRadarMotionActive()) ? 36 : 96);
+      for (let i = 0; i <= samples; i++) {
+        const st = radarStateAtPhase(cfg, i / samples);
+        const rawR = Math.max(0.01, st.rangeLambda);
+        const r = rawR > 160 ? Math.min(160, 80 + 22 * Math.log10(Math.max(1, rawR / 160))) : rawR;
+        pts.push(getDirectionFromAzElDeg(st.az, st.el).multiplyScalar(r));
+      }
+      const geo = new THREE.BufferGeometry().setFromPoints(pts);
+      const mat = new THREE.LineBasicMaterial({ color: 0xfbbf24, transparent: true, opacity: 0.82 });
+      const line = new THREE.Line(geo, mat);
+      line.renderOrder = 12;
+      return line;
+    }
+
+
+
+    function fitInitialRadarViewToRange(visualRange) {
+      if (!camera || !controls || didInitialRadarViewFit) return;
+      const radius = Math.max(12, Number.isFinite(visualRange) ? visualRange : 35);
+      // Put the camera far enough away that the full reference sphere is visible on first load.
+      // This is only an initial fit; after that the user's manual orbit/zoom is preserved.
+      const distance = Math.max(32, radius * 2.25);
+      camera.position.set(distance * 0.82, distance * 0.55, distance * 0.82);
+      camera.near = Math.max(0.01, distance / 5000);
+      camera.far = Math.max(5000, distance * 8, radius * 10);
+      camera.updateProjectionMatrix();
+      controls.target.set(0, 0, 0);
+      controls.update();
+      didInitialRadarViewFit = true;
+    }
+
+    function updateRadarScene() {
+      updateRadarMotionControlsAvailability();
+      syncRadarRcsEstimate();
+      syncRadarTargetToLinkedControls();
+      if (!radarSceneGroup) return;
+      clearGroupAndDispose(radarSceneGroup);
+      trimRendererMemory(false);
+      const card = document.getElementById('radar-scene-card');
+      if (!card) return;
+      const baseCfg = getRadarSceneControls();
+      const state = getAnimatedRadarTargetState(baseCfg);
+      applyRadarStateToLinkedPatternControls(state, baseCfg);
+      const cfg = { ...baseCfg, rangeLambda: state.rangeLambda, az: state.az, el: state.el, velocity: state.velocity, speedTotal: state.speedTotal ?? Math.abs(state.velocity || 0) };
+      const derived = computeRadarDerived(cfg);
+      const dir = getDirectionFromAzElDeg(cfg.az, cfg.el);
+      const activeAntennas = antennaGroup?.children?.filter(a => a.userData?.active).map(a => a.userData) || [];
+      const patternType = document.getElementById('pattern-type')?.value || 'isotropic';
+      const txGain = cfg.useTxGain ? computeTxSteeringGain(activeAntennas, dir, patternType) : 1;
+      setDoaText('system-wavelength-readout', `${(derived.lambda * 1000).toFixed(3)} mm`);
+      setDoaText('system-distance-readout', `${(100 * derived.lambda).toFixed(3)} m`);
+
+      // Important: the radar scene now uses the same λ scale as the normal pattern view.
+      // If R=100λ, the target sits on a 100λ reference sphere by default. You can also enter the same physical range in meters.
+      // For very large radar ranges the physical lambda distance can be thousands of wavelengths.
+      // Drawing that 1:1 makes the target disappear outside the useful camera view. Keep the numeric
+      // radar calculation exact, but compress only the 3D display beyond 160λ.
+      const displayCompressed = cfg.rangeLambda > 160;
+      const visualRange = displayCompressed
+        ? Math.min(160, 80 + 22 * Math.log10(Math.max(1, cfg.rangeLambda / 160)))
+        : Math.max(0.01, cfg.rangeLambda);
+      const sphereRadius = Math.max(1, visualRange);
+      const pos = dir.clone().multiplyScalar(visualRange);
+      fitInitialRadarViewToRange(sphereRadius);
+
+      const motionPreview = isRadarMotionActive();
+      const sphereSegW = motionPreview ? 24 : 64;
+      const sphereSegH = motionPreview ? 12 : 32;
+      const sphere = new THREE.Mesh(
+        new THREE.SphereGeometry(sphereRadius, sphereSegW, sphereSegH),
+        new THREE.MeshBasicMaterial({ color: 0x60a5fa, transparent: true, opacity: 0.045, wireframe: true, depthWrite: false })
+      );
+      sphere.renderOrder = 4;
+      radarSceneGroup.add(sphere);
+
+      const path = createRadarMotionPath(baseCfg);
+      if (path) radarSceneGroup.add(path);
+
+      const line = new THREE.Line(
+        new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, 0, 0), pos]),
+        new THREE.LineDashedMaterial({ color: 0xfb923c, dashSize: 0.45, gapSize: 0.22, transparent: true, opacity: 0.9 })
+      );
+      line.computeLineDistances();
+      line.renderOrder = 13;
+      radarSceneGroup.add(line);
+
+      const targetSize = Math.max(0.08, Math.min(Math.max(0.12, visualRange * 0.18), cfg.sizeLambda || 1.5));
+      if (cfg.showTarget3d) {
+        const targetMesh = createRadarTargetMesh(cfg.geometry, targetSize);
+        targetMesh.position.copy(pos);
+        targetMesh.lookAt(0, 0, 0);
+        targetMesh.renderOrder = 14;
+        radarSceneGroup.add(targetMesh);
+        const halo = new THREE.Mesh(
+          new THREE.SphereGeometry(targetSize * 1.45, motionPreview ? 12 : 24, motionPreview ? 8 : 12),
+          new THREE.MeshBasicMaterial({ color: 0xfbbf24, transparent: true, opacity: 0.18, depthWrite: false })
+        );
+        halo.position.copy(pos);
+        halo.renderOrder = 13;
+        radarSceneGroup.add(halo);
+      }
+
+      const aliasMessages = [];
+      if (derived.rangeAliased) aliasMessages.push(`Range is outside current unambiguous span: R=${cfg.rangeLambda.toFixed(1)} λ (${derived.rangeM.toFixed(2)} m), max≈${derived.maxRangeLambda.toFixed(0)} λ. Increase Nq or reduce B, otherwise the peak clamps/aliases near the edge.`);
+      if (derived.dopplerAliased) aliasMessages.push(`Velocity is outside current unambiguous span: v=${cfg.velocity.toFixed(1)} m/s, max≈±${derived.maxVelocity.toFixed(1)} m/s. Increase chirp rate/reduce T for more velocity span.`);
+      if (txGain < 0.12 && cfg.useTxGain) aliasMessages.push(`TX steering gain is low (${txGain.toFixed(2)}). The target is outside the current transmit beam, so the echo is weak.`);
+      if (displayCompressed) aliasMessages.push(`3D view is display-compressed: actual R=${cfg.rangeLambda.toFixed(0)}λ, drawn at ${visualRange.toFixed(0)}λ so the object stays visible. Radar/FFT numbers still use the real range.`);
+      const motionText = cfg.motionMode === 'stationary' ? 'stationary target' : `motion: ${cfg.motionMode}, current az ${cfg.az.toFixed(0)}°, el ${cfg.el.toFixed(0)}°, R ${cfg.rangeLambda.toFixed(1)} λ`;
+      setDoaText('radar-alias-warning', aliasMessages.length ? aliasMessages.join(' ') : `OK: ${motionText}. R within max≈${derived.maxRangeLambda.toFixed(0)} λ (${derived.maxRange.toFixed(1)} m), |v| within max≈${derived.maxVelocity.toFixed(1)} m/s. TX gain ${txGain.toFixed(2)}. FFT plots move with R and radial v; angle changes move the DOA plot.`);
+
+      const rangeCenterLambda = derived.rangeBin * derived.rangeResolutionLambda;
+      const rangeCenterM = derived.rangeBin * derived.rangeResolution;
+      const kFloatText = derived.rangeBinFloat.toFixed(2);
+      const lFloatText = derived.dopplerBinSignedFloat.toFixed(2);
+      const idealBeatRangeLambda = derived.rangeBinFloat * derived.rangeResolutionLambda;
+      const idealBeatRangeM = derived.rangeBinFloat * derived.rangeResolution;
+      const rangeBinErrorLambda = rangeCenterLambda - cfg.rangeLambda;
+      const rangeBinErrorM = rangeCenterM - derived.rangeM;
+      const dopplerBinCenterVelocity = derived.estimatedVelocity;
+      const idealDopplerVelocity = derived.dopplerBinSignedFloat * derived.velocityResolution;
+      const velocityBinError = dopplerBinCenterVelocity - cfg.velocity;
+      const rangeErrorSign = rangeBinErrorLambda >= 0 ? '+' : '';
+      const velocityErrorSign = velocityBinError >= 0 ? '+' : '';
+      const rangeUnit = getRadarRangeUnit();
+      const lambdaMm = derived.lambda * 1000;
+      const estimatedRangePrimary = rangeUnit === 'meter'
+        ? `${rangeCenterM >= 10 ? rangeCenterM.toFixed(2) : rangeCenterM >= 1 ? rangeCenterM.toFixed(3) : rangeCenterM.toFixed(4)} m`
+        : `${rangeCenterLambda.toFixed(2)} λ`;
+      const trueRangeText = rangeUnit === 'meter'
+        ? `${derived.rangeM >= 10 ? derived.rangeM.toFixed(2) : derived.rangeM >= 1 ? derived.rangeM.toFixed(3) : derived.rangeM.toFixed(4)} m = ${cfg.rangeLambda.toFixed(2)} λ`
+        : `${cfg.rangeLambda.toFixed(2)} λ = ${derived.rangeM.toFixed(3)} m`;
+      const secondaryRange = `reference ${trueRangeText}; error ${rangeErrorSign}${rangeBinErrorLambda.toFixed(2)} λ (${rangeBinErrorM >= 0 ? '+' : ''}${rangeBinErrorM.toFixed(3)} m); λ=${lambdaMm.toFixed(2)} mm`;
+      const chirpStartGHz = derived.fStartHz / 1e9;
+      const chirpEndGHz = derived.fEndHz / 1e9;
+      setDoaText('radar-chirp-readout', `${chirpStartGHz.toFixed(3)} → ${chirpEndGHz.toFixed(3)} GHz`);
+      setDoaText('radar-chirp-detail', `center f_c=${cfg.fcGHz.toFixed(3)} GHz, B=${cfg.bandwidthMHz.toFixed(0)} MHz, S=${(derived.slope / 1e12).toFixed(2)} MHz/µs, sample rate ${(derived.fs / 1e6).toFixed(2)} MS/s, PRF ${(derived.prf / 1e3).toFixed(2)} kHz`);
+      setDoaText('radar-est-range', estimatedRangePrimary);
+      setDoaText('radar-range-lambda', `${secondaryRange}; max ${derived.maxRangeLambda.toFixed(0)} λ`);
+      setDoaText('radar-range-bin', `k=${derived.rangeBin}`);
+      setDoaText('radar-range-detail', `bin center ${rangeCenterLambda.toFixed(2)} λ (${rangeCenterM.toFixed(3)} m); reference error ${rangeErrorSign}${rangeBinErrorLambda.toFixed(2)} λ (${rangeBinErrorM >= 0 ? '+' : ''}${rangeBinErrorM.toFixed(3)} m). Continuous beat location: k≈${kFloatText} → ${idealBeatRangeLambda.toFixed(2)} λ. ΔR=${derived.rangeResolutionLambda.toFixed(1)} λ, f_b ${(derived.beatHz / 1e6).toFixed(3)} MHz`);
+      setDoaText('radar-est-velocity', `${dopplerBinCenterVelocity.toFixed(2)} m/s`);
+      setDoaText('radar-velocity-limits', `reference radial speed ${cfg.velocity.toFixed(2)} m/s; error ${velocityErrorSign}${velocityBinError.toFixed(2)} m/s. Monostatic Doppler sees only this component. max ±${derived.maxVelocity.toFixed(1)} m/s, Δv ${derived.velocityResolution.toFixed(2)} m/s`);
+      setDoaText('radar-speed-total', `${(cfg.speedTotal ?? Math.abs(cfg.velocity || 0)).toFixed(2)} m/s`);
+      setDoaText('radar-speed-detail', `motion-path estimate from the selected trajectory. Single monostatic Doppler directly measures only radial speed; scalar speed needs tracking/trajectory information.`);
+      setDoaText('radar-doppler-bin', `l=${derived.dopplerBinSigned}`);
+      setDoaText('radar-doppler-detail', `bin center ${dopplerBinCenterVelocity.toFixed(2)} m/s; reference error ${velocityErrorSign}${velocityBinError.toFixed(2)} m/s. Continuous Doppler location: l≈${lFloatText} → ${idealDopplerVelocity.toFixed(2)} m/s. f_D ${derived.dopplerHz.toFixed(0)} Hz`);
+      drawRadarRangeDopplerMap(cfg, derived, txGain);
+      drawRadarSpectrum(['radar-range-fft','slice-radar-range-fft'], cfg.samples, derived.rangeBinFloat, derived.rangeBin, `k=${derived.rangeBin} (float ${derived.rangeBinFloat.toFixed(2)}), R=${cfg.rangeLambda.toFixed(1)} λ`, false, txGain);
+      drawRadarSpectrum(['radar-doppler-fft','slice-radar-doppler-fft'], cfg.chirps, derived.dopplerBinSignedFloat, derived.dopplerBinSigned, `l=${derived.dopplerBinSigned} (float ${derived.dopplerBinSignedFloat.toFixed(2)}), v=${cfg.velocity.toFixed(2)} m/s`, true, txGain);
+    }
+
+
     
 
     // Lightweight 2D slice system: one plane + one CanvasTexture.
@@ -2453,7 +4786,7 @@
 
     function getSliceExtent(mode='xy') {
       // Automatic sampled lambda width for polar cuts; no manual span UI.
-      const dist = parseFloat(document.getElementById('observation-distance')?.value || '20');
+      const dist = parseFloat(document.getElementById('observation-distance')?.value || '100');
       const xs = getActiveAntennaUserData().map(a => Math.abs(a.position.x || 0));
       const zs = getActiveAntennaUserData().map(a => Math.abs(a.position.z || 0));
       const aperture = Math.max(1, ...(xs.length ? xs : [1]), ...(zs.length ? zs : [1]));
@@ -2652,7 +4985,7 @@
       const { patternType, fieldQuantity, displayScale, useApprox, subpatchDensity, couplingEnabled, couplingStrength } = controlsValues;
       const activeAntennas = getActiveAntennaUserData();
       const steeringDir = getSteeringDirection();
-      const refObsDist = parseFloat(document.getElementById('observation-distance')?.value || '20');
+      const refObsDist = parseFloat(document.getElementById('observation-distance')?.value || '100');
       const referenceValue = activeAntennas.length
         ? calculateReferenceValue(activeAntennas, patternType, useApprox, steeringDir, subpatchDensity, refObsDist, fieldQuantity, couplingEnabled, couplingStrength)
         : 1;
@@ -2786,8 +5119,15 @@
       // Azimuth is a constant-elevation angular cut. Its helper is drawn as a horizontal cut level
       // on a reference sphere, not as the same plane as the Top Projection.
       // Top Projection uses a separate horizontal plane above the pattern, because it represents the footprint screen.
-      const rawRefRadius = parseFloat(document.getElementById('observation-distance')?.value || '20');
-      const refRadius = isFraunhoferMode() ? Math.max(8, Math.min(36, rawRefRadius)) : Math.max(0.25, Math.min(36, rawRefRadius));
+      const rawRefRadius = parseFloat(document.getElementById('observation-distance')?.value || '100');
+      // Draw the visible cut helpers on the same visual radius as the 3D range/pattern view.
+      // Previously this was clamped to 36λ, so vertical/elevation/beam cuts looked too small
+      // when the target/range sphere was 100λ or more. For very large radar ranges use the
+      // same display compression as the radar reference sphere, so the helper stays visible.
+      const safeRawRefRadius = Math.max(0.25, Number.isFinite(rawRefRadius) ? rawRefRadius : 100);
+      const refRadius = safeRawRefRadius > 160
+        ? Math.min(160, 80 + 22 * Math.log10(Math.max(1, safeRawRefRadius / 160)))
+        : safeRawRefRadius;
 
       for (const mode of modes) {
         let mesh, edges;
@@ -2983,7 +5323,7 @@
       patternMesh.material.clippingPlanes = [cutawayPlane];
       patternMesh.material.needsUpdate = true;
 
-      const obsDist = parseFloat(document.getElementById('observation-distance')?.value || '20');
+      const obsDist = parseFloat(document.getElementById('observation-distance')?.value || '100');
       const size = Math.max(8, Math.min(65, obsDist * 1.45));
       updateCutawayHelpers(normal, offset, size);
     }
@@ -2995,11 +5335,14 @@
       lastVisualUpdateMs = performance.now();
         updateSubpatchDensityAvailability();
       elementCurrentCache.key = null;
+      syncRadarTargetToLinkedControls();
       updateObjectPositions();
       updateFarFieldPattern();
       updateWaves();
       updateVectors();
       updateObservationInfo();
+      updateDoaSimulation();
+      updateRadarScene();
       fieldSliceNeedsRedraw = true;
       updateFieldSlice();
       slicePanelNeedsRebuild = true;
@@ -3067,17 +5410,26 @@
       const phaseList = document.getElementById('steering-phase-info');
       phaseList.innerHTML = '';
       const elementCurrents = getElementCurrents(activeAntennas, steeringDir, couplingEnabled, couplingStrength);
-      activeAntennas.forEach(antenna => {
-          const phaseDeg = (WAVENUMBER * antenna.position.dot(steeringDir) * 180 / Math.PI).toFixed(2);
+      const table = document.createElement('table');
+      table.className = 'phase-shift-table';
+      const thead = document.createElement('thead');
+      thead.innerHTML = couplingEnabled
+        ? '<tr><th>n</th><th>x</th><th>y</th><th>z</th><th>feed phase</th><th>|I|</th><th>∠I</th></tr>'
+        : '<tr><th>n</th><th>x</th><th>y</th><th>z</th><th>feed phase</th></tr>';
+      table.appendChild(thead);
+      const tbody = document.createElement('tbody');
+      activeAntennas.forEach((antenna, idx) => {
+          const phaseDeg = (WAVENUMBER * antenna.position.dot(steeringDir) * 180 / Math.PI).toFixed(1);
           const I = elementCurrents.get(antenna.index) || { re: 1, im: 0 };
           const magI = Math.sqrt(I.re * I.re + I.im * I.im).toFixed(2);
           const angleI = (Math.atan2(I.im, I.re) * 180 / Math.PI).toFixed(1);
-          const li = document.createElement('li');
-          li.textContent = couplingEnabled
-            ? `Antenna (${antenna.position.x},${antenna.position.y},${antenna.position.z}): feed ${phaseDeg}°, solved I = ${magI} ∠ ${angleI}°`
-            : `Antenna (${antenna.position.x},${antenna.position.y},${antenna.position.z}): ${phaseDeg}°`;
-          phaseList.appendChild(li);
+          const tr = document.createElement('tr');
+          const base = `<td>${idx + 1}</td><td>${antenna.position.x}</td><td>${antenna.position.y}</td><td>${antenna.position.z}</td><td>${phaseDeg}°</td>`;
+          tr.innerHTML = couplingEnabled ? `${base}<td>${magI}</td><td>${angleI}°</td>` : base;
+          tbody.appendChild(tr);
       });
+      table.appendChild(tbody);
+      phaseList.appendChild(table);
     }
 
     // Keep steering and observation angles coupled when Observation = Steering is enabled.
@@ -3126,27 +5478,27 @@
     function getAzimuthCutTitle() {
       const choice = document.getElementById('azimuth-cut-elevation')?.value || 'steering';
       const elDeg = Math.round(getAzimuthCutElevationRad() * 180 / Math.PI);
-      if (choice === 'steering') return `Azimuth pattern — horizontal cut at steering elevation = ${elDeg}°`;
-      if (elDeg === 0) return 'Azimuth pattern — horizontal cut at elevation = 0°';
-      return `Azimuth pattern — horizontal cut at elevation = ${elDeg}°`;
+      if (choice === 'steering') return getActiveTranslation('slice-az-title-steering', 'Azimuth pattern — horizontal cut at steering elevation = {value}°').replace('{value}', elDeg);
+      if (elDeg === 0) return getActiveTranslation('slice-az-title-zero', 'Azimuth pattern — horizontal cut at elevation = 0°');
+      return getActiveTranslation('slice-az-title-elevation', 'Azimuth pattern — horizontal cut at elevation = {value}°').replace('{value}', elDeg);
     }
 
     function getAzimuthCutShort() {
       const choice = document.getElementById('azimuth-cut-elevation')?.value || 'steering';
       const elDeg = Math.round(getAzimuthCutElevationRad() * 180 / Math.PI);
-      return choice === 'steering' ? `steering elevation ${elDeg}°` : `elevation ${elDeg}°`;
+      return choice === 'steering' ? getActiveTranslation('slice-az-short-steering', 'steering elevation {value}°').replace('{value}', elDeg) : getActiveTranslation('slice-az-short-elevation', 'elevation {value}°').replace('{value}', elDeg);
     }
 
     function getElevationCutTitle() {
-      return `Elevation pattern — vertical cut at azimuth = ${getDegreeInput('steering-azimuth')}°`;
+      return getActiveTranslation('slice-el-title', 'Elevation pattern — vertical cut at azimuth = {az}°').replace('{az}', getDegreeInput('steering-azimuth'));
     }
 
     function getBeamPlaneTitle() {
-      return `Beam-plane pattern — cut through steering direction (${getDegreeInput('steering-azimuth')}°, ${getDegreeInput('steering-elevation')}°)`;
+      return getActiveTranslation('slice-beam-title', 'Beam-plane pattern — cut through steering direction ({az}°, {el}°)').replace('{az}', getDegreeInput('steering-azimuth')).replace('{el}', getDegreeInput('steering-elevation'));
     }
 
     function getTopProjectionTitle() {
-      return 'Top projection — visual footprint from above';
+      return getActiveTranslation('slice-top-title', 'Top projection — visual footprint from above');
     }
 
     function updateSliceCardText() {
@@ -3221,6 +5573,33 @@
         return `<figure class="report-plot"><figcaption>${escapeReportHTML(title)}</figcaption>${svg ? svg.outerHTML : '<p>Missing plot</p>'}</figure>`;
       }).join('');
     }
+    function getCanvasSnapshotHTML(id, title, extraClass = '') {
+      const canvas = document.getElementById(id);
+      let img = '';
+      try { img = canvas ? canvas.toDataURL('image/png') : ''; } catch (e) { img = ''; }
+      const cls = `report-plot ${extraClass || ''}`.trim();
+      return `<figure class="${cls}"><figcaption>${escapeReportHTML(title)}</figcaption>${img ? `<img src="${img}" alt="${escapeReportHTML(title)}">` : '<p>Missing plot</p>'}</figure>`;
+    }
+
+    function getRadarPlotSnapshotsHTML() {
+      const fftPlots = [
+        ['radar-rd-map', getActiveTranslation('range-doppler-map-title', 'Range-Doppler map'), ''],
+        ['radar-range-fft', getActiveTranslation('radar-range-fft-caption', 'Range FFT magnitude'), ''],
+        ['radar-doppler-fft', getActiveTranslation('radar-doppler-fft-caption', 'Doppler FFT magnitude'), '']
+      ].map(([id, title, cls]) => getCanvasSnapshotHTML(id, title, cls)).join('');
+      const doaPlots = [
+        ['doa-correlation-map', getActiveTranslation('doa-map-caption', 'DOA correlation map: azimuth × elevation'), ''],
+        ['doa-sample-map', getActiveTranslation('doa-samples-caption', 'Received antenna samples: phase and amplitude after noise'), ''],
+        ['doa-az-cut', getActiveTranslation('doa-az-cut-caption', 'Azimuth correlation cut at estimated elevation'), ''],
+        ['doa-el-cut', getActiveTranslation('doa-el-cut-caption', 'Elevation correlation cut at estimated azimuth'), '']
+      ].map(([id, title, cls]) => getCanvasSnapshotHTML(id, title, cls)).join('');
+      return `
+        <h3 class="report-subtitle">${escapeReportHTML(getActiveTranslation('slice-radar-title', 'Radar FFT views'))}</h3>
+        <div class="report-plots report-radar-plots">${fftPlots}</div>
+        <h3 class="report-subtitle report-subtitle-spaced">${escapeReportHTML(getActiveTranslation('doa-panel-title', 'DOA / receive estimation plots'))}</h3>
+        <div class="report-plots report-radar-plots">${doaPlots}</div>`;
+    }
+
 
     function getAntennaReportHTML() {
       let rows = [];
@@ -3282,6 +5661,7 @@
             <section class="report-card report-3d"><h2>3D radiation view</h2>${image3d ? `<img src="${image3d}" alt="3D radiation pattern snapshot">` : '<p>3D snapshot unavailable.</p>'}</section>
             <section class="report-card"><h2>2D radiation views</h2><div class="report-plots">${getPlotSnapshotsHTML()}</div></section>
           </div>
+          <div class="report-section-full"><section class="report-card"><h2>Radar FFT and DOA plots</h2>${getRadarPlotSnapshotsHTML()}</section></div>
           <div class="report-grid report-section-full">${getReportExplanationHTML()}${getCurrentSettingsHTML()}</div>
           <div class="report-section-full">${getRadiationModelReportHTML()}</div>
           <div class="report-section-full">${getAntennaReportHTML()}</div>
@@ -3298,17 +5678,143 @@
 
     // Animation loop
     let animationFrameCounter = 0;
+    let lastRadarMotionUpdate = 0;
+    let lastRadarMotionPatternUpdate = 0;
+    let lastRadarMotionDoaUpdate = 0;
+    let lastRadarMotionSliceUpdate = 0;
+    let lastAppliedRendererDpr = 0;
+    let lastRangeSweepSyncSource = '';
+    let rangeSweepSyncing = false;
+
+    function syncRangeSweepVelocityControls(changedId = '') {
+      const mode = document.getElementById('radar-motion-mode')?.value || 'stationary';
+      if (mode !== 'range-sweep' || rangeSweepSyncing) return;
+      const fcGHz = Math.max(0.1, readRadarNumber('radar-carrier-ghz', 77));
+      const c0 = 299792458;
+      const lambdaM = c0 / (fcGHz * 1e9);
+      const periodEl = document.getElementById('radar-motion-period');
+      const vEl = document.getElementById('radar-target-velocity');
+      const startEl = document.getElementById('radar-motion-start-range');
+      const endEl = document.getElementById('radar-motion-end-range');
+      if (!vEl || !startEl || !endEl || !periodEl) return;
+
+      const source = changedId || lastRangeSweepSyncSource || 'geometry';
+      lastRangeSweepSyncSource = source;
+      const period = Math.max(0.5, readRadarNumber('radar-motion-period', 8));
+      const startLam = radarRangeInputToLambda(readRadarNumber('radar-motion-start-range', getRadarRangeUnit() === 'meter' ? 0.39 : 100), fcGHz);
+      const endLam = radarRangeInputToLambda(readRadarNumber('radar-motion-end-range', getRadarRangeUnit() === 'meter' ? 0.39 : 100), fcGHz);
+
+      rangeSweepSyncing = true;
+      try {
+        if (source === 'radar-target-velocity') {
+          // v is the signed radial velocity during the outward half-sweep.
+          // For the full back-and-forth period: deltaR = v * T/2.
+          const v = readRadarNumber('radar-target-velocity', 0);
+          const deltaLam = (v * period / 2) / lambdaM;
+          const nextEndLam = Math.max(0.01, startLam + deltaLam);
+          const shown = radarRangeLambdaToInput(nextEndLam, fcGHz);
+          if (document.activeElement !== endEl) endEl.value = formatRadarRangeInputValue(shown);
+        } else {
+          // Period/start/end are the independent variables. Recompute the radial velocity.
+          const v = (endLam - startLam) * 2 / period * lambdaM;
+          if (document.activeElement !== vEl) vEl.value = (Math.round(v * 1000) / 1000).toString();
+        }
+      } finally {
+        rangeSweepSyncing = false;
+      }
+    }
+
+    function updateRadarMotionControlsAvailability() {
+      syncRangeSweepVelocityControls();
+      const mode = document.getElementById('radar-motion-mode')?.value || 'stationary';
+      const card = document.getElementById('radar-scene-card');
+      if (card) {
+        card.classList.toggle('motion-disabled', mode === 'stationary');
+        card.classList.toggle('motion-enabled', mode !== 'stationary');
+        card.dataset.motionMode = mode;
+      }
+      const enabledByMode = {
+        stationary: ['radar-target-velocity'],
+        linear: ['radar-motion-period', 'radar-motion-start-range', 'radar-motion-start-az', 'radar-motion-start-el', 'radar-motion-end-range', 'radar-motion-end-az', 'radar-motion-end-el'],
+        'az-circle': ['radar-motion-period', 'radar-motion-start-range', 'radar-motion-start-az', 'radar-motion-start-el'],
+        'el-sweep': ['radar-motion-period', 'radar-motion-start-range', 'radar-motion-start-az', 'radar-motion-start-el', 'radar-motion-end-el'],
+        'range-sweep': ['radar-target-velocity', 'radar-motion-period', 'radar-motion-start-range', 'radar-motion-start-az', 'radar-motion-start-el', 'radar-motion-end-range'],
+        curve: ['radar-motion-period', 'radar-motion-start-range', 'radar-motion-start-az', 'radar-motion-start-el', 'radar-motion-end-range', 'radar-motion-end-az', 'radar-motion-end-el']
+      };
+      const enabled = new Set(enabledByMode[mode] || []);
+      const hints = {
+        stationary: 'Choose a motion mode first. Stationary targets use the main target range/azimuth/elevation.',
+        linear: 'Linear motion uses start and end R/az/el.',
+        'az-circle': 'Azimuth circle uses start R, start az and start el. End fields are not needed.',
+        'el-sweep': 'Elevation sweep uses start R/az plus start and end elevation.',
+        'range-sweep': 'Range sweep uses start az/el plus start and end range.'
+      };
+      ['radar-target-velocity', 'radar-motion-period', 'radar-motion-start-range', 'radar-motion-start-az', 'radar-motion-start-el', 'radar-motion-end-range', 'radar-motion-end-az', 'radar-motion-end-el'].forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const isEnabled = enabled.has(id);
+        el.disabled = !isEnabled;
+        el.closest('.radar-motion-field')?.classList.toggle('motion-field-disabled', !isEnabled);
+        el.title = isEnabled ? (hints[mode] || '') : (hints[mode] || hints.stationary);
+      });
+    }
+
+    function isRadarMotionActive() {
+      return (document.getElementById('radar-motion-mode')?.value || 'stationary') !== 'stationary';
+    }
     function animate() {
       requestAnimationFrame(animate);
       animationFrameCounter++;
       controls.update();
       const quality = getRenderQuality();
+      if (renderer && Math.abs((lastAppliedRendererDpr || 0) - quality.dpr) > 0.05) {
+        lastAppliedRendererDpr = quality.dpr;
+        renderer.setPixelRatio(quality.dpr);
+        const container = document.getElementById('canvas-container');
+        if (container) renderer.setSize(container.clientWidth, container.clientHeight, false);
+      }
       const animateThisFrame = animationFrameCounter % quality.frameSkip === 0;
       fieldSliceTime += isPhoneLayout() ? 0.02 : 0.035;
       const sliceMode = document.getElementById('field-slice-mode')?.value || 'off';
       const sliceStyle = document.getElementById('field-slice-style')?.value || 'contour';
-      if (animateThisFrame && sliceMode !== 'off' && sliceStyle === 'waves') updateFieldSlice();
-      if (animateThisFrame && !isPhoneLayout()) updateSlicePanelAnimation();
+      if (animateThisFrame && sliceMode !== 'off' && sliceStyle === 'waves' && !isRadarMotionActive()) updateFieldSlice();
+      if (animateThisFrame && !isPhoneLayout() && !isRadarMotionActive()) updateSlicePanelAnimation();
+      if (radarSceneGroup && isRadarMotionActive()) {
+        const now = performance.now();
+        document.getElementById('visual-workspace')?.classList.add('progressive-low');
+
+        // Smooth path animation: update current target position and radar result cards every frame.
+        // This avoids visible stepping. Cost is controlled by lower DPR and lower pattern mesh quality, not by skipping frames.
+        updateRadarScene();
+        updateObjectPositions();
+        updateObservationInfo();
+
+        // The lobe/3D magnitude/hemisphere must visually track the target smoothly too.
+        // It is recomputed every frame, but getRenderQuality() returns a low-poly preview mesh during motion.
+        updateFarFieldPattern();
+        if (now - lastRadarMotionPatternUpdate > 66) {
+          lastRadarMotionPatternUpdate = now;
+          updateWaves();
+          updateVectors();
+        }
+
+        // Correlation/DOA and slice plots are not used for the perceived motion itself.
+        // Keep them live, but avoid frame stepping of the 3D target by throttling only these plots.
+        if (now - lastRadarMotionDoaUpdate > 180) {
+          lastRadarMotionDoaUpdate = now;
+          updateDoaSimulation();
+        }
+        if (now - lastRadarMotionSliceUpdate > 520) {
+          lastRadarMotionSliceUpdate = now;
+          fieldSliceNeedsRedraw = true;
+          updateFieldSlice();
+          slicePanelNeedsRebuild = true;
+          rebuildSlicePanelCache();
+          updateSlicePlaneMarkers();
+        }
+      } else if (!isProgressiveInteracting) {
+        document.getElementById('visual-workspace')?.classList.remove('progressive-low');
+      }
       if (!isCoarsePointerDevice()) updateSliceHoverTooltip();
       renderer.render(scene, camera);
     }
@@ -3321,6 +5827,7 @@
         camera.updateProjectionMatrix();
         renderer.setPixelRatio(getRenderQuality().dpr);
         renderer.setSize(container.clientWidth, container.clientHeight, false);
+        trimRendererMemory(false);
       }
     }
 
@@ -3475,7 +5982,7 @@
         if (id === 'subpatch-density' || (Number.isFinite(step) && step >= 1)) value = Math.round(value);
         slider.value = value;
         syncNumberInputWithSlider(id, suffix, formatter, true);
-        scheduleProgressiveVisuals();
+        slider.dispatchEvent(new Event('input', { bubbles: true }));
     }
 
     function setupNumberInputForSlider(id, suffix='', formatter=formatLambdaValue) {
@@ -3505,21 +6012,27 @@
         document.getElementById('language-select').addEventListener('change', e => applyTranslations(e.target.value));
         
         // Sliders
-        ['steering-azimuth', 'steering-elevation', 'observation-azimuth', 'observation-elevation', 'observation-distance', 'subpatch-density', 'coupling-strength', 'array-x-count', 'array-z-count', 'element-spacing', 'chebyshev-sidelobe', 'cutaway-offset', 'slice-size'].forEach(id => {
+        ['steering-azimuth', 'steering-elevation', 'observation-azimuth', 'observation-elevation', 'observation-distance', 'subpatch-density', 'coupling-strength', 'array-x-count', 'array-z-count', 'element-spacing', 'chebyshev-sidelobe', 'cutaway-offset', 'slice-size', 'doa-target-azimuth', 'doa-target-elevation', 'doa-snr', 'doa-resolution'].forEach(id => {
             const el = document.getElementById(id);
             if (!el) return;
             el.addEventListener('input', e => {
                 const valueEl = document.getElementById(`${id}-value`);
                 if (id.includes('density')) { valueEl.textContent = `${e.target.value}x${e.target.value}`; const ni = document.getElementById(`${id}-input`); if (ni && document.activeElement !== ni) ni.value = e.target.value; }
-                else if (id === 'array-x-count' || id === 'array-z-count') valueEl.textContent = `${e.target.value}`;
-                else if (id === 'element-spacing') valueEl.textContent = `${Number(e.target.value).toFixed(2)}λ`;
-                else if (id === 'chebyshev-sidelobe') valueEl.textContent = `${e.target.value} dB`;
+                else if (id === 'array-x-count' || id === 'array-z-count') { valueEl.textContent = `${e.target.value}`; const ni = document.getElementById(`${id}-input`); if (ni && document.activeElement !== ni) ni.value = String(Math.round(Number(e.target.value))); }
+                else if (id === 'element-spacing') { valueEl.textContent = `${Number(e.target.value).toFixed(2)}λ`; const ni = document.getElementById(`${id}-input`); if (ni && document.activeElement !== ni) ni.value = Number(e.target.value).toFixed(2); }
+                else if (id === 'chebyshev-sidelobe') { valueEl.textContent = `${e.target.value} dB`; const ni = document.getElementById(`${id}-input`); if (ni && document.activeElement !== ni) ni.value = String(Math.round(Number(e.target.value))); }
+                else if (id === 'coupling-strength') { const ni = document.getElementById(`${id}-input`); if (ni && document.activeElement !== ni) ni.value = String(Math.round(Number(e.target.value))); }
                 else if (id === 'cutaway-offset') valueEl.textContent = `${Number(e.target.value).toFixed(1)}`;
                 else if (id === 'slice-size') valueEl.textContent = `${Number(e.target.value).toFixed(0)}`;
+                else if (id === 'doa-snr') valueEl.textContent = `${Number(e.target.value).toFixed(0)} dB`;
+                else if (id === 'doa-resolution') valueEl.textContent = `${Number(e.target.value).toFixed(0)}°`;
+                else if (id === 'doa-target-azimuth' || id === 'doa-target-elevation') valueEl.textContent = `${Number(e.target.value).toFixed(0)}°`;
+                if (id.startsWith('doa-')) {
+                    const ni = document.getElementById(`${id}-input`);
+                    if (ni && document.activeElement !== ni) ni.value = String(Math.round(Number(e.target.value)));
+                }
                 else if (id.includes('coupling-strength')) {
-                    const db = Number(e.target.value);
-                    const lin = Math.pow(10, db / 20);
-                    valueEl.textContent = `${db.toFixed(0)} dB (≈${lin.toFixed(2)})`;
+                    updateCouplingControlState();
                 }
                 else if (id.includes('distance')) { valueEl.textContent = `${formatLambdaValue(e.target.value)}λ`; const ni = document.getElementById(`${id}-input`); if (ni && document.activeElement !== ni) ni.value = formatLambdaValue(e.target.value); }
                 else valueEl.textContent = `${e.target.value}°`;
@@ -3548,9 +6061,39 @@
             });
         });
 
+        ['doa-target-azimuth', 'doa-target-elevation', 'doa-snr', 'doa-resolution'].forEach(id => {
+            const numberInput = document.getElementById(`${id}-input`);
+            const slider = document.getElementById(id);
+            const valueEl = document.getElementById(`${id}-value`);
+            if (!numberInput || !slider) return;
+            const commit = () => {
+                const min = parseFloat(slider.min || '-Infinity');
+                const max = parseFloat(slider.max || 'Infinity');
+                let v = parseFloat(numberInput.value);
+                if (!Number.isFinite(v)) v = parseFloat(slider.value) || 0;
+                v = Math.max(min, Math.min(max, v));
+                slider.value = String(v);
+                numberInput.value = String(Math.round(v));
+                if (valueEl) {
+                    if (id === 'doa-snr') valueEl.textContent = `${Math.round(v)} dB`;
+                    else valueEl.textContent = `${Math.round(v)}°`;
+                }
+                updateAllVisuals();
+            };
+            numberInput.addEventListener('change', commit);
+            numberInput.addEventListener('keydown', e => {
+                if (e.key === 'Enter') { commit(); numberInput.blur(); }
+            });
+        });
+
         ['steering-azimuth', 'steering-elevation', 'observation-azimuth', 'observation-elevation'].forEach(setupAngleNumberInput);
         setupNumberInputForSlider('observation-distance', 'λ', formatLambdaValue);
         setupNumberInputForSlider('subpatch-density', '', v => String(Math.round(Number(v) || 1)));
+        setupNumberInputForSlider('array-x-count', '', v => String(Math.round(Number(v) || 3)));
+        setupNumberInputForSlider('array-z-count', '', v => String(Math.round(Number(v) || 3)));
+        setupNumberInputForSlider('element-spacing', 'λ', v => (Number(v) || 0).toFixed(2));
+        setupNumberInputForSlider('chebyshev-sidelobe', ' dB', v => String(Math.round(Number(v) || 25)));
+        setupNumberInputForSlider('coupling-strength', ' dB', v => String(Math.round(Number(v) || -7)));
 
         // Toggles
         ['custom-array-enabled', 'sync-observation-toggle', 'show-observation-point-toggle', 'show-steering-point-toggle', 'show-waves', 'show-vectors', 'show-pattern', 'normalize-pattern-toggle', 'mutual-coupling-toggle', 'slice-marker-azimuth', 'slice-marker-elevation', 'slice-marker-beam', 'slice-marker-top'].forEach(id => {
@@ -3558,6 +6101,7 @@
             if (!toggleEl) return;
             toggleEl.addEventListener('change', e => {
                 if (id === 'custom-array-enabled') { renderAntennaCheckboxes(); createAntennas(); attachAntennaCheckboxListeners(); }
+                if (id === 'mutual-coupling-toggle') updateCouplingControlState();
                 if (id === 'sync-observation-toggle' && e.target.checked) syncObservationToSteering();
                 observationPoint.visible = document.getElementById('show-observation-point-toggle').checked;
                 steeringPoint.visible = document.getElementById('show-steering-point-toggle').checked;
@@ -3599,7 +6143,49 @@
             updateAllVisuals();
         });
 
-        loadPresetIntoEditor(document.getElementById('array-source')?.value || 'rectangular', 'Rectangular grid loaded into vector editor.');
+
+        ['doa-propagation-model', 'doa-freeze-noise', 'doa-seed', 'radar-lock-to-steering', 'radar-lock-to-distance', 'radar-show-target', 'radar-use-tx-gain', 'radar-motion-mode', 'radar-frequency-preset', 'radar-range-unit'].forEach(id => {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.addEventListener('change', () => {
+                if (id === 'radar-motion-mode') updateRadarMotionControlsAvailability();
+                if (id === 'radar-frequency-preset') applyRadarFrequencyPreset();
+                if (id === 'radar-range-unit') handleRadarRangeUnitChange();
+                if (id === 'radar-size-unit') handleRadarSizeUnitChange();
+                updateAllVisuals();
+            });
+        });
+
+        ['radar-target-name', 'radar-target-geometry', 'radar-target-size-lambda', 'radar-size-unit', 'radar-range-unit', 'radar-target-range-lambda', 'radar-rcs-mode', 'radar-target-velocity', 'radar-target-rcs', 'radar-frequency-preset', 'radar-carrier-ghz', 'radar-bandwidth-mhz', 'radar-chirp-us', 'radar-samples', 'radar-chirps', 'radar-lock-to-steering', 'radar-lock-to-distance', 'radar-show-target', 'radar-use-tx-gain', 'radar-motion-mode', 'radar-motion-period', 'radar-motion-start-range', 'radar-motion-start-az', 'radar-motion-start-el', 'radar-motion-end-range', 'radar-motion-end-az', 'radar-motion-end-el'].forEach(id => {
+            const el = document.getElementById(id);
+            if (!el) return;
+            const handler = () => {
+                if (id === 'radar-carrier-ghz') syncRadarFrequencyPresetFromCarrier();
+                if (['radar-target-geometry','radar-target-size-lambda','radar-size-unit','radar-rcs-mode','radar-carrier-ghz','radar-frequency-preset'].includes(id)) syncRadarRcsEstimate();
+                if (id === 'radar-frequency-preset') applyRadarFrequencyPreset();
+                if (id === 'radar-range-unit') handleRadarRangeUnitChange();
+                if (id === 'radar-size-unit') handleRadarSizeUnitChange();
+                if (id === 'radar-motion-mode') updateRadarMotionControlsAvailability();
+                if (['radar-target-velocity','radar-motion-period','radar-motion-start-range','radar-motion-end-range'].includes(id)) { lastRangeSweepSyncSource = id; syncRangeSweepVelocityControls(id); }
+                updateAllVisuals();
+            };
+            el.addEventListener('input', handler);
+            el.addEventListener('change', handler);
+        });
+
+        const newNoiseBtn = document.getElementById('doa-new-noise');
+        if (newNoiseBtn) newNoiseBtn.addEventListener('click', () => {
+            const seed = document.getElementById('doa-seed');
+            if (seed) seed.value = String((parseInt(seed.value || '1234', 10) || 1234) + 1);
+            const freeze = document.getElementById('doa-freeze-noise');
+            if (freeze) freeze.checked = true;
+            updateAllVisuals();
+        });
+
+        updateRadarRangeUnitUI();
+        lastRadarRangeUnit = getRadarRangeUnit();
+        updateRadarMotionControlsAvailability();
+        moveRadarPlotsToLeftPanel();
         renderAntennaCheckboxes();
         createAntennas();
         attachAntennaCheckboxListeners();
@@ -3643,7 +6229,7 @@
             const workspace = document.getElementById('visual-workspace');
             if (!workspace) return;
             const collapsed = workspace.classList.toggle('slice-2d-collapsed');
-            toggle2d.textContent = collapsed ? 'Show 2D' : 'Hide 2D';
+            toggle2d.textContent = collapsed ? getActiveTranslation('slice-show-2d', 'Show 2D') : getActiveTranslation('slice-hide-2d', 'Hide 2D');
             requestAnimationFrame(() => { onWindowResize(); updateFieldSlice(); rebuildSlicePanelCache(); });
         });
 
@@ -3654,7 +6240,7 @@
             if (isPhoneLayout()) {
                 const expanded = workspace.classList.toggle('mobile-expanded');
                 document.body.classList.toggle('mobile-big-preview', expanded);
-                workFullscreen.textContent = expanded ? 'Sticky view' : 'Big view';
+                workFullscreen.textContent = expanded ? getActiveTranslation('workspace-sticky-view', 'Sticky view') : getActiveTranslation('workspace-big-view', 'Big view');
                 requestAnimationFrame(() => { onWindowResize(); updateFieldSlice(); rebuildSlicePanelCache(); });
                 if (expanded) workspace.scrollIntoView({ block: 'start', behavior: 'smooth' });
                 return;
@@ -3702,7 +6288,7 @@
         workspace.classList.remove('workspace-compact-height','mobile-expanded');
         document.body.classList.remove('mobile-big-preview');
         const wf = document.getElementById('workspace-fullscreen');
-        if (wf) wf.textContent = 'Big view';
+        if (wf) wf.textContent = getActiveTranslation('workspace-big-view', 'Big view');
       }
       // Remove old separate 2D/3D compact states from previous cached versions.
       workspace.classList.remove('two-d-compact','two-d-collapsed','three-d-compact','three-d-collapsed');
@@ -3831,7 +6417,7 @@
       try { channel = new BroadcastChannel('phased-array-live-popout'); } catch (e) { channel = null; }
 
       const CONTROL_SELECTOR = 'input, select, textarea';
-      const skipIds = new Set(['language-select', 'theme-select', 'canvas-theme-select']);
+      const skipIds = new Set(['language-select']);
 
       function collectSettings() {
         const values = {};
@@ -3843,42 +6429,124 @@
         return values;
       }
 
+      function writeSettingsSnapshot() {
+        try {
+          localStorage.setItem('phased_array_live_popout_settings', JSON.stringify({ t: Date.now(), values: collectSettings() }));
+        } catch (e) {}
+      }
+
+      function readSettingsSnapshot() {
+        try {
+          const raw = localStorage.getItem('phased_array_live_popout_settings');
+          if (!raw) return null;
+          const parsed = JSON.parse(raw);
+          return parsed && parsed.values ? parsed.values : null;
+        } catch (e) { return null; }
+      }
+
+      const POPUP_STRUCTURAL_IDS = new Set([
+        'array-source', 'custom-array-enabled', 'custom-coordinates', 'num-elements-x', 'num-elements-y',
+        'element-spacing-x', 'element-spacing-y', 'calculation-method', 'subpatch-density',
+        'amplitude-taper', 'chebyshev-sidelobe', 'mutual-coupling-toggle', 'coupling-strength'
+      ]);
+      const POPUP_LIGHTWEIGHT_SYNC_IDS = new Set([
+        'steering-azimuth', 'steering-elevation', 'observation-azimuth', 'observation-elevation',
+        'radar-target-azimuth', 'radar-target-elevation', 'radar-target-range', 'radar-target-velocity',
+        'radar-motion-mode', 'radar-motion-period', 'radar-motion-start-range', 'radar-motion-end-range',
+        'radar-carrier-ghz', 'radar-bandwidth-mhz', 'radar-chirp-time-us', 'radar-num-chirps', 'radar-fast-samples',
+        'radar-noise-db', 'field-quantity', 'display-scale', 'canvas-height', 'slice-plot-theme'
+      ]);
+
+      let popoutApplyQueued = false;
+      let popoutPendingValues = null;
       function applySettings(values) {
         if (!values || typeof values !== 'object') return;
+        // Coalesce bursts of slider events in the popout to one render per animation frame.
+        popoutPendingValues = Object.assign(popoutPendingValues || {}, values);
+        if (popoutApplyQueued) return;
+        popoutApplyQueued = true;
+        requestAnimationFrame(() => {
+          popoutApplyQueued = false;
+          const nextValues = popoutPendingValues;
+          popoutPendingValues = null;
+          applySettingsNow(nextValues);
+        });
+      }
+
+      function applySettingsNow(values) {
+        if (!values || typeof values !== 'object') return;
         let changed = false;
+        let structuralChanged = false;
+        let themeChanged = false;
+        let canvasThemeChanged = false;
+        let sliceThemeChanged = false;
         Object.entries(values).forEach(([id, data]) => {
           const el = document.getElementById(id);
           if (!el || !data) return;
+          let oneChanged = false;
           if (data.type === 'checkbox') {
-            if (el.checked !== !!data.checked) { el.checked = !!data.checked; changed = true; }
+            if (el.checked !== !!data.checked) { el.checked = !!data.checked; oneChanged = true; }
           } else if (data.value !== undefined && String(el.value) !== String(data.value)) {
             el.value = data.value;
-            changed = true;
+            oneChanged = true;
           }
+          if (!oneChanged) return;
+          changed = true;
+          if (POPUP_STRUCTURAL_IDS.has(id)) structuralChanged = true;
+          if (id === 'theme-select') themeChanged = true;
+          if (id === 'canvas-theme-select') canvasThemeChanged = true;
+          if (id === 'slice-plot-theme') sliceThemeChanged = true;
         });
+        if (themeChanged && typeof applyTheme === 'function') applyTheme(document.getElementById('theme-select')?.value || 'system');
+        if (canvasThemeChanged && typeof applyCanvasBackground === 'function') {
+          try { localStorage.setItem('canvas-background-theme', document.getElementById('canvas-theme-select')?.value || 'auto'); } catch (e) {}
+          applyCanvasBackground();
+        }
+        if (sliceThemeChanged && typeof applySlicePlotTheme === 'function') applySlicePlotTheme();
         if (changed) {
-          if (typeof createAntennas === 'function') createAntennas();
-          if (typeof updateSubpatchDensityAvailability === 'function') updateSubpatchDensityAvailability();
+          try { if (typeof syncRadarTargetToLinkedControls === 'function') syncRadarTargetToLinkedControls(); } catch (e) {}
+          try { if (typeof syncRadarRcsEstimate === 'function') syncRadarRcsEstimate(); } catch (e) {}
+          if (structuralChanged) {
+            const sourceEl = document.getElementById('array-source');
+            if (sourceEl && typeof loadPresetIntoEditor === 'function' && sourceEl.value !== 'custom') loadPresetIntoEditor(sourceEl.value);
+            if (typeof renderAntennaCheckboxes === 'function') renderAntennaCheckboxes();
+            if (typeof createAntennas === 'function') createAntennas();
+            if (typeof updateSubpatchDensityAvailability === 'function') updateSubpatchDensityAvailability();
+          }
           if (typeof updateAllVisuals === 'function') updateAllVisuals();
           requestAnimationFrame(() => { if (typeof onWindowResize === 'function') onWindowResize(); });
         }
       }
 
-      function broadcastSettings() {
-        if (!channel || isPopout) return;
-        channel.postMessage({ type: 'settings', values: collectSettings() });
+      let lastBroadcastAt = 0;
+      let pendingBroadcast = false;
+      const POPUP_BROADCAST_MIN_MS = 24;
+      function broadcastSettings(force = false) {
+        if (isPopout) return;
+        const now = performance.now ? performance.now() : Date.now();
+        if (!force && now - lastBroadcastAt < POPUP_BROADCAST_MIN_MS) {
+          if (!pendingBroadcast) {
+            pendingBroadcast = true;
+            setTimeout(() => { pendingBroadcast = false; broadcastSettings(true); }, POPUP_BROADCAST_MIN_MS);
+          }
+          return;
+        }
+        lastBroadcastAt = now;
+        const values = collectSettings();
+        writeSettingsSnapshot();
+        if (channel) channel.postMessage({ type: 'settings', values, t: Date.now() });
       }
 
       function openWorkspacePopout() {
         const url = new URL(window.location.href);
         url.searchParams.set('plotPopout', 'workspace');
+        writeSettingsSnapshot();
         const popup = window.open(url.toString(), 'phased-array-live-workspace', 'popup=yes,width=1280,height=900,resizable=yes,scrollbars=yes');
         if (!popup) {
           alert('Please allow pop-ups for this page to open the separate live plot window.');
           return;
         }
-        setTimeout(broadcastSettings, 350);
-        setTimeout(broadcastSettings, 1200);
+        [50, 150, 300, 650, 1200].forEach(ms => setTimeout(() => broadcastSettings(true), ms));
         popup.focus?.();
       }
 
@@ -3889,6 +6557,17 @@
           if (!isPopout && msg.type === 'request-settings') broadcastSettings();
         };
       }
+      window.addEventListener('storage', (event) => {
+        if (!isPopout || event.key !== 'phased_array_live_popout_settings' || !event.newValue) return;
+        try {
+          const parsed = JSON.parse(event.newValue);
+          if (parsed?.values) applySettings(parsed.values);
+        } catch (e) {}
+      });
+      if (isPopout) {
+        const snapshot = readSettingsSnapshot();
+        if (snapshot) requestAnimationFrame(() => applySettings(snapshot));
+      }
 
       // Make the separate-window feature visible even if an older HTML file is loaded.
       const mainToolbar = document.querySelector('.workspace-toolbar-inline');
@@ -3897,17 +6576,40 @@
         big.className = 'slice-mini-btn plot-popout-btn workspace-popout-main';
         big.id = 'workspace-popout';
         big.type = 'button';
-        big.title = 'Open the complete live 2D + 3D visualization in a separate browser window for a second monitor';
-        big.textContent = 'Open in new window';
+        big.title = getActiveTranslation('workspace-open-new-window-title', 'Open the complete live 2D + 3D visualization in a separate browser window for a second monitor');
+        big.textContent = getActiveTranslation('workspace-open-new-window', 'Open in new window');
         mainToolbar.prepend(big);
       }
 
       document.getElementById('workspace-popout')?.addEventListener('click', openWorkspacePopout);
 
+      function setMainPreviewHidden(hidden) {
+        document.body.classList.toggle('main-preview-hidden', !!hidden);
+        try { localStorage.setItem('phased_array_main_preview_hidden', hidden ? '1' : '0'); } catch (e) {}
+        const btn = document.getElementById('hide-main-preview');
+        if (btn) btn.textContent = hidden ? getActiveTranslation('workspace-show-preview', 'Show preview') : getActiveTranslation('workspace-controls-only', 'Controls only');
+        const restore = document.getElementById('restore-main-preview');
+        if (restore) restore.hidden = !hidden;
+        requestAnimationFrame(() => { try { onWindowResize(); } catch (e) {} });
+      }
+
       if (!isPopout) {
-        document.addEventListener('input', (e) => { if (e.target?.matches?.(CONTROL_SELECTOR)) setTimeout(broadcastSettings, 0); }, true);
-        document.addEventListener('change', (e) => { if (e.target?.matches?.(CONTROL_SELECTOR)) setTimeout(broadcastSettings, 0); }, true);
-        setInterval(broadcastSettings, 1500);
+        if (!document.getElementById('restore-main-preview')) {
+          const restore = document.createElement('button');
+          restore.id = 'restore-main-preview';
+          restore.type = 'button';
+          restore.className = 'restore-main-preview-btn';
+          restore.textContent = getActiveTranslation('workspace-show-2d3d-preview', 'Show 2D/3D preview');
+          restore.hidden = true;
+          restore.addEventListener('click', () => setMainPreviewHidden(false));
+          document.body.appendChild(restore);
+        }
+        document.getElementById('hide-main-preview')?.addEventListener('click', () => setMainPreviewHidden(!document.body.classList.contains('main-preview-hidden')));
+        setMainPreviewHidden(localStorage.getItem('phased_array_main_preview_hidden') === '1');
+        writeSettingsSnapshot();
+        document.addEventListener('input', (e) => { if (e.target?.matches?.(CONTROL_SELECTOR)) broadcastSettings(false); }, true);
+        document.addEventListener('change', (e) => { if (e.target?.matches?.(CONTROL_SELECTOR)) broadcastSettings(true); }, true);
+        setInterval(() => broadcastSettings(false), 100);
         return;
       }
 
@@ -3915,8 +6617,13 @@
       document.documentElement.classList.add('plot-popout-mode');
       const header = document.createElement('div');
       header.className = 'live-popout-header';
-      header.innerHTML = '<strong>Live 2D + 3D view</strong><span>Changes in the main tab are mirrored here — move this window to your second monitor.</span>';
+      header.innerHTML = `<strong>${getActiveTranslation('popout-title', 'Live 2D + 3D + Radar FFT view')}</strong><span>${getActiveTranslation('popout-subtitle', 'Changes in the main tab are mirrored here — move this window to your second monitor.')}</span>`;
       document.body.prepend(header);
+      [0, 100, 350, 900, 1600].forEach(ms => setTimeout(() => {
+        const snapshot = readSettingsSnapshot();
+        if (snapshot) applySettings(snapshot);
+        if (channel) channel.postMessage({ type: 'request-settings' });
+      }, ms));
       if (channel) channel.postMessage({ type: 'request-settings' });
       setTimeout(() => { if (channel) channel.postMessage({ type: 'request-settings' }); }, 700);
     }
@@ -3931,6 +6638,7 @@
         setupThemeSelector();
         setupCanvasThemeSelector();
         applySliceDashboardVisibility();
+        updateCouplingControlState();
         applyTranslations(document.getElementById('language-select').value);
     });
   
